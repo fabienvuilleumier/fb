@@ -18,7 +18,7 @@ public class AglRun {
         {"Integer", "id", "f", ""},
         {"String", "key", "f", "VARCHAR"},
         {"String", "value", "f", "VARCHAR"}};
-
+    
     private final boolean WRITE = true;
     private final String[] ROLES = new String[]{"ADMIN"};
 

@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,6 +41,7 @@ public class RevisionEO extends AbstractDataEO<Integer> implements Serializable 
     @Column(name = "revision_date", nullable = false, columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private Date revisionDate;
+
     @Column(name = "revision_time", nullable = true, columnDefinition = "TIME")
     @Temporal(TemporalType.TIME)
     private Date revisionTime;
@@ -51,6 +53,7 @@ public class RevisionEO extends AbstractDataEO<Integer> implements Serializable 
     @Column(name = "revision_cost", nullable = true)
     private double cost;
 
+    @JsonBackReference("machineRevision")
     @JoinColumn(name = "machine_id", referencedColumnName = "machine_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MachineEO machine;
