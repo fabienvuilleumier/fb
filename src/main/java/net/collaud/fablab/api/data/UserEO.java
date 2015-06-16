@@ -42,8 +42,8 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_user")
 @Getter
 @Setter
-@ToString(exclude={"subscriptions", "ticketCloseList", "ticketCreationList",
-    "payments", "groups", "reservation"})
+@ToString(exclude = {"subscriptions", "ticketCloseList", "ticketCreationList",
+    "payments", "groups", "reservations"})
 @AllArgsConstructor
 @Where(clause = "active=1")
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {
@@ -106,7 +106,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Column(name = "comment", nullable = true)
     private String comment;
-    
+
     @JsonManagedReference("userSubscription")
     @OneToMany(mappedBy = "user")
     private Set<SubscriptionEO> subscriptions;
@@ -146,7 +146,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "creationUser", fetch = FetchType.LAZY)
     private List<TicketEO> ticketCreationList;
 
-        @JsonManagedReference("userCloseTicketList")
+    @JsonManagedReference("userCloseTicketList")
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "closeUser", fetch = FetchType.LAZY)
     private List<TicketEO> ticketCloseList;
 
