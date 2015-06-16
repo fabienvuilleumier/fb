@@ -1,6 +1,5 @@
 package net.collaud.fablab.api.data;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -32,7 +31,8 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_machine")
 @Getter
 @Setter
-@ToString(exclude = {"reservationList", "revisionList", "usageList"})
+
+@ToString(exclude = "reservationList")
 @Where(clause = "active=1")
 public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -70,30 +70,14 @@ public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MachineStateEO machineState;
 
-    @JsonManagedReference("machineReservation")
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machine", fetch = FetchType.LAZY)
     private List<ReservationEO> reservationList;
 
-    @JsonManagedReference("machineRevision")
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machine", fetch = FetchType.LAZY)
     private List<RevisionEO> revisionList;
 
-    @JsonManagedReference("machineUsage")
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machine", fetch = FetchType.LAZY)
-    private List<UsageEO> usageList;
-
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
-
-    /**
-     * Add a usage to this machine (bidirectionnal use).
-     *
-     * @param usage the usage
-     */
-    public void addUsage(UsageEO usage) {
-        this.getUsageList().add(usage);
-        usage.setMachine(this);
-    }
 
     /**
      * Add a reservation to this machine (bidirectionnal use).

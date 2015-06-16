@@ -28,7 +28,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_role")
 @Getter
 @Setter
-@ToString(exclude="groups")
+@ToString
 @Where(clause = "active=1")
 public class RoleEO extends AbstractDataEO<Integer> implements Serializable {
 

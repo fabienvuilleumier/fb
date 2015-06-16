@@ -1,6 +1,5 @@
 package net.collaud.fablab.api.data;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,8 +41,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_user")
 @Getter
 @Setter
-@ToString(exclude = {"subscriptions", "ticketCloseList", "ticketCreationList",
-    "payments", "groups", "reservations"})
+@ToString
 @AllArgsConstructor
 @Where(clause = "active=1")
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {
@@ -107,7 +105,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
     @Column(name = "comment", nullable = true)
     private String comment;
 
-    @JsonManagedReference("userSubscription")
+    @JsonManagedReference("user-subscription")
     @OneToMany(mappedBy = "user")
     private Set<SubscriptionEO> subscriptions;
 
@@ -132,7 +130,6 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
             fetch = FetchType.LAZY)
     private Set<ReservationEO> reservations;
 
-    @JsonBackReference("userMembership")
     @JoinColumn(name = "membership_type_id",
             referencedColumnName = "membership_type_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -142,11 +139,9 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserBalanceEO balance;
 
-    @JsonManagedReference("userCreationTicketList")
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "creationUser", fetch = FetchType.LAZY)
     private List<TicketEO> ticketCreationList;
 
-    @JsonManagedReference("userCloseTicketList")
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "closeUser", fetch = FetchType.LAZY)
     private List<TicketEO> ticketCloseList;
 
