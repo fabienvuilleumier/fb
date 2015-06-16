@@ -1,6 +1,5 @@
 package net.collaud.fablab.api.data;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -26,7 +25,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_membership_type")
 @Getter
 @Setter
-@ToString(exclude="userList")
+@ToString
 @Where(clause = "active=1")
 public class MembershipTypeEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -44,7 +43,6 @@ public class MembershipTypeEO extends AbstractDataEO<Integer> implements Seriali
     @Column(name = "price", nullable = false)
     private double price;
 
-    @JsonBackReference("userMembership")
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "membershipType", fetch = FetchType.LAZY)
     private List<UserEO> userList;
 

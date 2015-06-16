@@ -51,7 +51,7 @@ public class SubscriptionEO extends AbstractDataEO<Integer> implements Serializa
     @Column(name = "comment")
     private String comment;
 
-    @JsonBackReference("userSubscription")
+    @JsonBackReference("user-subscription")
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserEO user;
