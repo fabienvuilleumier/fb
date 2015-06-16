@@ -62,13 +62,13 @@ public class BackendEOGenerator {
             str.append("import javax.persistence.FetchType;").append("\n");
             str.append("import javax.persistence.CascadeType;").append("\n");
             str.append("import java.util.List;").append("\n");
-            str.append("import com.fasterxml.jackson.annotation.JsonManagedReference;").append("\n");
+            //str.append("import com.fasterxml.jackson.annotation.JsonManagedReference;").append("\n");
         }
         if (hasEO) {
             str.append("import javax.persistence.JoinColumn;").append("\n");
             str.append("import javax.persistence.ManyToOne;").append("\n");
             str.append("import javax.persistence.FetchType;").append("\n");
-            str.append("import com.fasterxml.jackson.annotation.JsonBackReference;").append("\n");
+            //str.append("import com.fasterxml.jackson.annotation.JsonBackReference;").append("\n");
 
         }
         if (hasDate) {
@@ -119,9 +119,9 @@ public class BackendEOGenerator {
         str.append("@Getter").append("\n");
         str.append("@Setter").append("\n");
         str.append("@ToString");
-        if (hasList) {
+        /*if (hasList) {
             str.append(excludeList());
-        }
+        }*/
         str.append("\n");
         str.append("@Where(clause=\"active=1\")").append("\n");
         str.append("public class ").append(CLASS_EO).append(" extends AbstractDataEO<Integer> implements Serializable {").append("\n\n");
@@ -140,15 +140,15 @@ public class BackendEOGenerator {
                     } else {
                         if (type.contains("List")) {
                             lists.put(name, type);
-                            str.append("    ").append("@JsonManagedReference(\"").append(CLASS_ATTRIBUTE)
+                            /*str.append("    ").append("@JsonManagedReference(\"").append(CLASS_ATTRIBUTE)
                                     .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
-                                    .append("\")\n");
+                                    .append("\")\n");*/
                             str.append("    ").append("@OneToMany(cascade = CascadeType.PERSIST, mappedBy = \"").append(CLASS_ATTRIBUTE).append("\", fetch = FetchType.LAZY)").append("\n");
                             str.append("    ").append("private ").append(type).append(" ").append(name).append(";\n\n");
                         } else if (type.contains("EO") && !type.contains("List")) {
-                            str.append("    ").append("@JsonBackReference(\"").append(CLASS_ATTRIBUTE)
+                            /*str.append("    ").append("@JsonBackReference(\"").append(CLASS_ATTRIBUTE)
                                     .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
-                                    .append("\")\n");
+                                    .append("\")\n");*/
                             str.append("    ").append("@JoinColumn(name = \"").append(getFKname()).append("\", referencedColumnName = \"").append(getFKname()).append("\")").append("\n");
                             str.append("    ").append("@ManyToOne(optional = false, fetch = FetchType.LAZY)").append("\n");
                             str.append("    ").append("private ").append(type).append(" ").append(name).append(";\n\n");

@@ -31,8 +31,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_machine")
 @Getter
 @Setter
-
-@ToString(exclude = "reservationList")
+@ToString(exclude = {"revisionList", "reservationList"})
 @Where(clause = "active=1")
 public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
 

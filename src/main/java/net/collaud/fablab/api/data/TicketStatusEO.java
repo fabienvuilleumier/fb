@@ -25,7 +25,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_ticket_status")
 @Getter
 @Setter
-@ToString
+@ToString(exclude="ticketList")
 @Where(clause = "active=1")
 public class TicketStatusEO extends AbstractDataEO<Integer> implements Serializable {
 

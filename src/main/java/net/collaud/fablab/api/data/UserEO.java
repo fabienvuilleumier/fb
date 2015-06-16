@@ -41,7 +41,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_user")
 @Getter
 @Setter
-@ToString
+@ToString(exclude={"payments", "subscriptions", "ticketCloseList", "ticketCreationList", "groups"})
 @AllArgsConstructor
 @Where(clause = "active=1")
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {
