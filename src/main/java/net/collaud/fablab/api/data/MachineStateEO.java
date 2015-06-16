@@ -33,6 +33,7 @@ public class MachineStateEO extends AbstractDataEO<Integer> implements Serializa
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "machine_state_id", nullable = false)
     private Integer id;
+    
     @Column(name = "label", nullable = false)
     private String label;
 

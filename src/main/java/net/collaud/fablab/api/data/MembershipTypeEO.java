@@ -25,7 +25,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_membership_type")
 @Getter
 @Setter
-@ToString
+@ToString(exclude="userList")
 @Where(clause = "active=1")
 public class MembershipTypeEO extends AbstractDataEO<Integer> implements Serializable {
 
