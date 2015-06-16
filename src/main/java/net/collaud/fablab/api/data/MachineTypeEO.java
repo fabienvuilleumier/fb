@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
@@ -44,10 +45,11 @@ public class MachineTypeEO extends AbstractDataEO<Integer> implements Serializab
     @Column(name = "restricted", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean restricted;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machineType", fetch = FetchType.LAZY)
     private List<MachineEO> machineList;
 
-    @JsonManagedReference("machineType-price")
+    @JsonManagedReference("machineTypePrice")
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machineTypeEO", fetch = FetchType.LAZY)
     private Set<PriceMachineEO> priceList;
 

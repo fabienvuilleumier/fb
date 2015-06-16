@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +37,7 @@ public class MachineStateEO extends AbstractDataEO<Integer> implements Serializa
     @Column(name = "label", nullable = false)
     private String label;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machineState", fetch = FetchType.LAZY)
     private List<MachineEO> machineList;
 

@@ -62,11 +62,14 @@ public class BackendEOGenerator {
             str.append("import javax.persistence.FetchType;").append("\n");
             str.append("import javax.persistence.CascadeType;").append("\n");
             str.append("import java.util.List;").append("\n");
+            str.append("import com.fasterxml.jackson.annotation.JsonManagedReference;").append("\n");
         }
         if (hasEO) {
             str.append("import javax.persistence.JoinColumn;").append("\n");
             str.append("import javax.persistence.ManyToOne;").append("\n");
             str.append("import javax.persistence.FetchType;").append("\n");
+            str.append("import com.fasterxml.jackson.annotation.JsonBackReference;").append("\n");
+
         }
         if (hasDate) {
             str.append("import java.util.Date;").append("\n");
@@ -115,8 +118,11 @@ public class BackendEOGenerator {
         str.append("@Table(name = \"").append(TABLE_NAME).append("\")").append("\n");
         str.append("@Getter").append("\n");
         str.append("@Setter").append("\n");
-        str.append("@ToString").append("\n");
-        str.append("@JsonIdentityInfo(generator=JSOGGenerator.class)").append("\n");
+        str.append("@ToString");
+        if (hasList) {
+            str.append(excludeList());
+        }
+        str.append("\n");
         str.append("@Where(clause=\"active=1\")").append("\n");
         str.append("public class ").append(CLASS_EO).append(" extends AbstractDataEO<Integer> implements Serializable {").append("\n\n");
         if (FIELDS.length != 0) {
@@ -134,9 +140,15 @@ public class BackendEOGenerator {
                     } else {
                         if (type.contains("List")) {
                             lists.put(name, type);
+                            str.append("    ").append("@JsonManagedReference(\"").append(CLASS_ATTRIBUTE)
+                                    .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
+                                    .append("\")\n");
                             str.append("    ").append("@OneToMany(cascade = CascadeType.PERSIST, mappedBy = \"").append(CLASS_ATTRIBUTE).append("\", fetch = FetchType.LAZY)").append("\n");
                             str.append("    ").append("private ").append(type).append(" ").append(name).append(";\n\n");
-                        } else if (type.contains("EO") && !type.contains("List")) { 
+                        } else if (type.contains("EO") && !type.contains("List")) {
+                            str.append("    ").append("@JsonBackReference(\"").append(CLASS_ATTRIBUTE)
+                                    .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
+                                    .append("\")\n");
                             str.append("    ").append("@JoinColumn(name = \"").append(getFKname()).append("\", referencedColumnName = \"").append(getFKname()).append("\")").append("\n");
                             str.append("    ").append("@ManyToOne(optional = false, fetch = FetchType.LAZY)").append("\n");
                             str.append("    ").append("private ").append(type).append(" ").append(name).append(";\n\n");
@@ -240,6 +252,35 @@ public class BackendEOGenerator {
                 }
             }
         }
+    }
+
+    private String excludeList() {
+        StringBuilder str = new StringBuilder();
+        List<String> names = new ArrayList<>();
+        if (FIELDS.length != 0) {
+            if (FIELDS[0].length == 4) {
+                for (String[] fields : FIELDS) {
+                    if (fields[0].contains("List")) {
+                        names.add(fields[1]);
+                    }
+                }
+            }
+        }
+        boolean many = names.size() > 1;
+        str.append("(exclude = ");
+        if (many) {
+            str.append("{");
+        }
+        
+        for (String n : names) {
+            str.append("\"").append(n).append("\",");
+        }
+        str.deleteCharAt(str.length() - 1);
+        if (many) {
+            str.append("}");
+        }
+        str.append(")");
+        return str.toString();
     }
 
     private StringBuilder getFKname() {

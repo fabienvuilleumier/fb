@@ -48,12 +48,12 @@ public class PaymentEO extends AbstractDataEO<Integer> implements Serializable {
     @Column(name = "comment")
     private String comment;
 
-    @JsonProperty("payment-user")
+    @JsonProperty("paymentUser")
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEO user;
 
-    @JsonProperty("payement-cashier")
+    @JsonProperty("payementCashier")
     @JoinColumn(name = "cashier_id", referencedColumnName = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEO cashier;

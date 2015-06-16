@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
@@ -54,15 +55,17 @@ public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Column(name = "comment")
     private String comment;
-
+    
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEO user;
 
+    @JsonBackReference("machineUsage")
     @JoinColumn(name = "machine_id", referencedColumnName = "machine_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private MachineEO machine;
 
+    
     @JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private MembershipTypeEO membershipType;
