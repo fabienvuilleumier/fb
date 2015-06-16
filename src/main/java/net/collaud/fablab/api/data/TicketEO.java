@@ -72,7 +72,7 @@ public class TicketEO extends AbstractDataEO<Integer> implements Serializable {
 
     @JsonBackReference("userCloseTicketList")
     @JoinColumn(name = "close_user_id", referencedColumnName = "user_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private UserEO closeUser;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
