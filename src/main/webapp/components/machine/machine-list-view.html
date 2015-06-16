@@ -1,0 +1,74 @@
+<h1 translate="machine.title"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <a class="btn btn-success" href="#/machines/machine-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+    </div>
+</div>
+<div class="machineList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="machine in $data"
+            ng-class="{ 'bg-warning':machine.machineStatus.label.toUpperCase()==='EN RÉPARATION' || machine.machineStatus.label.toUpperCase()==='PRÊTÉ - EN LOCATION',
+                        'bg-danger':machine.machineStatus.label.toUpperCase()==='ENDOMMAGÉ' || machine.machineStatus.label.toUpperCase()==='INDISPONIBLE',
+                        'bg-success':machine.machineStatus.label.toUpperCase()==='DISPONIBLE'}">
+            <td  style="width:90px" 
+                data-title="'machine.code' | translate" 
+                sortable="'code'"
+                filter="{'code':'text'}">
+                {{machine.code}}
+            </td>
+            <td 
+                data-title="'machine.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{machine.name}}
+            </td>
+            <td style="width:120px" 
+                data-title="'machine.buyPrice' | translate" 
+                sortable="'buyPrice'"
+                filter="{'buyPrice':'text'}">
+                <span>{{machine.buyPrice}}</span>
+                <span> {{currency}}</span>
+            </td>
+            <td  style="width:145px"
+                data-title="'machine.acquisitionDate' | translate" 
+                sortable="'acquisitionDate'"
+                filter="{'acquisitionDate':'text'}">
+                {{machine.acquisitionDate}}
+            </td>
+            <td  
+                data-title="'machine.machineType' | translate" 
+                sortable="'machineType'"
+                filter="{'machineType':'text'}">
+                {{machine.machineType.name}}
+            </td>
+            <td
+                data-title="'machine.machineStatus' | translate" 
+                sortable="'machineStatus'"
+                filter="{'machineStatus':'text'}">
+                {{machine.machineStatus.label}}
+            </td>
+            <td style="width:100px" 
+                data-title="'machine.machineState' | translate" 
+                sortable="'machineState'"
+                filter="{'machineState':'text'}">
+                {{machine.machineState.label}}
+            </td>
+                <td class="listBtn3">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/machines/machine-edit/{{machine.id}}">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(machine)"
+                            ng-really-message="{{'machine.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                    <a title="Make a revision" class="btn btn-sm btn-primary" href="#/revisions/revision-edit-code/{{machine.code}}">
+                        <span class="fa fa-fw fa-check-square-o"> </span>
+                    </a>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

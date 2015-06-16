@@ -1,0 +1,43 @@
+package net.collaud.fablab.api.rest.v1;
+
+import javax.annotation.PostConstruct;
+import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
+import net.collaud.fablab.api.data.TicketStatusEO;
+import net.collaud.fablab.api.exceptions.FablabException;
+import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
+import net.collaud.fablab.api.rest.v1.base.SoftRemoveWebService;
+import net.collaud.fablab.api.service.TicketStatusService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * This is the WS class for a <tt>TicketStatus</tt>.
+ *
+ * @author Fabien Vuilleumier
+ */
+@RestController()
+@RequestMapping("/v1/ticketStatus")
+@JavascriptAPIConstant("TICKET_STATUS_API")
+public class TicketStatusWS extends ReadWriteRestWebservice<TicketStatusEO, TicketStatusService> implements SoftRemoveWebService {
+
+    @Autowired
+    private TicketStatusService ticketStatusService;
+
+    @PostConstruct
+    public void postConstruct() {
+        super.setService(ticketStatusService);
+    }
+
+    @Override
+    public void softRemove(Integer id) throws FablabException {
+        ticketStatusService.softRemove(id);
+    }
+    
+    @RequestMapping(value = "findByLabel", method = RequestMethod.GET)
+    public TicketStatusEO findByLabel(@RequestParam(value = "label") String label) {
+        return ticketStatusService.findByLabel(label);
+    }
+}

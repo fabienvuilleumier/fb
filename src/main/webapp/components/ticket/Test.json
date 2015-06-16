@@ -1,0 +1,291 @@
+{
+    "@id": "33",
+    "creationDate": "2015-06-16T07:44:43.608Z",
+    "creationUser": {
+        "@id": "1",
+        "id": 2,
+        "login": "admin"
+        ,
+        "passwordNew": null,
+        "firstname": "Admin",
+        "lastname": "Admin",
+        "email": "1@1.com",
+        "dateInscr": 1432645032000
+        ,
+        "rfid": "120050C9ED65",
+        "birthdate": "1990-07-19",
+        "gender": "MALE",
+        "phone": null,
+        "address": null,
+        "comment"
+                : null,
+        "subscriptions": [
+            {
+                "@id": "2",
+                "id": 2,
+                "dateSubscription": 1432645310000,
+                "price": 8,
+                "duration": 1,
+                "comment"
+                        : null,
+                "user": {
+                    "@id": "36",
+                    "@ref": "1"
+                },
+                "membershipType": {
+                    "@id": "3",
+                    "id": 2,
+                    "name": "normal",
+                    "duration": 1
+                    ,
+                    "price": 8,
+                    "userList": null,
+                    "active": true
+                },
+                "active": true
+            }
+        ],
+        "groups": [
+            {
+                "@id": "4",
+                "id": 1,
+                "name": "Comité"
+                ,
+                "roles": [
+                    {
+                        "@id": "5",
+                        "id": 1,
+                        "name": "Administration",
+                        "technicalname": "ROLE_ADMIN",
+                        "active": true
+                    },
+                    {
+                        "@id"
+                                : "6",
+                        "id": 2,
+                        "name": "View user",
+                        "technicalname": "ROLE_USER_VIEW",
+                        "active": true
+                    },
+                    {
+                        "@id": "7",
+                        "id": 3,
+                        "name"
+                                : "Manage user",
+                        "technicalname": "ROLE_USER_MANAGE",
+                        "active": true
+                    },
+                    {
+                        "@id": "8",
+                        "id": 4,
+                        "name": "View machine"
+                        ,
+                        "technicalname": "ROLE_MACHINE_VIEW",
+                        "active": true
+                    },
+                    {
+                        "@id": "9",
+                        "id": 5,
+                        "name": "Manage machine",
+                        "technicalname"
+                                : "ROLE_MACHINE_MANAGE",
+                        "active": true
+                    },
+                    {
+                        "@id": "10",
+                        "id": 6,
+                        "name": "View payment",
+                        "technicalname": "ROLE_PAYMENT_VIEW"
+                        ,
+                        "active": true
+                    },
+                    {
+                        "@id": "11",
+                        "id": 7,
+                        "name": "Manage payment",
+                        "technicalname": "ROLE_PAYMENT_MANAGE",
+                        "active"
+                                : true
+                    },
+                    {
+                        "@id": "12",
+                        "id": 8,
+                        "name": "View accounting",
+                        "technicalname": "ROLE_ACCOUNTING_VIEW",
+                        "active": true
+                    },
+                    {
+                        "@id": "13",
+                        "id": 9,
+                        "name": "Manage accounting",
+                        "technicalname": "ROLE_ACCOUNTING_MANAGE",
+                        "active": true
+                    },
+                    {
+                        "@id": "14",
+                        "id": 10,
+                        "name": "View audit",
+                        "technicalname": "ROLE_AUDIT_VIEW",
+                        "active": true
+                    },
+                    {
+                        "@id": "15"
+                        ,
+                        "id": 11,
+                        "name": "View reservation",
+                        "technicalname": "ROLE_RESERVATION_VIEW",
+                        "active": true
+                    },
+                    {
+                        "@id": "16"
+                        ,
+                        "id": 12,
+                        "name": "Use reservation",
+                        "technicalname": "ROLE_RESERVATION_USE",
+                        "active": true
+                    },
+                    {
+                        "@id": "17",
+                        "id"
+                                : 13,
+                        "name": "Manage reservation",
+                        "technicalname": "ROLE_RESERVATION_MANAGE",
+                        "active": true
+                    },
+                    {
+                        "@id": "18"
+                        ,
+                        "id": 14,
+                        "name": "Manage Mailing list",
+                        "technicalname": "ROLE_MAILINGLIST_MANAGE",
+                        "active": true
+                    },
+                    {
+                        "@id"
+                                : "19",
+                        "id": 15,
+                        "name": "Ticket View",
+                        "technicalname": "ROLE_TICKET_VIEW",
+                        "active": true
+                    },
+                    {
+                        "@id": "20",
+                        "id"
+                                : 16,
+                        "name": "Ticket manage",
+                        "technicalname": "ROLE_TICKET_MANAGE",
+                        "active": true
+                    }
+                ],
+                "active": true
+            }
+        ],
+        "membershipType"
+                : {
+                    "@id": "55",
+                    "@ref": "3"
+                },
+        "balance": {
+            "@id": "56",
+            "value": -1.6391277313232422e-7
+        },
+        "ticketCreationList": null
+        ,
+        "ticketCloseList": null,
+        "active": true
+    },
+    "status": {
+        "@id": "57",
+        "id": 1,
+        "label": "Open",
+        "ticketList": null,
+        "active"
+                : true
+    },
+    "title": "ads",
+    "machine": {
+        "@id": "58",
+        "id": 1,
+        "code": "ULTI1",
+        "name": "Ultimaker V1",
+        "buyPrice": 3000
+        ,
+        "toDoRevision": null,
+        "acquisitionDate": "2015-01-01",
+        "machineType": {
+            "@id": "59",
+            "id": 1,
+            "technicalname"
+                    : "3dprinter",
+            "name": "Imprimante 3D",
+            "restricted": true,
+            "machineList": null,
+            "priceList": [
+                {
+                    "@id": "60",
+                    "machineTypeId"
+                            : 1,
+                    "membershipTypeId": 1,
+                    "price": 10,
+                    "machineTypeEO": {
+                        "@ref": "59"
+                    },
+                    "membershipType": null
+                },
+                {
+                    "@id": "61",
+                    "machineTypeId"
+                            : 1,
+                    "membershipTypeId": 2,
+                    "price": 7,
+                    "machineTypeEO": {
+                        "@ref": "59"
+                    },
+                    "membershipType": null
+                },
+                {
+                    "@id": "62",
+                    "machineTypeId"
+                            : 1,
+                    "membershipTypeId": 3,
+                    "price": 5,
+                    "machineTypeEO": {
+                        "@ref": "59"
+                    },
+                    "membershipType": null
+                },
+                {
+                    "@id": "63",
+                    "machineTypeId"
+                            : 1,
+                    "membershipTypeId": 4,
+                    "price": 5,
+                    "machineTypeEO": {
+                        "@ref": "59"
+                    },
+                    "membershipType": null
+                }
+            ],
+            "active": true
+        },
+        "machineStatus": {
+            "@id": "64",
+            "id": 2,
+            "label": "En réparation",
+            "machineList": null,
+            "active": true
+        },
+        "machineState"
+                : {
+                    "@id": "65",
+                    "id": 2,
+                    "label": "Bon état",
+                    "machineList": null,
+                    "active": true
+                },
+        "reservationList": null,
+        "revisionList"
+                : null,
+        "active": true
+    }
+}

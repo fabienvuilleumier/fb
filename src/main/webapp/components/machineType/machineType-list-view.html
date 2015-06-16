@@ -1,0 +1,40 @@
+<h1 translate="machineType.title"></h1>
+<div class="header-control">
+    <div class="btn-group">
+        <a class="btn btn-success" href="#/machineTypes/machineType-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+    </div>
+</div>
+<div class="machine">
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="machineType in $data">
+            <td 
+                data-title="'machineType.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{machineType.name}}
+            </td>
+            <td 
+                data-title="'machineType.technicalname' | translate" 
+                sortable="'technicalname'"
+                filter="{'technicalname':'text'}">
+                {{machineType.technicalname}}
+            </td>
+            <td 
+                data-title="'machineType.restricted' | translate" 
+                sortable="'restricted'"
+                filter="{'restricted':'text'}">
+                {{machineType.restricted}}
+            </td>
+            <td  class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/machineTypes/machineType-edit/{{machineType.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(machineType)"
+                            ng-really-message="{{'machineType.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>

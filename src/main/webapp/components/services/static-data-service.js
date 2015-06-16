@@ -1,0 +1,43 @@
+(function () {
+    'use strict';
+
+    angular.module('Fablab').service('StaticDataService', function (GroupService,
+            MachineService, MachineTypeService, MachineStatusService, MachineStateService,
+            MembershipTypeService, TicketStatusService, ConfigurationService) {
+
+        this.loadMemberShipTypes = function (successFn) {
+            MembershipTypeService.list(successFn);
+        };
+        this.loadGroups = function (successFn) {
+            GroupService.list(successFn);
+        };
+        this.loadMachineries = function (successFn) {
+            MachineService.list(successFn);
+        };
+        this.loadMachineriesDispo = function (successFn) {
+            MachineService.getStatusLabel("Disponible", successFn);
+        };
+        this.loadMachineTypes = function (successFn) {
+            MachineTypeService.list(successFn);
+        };
+        this.loadMachineStatus = function (successFn) {
+            MachineStatusService.list(successFn);
+        };
+        this.loadMachineStates = function (successFn) {
+            MachineStateService.list(successFn);
+        };
+        this.findSimpleMachineByCode = function (code, successFn) {
+            MachineService.findSimpleByCode(code, successFn);
+        };
+        this.loadTicketStatus = function (successFn) {
+            TicketStatusService.list(successFn);
+        };
+        this.getConf = function (key, successFn) {
+            ConfigurationService.findByKey(key, successFn);
+        };
+        this.prettyCreationDate = function (date) {
+            return moment(date).format('DD.MM.YYYY');
+        };
+    });
+
+}());

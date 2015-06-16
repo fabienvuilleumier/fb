@@ -1,0 +1,36 @@
+{
+    "elements": {
+        "toast": {},
+        "fab-user-subscription": {
+            "attributes": {
+                "user": {}
+            }
+        },
+        "user-payment-history": {
+            "attributes": {
+                "confirm-callback": {},
+                "user": {}
+            }
+        },
+        "fablab-calendar": {}
+    },
+    "attributes": {
+        "fast-repeat": {
+            "context": "tr"
+        },
+        "fab-nav-dropdown-machine": {},
+        "fab-nav-dropdown-accounting": {
+            "context": "li"
+        },
+        "fab-nav-dropdown-admin": {
+            "context": "li"
+        },
+        "aria-expanded": {},
+        "confirm-callback": {},
+        "fab-nav-side": {
+            "context": "div"
+        },
+        "fab-nav-item": {},
+        "sortable": {}
+    }
+}
