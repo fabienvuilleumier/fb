@@ -1,6 +1,7 @@
 package net.collaud.fablab.api.data;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -65,12 +66,12 @@ public class TicketEO extends AbstractDataEO<Integer> implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TicketStatusEO status;
 
-    @JsonBackReference("userCreationTicketList")
+    @JsonProperty("creationUser")
     @JoinColumn(name = "creation_user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserEO creationUser;
 
-    @JsonBackReference("userCloseTicketList")
+    @JsonProperty("closeUser")
     @JoinColumn(name = "close_user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private UserEO closeUser;
