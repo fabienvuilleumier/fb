@@ -29,8 +29,7 @@
                     <label ng-if="!supply.supplyUnity" class="col-sm-2 control-label" translate="supply.supplyUnity"></label>
                     <label ng-if="supply.supplyUnity" class="col-sm-2 control-label" translate="supply.unityBuyingPrice"></label>
                     <div ng-if="supply.supplyUnity" class="col-sm-6">
-                        <input ng-if="supply.supplyUnity.floating" type="number" min="0" step="0.05" class="form-control" ng-model="supply.unityBuyingPrice"/>
-                        <input ng-if="!supply.supplyUnity.floating" type="number" min="0" step="1" class="form-control" ng-model="supply.unityBuyingPrice"/>
+                        <input type="number" min="0" step="0.05" class="form-control" ng-model="supply.unityBuyingPrice"/>
                     </div>
                     <label ng-if="supply.supplyUnity" class="col-sm-1 control-label">/</label>
                     <div ng-if="supply.supplyUnity" class="col-sm-1">
