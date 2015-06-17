@@ -161,6 +161,15 @@
         }).when('/purchases/purchase-edit', {
             templateUrl: './components/purchase/purchase-edit-view.html',
             controller: 'PurchaseNewController'
+        }).when('/supplyUnities', {
+            templateUrl: './components/supplyUnity/supplyUnity-list-view.html',
+            controller: 'SupplyUnityListController'
+        }).when('/supplyUnities/supplyUnity-edit/:id', {
+            templateUrl: './components/supplyUnity/supplyUnity-edit-view.html',
+            controller: 'SupplyUnityEditController'
+        }).when('/supplyUnities/supplyUnity-edit', {
+            templateUrl: './components/supplyUnity/supplyUnity-edit-view.html',
+            controller: 'SupplyUnityNewController'
         }).otherwise({
             redirectTo: '/'
         });

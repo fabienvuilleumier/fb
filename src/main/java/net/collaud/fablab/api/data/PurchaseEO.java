@@ -20,6 +20,7 @@ import lombok.ToString;
 
 /**
  * This is the business class for a <tt>Purchase</tt>
+ *
  * @author Fabien Vuilleumier
  */
 @Entity
@@ -27,7 +28,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Where(clause="active=1")
+@Where(clause = "active=1")
 public class PurchaseEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Id
@@ -35,14 +36,14 @@ public class PurchaseEO extends AbstractDataEO<Integer> implements Serializable 
     @Column(name = "purchase_id", nullable = false)
     private Integer id;
 
-    @Column(name = "purchase_date", nullable = false )
+    @Column(name = "purchase_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date purchaseDate;
 
-    @Column(name = "quantity", nullable = false )
+    @Column(name = "quantity", nullable = false)
     private Integer quantity;
 
-    @Column(name = "purchase_price", nullable = false )
+    @Column(name = "purchase_price", nullable = false)
     private Double purchasePrice;
 
     @JoinColumn(name = "supply_id", referencedColumnName = "supply_id")
@@ -53,11 +54,11 @@ public class PurchaseEO extends AbstractDataEO<Integer> implements Serializable 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserEO user;
 
-    @Column(name="active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
 
     public PurchaseEO() {
-        this.active = true;
+        this(null);
     }
 
     public PurchaseEO(Integer id) {

@@ -2,6 +2,7 @@
 var app = angular.module('Fablab');
 app.controller('SupplyListController', function ($scope, $filter, $location,
         ngTableParams, SupplyService, NotificationService) {
+    $scope.currency = App.CONFIG.CURRENCY;
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page
@@ -12,7 +13,8 @@ app.controller('SupplyListController', function ($scope, $filter, $location,
                     sellingPrice: 'asc',
                     unityBuyingPrice: 'asc',
                     orderAddress: 'asc',
-                    supplyType: 'asc'
+                    supplyType: 'asc', 
+                    supplyUnity: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

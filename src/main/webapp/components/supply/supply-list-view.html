@@ -23,13 +23,13 @@
                 data-title="'supply.sellingPrice' | translate" 
                 sortable="'sellingPrice'"
                 filter="{'sellingPrice':'text'}">
-                {{supply.sellingPrice}}
+                {{supply.sellingPrice}} {{currency}}
             </td>
             <td 
                 data-title="'supply.unityBuyingPrice' | translate" 
                 sortable="'unityBuyingPrice'"
                 filter="{'unityBuyingPrice':'text'}">
-                {{supply.unityBuyingPrice}}
+                {{supply.unityBuyingPrice}} {{currency}}
             </td>
             <td 
                 data-title="'supply.orderAddress' | translate" 
@@ -47,7 +47,7 @@
                 data-title="'supply.quantityStock' | translate" 
                 sortable="'quantityStock'"
                 filter="{'quantityStock':'text'}">
-                {{supply.quantityStock}}
+                {{supply.quantityStock}} {{supply.supplyUnity.label}}
             </td>
             <td style="width:140px">
                 <div class="btn-group">
@@ -80,7 +80,8 @@
                                     <div class="form-group">
                                         <label class="col-sm-offset-2 col-sm-3 control-label" translate="supply.quantityStockModal"></label>
                                         <div class="col-sm-3">
-                                            <input type="number" min="0" step="0.1" class="form-control" ng-model="newQuantity" required/>
+                                            <input ng-if="supply.unity.floating" type="number" min="0" step="0.1" class="form-control" ng-model="newQuantity" required/>
+                                            <input ng-if="!supply.unity.floating" type="number" min="0" class="form-control" ng-model="newQuantity" required/>
                                         </div>
                                     </div>
                                 </div>

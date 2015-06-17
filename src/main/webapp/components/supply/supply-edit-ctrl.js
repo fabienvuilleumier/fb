@@ -20,6 +20,10 @@ app.controller('GlobalSupplyEditController', function ($scope, $location,
     StaticDataService.loadSupplyTypes(function (data) {
         $scope.supplyTypeList = data;
     });
+    
+    StaticDataService.loadSupplyUnities(function (data) {
+        $scope.unityList = data;
+    });
 }
 );
 app.controller('SupplyNewController', function ($scope, $controller) {
