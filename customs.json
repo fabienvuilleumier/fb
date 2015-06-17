@@ -6,6 +6,11 @@
                 "user": {}
             }
         },
+        "btn-cancel": {
+            "attributes": {
+                "link": {}
+            }
+        },
         "user-payment-history": {
             "attributes": {
                 "confirm-callback": {},

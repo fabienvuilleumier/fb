@@ -134,6 +134,33 @@
         }).when('/tickets/ticket-edit', {
             templateUrl: './components/ticket/ticket-edit-view.html',
             controller: 'TicketNewController'
+        }).when('/supplies', {
+            templateUrl: './components/supply/supply-list-view.html',
+            controller: 'SupplyListController'
+        }).when('/supplies/supply-edit/:id', {
+            templateUrl: './components/supply/supply-edit-view.html',
+            controller: 'SupplyEditController'
+        }).when('/supplies/supply-edit', {
+            templateUrl: './components/supply/supply-edit-view.html',
+            controller: 'SupplyNewController'
+        }).when('/supplyTypes', {
+            templateUrl: './components/supplyType/supplyType-list-view.html',
+            controller: 'SupplyTypeListController'
+        }).when('/supplyTypes/supplyType-edit/:id', {
+            templateUrl: './components/supplyType/supplyType-edit-view.html',
+            controller: 'SupplyTypeEditController'
+        }).when('/supplyTypes/supplyType-edit', {
+            templateUrl: './components/supplyType/supplyType-edit-view.html',
+            controller: 'SupplyTypeNewController'
+        }).when('/purchases', {
+            templateUrl: './components/purchase/purchase-list-view.html',
+            controller: 'PurchaseListController'
+        }).when('/purchases/purchase-edit/:id', {
+            templateUrl: './components/purchase/purchase-edit-view.html',
+            controller: 'PurchaseEditController'
+        }).when('/purchases/purchase-edit', {
+            templateUrl: './components/purchase/purchase-edit-view.html',
+            controller: 'PurchaseNewController'
         }).otherwise({
             redirectTo: '/'
         });
