@@ -310,6 +310,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             create: 'Ticket creation',
             edit: 'Edit :',
             closeTicket :'Close this ticket',
+            reOpenTicket:'Re-Open this ticket',
             notification: {
                 saved: 'Ticket saved',
                 removed: 'Ticket removed'

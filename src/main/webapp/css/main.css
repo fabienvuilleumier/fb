@@ -18,31 +18,6 @@ hr{
     background-color: #FFF;
 }
 
-/*
-@media screen and (min-height:200px){
-    .side-nav{
-        height: 250px;
-    }
-    .side-nav > li:last-child{
-        margin-top : 170px;
-    }
-}
-@media screen and (min-height:600px){
-    .side-nav{
-        height: 370px;
-    }
-    .side-nav > li:last-child{
-        margin-top : 20px;
-    }
-}
-@media screen and (min-height:2000px){
-    .side-nav{
-        height: 600px;
-    }
-    .side-nav > li:last-child{
-        margin-top : 170px;
-    }
-}*/
 
 @media screen and (min-width:769px) {
     #content {
@@ -51,7 +26,7 @@ hr{
     }
 
     .nav-side-ul{
-        direction: ltr;
+        direction: initial;
     }
 
     .side-nav{
@@ -61,11 +36,11 @@ hr{
         overflow-y : scroll;
         overflow-x: hidden;
         border: 1px solid #E7E7E7;
-    }
-    .side-nav{
+        text-align: left;
+        padding-left: 20px;
         height: 90vh;
     }
-    
+
     .side-nav > li:last-child{
         margin-top : 50px;        
     }
