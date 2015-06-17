@@ -23,13 +23,13 @@
                 data-title="'supply.sellingPrice' | translate" 
                 sortable="'sellingPrice'"
                 filter="{'sellingPrice':'text'}">
-                {{supply.sellingPrice}} {{currency}}
+                {{supply.sellingPrice}} {{currency}} / {{supply.supplyUnity.label}}
             </td>
             <td 
                 data-title="'supply.unityBuyingPrice' | translate" 
                 sortable="'unityBuyingPrice'"
                 filter="{'unityBuyingPrice':'text'}">
-                {{supply.unityBuyingPrice}} {{currency}}
+                {{supply.unityBuyingPrice}} {{currency}} / {{supply.supplyUnity.label}}
             </td>
             <td 
                 data-title="'supply.orderAddress' | translate" 
