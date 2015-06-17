@@ -52,6 +52,8 @@ public class SupplyServiceImpl extends AbstractServiceImpl implements SupplyServ
             old.setUnityBuyingPrice(supply.getUnityBuyingPrice());
             old.setOrderAddress(supply.getOrderAddress());
             old.setSupplyType(supply.getSupplyType());
+            old.setQuantityStock(supply.getQuantityStock());
+            old.setSupplyUnity(supply.getSupplyUnity());
             old.setActive(supply.isActive());
             return supplyDAO.saveAndFlush(old);
         } else {

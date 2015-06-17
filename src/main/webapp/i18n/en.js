@@ -47,7 +47,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             key: 'Admin panel',
             supplies: 'Supplies',
             supplyTypes: 'Supply types',
-            purchases : 'Make a purchase'
+            purchases: 'Make a purchase',
+            supplyUnities : 'Supply unities'
         },
         loading: {
             title: 'Loading',
@@ -347,14 +348,15 @@ angular.module('Fablab').config(function ($translateProvider) {
             supplyType: 'Supply type',
             quantityStock: 'Stock quantity',
             quantityStockModal: 'Quantity',
-            initialQuantity:'Initial quantity',
-            modalTitle:'Add some quantity to ',
+            supplyUnity:'Unity',
+            initialQuantity: 'Initial quantity',
+            modalTitle: 'Add some quantity to ',
             create: 'Supply creation',
             edit: 'Edit :',
             notification: {
                 saved: 'Supply saved',
                 removed: 'Supply removed',
-                addQuantity:'Quantity added'
+                addQuantity: 'Quantity added'
             },
             confirmation: {
                 remove: 'Do you really want to remove this supply ?'
@@ -388,6 +390,20 @@ angular.module('Fablab').config(function ($translateProvider) {
             },
             confirmation: {
                 remove: 'Do you really want to remove this purchase ?'
+            }
+        },
+        supplyUnity: {
+            title: 'Supply unity',
+            label: 'Label',
+            floating: 'isFloating ? ',
+            create: 'Supply unity creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Supply unity saved',
+                removed: 'Supply unity removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this supply unity ?'
             }
         }
     });

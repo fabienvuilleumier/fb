@@ -184,6 +184,8 @@ public class BackendEOGenerator {
                 }
             }
         }
+        str.append("    ").append("@Column(name=\"active\", nullable = false, columnDefinition = \"TINYINT(1) DEFAULT 1\")").append("\n");
+        str.append("    ").append("private boolean active;").append("\n\n");
         if (hasList) {
             for (String name : lists.keySet()) {
                 String type = lists.get(name);
@@ -209,10 +211,8 @@ public class BackendEOGenerator {
                 str.append("    ").append("}").append("\n");
             }
         }
-        str.append("    ").append("@Column(name=\"active\", nullable = false, columnDefinition = \"TINYINT(1) DEFAULT 1\")").append("\n");
-        str.append("    ").append("private boolean active;").append("\n\n");
         str.append("    ").append("public ").append(CLASS_EO).append("() {").append("\n");
-        str.append("        ").append("this.active = true;").append("\n");
+        str.append("        ").append("this(null);").append("\n");
         str.append("    ").append("}").append("\n\n");
         str.append("    ").append("public ").append(CLASS_EO).append("(Integer id) {").append("\n");
         str.append("        ").append("this.active = true;").append("\n");
@@ -304,7 +304,7 @@ public class BackendEOGenerator {
         str.deleteCharAt(str.length() - 1);
         return str;
     }
-    
+
     private StringBuilder getId() {
         StringBuilder str = new StringBuilder();
         String[] words = CLASS_NAME.toLowerCase().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");

@@ -165,7 +165,7 @@ public class BackendAngularListEditGenerator {
         str.append("    ").append("});").append("\n");
         str.append("    ").append("var update").append(CLASS_NAME).append("List = function () {").append("\n");
         str.append("        ").append(CLASS_SERVICE).append(".list(function (data) {").append("\n");
-        str.append("            ").append("$scope.").append(endWithS(CLASS_ATTRIBUTE)).append("data;").append("\n");
+        str.append("            ").append("$scope.").append(endWithS(CLASS_ATTRIBUTE)).append(" = data;").append("\n");
         str.append("            ").append("$scope.tableParams.reload();").append("\n");
         str.append("        ").append("});").append("\n");
         str.append("    ").append("};").append("\n");

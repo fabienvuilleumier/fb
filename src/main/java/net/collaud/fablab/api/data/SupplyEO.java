@@ -55,12 +55,16 @@ public class SupplyEO extends AbstractDataEO<Integer> implements Serializable {
     @JoinColumn(name = "supply_type_id", referencedColumnName = "supply_type_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private SupplyTypeEO supplyType;
+    
+    @JoinColumn(name = "supply_unity_id", referencedColumnName = "supply_unity_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private SupplyUnityEO supplyUnity;
 
     @Column(name="active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
 
     public SupplyEO() {
-        this.active = true;
+        this(null);
     }
 
     public SupplyEO(Integer id) {

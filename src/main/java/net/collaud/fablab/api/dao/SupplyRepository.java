@@ -15,19 +15,22 @@ public interface SupplyRepository extends JpaRepository<SupplyEO, Integer>{
 
     @Query("SELECT DISTINCT s "
         + " FROM SupplyEO s  " 
-        + " LEFT JOIN FETCH s.supplyType ")
+        + " LEFT JOIN FETCH s.supplyType "
+        + " LEFT JOIN FETCH s.supplyUnity ")
     @Override
     List<SupplyEO> findAll();
     
     @Query("SELECT s "
         + " FROM SupplyEO s "
         + " LEFT JOIN FETCH s.supplyType "
+        + " LEFT JOIN FETCH s.supplyUnity "
         + " WHERE s.id=:id")
     Optional<SupplyEO> findOneDetails(@Param("id")Integer id);
     
     @Query("SELECT s "
         + " FROM SupplyEO s "
         + " LEFT JOIN FETCH s.supplyType "
+        + " LEFT JOIN FETCH s.supplyUnity "
         + " WHERE s.quantityStock>0")
     List<SupplyEO> stock();
 }
