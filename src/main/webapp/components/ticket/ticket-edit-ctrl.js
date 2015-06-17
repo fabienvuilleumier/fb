@@ -11,7 +11,6 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
     };
     $scope.save = function () {
         var ticketCurrent = angular.copy($scope.ticket);
-        //TicketService.save(JSOG.encode(ticketCurrent), function (data) {
         TicketService.save(ticketCurrent, function (data) {
             $scope.ticket = data;
             NotificationService.notify("success", "ticket.notification.saved");
@@ -23,11 +22,21 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
         if (!$scope.newTicket) {
             $scope.ticket.closeDate = new Date();
             $scope.ticket.closeUser = $rootScope.connectedUser.user;
-            console.log("Close user " + $rootScope.connectedUser.user);
             TicketStatusService.findByLabel("CLOSED", function (data) {
                 $scope.ticket.status = data;
+                $scope.save();
             });
-            $scope.save();
+        }
+    };
+    
+    $scope.reOpenTicket = function () {
+        if (!$scope.newTicket) {
+            $scope.ticket.closeDate = null;
+            $scope.ticket.closeUser = null;
+            TicketStatusService.findByLabel("OPEN", function (data) {
+                $scope.ticket.status = data;
+                $scope.save();
+            });
         }
     };
 
@@ -107,7 +116,6 @@ app.controller('TicketNewController', function ($scope, $controller, $rootScope,
     TicketStatusService.findByLabel("OPEN", function (data) {
         $scope.ticket.status = data;
     });
-
 }
 );
 app.controller('TicketEditController', function ($scope, $routeParams, $controller) {
