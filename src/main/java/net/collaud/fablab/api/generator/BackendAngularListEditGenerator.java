@@ -23,6 +23,7 @@ public class BackendAngularListEditGenerator {
 
     private boolean hasList = false;
     private boolean hasEO = false;
+    private boolean hasDate = false;
 
     private final String SERVICE;
     private final String COMPONENTS;
@@ -76,7 +77,7 @@ public class BackendAngularListEditGenerator {
         str.append("<h1 translate=\"").append(CLASS_ATTRIBUTE).append(".title\"></h1>").append("\n");
         str.append("<div class=\"header-control\">").append("\n");
         str.append("    ").append("<div class=\"btn-group\" >").append("\n");
-        str.append("        ").append("<a class=\"btn btn-success\" href=\"#/").append(CLASS_ATTRIBUTE).append(endWithS()).append("/").append(CLASS_ATTRIBUTE).append("-edit\">{{'button.create'| translate}} <span class=\"glyphicon glyphicon-plus\"> </span></a>").append("\n");
+        str.append("        ").append("<a class=\"btn btn-success\" href=\"#/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit\">{{'button.create'| translate}} <span class=\"glyphicon glyphicon-plus\"> </span></a>").append("\n");
         str.append("    ").append("</div>").append("\n");
         str.append("</div>").append("\n");
         str.append("<div class=\"").append(CLASS_ATTRIBUTE).append("List\" >").append("\n");
@@ -101,9 +102,9 @@ public class BackendAngularListEditGenerator {
             }
         }
 
-        str.append("            ").append("<td>").append("\n");
+        str.append("            ").append("<td class=\"listBtn2\">").append("\n");
         str.append("                ").append("<div class=\"btn-group\">").append("\n");
-        str.append("                    ").append("<a class=\"btn btn-sm btn-default\" href=\"#/").append(CLASS_ATTRIBUTE).append(endWithS()).append("/").append(CLASS_ATTRIBUTE).append("-edit/{{").append(CLASS_ATTRIBUTE).append(".id}}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>").append("\n");
+        str.append("                    ").append("<a class=\"btn btn-sm btn-default\" href=\"#/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit/{{").append(CLASS_ATTRIBUTE).append(".id}}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>").append("\n");
         str.append("                    ").append("<button class=\"btn btn-sm btn-danger\" ").append("\n");
         str.append("                        ").append("ng-really-click=\"softRemove(").append(CLASS_ATTRIBUTE).append(")\"").append("\n");
         str.append("                        ").append("ng-really-message=\"{{'").append(CLASS_ATTRIBUTE).append(".confirmation.remove'|translate}}\">").append("\n");
@@ -153,10 +154,10 @@ public class BackendAngularListEditGenerator {
         str.append("                ").append("}").append("\n");
         str.append("            ").append("}, $location.search()), {").append("\n");
         str.append("        ").append("getData: function ($defer, params) {").append("\n");
-        str.append("            ").append("if ($scope.").append(CLASS_ATTRIBUTE).append(endWithS()).append(") {").append("\n");
-        str.append("                ").append("params.total($scope.").append(CLASS_ATTRIBUTE).append(endWithS()).append(".length);").append("\n");
+        str.append("            ").append("if ($scope.").append(endWithS(CLASS_ATTRIBUTE)).append(") {").append("\n");
+        str.append("                ").append("params.total($scope.").append(endWithS(CLASS_ATTRIBUTE)).append(".length);").append("\n");
         str.append("                ").append("$location.search(params.url());").append("\n");
-        str.append("                ").append("var filteredData = params.filter() ? $filter('filter')($scope.").append(CLASS_ATTRIBUTE).append(endWithS()).append(", params.filter()) : $scope.").append(CLASS_ATTRIBUTE).append(endWithS()).append(";").append("\n");
+        str.append("                ").append("var filteredData = params.filter() ? $filter('filter')($scope.").append(endWithS(CLASS_ATTRIBUTE)).append(", params.filter()) : $scope.").append(endWithS(CLASS_ATTRIBUTE)).append(";").append("\n");
         str.append("                ").append("var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;").append("\n");
         str.append("                ").append("$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));").append("\n");
         str.append("            ").append("}").append("\n");
@@ -164,7 +165,7 @@ public class BackendAngularListEditGenerator {
         str.append("    ").append("});").append("\n");
         str.append("    ").append("var update").append(CLASS_NAME).append("List = function () {").append("\n");
         str.append("        ").append(CLASS_SERVICE).append(".list(function (data) {").append("\n");
-        str.append("            ").append("$scope.").append(CLASS_ATTRIBUTE).append(endWithS()).append(" = JSOG.decode(data);").append("\n");
+        str.append("            ").append("$scope.").append(endWithS(CLASS_ATTRIBUTE)).append("data;").append("\n");
         str.append("            ").append("$scope.tableParams.reload();").append("\n");
         str.append("        ").append("});").append("\n");
         str.append("    ").append("};").append("\n");
@@ -212,6 +213,27 @@ public class BackendAngularListEditGenerator {
                         str.append("                    ").append("ng-options=\"common.label for common in ").append(f.getName()).append("List track by common.id\"></select>").append("\n");
                         str.append("                ").append("</div>").append("\n");
                         str.append("            ").append("</div>").append("\n");
+                    } else if (f.getType().getSimpleName().toUpperCase().contains("DATE")) {
+                        str.append("                ").append("<p class=\"input-group\">").append("\n");
+                        str.append("                    ").append("<div class=\"form-group\">").append("\n");
+                        str.append("                    ").append("<div class=\"form-group\">").append("\n");
+                        str.append("                        ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"></label>").append("\n");
+                        str.append("                        ").append("<div class=\"col-sm-8\">").append("\n");
+                        str.append("                        ").append("<input class=\"form-control\" ").append("\n");
+                        str.append("                        ").append("datepicker-popup=\"{{format}}\" ").append("\n");
+                        str.append("                            ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\" ").append("\n");
+                        str.append("                            ").append("is-open=\"opened\" ").append("\n");
+                        str.append("                            ").append("min-date=\"{{minDate}}\"").append("\n");
+                        str.append("                            ").append("datepicker-options=\"dateOptions\" ").append("\n");
+                        str.append("                            ").append("ng-required=\"true\" ").append("\n");
+                        str.append("                            ").append("close-text=\"Close\"").append("\n");
+                        str.append("                        ").append("required/>").append("\n");
+                        str.append("                        ").append("</div>").append("\n");
+                        str.append("                    ").append("</div>").append("\n");
+                        str.append("                    ").append("<span class=\"input-group-btn\">").append("\n");
+                        str.append("                        ").append("<button type=\"button\" class=\"btn btn-default\" ng-click=\"open($event)\"><i class=\"glyphicon glyphicon-calendar\"></i></button>").append("\n");
+                        str.append("                    ").append("</span>").append("\n");
+                        str.append("                ").append("</p>").append("\n");
                     } else {
                         str.append("                ").append("<div class=\"form-group\">").append("\n");
                         str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"></label>").append("\n");
@@ -226,7 +248,7 @@ public class BackendAngularListEditGenerator {
         }
         str.append("            ").append("</div>").append("\n");
         str.append("            ").append("<div class=\"panel-footer right\">").append("\n");
-        str.append("                ").append("<btn-cancel link=\"#/").append(CLASS_ATTRIBUTE).append(endWithS()).append("\"></btn-cancel>").append("\n");
+        str.append("                ").append("<btn-cancel link=\"#/").append(endWithS(CLASS_ATTRIBUTE)).append("\"></btn-cancel>").append("\n");
         str.append("                ").append("<btn-submit form=\"edit").append(CLASS_NAME).append("\"></btn-submit>").append("\n");
         str.append("            ").append("</div>").append("\n");
         str.append("        ").append("</div>").append("\n");
@@ -259,13 +281,62 @@ public class BackendAngularListEditGenerator {
         str.append("        ").append(CLASS_SERVICE).append(".save(").append(CLASS_ATTRIBUTE).append("Current, function (data) {").append("\n");
         str.append("            ").append("$scope.").append(CLASS_ATTRIBUTE).append(" = data;").append("\n");
         str.append("            ").append("NotificationService.notify(\"success\", \"").append(CLASS_ATTRIBUTE).append(".notification.saved\");").append("\n");
-        str.append("            ").append("$location.path(\"").append(CLASS_ATTRIBUTE).append(endWithS()).append("\");").append("\n");
+        str.append("            ").append("$location.path(\"").append(endWithS(CLASS_ATTRIBUTE)).append("\");").append("\n");
         str.append("        ").append("});").append("\n");
         str.append("    ").append("};").append("\n");
 
+        if (hasDate) {
+            str.append("    ").append("$scope.minDate = new Date();").append("\n");
+            str.append("    ").append("$scope.today = function () {").append("\n");
+            str.append("        ").append("$scope.dt = new Date();").append("\n");
+            str.append("    ").append("};").append("\n");
+            str.append("    ").append("$scope.today();").append("\n");
+            str.append("    ").append("$scope.clear = function () {").append("\n");
+            str.append("        ").append("$scope.dt = null;").append("\n");
+            str.append("    ").append("};").append("\n");
+            str.append("    ").append("$scope.open = function ($event) {").append("\n");
+            str.append("        ").append("$event.preventDefault();").append("\n");
+            str.append("        ").append("$event.stopPropagation();").append("\n");
+            str.append("        ").append("$scope.opened = true;").append("\n");
+            str.append("    ").append("};").append("\n");
+            str.append("    ").append("$scope.dateOptions = {").append("\n");
+            str.append("        ").append("formatYear: 'yy',").append("\n");
+            str.append("        ").append("startingDay: 1").append("\n");
+            str.append("    ").append("};").append("\n");
+            str.append("    ").append("$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];").append("\n");
+            str.append("    ").append("$scope.format = $scope.formats[2];").append("\n");
+            str.append("    ").append("var tomorrow = new Date();").append("\n");
+            str.append("    ").append("tomorrow.setDate(tomorrow.getDate() + 1);").append("\n");
+            str.append("    ").append("var afterTomorrow = new Date();").append("\n");
+            str.append("    ").append("afterTomorrow.setDate(tomorrow.getDate() + 2);").append("\n");
+            str.append("    ").append("$scope.events =").append("\n");
+            str.append("        ").append("[").append("\n");
+            str.append("            ").append("{").append("\n");
+            str.append("                ").append("date: tomorrow,").append("\n");
+            str.append("                ").append("status: 'full'").append("\n");
+            str.append("            ").append("},").append("\n");
+            str.append("            ").append("{").append("\n");
+            str.append("                ").append("date: afterTomorrow,").append("\n");
+            str.append("                ").append("status: 'partially'").append("\n");
+            str.append("            ").append("}").append("\n");
+            str.append("        ").append("];").append("\n");
+            str.append("    ").append("$scope.getDayClass = function (date, mode) {").append("\n");
+            str.append("        ").append("if (mode === 'day') {").append("\n");
+            str.append("            ").append("var dayToCheck = new Date(date).setHours(0, 0, 0, 0);").append("\n");
+            str.append("            ").append("for (var i = 0; i < $scope.events.length; i++) {").append("\n");
+            str.append("                ").append("var currentDay = new Date($scope.events[i].date).setHours(0, 0, 0, 0);").append("\n");
+            str.append("                ").append("if (dayToCheck === currentDay) {").append("\n");
+            str.append("                    ").append("return $scope.events[i].status;").append("\n");
+            str.append("                ").append("}").append("\n");
+            str.append("            ").append("}").append("\n");
+            str.append("        ").append("}").append("\n");
+            str.append("        ").append("return '';").append("\n");
+            str.append("    ").append("};").append("\n");
+        }
+
         for (Field f : FIELDS) {
-            if (f.getType().getSimpleName().contains("hasEO") && !f.getType().getSimpleName().contains("List")) {
-                str.append("    ").append("StaticDataService.load").append(f.getName().substring(0, 1).toUpperCase()).append(f.getName().substring(1)).append(endWithS()).append("(function (data) {").append("\n");
+            if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
+                str.append("    ").append("StaticDataService.load").append(f.getName().substring(0, 1).toUpperCase()).append(endWithS(f.getName().substring(1))).append("(function (data) {").append("\n");
                 str.append("        ").append("$scope.").append(f.getName()).append("List = data;").append("\n");
                 str.append("    ").append("});").append("\n");
             }
@@ -369,9 +440,9 @@ public class BackendAngularListEditGenerator {
         str.append("#####IN INDEX.HTML FILE#####").append("\n");
         str.append("        ").append("<link href=\"./components/").append(CLASS_ATTRIBUTE).append("/style.css\" rel=\"stylesheet\">").append("\n");
         str.append("\n");
-        str.append("        ").append("<li fab-nav-item-af link=\"").append(CLASS_ATTRIBUTE).append(endWithS()).append("\" icon=\"\" ").append("\n");
+        str.append("        ").append("<li fab-nav-item-af link=\"").append(endWithS(CLASS_ATTRIBUTE)).append("\" icon=\"\" ").append("\n");
         str.append("            ").append("label=\"menu.");
-        str.append(CLASS_ATTRIBUTE).append(endWithS()).append("\" ").append("\n");
+        str.append(endWithS(CLASS_ATTRIBUTE)).append("\" ").append("\n");
         str.append("            ").append("show=\"hasAnyRole('");
         for (String s : roles) {
             str.append(s).append(",");
@@ -385,25 +456,25 @@ public class BackendAngularListEditGenerator {
         str.append("        ").append("<script src=\"./components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-edit-ctrl.js\"></script>").append("\n");
         str.append("########################\n\n").append("\n");
         str.append("#####IN APP.JS FILE#####").append("\n");
-        str.append("    ").append(" }).when('/").append(CLASS_ATTRIBUTE).append(endWithS()).append("', {").append("\n");
+        str.append("    ").append(" }).when('/").append(endWithS(CLASS_ATTRIBUTE)).append("', {").append("\n");
         str.append("        ").append("templateUrl: './components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-list-view.html',").append("\n");
         str.append("        ").append("controller: '").append(CLASS_NAME).append("ListController'").append("\n");
-        str.append("    ").append("}).when('/").append(CLASS_ATTRIBUTE).append(endWithS()).append("/").append(CLASS_ATTRIBUTE).append("-edit/:id', {").append("\n");
+        str.append("    ").append("}).when('/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit/:id', {").append("\n");
         str.append("        ").append("templateUrl: './components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-edit-view.html',").append("\n");
         str.append("        ").append("controller: '").append(CLASS_NAME).append("EditController'").append("\n");
-        str.append("    ").append("}).when('/").append(CLASS_ATTRIBUTE).append(endWithS()).append("/").append(CLASS_ATTRIBUTE).append("-edit', {").append("\n");
+        str.append("    ").append("}).when('/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit', {").append("\n");
         str.append("        ").append("templateUrl: './components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-edit-view.html',").append("\n");
         str.append("        ").append("controller: '").append(CLASS_NAME).append("NewController'").append("\n");
         str.append("########################\n\n").append("\n");
         str.append("#####IN EN.JS FILE#####").append("\n");
         str.append("IN MENU : ").append("\n");
-        str.append("    ,").append(CLASS_ATTRIBUTE).append(endWithS()).append("").append(" : '").append(CLASS_NAME).append(endWithS()).append("'");
+        str.append("    ,").append(endWithS(CLASS_ATTRIBUTE)).append("").append(" : '").append(endWithS(CLASS_NAME)).append("'");
         str.append("\n");
         str.append("EACH ").append("\n");
         str.append(",").append(CLASS_ATTRIBUTE).append(": {").append("\n");
         str.append("    ").append("title: '").append(CLASS_NAME).append("',").append("\n");
         for (Field f : FIELDS) {
-            if (!f.getName().equals("id")  || !f.getName().equals("active")) {
+            if (!f.getName().equals("id") && !f.getName().equals("active") && !f.getType().getSimpleName().contains("List")) {
                 str.append("    ").append(f.getName()).append(": '").append((f.getName().substring(0, 1)).toUpperCase()).append(f.getName().substring(1)).append("',").append("\n");
             }
         }
@@ -427,8 +498,8 @@ public class BackendAngularListEditGenerator {
 
         str.append("#####STATIC_DATA IF NEEDED#####").append("\n");
         for (Field f : FIELDS) {
-            if (f.getType().getSimpleName().contains("EO")) {
-                str.append("    ").append("this.load").append(f.getName().substring(0, 1).toUpperCase()).append(f.getName().substring(1)).append(endWithS()).append(" = function (successFn) {").append("\n");
+            if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
+                str.append("    ").append("this.load").append(f.getName().substring(0, 1).toUpperCase()).append(endWithS(f.getName().substring(1))).append(" = function (successFn) {").append("\n");
                 str.append("        ").append(f.getName().substring(0, 1).toUpperCase()).append(f.getName().substring(1)).append("Service.list(successFn);").append("\n");
                 str.append("    ").append("};").append("\n");
             }
@@ -464,14 +535,22 @@ public class BackendAngularListEditGenerator {
             String type = f.getType().getSimpleName();
             hasList = hasList || type.contains("List");
             hasEO = hasEO || (type.contains("EO") && !type.contains("List"));
+            hasDate = hasDate || (type.toUpperCase().contains("DATE"));
         }
     }
 
-    private String endWithS() {
-        if (CLASS_NAME.substring(CLASS_NAME.length() - 1).equals("s")) {
-            return "";
-        } else {
-            return "s";
+    private StringBuilder endWithS(String classAttribute) {
+        StringBuilder str = new StringBuilder(classAttribute);
+        switch (CLASS_NAME.substring(CLASS_NAME.length() - 1)) {
+            case "s":
+                return str;
+            case "y":
+                str.deleteCharAt(str.length() - 1);
+                str.append("ies");
+                return str;
+            default:
+                str.append("s");
+                return str;
         }
     }
 }

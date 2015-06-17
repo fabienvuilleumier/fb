@@ -3,7 +3,8 @@
 
     angular.module('Fablab').service('StaticDataService', function (GroupService,
             MachineService, MachineTypeService, MachineStatusService, MachineStateService,
-            MembershipTypeService, TicketStatusService, ConfigurationService) {
+            MembershipTypeService, TicketStatusService, ConfigurationService, SupplyTypeService,
+            SupplyService, UserService) {
 
         this.loadMemberShipTypes = function (successFn) {
             MembershipTypeService.list(successFn);
@@ -37,6 +38,18 @@
         };
         this.prettyCreationDate = function (date) {
             return moment(date).format('DD.MM.YYYY');
+        };
+        this.loadSupplyTypes = function (successFn) {
+            SupplyTypeService.list(successFn);
+        };
+        this.loadSupplies = function (successFn) {
+            SupplyService.list(successFn);
+        };
+        this.loadSupplyStock = function (successFn) {
+            SupplyService.stock(successFn);
+        };
+        this.loadUsers = function (successFn) {
+            UserService.list(successFn);
         };
     });
 

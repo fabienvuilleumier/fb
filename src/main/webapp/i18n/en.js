@@ -41,10 +41,13 @@ angular.module('Fablab').config(function ($translateProvider) {
             membershipTypes: 'Membership types',
             inOut: 'In / Out',
             revision: "Revisions",
-            ticketStatus: 'TicketStatus',
-            tickets: 'Tickets',
-            configurations : 'Configurations', 
-            key: 'Admin panel'
+            ticketStatus: 'Ticket status',
+            tickets: 'Announce a failure',
+            configurations: 'Configurations',
+            key: 'Admin panel',
+            supplies: 'Supplies',
+            supplyTypes: 'Supply types',
+            purchases : 'Make a purchase'
         },
         loading: {
             title: 'Loading',
@@ -309,8 +312,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             closeUser: 'by',
             create: 'Ticket creation',
             edit: 'Edit :',
-            closeTicket :'Close this ticket',
-            reOpenTicket:'Re-Open this ticket',
+            closeTicket: 'Close this ticket',
+            reOpenTicket: 'Re-Open this ticket',
             notification: {
                 saved: 'Ticket saved',
                 removed: 'Ticket removed'
@@ -332,6 +335,59 @@ angular.module('Fablab').config(function ($translateProvider) {
             },
             confirmation: {
                 remove: 'Do you really want to remove this configuration ?'
+            }
+        },
+        supply: {
+            title: 'Supply',
+            code: 'Code',
+            label: 'Label',
+            sellingPrice: 'Selling price',
+            unityBuyingPrice: 'Unity buying price',
+            orderAddress: 'Order address',
+            supplyType: 'Supply type',
+            quantityStock: 'Stock quantity',
+            quantityStockModal: 'Quantity',
+            initialQuantity:'Initial quantity',
+            modalTitle:'Add some quantity to ',
+            create: 'Supply creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Supply saved',
+                removed: 'Supply removed',
+                addQuantity:'Quantity added'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this supply ?'
+            }
+        },
+        supplyType: {
+            title: 'Supply type',
+            label: 'Label',
+            create: 'Supply type creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Supply type saved',
+                removed: 'Supply type removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this supply type ?'
+            }
+        },
+        purchase: {
+            title: 'Purchase',
+            purchaseDate: 'Purchase date',
+            quantity: 'Quantity',
+            purchasePrice: 'Purchase price',
+            supply: 'Supply',
+            user: 'User',
+            create: 'Purchase creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Purchase saved',
+                removed: 'Purchase removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this purchase ?'
             }
         }
     });

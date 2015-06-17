@@ -107,7 +107,7 @@ public class BackendEOGenerator {
         }
         str.append("import javax.persistence.Table;").append("\n");
         str.append("import lombok.Getter;").append("\n");
-        str.append("org.hibernate.annotations.Where;").append("\n");
+        str.append("import org.hibernate.annotations.Where;").append("\n");
         str.append("import lombok.Setter;").append("\n");
         str.append("import lombok.ToString;").append("\n\n");
         str.append("/**").append("\n");
@@ -119,9 +119,9 @@ public class BackendEOGenerator {
         str.append("@Getter").append("\n");
         str.append("@Setter").append("\n");
         str.append("@ToString");
-        /*if (hasList) {
+        if (hasList) {
             str.append(excludeList());
-        }*/
+        }
         str.append("\n");
         str.append("@Where(clause=\"active=1\")").append("\n");
         str.append("public class ").append(CLASS_EO).append(" extends AbstractDataEO<Integer> implements Serializable {").append("\n\n");
@@ -135,21 +135,21 @@ public class BackendEOGenerator {
                     if (name.equals("id")) {
                         str.append("    ").append("@Id").append("\n");
                         str.append("    ").append("@GeneratedValue(strategy = GenerationType.IDENTITY)").append("\n");
-                        str.append("    ").append("@Column(name = \"").append(CLASS_ATTRIBUTE).append("_id\", nullable = false)").append("\n");
+                        str.append("    ").append("@Column(name = \"").append(getId()).append("\", nullable = false)").append("\n");
                         str.append("    ").append("private ").append("Integer").append(" id;").append("\n\n");
                     } else {
                         if (type.contains("List")) {
                             lists.put(name, type);
                             /*str.append("    ").append("@JsonManagedReference(\"").append(CLASS_ATTRIBUTE)
-                                    .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
-                                    .append("\")\n");*/
+                             .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
+                             .append("\")\n");*/
                             str.append("    ").append("@OneToMany(cascade = CascadeType.PERSIST, mappedBy = \"").append(CLASS_ATTRIBUTE).append("\", fetch = FetchType.LAZY)").append("\n");
                             str.append("    ").append("private ").append(type).append(" ").append(name).append(";\n\n");
                         } else if (type.contains("EO") && !type.contains("List")) {
                             /*str.append("    ").append("@JsonBackReference(\"").append(CLASS_ATTRIBUTE)
-                                    .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
-                                    .append("\")\n");*/
-                            str.append("    ").append("@JoinColumn(name = \"").append(getFKname()).append("\", referencedColumnName = \"").append(getFKname()).append("\")").append("\n");
+                             .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
+                             .append("\")\n");*/
+                            str.append("    ").append("@JoinColumn(name = \"").append(getFKname(name)).append("\", referencedColumnName = \"").append(getFKname(name)).append("\")").append("\n");
                             str.append("    ").append("@ManyToOne(optional = false, fetch = FetchType.LAZY)").append("\n");
                             str.append("    ").append("private ").append(type).append(" ").append(name).append(";\n\n");
                         } else {
@@ -271,7 +271,7 @@ public class BackendEOGenerator {
         if (many) {
             str.append("{");
         }
-        
+
         for (String n : names) {
             str.append("\"").append(n).append("\",");
         }
@@ -283,23 +283,15 @@ public class BackendEOGenerator {
         return str.toString();
     }
 
-    private StringBuilder getFKname() {
+    private StringBuilder getFKname(String attributeName) {
         StringBuilder str = new StringBuilder();
-        if (FIELDS.length != 0) {
-            if (FIELDS[0].length == 4) {
-                for (String[] fields : FIELDS) {
-                    if (fields[1].contains("id")) {
-                        String[] words = fields[1].split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
-                        for (String s : words) {
-                            if (!s.toLowerCase().equals("eo")) {
-                                str.append(s.toLowerCase()).append("_");
-                            }
-                        }
-                        str.append("id");
-                    }
-                }
+        String[] words = attributeName.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+        for (String s : words) {
+            if (!s.toLowerCase().equals("eo")) {
+                str.append(s.toLowerCase()).append("_");
             }
         }
+        str.append("id");
         return str;
     }
 
@@ -310,6 +302,16 @@ public class BackendEOGenerator {
             str.append(s.toLowerCase()).append("_");
         }
         str.deleteCharAt(str.length() - 1);
+        return str;
+    }
+    
+    private StringBuilder getId() {
+        StringBuilder str = new StringBuilder();
+        String[] words = CLASS_NAME.toLowerCase().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+        for (String s : words) {
+            str.append(s.toLowerCase()).append("_");
+        }
+        str.append("id");
         return str;
     }
 }

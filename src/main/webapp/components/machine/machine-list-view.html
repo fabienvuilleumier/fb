@@ -7,13 +7,13 @@
 <div class="machineList" >
     <table ng-table="tableParams" class="table" show-filter="true">
         <tr ng-repeat="machine in $data"
-            ng-class="{ 'bg-warning':machine.machineStatus.label.toUpperCase()==='EN RÉPARATION' || machine.machineStatus.label.toUpperCase()==='PRÊTÉ - EN LOCATION',
-                        'bg-danger':machine.machineStatus.label.toUpperCase()==='ENDOMMAGÉ' || machine.machineStatus.label.toUpperCase()==='INDISPONIBLE',
-                        'bg-success':machine.machineStatus.label.toUpperCase()==='DISPONIBLE'}">
+            ng-class="{ 'bg-warning':machine.machineStatus.label.toUpperCase() === 'EN RÉPARATION' || machine.machineStatus.label.toUpperCase() === 'PRÊTÉ - EN LOCATION',
+                        'bg-danger':machine.machineStatus.label.toUpperCase() === 'ENDOMMAGÉ' || machine.machineStatus.label.toUpperCase() === 'INDISPONIBLE',
+                        'bg-success':machine.machineStatus.label.toUpperCase() === 'DISPONIBLE'}">
             <td  style="width:90px" 
-                data-title="'machine.code' | translate" 
-                sortable="'code'"
-                filter="{'code':'text'}">
+                 data-title="'machine.code' | translate" 
+                 sortable="'code'"
+                 filter="{'code':'text'}">
                 {{machine.code}}
             </td>
             <td 
@@ -30,9 +30,9 @@
                 <span> {{currency}}</span>
             </td>
             <td  style="width:145px"
-                data-title="'machine.acquisitionDate' | translate" 
-                sortable="'acquisitionDate'"
-                filter="{'acquisitionDate':'text'}">
+                 data-title="'machine.acquisitionDate' | translate" 
+                 sortable="'acquisitionDate'"
+                 filter="{'acquisitionDate':'text'}">
                 {{machine.acquisitionDate}}
             </td>
             <td  
@@ -53,7 +53,7 @@
                 filter="{'machineState':'text'}">
                 {{machine.machineState.label}}
             </td>
-                <td class="listBtn3">
+            <td class="listBtn3">
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" href="#/machines/machine-edit/{{machine.id}}">
                         <span class="glyphicon glyphicon-pencil"></span>
