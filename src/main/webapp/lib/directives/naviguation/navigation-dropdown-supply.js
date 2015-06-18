@@ -31,6 +31,9 @@ naviguation.directive('fabNavDropdownSupply', function () {
                 + '     <li fab-nav-item-af link="purchases/purchase-edit" icon = "plus-circle" '
                 + '         label="menu.addPurchase" '
                 + '         show="hasAnyRole(\'SUPPLY_VIEW\')"></li>'
+                + '     <li fab-nav-item-af link="motionStocks" icon="database"'
+                + '         label="menu.motionStocks"'
+                + '         show="hasAnyRole(\'SUPPLY_MANAGE\')"></li>'
                 + '</ul>'
     };
 });

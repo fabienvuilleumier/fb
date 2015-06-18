@@ -1,0 +1,46 @@
+<h1 translate="motionStock.title"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <a class="btn btn-success" href="#/motionStocks/motionStock-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+    </div>
+</div>
+<div class="motionStockList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="motionStock in $data"
+            ng-class="{ 'bg-warning':motionStock.io.toUpperCase() === 'CORRECTION',
+                        'bg-danger':motionStock.io.toUpperCase() === 'OUTPUT',
+                        'bg-success':motionStock.io.toUpperCase() === 'INPUT'}">
+            <td 
+                data-title="'motionStock.motionDate' | translate" 
+                sortable="'motionDate'"
+                filter="{'motionDate':'text'}">
+                {{motionStock.motionDate}}
+            </td>
+            <td 
+                data-title="'motionStock.quantity' | translate" 
+                sortable="'quantity'"
+                filter="{'quantity':'text'}">
+                {{motionStock.quantity}}
+            </td>
+            <td 
+                data-title="'motionStock.io' | translate" 
+                sortable="'io'"
+                filter="{'io':'text'}">
+                {{motionStock.io}}
+            </td>
+            <td 
+                data-title="'motionStock.supply' | translate" 
+                sortable="'supply'"
+                filter="{'supply':'text'}">
+                {{motionStock.supply.code}} - {{motionStock.supply.label}}
+            </td>
+            <td 
+                data-title="'motionStock.user' | translate" 
+                sortable="'user'"
+                filter="{'user':'text'}">
+                {{motionStock.user ? (motionStock.user|prettyUser) : "FabLab"}}
+            </td>
+        </tr>
+    </table> 
+</div>
+

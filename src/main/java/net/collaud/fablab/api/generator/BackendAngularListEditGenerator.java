@@ -71,7 +71,7 @@ public class BackendAngularListEditGenerator {
         return instance;
     }
 
-    private String genereListVIEW() {
+    private String genereListVIEW(boolean write) {
 
         StringBuilder str = new StringBuilder();
         str.append("<h1 translate=\"").append(CLASS_ATTRIBUTE).append(".title\"></h1>").append("\n");
@@ -102,19 +102,21 @@ public class BackendAngularListEditGenerator {
             }
         }
 
-        str.append("            ").append("<td class=\"listBtn2\">").append("\n");
-        str.append("                ").append("<div class=\"btn-group\">").append("\n");
-        str.append("                    ").append("<a class=\"btn btn-sm btn-default\" href=\"#/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit/{{").append(CLASS_ATTRIBUTE).append(".id}}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>").append("\n");
-        str.append("                    ").append("<button class=\"btn btn-sm btn-danger\" ").append("\n");
-        str.append("                        ").append("ng-really-click=\"softRemove(").append(CLASS_ATTRIBUTE).append(")\"").append("\n");
-        str.append("                        ").append("ng-really-message=\"{{'").append(CLASS_ATTRIBUTE).append(".confirmation.remove'|translate}}\">").append("\n");
-        str.append("                        ").append("<span class=\"glyphicon glyphicon-trash\"></span>").append("\n");
-        str.append("                    ").append("</button>").append("\n");
-        str.append("                ").append("</div>").append("\n");
-        str.append("            ").append("</td>").append("\n");
-        str.append("        ").append("</tr>").append("\n");
-        str.append("    ").append("</table> ").append("\n");
-        str.append("</div>").append("\n");
+        if (write) {
+            str.append("            ").append("<td class=\"listBtn2\">").append("\n");
+            str.append("                ").append("<div class=\"btn-group\">").append("\n");
+            str.append("                    ").append("<a class=\"btn btn-sm btn-default\" href=\"#/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit/{{").append(CLASS_ATTRIBUTE).append(".id}}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>").append("\n");
+            str.append("                    ").append("<button class=\"btn btn-sm btn-danger\" ").append("\n");
+            str.append("                        ").append("ng-really-click=\"softRemove(").append(CLASS_ATTRIBUTE).append(")\"").append("\n");
+            str.append("                        ").append("ng-really-message=\"{{'").append(CLASS_ATTRIBUTE).append(".confirmation.remove'|translate}}\">").append("\n");
+            str.append("                        ").append("<span class=\"glyphicon glyphicon-trash\"></span>").append("\n");
+            str.append("                    ").append("</button>").append("\n");
+            str.append("                ").append("</div>").append("\n");
+            str.append("            ").append("</td>").append("\n");
+            str.append("        ").append("</tr>").append("\n");
+            str.append("    ").append("</table> ").append("\n");
+            str.append("</div>").append("\n");
+        }
         return str.toString();
     }
 
@@ -132,7 +134,7 @@ public class BackendAngularListEditGenerator {
         }
     }
 
-    private String genereListJS() {
+    private String genereListJS(boolean write) {
         StringBuilder str = new StringBuilder();
         str.append("'use strict';").append("\n");
         str.append("var app = angular.module('Fablab');").append("\n");
@@ -170,19 +172,21 @@ public class BackendAngularListEditGenerator {
         str.append("        ").append("});").append("\n");
         str.append("    ").append("};").append("\n");
 
-        str.append("    ").append("$scope.remove = function (").append(CLASS_ATTRIBUTE).append(") {").append("\n");
-        str.append("        ").append(CLASS_SERVICE).append(".remove(").append(CLASS_ATTRIBUTE).append(".id, function () {").append("\n");
-        str.append("            ").append("NotificationService.notify(\"success\", \"").append(CLASS_ATTRIBUTE).append(".notification.removed\");").append("\n");
-        str.append("            ").append("update").append(CLASS_NAME).append("List();").append("\n");
-        str.append("        ").append("});").append("\n");
-        str.append("    ").append("};").append("\n");
+        if (write) {
+            str.append("    ").append("$scope.remove = function (").append(CLASS_ATTRIBUTE).append(") {").append("\n");
+            str.append("        ").append(CLASS_SERVICE).append(".remove(").append(CLASS_ATTRIBUTE).append(".id, function () {").append("\n");
+            str.append("            ").append("NotificationService.notify(\"success\", \"").append(CLASS_ATTRIBUTE).append(".notification.removed\");").append("\n");
+            str.append("            ").append("update").append(CLASS_NAME).append("List();").append("\n");
+            str.append("        ").append("});").append("\n");
+            str.append("    ").append("};").append("\n");
 
-        str.append("    ").append("$scope.softRemove = function (").append(CLASS_ATTRIBUTE).append(") {").append("\n");
-        str.append("        ").append(CLASS_SERVICE).append(".softRemove(").append(CLASS_ATTRIBUTE).append(".id, function () {").append("\n");
-        str.append("            ").append("NotificationService.notify(\"success\", \"").append(CLASS_ATTRIBUTE).append(".notification.removed\");").append("\n");
-        str.append("            ").append("update").append(CLASS_NAME).append("List();").append("\n");
-        str.append("        ").append("});").append("\n");
-        str.append("    ").append("};").append("\n");
+            str.append("    ").append("$scope.softRemove = function (").append(CLASS_ATTRIBUTE).append(") {").append("\n");
+            str.append("        ").append(CLASS_SERVICE).append(".softRemove(").append(CLASS_ATTRIBUTE).append(".id, function () {").append("\n");
+            str.append("            ").append("NotificationService.notify(\"success\", \"").append(CLASS_ATTRIBUTE).append(".notification.removed\");").append("\n");
+            str.append("            ").append("update").append(CLASS_NAME).append("List();").append("\n");
+            str.append("        ").append("});").append("\n");
+            str.append("    ").append("};").append("\n");
+        }
 
         str.append("    ").append("update").append(CLASS_NAME).append("List();").append("\n");
         str.append("});").append("\n");
@@ -360,7 +364,7 @@ public class BackendAngularListEditGenerator {
         return str.toString();
     }
 
-    private String genereServiceJS() {
+    private String genereServiceJS(boolean write) {
         StringBuilder str = new StringBuilder();
         str.append("(function () {").append("\n");
         str.append("    ").append("'use strict';").append("\n\n");
@@ -379,22 +383,23 @@ public class BackendAngularListEditGenerator {
         str.append("                ").append(").success(successFn);").append("\n");
         str.append("            ").append("},").append("\n");
 
-        str.append("            ").append("remove: function (id, successFn) {").append("\n");
-        str.append("                ").append("$log.debug(\"").append(CLASS_SERVICE).append(": remove...\");").append("\n");
-        str.append("                ").append(CLASS_ATTRIBUTE).append(".remove({id: id}, successFn);").append("\n");
-        str.append("            ").append("},").append("\n");
+        if (write) {
+            str.append("            ").append("remove: function (id, successFn) {").append("\n");
+            str.append("                ").append("$log.debug(\"").append(CLASS_SERVICE).append(": remove...\");").append("\n");
+            str.append("                ").append(CLASS_ATTRIBUTE).append(".remove({id: id}, successFn);").append("\n");
+            str.append("            ").append("},").append("\n");
 
-        str.append("            ").append("softRemove: function (id, successFn) {").append("\n");
-        str.append("            ").append("$http.get(App.API.").append(getApiName()).append(" + \"/softRemove?id=\" + id).success(successFn);").append("\n");
-        str.append("            ").append("$log.debug(\"").append(CLASS_SERVICE).append(": soft remove...\");").append("\n");
-        str.append("            ").append("},").append("\n");
+            str.append("            ").append("softRemove: function (id, successFn) {").append("\n");
+            str.append("            ").append("$http.get(App.API.").append(getApiName()).append(" + \"/softRemove?id=\" + id).success(successFn);").append("\n");
+            str.append("            ").append("$log.debug(\"").append(CLASS_SERVICE).append(": soft remove...\");").append("\n");
+            str.append("            ").append("},").append("\n");
 
-        str.append("            ").append("save: function (").append(CLASS_ATTRIBUTE).append("Param, successFn, errorFn) {").append("\n");
-        str.append("                ").append("$log.debug(\"").append(CLASS_SERVICE).append(": save...\");").append("\n");
-        str.append("                ").append("var saved = ").append(CLASS_ATTRIBUTE).append(".save(").append(CLASS_ATTRIBUTE).append("Param, successFn, errorFn);").append("\n");
-        str.append("                ").append("return saved;").append("\n");
-        str.append("            ").append("},").append("\n");
-
+            str.append("            ").append("save: function (").append(CLASS_ATTRIBUTE).append("Param, successFn, errorFn) {").append("\n");
+            str.append("                ").append("$log.debug(\"").append(CLASS_SERVICE).append(": save...\");").append("\n");
+            str.append("                ").append("var saved = ").append(CLASS_ATTRIBUTE).append(".save(").append(CLASS_ATTRIBUTE).append("Param, successFn, errorFn);").append("\n");
+            str.append("                ").append("return saved;").append("\n");
+            str.append("            ").append("},").append("\n");
+        }
         str.append("            ").append("get: function (id, successFn) {").append("\n");
         str.append("                ").append("$log.debug(\"").append(CLASS_SERVICE).append(": get...\");").append("\n");
         str.append("                ").append("var ").append(CLASS_ATTRIBUTE).append("Res = ").append(CLASS_ATTRIBUTE).append(".get({id: id}, successFn);").append("\n");
@@ -407,17 +412,19 @@ public class BackendAngularListEditGenerator {
         return str.toString();
     }
 
-    public void genere(String styleContent, String... roles) throws IOException {
+    public void genere(boolean write, String styleContent, String... roles) throws IOException {
         createDirectory();
         init();
-        createFile(genereServiceJS(), SERVICE_FP, "js");
-        createFile(genereEditJS(), EDIT_JS_FP, "js");
-        createFile(genereEditVIEW(), EDIT_VIEW_FP, "html");
-        createFile(genereListJS(), LIST_JS_FP, "js");
-        createFile(genereListVIEW(), LIST_VIEW_FP, "html");
+        createFile(genereServiceJS(write), SERVICE_FP, "js");
+        if (write) {
+            createFile(genereEditJS(), EDIT_JS_FP, "js");
+            createFile(genereEditVIEW(), EDIT_VIEW_FP, "html");
+        }
+        createFile(genereListJS(write), LIST_JS_FP, "js");
+        createFile(genereListVIEW(write), LIST_VIEW_FP, "html");
         createFile(styleContent, STYLE_FP, "css");
         System.out.println("\n\n");
-        System.out.println(printOther(roles));
+        System.out.println(printOther(write, roles));
     }
 
     private void createDirectory() throws IOException {
@@ -434,37 +441,42 @@ public class BackendAngularListEditGenerator {
 
     }
 
-    private String printOther(String... roles) {
+    private String printOther(boolean write, String... roles) {
         StringBuilder str = new StringBuilder();
         str.append("ATTENTION A EDIT VIEW ET LIST VIEW SI IL Y A DES LISTS !!!!!\n\n");
         str.append("#####IN INDEX.HTML FILE#####").append("\n");
         str.append("        ").append("<link href=\"./components/").append(CLASS_ATTRIBUTE).append("/style.css\" rel=\"stylesheet\">").append("\n");
         str.append("\n");
-        str.append("        ").append("<li fab-nav-item-af link=\"").append(endWithS(CLASS_ATTRIBUTE)).append("\" icon=\"\" ").append("\n");
-        str.append("            ").append("label=\"menu.");
-        str.append(endWithS(CLASS_ATTRIBUTE)).append("\" ").append("\n");
-        str.append("            ").append("show=\"hasAnyRole('");
+        str.append("        + '    ").append("<li fab-nav-item-af link=\"").append(endWithS(CLASS_ATTRIBUTE)).append("\" icon=\"\" ").append("'\n");
+        str.append("        + '        ").append("label=\"menu.");
+        str.append(endWithS(CLASS_ATTRIBUTE)).append("\" ").append("'\n");
+        str.append("        + '        ").append("show=\"hasAnyRole(\\'");
         for (String s : roles) {
             str.append(s).append(",");
         }
         str.deleteCharAt(str.length() - 1);
-        str.append("')\"></li>").append("\n");
+        str.append("\\')\"></li>").append("'\n");
         str.append("\n");
         str.append("        ").append("<script src=\"./components/services/").append(CLASS_ATTRIBUTE).append("-service.js\"></script>").append("\n");
         str.append("\n");
         str.append("        ").append("<script src=\"./components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-list-ctrl.js\"></script>").append("\n");
-        str.append("        ").append("<script src=\"./components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-edit-ctrl.js\"></script>").append("\n");
+        if (write) {
+            str.append("        ").append("<script src=\"./components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-edit-ctrl.js\"></script>").append("\n");
+        }
         str.append("########################\n\n").append("\n");
         str.append("#####IN APP.JS FILE#####").append("\n");
         str.append("    ").append(" }).when('/").append(endWithS(CLASS_ATTRIBUTE)).append("', {").append("\n");
         str.append("        ").append("templateUrl: './components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-list-view.html',").append("\n");
         str.append("        ").append("controller: '").append(CLASS_NAME).append("ListController'").append("\n");
-        str.append("    ").append("}).when('/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit/:id', {").append("\n");
-        str.append("        ").append("templateUrl: './components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-edit-view.html',").append("\n");
-        str.append("        ").append("controller: '").append(CLASS_NAME).append("EditController'").append("\n");
-        str.append("    ").append("}).when('/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit', {").append("\n");
-        str.append("        ").append("templateUrl: './components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-edit-view.html',").append("\n");
-        str.append("        ").append("controller: '").append(CLASS_NAME).append("NewController'").append("\n");
+
+        if (write) {
+            str.append("    ").append("}).when('/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit/:id', {").append("\n");
+            str.append("        ").append("templateUrl: './components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-edit-view.html',").append("\n");
+            str.append("        ").append("controller: '").append(CLASS_NAME).append("EditController'").append("\n");
+            str.append("    ").append("}).when('/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit', {").append("\n");
+            str.append("        ").append("templateUrl: './components/").append(CLASS_ATTRIBUTE).append("/").append(CLASS_ATTRIBUTE).append("-edit-view.html',").append("\n");
+            str.append("        ").append("controller: '").append(CLASS_NAME).append("NewController'").append("\n");
+        }
         str.append("########################\n\n").append("\n");
         str.append("#####IN EN.JS FILE#####").append("\n");
         str.append("IN MENU : ").append("\n");
@@ -478,15 +490,17 @@ public class BackendAngularListEditGenerator {
                 str.append("    ").append(f.getName()).append(": '").append((f.getName().substring(0, 1)).toUpperCase()).append(f.getName().substring(1)).append("',").append("\n");
             }
         }
-        str.append("    ").append("create:'").append(CLASS_NAME).append(" creation',").append("\n");
-        str.append("    ").append("edit:'Edit :',").append("\n");
-        str.append("    ").append("notification: {").append("\n");
-        str.append("        ").append("saved: '").append(CLASS_NAME).append(" saved',").append("\n");
-        str.append("        ").append("removed: '").append(CLASS_NAME).append(" removed'").append("\n");
-        str.append("    ").append("},").append("\n");
-        str.append("    ").append("confirmation: {").append("\n");
-        str.append("        ").append("remove: 'Do you really want to remove this ").append(CLASS_ATTRIBUTE).append(" ?'").append("\n");
-        str.append("    ").append("}").append("\n");
+        if (write) {
+            str.append("    ").append("create:'").append(CLASS_NAME).append(" creation',").append("\n");
+            str.append("    ").append("edit:'Edit :',").append("\n");
+            str.append("    ").append("notification: {").append("\n");
+            str.append("        ").append("saved: '").append(CLASS_NAME).append(" saved',").append("\n");
+            str.append("        ").append("removed: '").append(CLASS_NAME).append(" removed'").append("\n");
+            str.append("    ").append("},").append("\n");
+            str.append("    ").append("confirmation: {").append("\n");
+            str.append("        ").append("remove: 'Do you really want to remove this ").append(CLASS_ATTRIBUTE).append(" ?'").append("\n");
+            str.append("    ").append("}").append("\n");
+        }
         str.append("}").append("\n");
         str.append("########################\n\n").append("\n");
         str.append("#####IN ROLES FILE (net.collaud.fablab.api.security)#####").append("\n");
@@ -496,15 +510,17 @@ public class BackendAngularListEditGenerator {
         }
         str.append("########################\n\n").append("\n");
 
-        str.append("#####STATIC_DATA IF NEEDED#####").append("\n");
-        for (Field f : FIELDS) {
-            if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
-                str.append("    ").append("this.load").append(f.getName().substring(0, 1).toUpperCase()).append(endWithS(f.getName().substring(1))).append(" = function (successFn) {").append("\n");
-                str.append("        ").append(f.getName().substring(0, 1).toUpperCase()).append(f.getName().substring(1)).append("Service.list(successFn);").append("\n");
-                str.append("    ").append("};").append("\n");
+        if (write) {
+            str.append("#####STATIC_DATA IF NEEDED#####").append("\n");
+            for (Field f : FIELDS) {
+                if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
+                    str.append("    ").append("this.load").append(f.getName().substring(0, 1).toUpperCase()).append(endWithS(f.getName().substring(1))).append(" = function (successFn) {").append("\n");
+                    str.append("        ").append(f.getName().substring(0, 1).toUpperCase()).append(f.getName().substring(1)).append("Service.list(successFn);").append("\n");
+                    str.append("    ").append("};").append("\n");
+                }
             }
+            str.append("########################\n\n").append("\n");
         }
-        str.append("########################\n\n").append("\n");
         return str.toString();
     }
 
