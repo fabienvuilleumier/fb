@@ -18,6 +18,7 @@ import lombok.ToString;
 
 /**
  * This is the business class for a <tt>Supply</tt>
+ *
  * @author Fabien Vuilleumier
  */
 @Entity
@@ -25,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Where(clause="active=1")
+@Where(clause = "active=1")
 public class SupplyEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Id
@@ -33,34 +34,34 @@ public class SupplyEO extends AbstractDataEO<Integer> implements Serializable {
     @Column(name = "supply_id", nullable = false)
     private Integer id;
 
-    @Column(name = "code", nullable = false )
+    @Column(name = "code", nullable = false)
     private String code;
- 
-    @Column(name = "label", nullable = false )
+
+    @Column(name = "label", nullable = false)
     private String label;
 
-    @Column(name = "selling_price", nullable = false )
+    @Column(name = "selling_price", nullable = false)
     private Double sellingPrice;
 
-    @Column(name = "unity_buying_price", nullable = true )
+    @Column(name = "unity_buying_price", nullable = true)
     private Double unityBuyingPrice;
 
-    @Column(name = "order_address", nullable = true )
+    @Column(name = "order_address", nullable = true)
     @Type(type = "text")
     private String orderAddress;
-    
-    @Column(name= "quantity_stock", nullable = false)
+
+    @Column(name = "quantity_stock", nullable = false)
     private Double quantityStock;
 
     @JoinColumn(name = "supply_type_id", referencedColumnName = "supply_type_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private SupplyTypeEO supplyType;
-    
+
     @JoinColumn(name = "supply_unity_id", referencedColumnName = "supply_unity_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private SupplyUnityEO supplyUnity;
 
-    @Column(name="active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
 
     public SupplyEO() {

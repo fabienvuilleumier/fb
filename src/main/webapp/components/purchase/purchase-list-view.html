@@ -14,18 +14,6 @@
                 {{purchase.purchaseDate}}
             </td>
             <td 
-                data-title="'purchase.quantity' | translate" 
-                sortable="'quantity'"
-                filter="{'quantity':'text'}">
-                {{purchase.quantity}}
-            </td>
-            <td 
-                data-title="'purchase.purchasePrice' | translate" 
-                sortable="'purchasePrice'"
-                filter="{'purchasePrice':'text'}">
-                {{purchase.purchasePrice}}
-            </td>
-            <td 
                 data-title="'purchase.supply' | translate" 
                 sortable="'supply'"
                 filter="{'supply':'text'}">
@@ -35,14 +23,32 @@
                 data-title="'purchase.user' | translate" 
                 sortable="'user'"
                 filter="{'user':'text'}">
-                {{purchase.user.label}}
+                {{purchase.user|prettyUser}}
+            </td>
+            <td style="width:80px" 
+                data-title="'purchase.quantity' | translate" 
+                sortable="'quantity'"
+                filter="{'quantity':'text'}">
+                {{purchase.quantity}}
+            </td>
+            <td style="width:80px" 
+                data-title="'purchase.discount' | translate" 
+                sortable="'disount'"
+                filter="{'disount':'text'}">
+                {{purchase.discount}} {{purchase.discountPercent ? "%" : currency}}
+            </td>
+            <td style="width:140px"
+                data-title="'purchase.purchasePrice' | translate" 
+                sortable="'purchasePrice'"
+                filter="{'purchasePrice':'text'}">
+                {{purchase.purchasePrice}} {{currency}}
             </td>
             <td class="listBtn2">
                 <div class="btn-group">
-                    <a class="btn btn-sm btn-default" href="#/purchases/purchase-edit/{{purchase.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a class="btn btn-sm btn-default" href="#/purchases/purchase-edit/{{purchase.id}}"><span class="glyphicon glyphicon-zoom-in"></span></a>
                     <button class="btn btn-sm btn-danger" 
-                        ng-really-click="softRemove(purchase)"
-                        ng-really-message="{{'purchase.confirmation.remove'|translate}}">
+                            ng-really-click="softRemove(purchase)"
+                            ng-really-message="{{'purchase.confirmation.remove'|translate}}">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </div>

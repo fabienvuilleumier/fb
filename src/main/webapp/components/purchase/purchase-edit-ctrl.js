@@ -10,12 +10,48 @@ app.controller('GlobalPurchaseEditController', function ($scope, $location,
     };
     $scope.save = function () {
         var purchaseCurrent = angular.copy($scope.purchase);
+        updateStock();
         PurchaseService.save(purchaseCurrent, function (data) {
             $scope.purchase = data;
             NotificationService.notify("success", "purchase.notification.saved");
             $location.path("purchases");
         });
     };
+    
+    var updateStock = function(){
+        var stockInit = $scope.purchase.supply.quantityStock;
+        $scope.purchase.supply.quantityStock = parseFloat(stockInit) - parseFloat($scope.purchase.quantity);
+    }
+
+    $scope.maxMoney = function () {
+        return parseFloat($scope.purchase.quantity) * parseFloat($scope.purchase.supply.sellingPrice);
+    };
+
+    $scope.updatePrice = function () {
+        console.log("% " + $scope.purchase.discountPercent)
+        var interTotal = parseFloat($scope.purchase.quantity) * parseFloat($scope.purchase.supply.sellingPrice);
+        if ($scope.purchase.discount === undefined) {
+            $scope.purchase.purchasePrice = interTotal;
+        } else {
+            if ($scope.purchase.discountPercent) {
+                var discountInter = parseFloat(interTotal) * (parseFloat($scope.purchase.discount) / parseFloat(100))
+                var discountFinal = parseFloat(interTotal) - parseFloat(discountInter);
+                $scope.purchase.purchasePrice = (Math.ceil(discountFinal * 20) / 20).toFixed(2);
+            } else {
+                $scope.purchase.purchasePrice = parseFloat(interTotal) - parseFloat($scope.purchase.discount);
+            }
+        }
+
+    };
+
+    $scope.firstPercent = App.CONFIG.FIRST_PERCENT === "PERCENT";
+    $scope.optionsPercent = [{
+            name: "%",
+            value: true
+        }, {
+            name: App.CONFIG.CURRENCY,
+            value: false
+        }];
 
     $scope.minDate = new Date();
     $scope.today = function () {
@@ -73,7 +109,7 @@ app.controller('GlobalPurchaseEditController', function ($scope, $location,
 
         return '';
     };
-    
+
     StaticDataService.loadSupplyStock(function (data) {
         $scope.supplyStock = data;
     });
@@ -84,7 +120,7 @@ app.controller('PurchaseNewController', function ($scope, $controller, $rootScop
     $scope.newPurchase = true;
     $scope.purchase = {
         purchaseDate: new Date(),
-        user :$rootScope.connectedUser.user
+        user: $rootScope.connectedUser.user
     };
 }
 );

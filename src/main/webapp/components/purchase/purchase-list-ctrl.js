@@ -2,16 +2,17 @@
 var app = angular.module('Fablab');
 app.controller('PurchaseListController', function ($scope, $filter, $location,
         ngTableParams, PurchaseService, NotificationService) {
+    $scope.currency = App.CONFIG.CURRENCY;
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    purchaseDate:'asc',
-                    quantity:'asc',
-                    purchasePrice:'asc',
-                    supply:'asc',
-                    user:'asc'
+                    purchaseDate: 'asc',
+                    quantity: 'asc',
+                    purchasePrice: 'asc',
+                    supply: 'asc',
+                    user: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {
