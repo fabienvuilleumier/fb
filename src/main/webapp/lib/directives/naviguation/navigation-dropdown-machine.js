@@ -35,6 +35,9 @@ naviguation.directive('fabNavDropdownMachine', function () {
                 + '     <li fab-nav-item-af link="ticketStatus" icon="terminal" '
                 + '         label="menu.ticketStatus" '
                 + '         show="hasAnyRole(\'TICKET_MANAGE\')"></li>'
+                + '     <li fab-nav-item-af link="tickets/ticket-edit" icon="bolt" '
+                + '         label="menu.addFailure" '
+                + '         show="hasAnyRole(\'TICKET_VIEW\')"></li>'
                 + '</ul>'
     };
 });

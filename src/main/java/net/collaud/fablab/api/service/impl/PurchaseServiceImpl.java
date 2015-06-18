@@ -47,6 +47,9 @@ public class PurchaseServiceImpl extends AbstractServiceImpl implements Purchase
             old.setPurchaseDate(purchase.getPurchaseDate());
             old.setQuantity(purchase.getQuantity());
             old.setPurchasePrice(purchase.getPurchasePrice());
+            old.setDiscount(purchase.getDiscount());
+            old.setDiscountPercent(purchase.isDiscountPercent());
+            old.setNote(purchase.getNote());
             old.setSupply(purchase.getSupply());
             old.setUser(purchase.getUser());
             old.setActive(purchase.isActive());

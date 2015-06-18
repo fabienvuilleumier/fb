@@ -17,6 +17,7 @@ import lombok.Getter;
 import org.hibernate.annotations.Where;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 /**
  * This is the business class for a <tt>Purchase</tt>
@@ -41,10 +42,20 @@ public class PurchaseEO extends AbstractDataEO<Integer> implements Serializable 
     private Date purchaseDate;
 
     @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    private Double quantity;
+
+    @Column(name = "discount", nullable = true)
+    private Double discount;
+
+    @Column(name = "discount_percent", nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean discountPercent;
 
     @Column(name = "purchase_price", nullable = false)
     private Double purchasePrice;
+
+    @Column(name = "note", nullable = true)
+    @Type(type = "text")
+    private String note;
 
     @JoinColumn(name = "supply_id", referencedColumnName = "supply_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -63,6 +74,7 @@ public class PurchaseEO extends AbstractDataEO<Integer> implements Serializable 
 
     public PurchaseEO(Integer id) {
         this.active = true;
+        this.discount = 0.0;
         this.id = id;
     }
 }

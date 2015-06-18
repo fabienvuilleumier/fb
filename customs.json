@@ -23,6 +23,12 @@
         "fast-repeat": {
             "context": "tr"
         },
+        "\"": {
+            "context": "input"
+        },
+        "ng-model": {
+            "context": "input"
+        },
         "fab-nav-dropdown-machine": {},
         "fab-nav-dropdown-accounting": {
             "context": "li"

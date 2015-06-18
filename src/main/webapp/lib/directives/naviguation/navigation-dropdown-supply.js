@@ -18,7 +18,7 @@ naviguation.directive('fabNavDropdownSupply', function () {
                 + '     <li fab-nav-item-af link="supplyTypes" icon="newspaper-o" '
                 + '         label="menu.supplyTypes" '
                 + '         show="hasAnyRole(\'SUPPLY_MANAGE\')"></li>'
-                + '    <li link="supplyUnities" show="hasAnyRole(\'SUPPLY_MANAGE\')">'
+                + '     <li show="hasAnyRole(\'SUPPLY_MANAGE\')">'
                 + '         <a href="#/supplyUnities">'
                 + '              <span class="iconify">m<sup>2</sup></span>'
                 + '              <span translate = "menu.supplyUnities"></span>'
@@ -27,6 +27,9 @@ naviguation.directive('fabNavDropdownSupply', function () {
                 + '     <hr show="hasAnyRole(\'SUPPLY_MANAGE\')"></hr>'
                 + '     <li fab-nav-item-af link="purchases" icon="barcode" '
                 + '         label="menu.purchases" '
+                + '         show="hasAnyRole(\'SUPPLY_MANAGE\')"></li>'
+                + '     <li fab-nav-item-af link="purchases/purchase-edit" icon = "plus-circle" '
+                + '         label="menu.addPurchase" '
                 + '         show="hasAnyRole(\'SUPPLY_VIEW\')"></li>'
                 + '</ul>'
     };
