@@ -1,8 +1,7 @@
 package net.collaud.fablab.api.generator;
 
 import java.io.IOException;
-import net.collaud.fablab.api.data.PurchaseEO;
-import net.collaud.fablab.api.data.SupplyUnityEO;
+import net.collaud.fablab.api.data.MotionStockEO;
 
 /**
  *
@@ -13,25 +12,28 @@ public class AglRun {
     private final BackendEOGenerator EO;
     private BackendBaseGenerator base;
     private BackendAngularListEditGenerator angular;
-    private final String CLASS_NAME = "SupplyUnity";
-    private final String TABLE_NAME = "t_supply_unity";
+    private final String CLASS_NAME = "MotionStock";
+    private final String TABLE_NAME = "t_motion_stock";
     /*
     * BEGIN CHANGE SECTION
     Must be a table of : {"java type", "java name", "nullable ? [t,f]", "db type"} 
     */
     private final String[][] FIELDS = new String[][]{
         {"Integer", "id", "f", "INT"},
-        {"String", "label", "f", "VARCHAR"},
-        {"List<SupplyEO>", "supplyList", "f", "INT"}};
+        {"Date", "motionDate", "f", "DATE"},
+        {"Double", "quantity", "f", "FLOAT"},
+        {"String", "io", "f", "VARCHAR"},
+        {"SupplyEO", "supply", "f", "INT"},
+        {"UserEO", "user", "f", "INT"}};
     
-    private final boolean WRITE = true;
+    private final boolean WRITE = false;
     private final String[] ROLES = new String[]{"SUPPLY_MANAGE"};
-    private final Class KLAZZ = SupplyUnityEO.class;
+    private final Class KLAZZ = MotionStockEO.class;
     
      public static void main(String[] args) {
         AglRun agl = new AglRun();
         //agl.runEO();
-        agl.runBase();
+        //agl.runBase();
         agl.runAngular();
     }
      
@@ -62,7 +64,7 @@ public class AglRun {
     private void runAngular() {
         try {
             this.angular = BackendAngularListEditGenerator.getInstance(KLAZZ);
-            angular.genere("", ROLES);
+            angular.genere(WRITE,"", ROLES);
         } catch (IOException ex) {
             System.out.println("Error : " + ex.getMessage());
         }

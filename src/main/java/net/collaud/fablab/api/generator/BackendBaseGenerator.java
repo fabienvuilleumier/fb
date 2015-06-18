@@ -55,7 +55,7 @@ public class BackendBaseGenerator {
         return instance;
     }
 
-    private String genereServiceImpl(String... roles) {
+    private String genereServiceImpl(boolean write, String... roles) {
         StringBuilder str = new StringBuilder();
         str.append("package net.collaud.fablab.api.service.impl;").append("\n\n");
         str.append("import java.util.ArrayList;").append("\n");
@@ -100,41 +100,43 @@ public class BackendBaseGenerator {
         }
         str.append("    ").append("}").append("\n\n");
 
-        str.append("    ").append(" @Override").append("\n");
-        str.append(roles(roles));
-        str.append("    ").append("public ").append(CLASS_EO).append(" save(").append(CLASS_EO).append(" ").append(CLASS_ATTRIBUTE).append(") {").append("\n");
-        str.append("        ").append("if (").append(CLASS_ATTRIBUTE).append(".getId() == null) {").append("\n");
-        str.append("            ").append(CLASS_ATTRIBUTE).append(".setId(0);").append("\n");
-        str.append("        ").append("}").append("\n");
-        str.append("        ").append("if (").append(CLASS_ATTRIBUTE).append(".getId() > 0) {").append("\n");
-        str.append("            ").append(CLASS_EO).append(" old = ").append(CLASS_DAO_ATTRIBUTE).append(".findOne(").append(CLASS_ATTRIBUTE).append(".getId());").append("\n");
+        if (write) {
+            str.append("    ").append(" @Override").append("\n");
+            str.append(roles(roles));
+            str.append("    ").append("public ").append(CLASS_EO).append(" save(").append(CLASS_EO).append(" ").append(CLASS_ATTRIBUTE).append(") {").append("\n");
+            str.append("        ").append("if (").append(CLASS_ATTRIBUTE).append(".getId() == null) {").append("\n");
+            str.append("            ").append(CLASS_ATTRIBUTE).append(".setId(0);").append("\n");
+            str.append("        ").append("}").append("\n");
+            str.append("        ").append("if (").append(CLASS_ATTRIBUTE).append(".getId() > 0) {").append("\n");
+            str.append("            ").append(CLASS_EO).append(" old = ").append(CLASS_DAO_ATTRIBUTE).append(".findOne(").append(CLASS_ATTRIBUTE).append(".getId());").append("\n");
 
-        for (Field field : FIELDS) {
-            if (!field.getName().equals("id")) {
-                str.append("            ").append("old.").append(setter(field)).append("(").append(CLASS_ATTRIBUTE).append(".").append(getter(field)).append(");").append("\n");
+            for (Field field : FIELDS) {
+                if (!field.getName().equals("id")) {
+                    str.append("            ").append("old.").append(setter(field)).append("(").append(CLASS_ATTRIBUTE).append(".").append(getter(field)).append(");").append("\n");
+                }
             }
+
+            str.append("            ").append("return ").append(CLASS_DAO_ATTRIBUTE).append(".saveAndFlush(old);").append("\n");
+            str.append("        ").append("} else {").append("\n");
+            str.append("            ").append("return ").append(CLASS_DAO_ATTRIBUTE).append(".saveAndFlush(").append(CLASS_ATTRIBUTE).append(");").append("\n");
+            str.append("        ").append("}").append("\n");
+            str.append("    ").append("}").append("\n\n");
+
+            str.append("    ").append("@Override").append("\n");
+            str.append(roles(roles));
+            str.append("    ").append("public void remove(Integer id) {").append("\n");
+            str.append("        ").append(CLASS_DAO_ATTRIBUTE).append(".delete(id);").append("\n");
+            str.append("    ").append("}").append("\n\n");
+
+            str.append("    ").append("@Override").append("\n");
+            str.append(roles(roles));
+            str.append("    ").append("public void softRemove(Integer id) {").append("\n");
+            str.append("        ").append(CLASS_EO).append(" current = ").append(CLASS_DAO_ATTRIBUTE).append(".findOne(id);").append("\n");
+            str.append("        ").append("current.setActive(false);").append("\n");
+            str.append("        ").append(CLASS_DAO_ATTRIBUTE).append(".saveAndFlush(current);").append("\n");
+            str.append("    ").append("}").append("\n");
+            str.append("}").append("\n");
         }
-
-        str.append("            ").append("return ").append(CLASS_DAO_ATTRIBUTE).append(".saveAndFlush(old);").append("\n");
-        str.append("        ").append("} else {").append("\n");
-        str.append("            ").append("return ").append(CLASS_DAO_ATTRIBUTE).append(".saveAndFlush(").append(CLASS_ATTRIBUTE).append(");").append("\n");
-        str.append("        ").append("}").append("\n");
-        str.append("    ").append("}").append("\n\n");
-
-        str.append("    ").append("@Override").append("\n");
-        str.append(roles(roles));
-        str.append("    ").append("public void remove(Integer id) {").append("\n");
-        str.append("        ").append(CLASS_DAO_ATTRIBUTE).append(".delete(id);").append("\n");
-        str.append("    ").append("}").append("\n\n");
-
-        str.append("    ").append("@Override").append("\n");
-        str.append(roles(roles));
-        str.append("    ").append("public void softRemove(Integer id) {").append("\n");
-        str.append("        ").append(CLASS_EO).append(" current = ").append(CLASS_DAO_ATTRIBUTE).append(".findOne(id);").append("\n");
-        str.append("        ").append("current.setActive(false);").append("\n");
-        str.append("        ").append(CLASS_DAO_ATTRIBUTE).append(".saveAndFlush(current);").append("\n");
-        str.append("    ").append("}").append("\n");
-        str.append("}").append("\n");
         return str.toString();
     }
 
@@ -312,7 +314,7 @@ public class BackendBaseGenerator {
         createFile(generateDaoInterface(), DAO + "\\" + CLASS_REPOSITORY);
         createFile(genereWS(write), REST_v1 + "\\" + CLASS_NAME + "WS");
         createFile(genereService(write), SERVICE + "\\" + CLASS_SERVICE);
-        createFile(genereServiceImpl(roles), SERVICE_IMPL + "\\" + CLASS_SERVICE_IMPL);
+        createFile(genereServiceImpl(write, roles), SERVICE_IMPL + "\\" + CLASS_SERVICE_IMPL);
     }
 
     private void createFile(String content, String path) throws IOException {

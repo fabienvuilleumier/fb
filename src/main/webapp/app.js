@@ -170,6 +170,9 @@
         }).when('/supplyUnities/supplyUnity-edit', {
             templateUrl: './components/supplyUnity/supplyUnity-edit-view.html',
             controller: 'SupplyUnityNewController'
+        }).when('/motionStocks', {
+            templateUrl: './components/motionStock/motionStock-list-view.html',
+            controller: 'MotionStockListController'
         }).otherwise({
             redirectTo: '/'
         });

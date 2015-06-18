@@ -46,11 +46,12 @@ angular.module('Fablab').config(function ($translateProvider) {
             configurations: 'Configurations',
             key: 'Admin panel',
             supplies: 'Supplies',
-            addFailure: 'Announce a failure', 
+            addFailure: 'Announce a failure',
             supplyTypes: 'Supply types',
             purchases: 'Purchases',
             addPurchase: 'Make a purchase',
-            supplyUnities : 'Supply unities'
+            supplyUnities: 'Supply unities',
+            motionStocks : 'Stock motion'
         },
         loading: {
             title: 'Loading',
@@ -348,11 +349,11 @@ angular.module('Fablab').config(function ($translateProvider) {
             unityBuyingPrice: 'Unity buying price',
             orderAddress: 'Order address',
             supplyType: 'Supply type',
-            note:'Note',
+            note: 'Note',
             quantityStock: 'Stock quantity',
             quantityStockModal: 'Quantity',
-            supplyUnity:'Unity',
-            back:'Return',
+            supplyUnity: 'Unity',
+            back: 'Return',
             initialQuantity: 'Initial quantity',
             modalTitle: 'Add some quantity to ',
             create: 'Supply creation',
@@ -386,9 +387,9 @@ angular.module('Fablab').config(function ($translateProvider) {
             purchasePrice: 'Purchase price',
             supply: 'Supply',
             user: 'User',
-            unityPrice:'Unity price',
-            discount:'Discount',
-            note:'Note',
+            unityPrice: 'Unity price',
+            discount: 'Discount',
+            note: 'Note',
             back: 'Return',
             create: 'Purchase creation',
             edit: 'Edit :',
@@ -413,6 +414,14 @@ angular.module('Fablab').config(function ($translateProvider) {
             confirmation: {
                 remove: 'Do you really want to remove this supply unity ?'
             }
+        },
+        motionStock: {
+            title: 'MotionStock',
+            motionDate: 'MotionDate',
+            quantity: 'Quantity',
+            io: 'Io',
+            supply: 'Supply',
+            user: 'User'
         }
     });
 });

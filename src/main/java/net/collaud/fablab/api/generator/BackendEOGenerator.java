@@ -307,7 +307,7 @@ public class BackendEOGenerator {
 
     private StringBuilder getId() {
         StringBuilder str = new StringBuilder();
-        String[] words = CLASS_NAME.toLowerCase().split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+        String[] words = CLASS_NAME.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
         for (String s : words) {
             str.append(s.toLowerCase()).append("_");
         }
