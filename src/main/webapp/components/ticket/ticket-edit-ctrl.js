@@ -119,7 +119,7 @@ app.controller('TicketNewController', function ($scope, $controller, $rootScope,
     });
 }
 );
-app.controller('TicketNewCodeController', function ($scope, $controller,
+app.controller('TicketNewWithMachineController', function ($scope, $controller,
         $rootScope, $routeParams, TicketStatusService, MachineService) {
     $controller('GlobalTicketEditController', {$scope: $scope});
     $scope.newTicket = true;

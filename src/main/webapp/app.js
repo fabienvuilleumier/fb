@@ -115,7 +115,7 @@
             controller: 'RevisionNewController'
         }).when('/revisions/revision-edit-machine/:machineId', {
             templateUrl: './components/revision/revision-edit-view.html',
-            controller: 'RevisionNewCodeController'
+            controller: 'RevisionNewWithMachineController'
         }).when('/ticketStatus', {
             templateUrl: './components/ticketStatus/ticketStatus-list-view.html',
             controller: 'TicketStatusListController'
@@ -136,7 +136,7 @@
             controller: 'TicketNewController'
         }).when('/tickets/ticket-edit-machine/:machineId', {
             templateUrl: './components/ticket/ticket-edit-view.html',
-            controller: 'TicketNewCodeController'
+            controller: 'TicketNewWithMachineController'
         }).when('/supplies', {
             templateUrl: './components/supply/supply-list-view.html',
             controller: 'SupplyListController'
