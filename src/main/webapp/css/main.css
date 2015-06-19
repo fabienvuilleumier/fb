@@ -116,6 +116,9 @@ hr{
 .listBtn3{
     width:120px;
 }
+.listBtn4{
+    width:180px;
+}
 
 .navbar-inverse .navbar-brand {
     color: #ff9c00;
@@ -237,4 +240,51 @@ a:active, a:hover {
     padding-bottom: 1px;
     border: 1px solid #999;
     border-radius: 4px;
+}
+
+.btn-alternate{
+    background-color: #d100FF;
+    color: #fff;
+    border-color: #8d2ca3;
+}
+
+.btn-alternate:hover,
+.btn-alternate:focus,
+.btn-alternate.focus,
+.btn-alternate:active,
+.btn-alternate.active,
+.open > .dropdown-toggle.btn-alternate {
+  color: #fff;
+  background-color: #751f89;
+  border-color: #76158c;
+}
+.btn-alternate:active,
+.btn-alternate.active,
+.open > .dropdown-toggle.btn-alternate {
+  background-image: none;
+}
+.btn-alternate.disabled,
+.btn-alternate[disabled],
+fieldset[disabled] .btn-alternate,
+.btn-alternate.disabled:hover,
+.btn-alternate[disabled]:hover,
+fieldset[disabled] .btn-alternate:hover,
+.btn-alternate.disabled:focus,
+.btn-alternate[disabled]:focus,
+fieldset[disabled] .btn-alternate:focus,
+.btn-alternate.disabled.focus,
+.btn-alternate[disabled].focus,
+fieldset[disabled] .btn-alternate.focus,
+.btn-alternate.disabled:active,
+.btn-alternate[disabled]:active,
+fieldset[disabled] .btn-alternate:active,
+.btn-alternate.disabled.active,
+.btn-alternate[disabled].active,
+fieldset[disabled] .btn-alternate.active {
+  background-color: #a037b8;
+  border-color: #89299f;
+}
+.btn-alternate .badge {
+  color: #9f33b7;
+  background-color: #fff;
 }

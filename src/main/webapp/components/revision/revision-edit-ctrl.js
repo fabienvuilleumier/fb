@@ -1,7 +1,8 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalRevisionEditController', function ($scope, $location,
+app.controller('GlobalRevisionEditController', function ($scope, $location, $routeParams, 
         RevisionService, NotificationService, StaticDataService) {
+            $scope.fromMachine = $routeParams.machineId ? true : false;
     $scope.selected = {revision: undefined};
     $scope.loadRevision = function (id) {
         RevisionService.get(id, function (data) {
@@ -108,7 +109,7 @@ app.controller('RevisionNewCodeController', function ($scope, $routeParams, $con
         revisionTime: new Date(),
         revisionDate: new Date()
     };
-    MachineService.findSimpleByCode($routeParams.code, function (data) {
+    MachineService.get($routeParams.machineId, function (data) {
         $scope.revision.machine = data;
     });
 }

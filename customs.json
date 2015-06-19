@@ -8,7 +8,9 @@
         },
         "btn-cancel": {
             "attributes": {
-                "link": {}
+                "ng-show": {},
+                "link": {},
+                "ng-if": {}
             }
         },
         "user-payment-history": {

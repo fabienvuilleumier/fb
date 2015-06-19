@@ -30,6 +30,9 @@
                 $log.debug("RevisionService: get...");
                 var revisionRes = revision.get({id: id}, successFn);
                 return revisionRes;
+            }, 
+            listByMachine: function (id, successFn) {
+                $http.get(App.API.REVISION_API + "/listByMachine?id=" + id).success(successFn);
             }
         };
     });

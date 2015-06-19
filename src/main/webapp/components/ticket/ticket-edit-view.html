@@ -79,7 +79,8 @@
                 </div>
             </div>
             <div class="panel-footer right">
-                <btn-cancel link="#/tickets"></btn-cancel>
+                <btn-cancel ng-show=="!fromMachine" link="#/tickets"></btn-cancel>
+                <btn-cancel ng-show=="fromMachine" link="#/machines"></btn-cancel>
                 <a ng-if="!newTicket && ticket.status.label.toUpperCase() === 'OPEN'" class="btn btn-primary" link="#/tickets" ng-click="closeTicket()">
                     <span translate="ticket.closeTicket"></span>
                     <i class="fa fa-fw fa-check"></i>

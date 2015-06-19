@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -35,9 +36,11 @@ public class BackendAngularListEditGenerator {
     private final StringBuilder LIST_VIEW_FP;
     private final StringBuilder STYLE_FP;
 
+    private final Map<String, String> NESTED_OBJECT_REPR_ATTR;
+
     private static BackendAngularListEditGenerator instance;
 
-    private <T> BackendAngularListEditGenerator(Class<T> klazz) {
+    private <T> BackendAngularListEditGenerator(Class<T> klazz, Map<String, String> nestedObjectReprAttr) {
         this.FIELDS = klazz.getDeclaredFields();
         this.CLASS_NAME = klazz.getSimpleName().substring(0, klazz.getSimpleName().length() - 2);
         this.CLASS_ATTRIBUTE = CLASS_NAME.substring(0, 1).toLowerCase() + CLASS_NAME.substring(1);
@@ -46,12 +49,14 @@ public class BackendAngularListEditGenerator {
         this.SERVICE = ".\\src\\main\\webapp\\components\\services";
         this.COMPONENTS = ".\\src\\main\\webapp\\components\\";
 
-        SERVICE_FP = new StringBuilder();
-        EDIT_JS_FP = new StringBuilder();
-        EDIT_VIEW_FP = new StringBuilder();
-        LIST_JS_FP = new StringBuilder();
-        LIST_VIEW_FP = new StringBuilder();
-        STYLE_FP = new StringBuilder();
+        this.NESTED_OBJECT_REPR_ATTR = nestedObjectReprAttr;
+
+        this.SERVICE_FP = new StringBuilder();
+        this.EDIT_JS_FP = new StringBuilder();
+        this.EDIT_VIEW_FP = new StringBuilder();
+        this.LIST_JS_FP = new StringBuilder();
+        this.LIST_VIEW_FP = new StringBuilder();
+        this.STYLE_FP = new StringBuilder();
         initFullPaths();
     }
 
@@ -64,9 +69,9 @@ public class BackendAngularListEditGenerator {
         STYLE_FP.append(COMPONENTS).append("\\").append(CLASS_ATTRIBUTE).append("\\style");
     }
 
-    public static synchronized <T> BackendAngularListEditGenerator getInstance(Class<T> klazz) {
+    public static synchronized <T> BackendAngularListEditGenerator getInstance(Class<T> klazz, Map<String, String> nestedObjectReprAttr) {
         if (instance == null) {
-            instance = new BackendAngularListEditGenerator(klazz);
+            instance = new BackendAngularListEditGenerator(klazz, nestedObjectReprAttr);
         }
         return instance;
     }
@@ -89,11 +94,13 @@ public class BackendAngularListEditGenerator {
                 if (!f.getType().getSimpleName().contains("List")) {
                     str.append("            ").append("<td ").append("\n");
                     str.append("                ").append("data-title=\"'").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("' | translate\" ").append("\n");
-                    str.append("                ").append("sortable=\"'").append(f.getName()).append("'\"").append("\n");
-                    str.append("                ").append("filter=\"{'").append(f.getName()).append("':'text'}\">").append("\n");
-                    if (f.getType().getSimpleName().contains("EO")) {
-                        str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append(".").append("label").append("}}").append("\n");
+                    if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
+                        str.append("                ").append("sortable=\"'").append(nestedObjectReprAtr(f)).append("'\"").append("\n");
+                        str.append("                ").append("filter=\"{'").append(nestedObjectReprAtr(f)).append("':'text'}\">").append("\n");
+                        str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append(".").append(NESTED_OBJECT_REPR_ATTR.get(f.getName())).append("}}").append("\n");
                     } else {
+                        str.append("                ").append("sortable=\"'").append(f.getName()).append("'\"").append("\n");
+                        str.append("                ").append("filter=\"{'").append(f.getName()).append("':'text'}\">").append("\n");
                         str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("}}").append("\n");
                     }
                     str.append("            ").append("</td>").append("\n");
@@ -145,13 +152,15 @@ public class BackendAngularListEditGenerator {
         str.append("                ").append("page: 1, // show first page").append("\n");
         str.append("                ").append("count: 25, // count per page").append("\n");
         str.append("                ").append("sorting: {").append("\n");
-        for (Field f : FIELDS) {
-            if (!f.getName().equals("id") && !f.getName().equals("active")) {
-                if (!f.getType().getSimpleName().contains("List")) {
-                    str.append("                    ").append(f.getName()).append(":'asc',").append("\n");
-                }
+        if (FIELDS.length != 0) {
+            Field f = FIELDS[0];
+            if (f.getType().getSimpleName().toUpperCase().contains("DATE")) {
+                str.append("                    ").append(f.getName()).append(":'desc',").append("\n");
+            } else {
+                str.append("                    ").append(f.getName()).append(":'asc',").append("\n");
             }
         }
+
         str.deleteCharAt(str.length() - 2);
         str.append("                ").append("}").append("\n");
         str.append("            ").append("}, $location.search()), {").append("\n");
@@ -167,6 +176,22 @@ public class BackendAngularListEditGenerator {
         str.append("    ").append("});").append("\n");
         str.append("    ").append("var update").append(CLASS_NAME).append("List = function () {").append("\n");
         str.append("        ").append(CLASS_SERVICE).append(".list(function (data) {").append("\n");
+
+        if (hasEO) {
+            str.append("            ").append("for (var i = 0; i < data.length; i++) {").append("\n");
+            for (Field f : FIELDS) {
+                if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
+                    str.append("                ").append("data[i].").append(nestedObjectReprAtr(f)).append(" = \"\"; //initialization of new property ").append("\n");
+                    str.append("                ").append("data[i].").append(nestedObjectReprAtr(f))
+                            .append(" = data[i].")
+                            .append(NESTED_OBJECT_REPR_ATTR.get(f.getName()))
+                            .append(".")
+                            .append(NESTED_OBJECT_REPR_ATTR.get(f.getName()))
+                            .append(";  //set the data from nested obj into new property").append("\n");
+                }
+            }
+            str.append("            ").append("}").append("\n");
+        }
         str.append("            ").append("$scope.").append(endWithS(CLASS_ATTRIBUTE)).append(" = data;").append("\n");
         str.append("            ").append("$scope.tableParams.reload();").append("\n");
         str.append("        ").append("});").append("\n");
@@ -214,7 +239,7 @@ public class BackendAngularListEditGenerator {
                         str.append("                        ").append("<select class=\"form-control\" ").append("\n");
                         str.append("                        ").append("required").append("\n");
                         str.append("                        ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"").append("\n");
-                        str.append("                    ").append("ng-options=\"common.label for common in ").append(f.getName()).append("List track by common.id\"></select>").append("\n");
+                        str.append("                    ").append("ng-options=\"common.").append(nestedObjectReprAtr(f)).append(" for common in ").append(f.getName()).append("List track by common.id\"></select>").append("\n");
                         str.append("                ").append("</div>").append("\n");
                         str.append("            ").append("</div>").append("\n");
                     } else if (f.getType().getSimpleName().toUpperCase().contains("DATE")) {
@@ -568,5 +593,19 @@ public class BackendAngularListEditGenerator {
                 str.append("s");
                 return str;
         }
+    }
+
+    private StringBuilder nestedObjectReprAtr(Field field) {
+        StringBuilder str = new StringBuilder();
+        StringBuilder strCamelCase = new StringBuilder();
+        String name = NESTED_OBJECT_REPR_ATTR.get(field.getName());
+        if (name != null) {
+            strCamelCase.append(name.substring(0, 1).toUpperCase())
+                    .append(name.substring(1));
+        } else {
+            strCamelCase.append("Label");
+        }
+        str.append(field.getName()).append(strCamelCase);
+        return str;
     }
 }
