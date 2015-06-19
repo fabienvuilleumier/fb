@@ -82,14 +82,9 @@ app.controller('GlobalRevisionEditController', function ($scope, $location,
 
         return '';
     };
-    $scope.mytime = new Date();
 
     $scope.hstep = 1;
     $scope.mstep = 15;
-
-    $scope.changed = function () {
-        $log.log('Time changed to: ' + $scope.mytime);
-    };
 });
 app.controller('RevisionNewController', function ($scope, $controller) {
     $controller('GlobalRevisionEditController', {$scope: $scope});
@@ -111,7 +106,7 @@ app.controller('RevisionNewCodeController', function ($scope, $routeParams, $con
     $scope.newRevision = true;
     $scope.revision = {
         revisionTime: new Date(),
-        revisionDate: new Date
+        revisionDate: new Date()
     };
     MachineService.findSimpleByCode($routeParams.code, function (data) {
         $scope.revision.machine = data;

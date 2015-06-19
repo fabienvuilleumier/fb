@@ -41,8 +41,8 @@ public class RevisionEO extends AbstractDataEO<Integer> implements Serializable 
     @Column(name = "revision_date", nullable = false, columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private Date revisionDate;
-    @Column(name = "revision_time", nullable = true, columnDefinition = "TIME")
-    @Temporal(TemporalType.TIME)
+    @Column(name = "revision_time", nullable = true, columnDefinition = "DATE")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date revisionTime;
 
     @Column(name = "note", nullable = true)

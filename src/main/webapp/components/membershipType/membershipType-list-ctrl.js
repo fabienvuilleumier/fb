@@ -7,9 +7,7 @@ app.controller('MembershipTypeListController', function ($scope, $filter, $locat
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    name: 'asc',
-                    duration: 'asc',
-                    price: 'asc'
+                    name: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

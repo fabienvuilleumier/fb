@@ -8,10 +8,7 @@ app.controller('RevisionListController', function ($scope, $filter, $location,
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    revisionDate: 'asc',
-                    note: 'asc',
-                    cost: 'asc',
-                    machine: 'asc'
+                    revisionDate: 'desc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

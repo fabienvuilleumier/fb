@@ -7,13 +7,7 @@ app.controller('MachineListController', function ($scope, $filter, $location,
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    name: 'asc',
-                    buyPrice: 'asc',
-                    acquisitionDate: 'asc',
-                    machineType: 'asc',
-                    machineStatus: 'asc',
-                    machineState: 'asc',
-                    code: 'asc'
+                    name: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

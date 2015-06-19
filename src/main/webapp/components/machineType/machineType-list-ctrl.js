@@ -7,9 +7,7 @@ app.controller('MachineTypeListController', function ($scope, $filter, $location
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    name: 'asc',
-                    technicalname: 'asc',
-                    restriction: 'asc'
+                    name: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

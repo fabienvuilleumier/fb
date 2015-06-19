@@ -7,12 +7,7 @@ app.controller('TicketListController', function ($scope, $filter, $location,
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    title: 'asc',
-                    creationDate: 'asc',
-                    previsionCloseDate: 'asc',
-                    closeDate: 'asc',
-                    machine: 'asc',
-                    status: 'asc'
+                    creationDate: 'desc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

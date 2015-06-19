@@ -7,9 +7,7 @@ app.controller('ConfigurationListController', function ($scope, $filter, $locati
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    key: 'asc',
-                    value: 'asc',
-                    name: 'asc'
+                    key: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {
