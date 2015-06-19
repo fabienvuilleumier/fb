@@ -200,7 +200,10 @@ angular.module('Fablab').config(function ($translateProvider) {
             machineType: 'Type',
             machineState: 'State',
             machineStatus: 'Status',
+            revisions: 'Revisions',
+            tickets: 'Tickets',
             toDoRevision: 'To-Do for revision',
+            lists:'Reservations & Tickets',
             create: 'Machinery creation',
             edit: 'Edit :',
             notification: {

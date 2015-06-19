@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.rest.v1;
 
+import java.util.List;
 import javax.annotation.PostConstruct;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.RevisionEO;
@@ -9,6 +10,8 @@ import net.collaud.fablab.api.rest.v1.base.SoftRemoveWebService;
 import net.collaud.fablab.api.service.RevisionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,5 +35,10 @@ public class RevisionWS extends ReadWriteRestWebservice<RevisionEO, RevisionServ
     @Override
     public void softRemove(Integer id) throws FablabException {
         revisionService.softRemove(id);
+    }
+        
+    @RequestMapping(value = "listByMachine", method = RequestMethod.GET)
+    public List<RevisionEO> listByMachine(@RequestParam(value = "id") Integer id) {
+        return revisionService.listByMachine(id);
     }
 }

@@ -1,0 +1,29 @@
+<table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="revision in $data">
+            <td 
+                data-title="'revision.revisionDate' | translate" 
+                sortable="'revisionDate'"
+                filter="{'revisionDate':'text'}">
+                {{revision.revisionDate | date:'dd.MM.yyyy'}}
+            </td>
+            <td 
+                data-title="'revision.revisionTime' | translate" 
+                sortable="'revisionTime'"
+                filter="{'revisionTime':'text'}">
+                {{revision.revisionTime | date:'HH:mm'}} 
+            </td>
+            <td 
+                data-title="'revision.note' | translate" 
+                sortable="'note'"
+                filter="{'note':'text'}">
+                {{revision.note}}
+            </td>
+            <td 
+                data-title="'revision.cost' | translate" 
+                sortable="'cost'"
+                filter="{'cost':'text'}">
+                <span>{{revision.cost}}</span>
+                <span> {{currency}}</span>
+            </td>
+        </tr>
+    </table> 

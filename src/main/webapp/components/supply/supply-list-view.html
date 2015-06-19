@@ -57,48 +57,44 @@
                             ng-really-message="{{'supply.confirmation.remove'|translate}}">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>                    
-                    <button title="Add some quantity" type="button" 
-                            class="btn btn-primary btn-sm" 
-                            data-toggle="modal" 
-                            data-target="#addQuantity">
-                        <span class="fa fa-fw fa-plus"> </span>
-                        <span class="fa fa-fw fa-database"> </span>
-                    </button>
-                </div>
-                <div class="modal" id="addQuantity" tabindex="-1" role="dialog" aria-labelledby="addQuantityLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="addQuantityLabel">
-                                    <span translate="supply.modalTitle"></span>
-                                    <span>{{supply.code}}</span>
-                                </h4>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label class="col-sm-offset-2 col-sm-3 control-label" translate="supply.quantityStockModal"></label>
-                                        <div class="col-sm-3">
-                                            <input ng-if="supply.unity.floating" type="number" min="0" step="0.1" class="form-control" ng-model="newQuantity" required/>
-                                            <input ng-if="!supply.unity.floating" type="number" min="0" class="form-control" ng-model="newQuantity" required/>
-                                        </div>
+                    <script type="text/ng-template" id="modalContent.html">
+                        <div class="modal-header">
+                            <h4 class="modal-title"
+                                <span translate="supply.modalTitle"></span>
+                                <span>{{supply.code}}</span>
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group">
+                                    <div style="margin-top:9px" class="col-sm-offset-2 col-sm-3 ">
+                                        <label class="control-label" translate="supply.quantityStockModal"></label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" min="0" step="{{supply.supplyUnity.floating ? 0.1 : 1}}" class="form-control" ng-model="newQuantity" required/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" data-dismiss="modal" class="btn btn-default btn-glyph">
-                                    <span translate="button.cancel"></span>
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                                <button data-dismiss="modal" ng-click="addQuantity(supply.id, newQuantity)" 
-                                        class="btn btn-success btn-glyph" ng-disabled="newQuantity === 0">
-                                    <span translate="button.save"></span>
-                                    <span class="glyphicon glyphicon-floppy-disk"></span>
-                                </button>
-                            </div>
                         </div>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-glyph"
+                                ng-click="cancel()">
+                                <span translate="button.cancel"></span>
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                            <button ng-click="ok()" 
+                                class="btn btn-success btn-glyph" 
+                                ng-disabled="newQuantity === 0">
+                                <span translate="button.save"></span>
+                                <span class="glyphicon glyphicon-floppy-disk"></span>
+                            </button>
+                        </div>
+                    </script>
+                    <button title="Add some quantity to {{supply.code}}" type="button" 
+                            class="btn btn-primary btn-sm" ng-click="open(supply)">
+                        <span class="fa fa-fw fa-plus"> </span>
+                        <span class="fa fa-fw fa-database"> </span>
+                    </button>
                 </div>
             </td>
         </tr>

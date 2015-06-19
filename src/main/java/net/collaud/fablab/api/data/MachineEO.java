@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -31,7 +32,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_machine")
 @Getter
 @Setter
-@ToString(exclude = {"revisionList", "reservationList"})
+@ToString(exclude = {"revisionList", "reservationList", "ticketList"})
 @Where(clause = "active=1")
 public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -74,9 +75,22 @@ public class MachineEO extends AbstractDataEO<Integer> implements Serializable {
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machine", fetch = FetchType.LAZY)
     private List<RevisionEO> revisionList;
+    
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machine", fetch = FetchType.LAZY)
+    private List<TicketEO> ticketList;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
+
+    /**
+     * Add a ticket to this machine (bidirectionnal use).
+     *
+     * @param ticket the ticket
+     */
+    public void addReservation(TicketEO ticket) {
+        this.getTicketList().add(ticket);
+        ticket.setMachine(this);
+    }
 
     /**
      * Add a reservation to this machine (bidirectionnal use).
