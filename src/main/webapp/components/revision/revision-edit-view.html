@@ -2,9 +2,9 @@
     <form class="form-horizontal" name="editRevision" ng-submit="save(false)">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span ng-if="newRevision" translate="revision.create"></span>
-                <span ng-if="!newRevision" translate="revision.edit"></span>
-                <span ng-if="!newRevision"> {{revision.revisionDate| date:'yyyy-MM-dd'}}</span>
+                <span ng-show="newRevision" translate="revision.create"></span>
+                <span ng-show="!newRevision" translate="revision.edit"></span>
+                <span ng-show="!newRevision"> {{revision.revisionDate| date:'yyyy-MM-dd'}}</span>
             </div>
             <div class="panel-body">
                 <div class="form-group">

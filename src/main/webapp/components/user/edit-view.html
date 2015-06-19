@@ -2,8 +2,8 @@
 <form class="form-horizontal" name="editUser" ng-submit="save(false)">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <span ng-if="newUser">Création d'un utilisation</span>
-            <span ng-if="!newUser">Edition de : {{user.firstname}} {{user.lastname}}</span>
+            <span ng-show="newUser">Création d'un utilisation</span>
+            <span ng-show="!newUser">Edition de : {{user.firstname}} {{user.lastname}}</span>
         </div>
         <div class="panel-body">
             <div class="form-group">

@@ -2,9 +2,9 @@
     <form class="form-horizontal" name="editTicketStatus" ng-submit="save(false)">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span ng-if="newTicketStatus" translate="ticketStatus.create"></span>
-                <span ng-if="!newTicketStatus" translate="ticketStatus.edit"></span>
-                <span ng-if="!newTicketStatus"> {{ticketStatus.label}}</span>
+                <span ng-show="newTicketStatus" translate="ticketStatus.create"></span>
+                <span ng-show="!newTicketStatus" translate="ticketStatus.edit"></span>
+                <span ng-show="!newTicketStatus"> {{ticketStatus.label}}</span>
             </div>
             <div class="panel-body">
                 <div class="form-group">

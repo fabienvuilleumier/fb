@@ -21,20 +21,19 @@ app.controller('GlobalPurchaseEditController', function ($scope, $location,
     var updateStock = function(){
         var stockInit = $scope.purchase.supply.quantityStock;
         $scope.purchase.supply.quantityStock = parseFloat(stockInit) - parseFloat($scope.purchase.quantity);
-    }
+    };
 
     $scope.maxMoney = function () {
         return parseFloat($scope.purchase.quantity) * parseFloat($scope.purchase.supply.sellingPrice);
     };
 
     $scope.updatePrice = function () {
-        console.log("% " + $scope.purchase.discountPercent)
         var interTotal = parseFloat($scope.purchase.quantity) * parseFloat($scope.purchase.supply.sellingPrice);
         if ($scope.purchase.discount === undefined) {
             $scope.purchase.purchasePrice = interTotal;
         } else {
             if ($scope.purchase.discountPercent) {
-                var discountInter = parseFloat(interTotal) * (parseFloat($scope.purchase.discount) / parseFloat(100))
+                var discountInter = parseFloat(interTotal) * (parseFloat($scope.purchase.discount) / parseFloat(100));
                 var discountFinal = parseFloat(interTotal) - parseFloat(discountInter);
                 $scope.purchase.purchasePrice = (Math.ceil(discountFinal * 20) / 20).toFixed(2);
             } else {

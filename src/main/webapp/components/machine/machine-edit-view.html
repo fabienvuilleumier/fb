@@ -2,9 +2,9 @@
     <form class="form-horizontal" name="editMachine" ng-submit="save(false)">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span ng-if="newMachine" translate="machine.create"></span>
-                <span ng-if="!newMachine"  translate="machine.edit"></span>
-                <span ng-if="!newMachine">{{machine.name}}</span>
+                <span ng-show="newMachine" translate="machine.create"></span>
+                <span ng-show="!newMachine"  translate="machine.edit"></span>
+                <span ng-show="!newMachine">{{machine.name}}</span>
             </div>
             <div class="panel-body">
                 <div class="form-group">
@@ -87,7 +87,7 @@
         </div>
     </form>
 
-    <div ng-if="!newMachine" class="panel panel-default">
+    <div ng-show="!newMachine" class="panel panel-default">
         <div class="panel-heading">
             <span translate="machine.lists"></span>
         </div>

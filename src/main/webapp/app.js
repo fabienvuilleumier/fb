@@ -119,7 +119,7 @@
         }).when('/ticketStatus', {
             templateUrl: './components/ticketStatus/ticketStatus-list-view.html',
             controller: 'TicketStatusListController'
-        }).when('/ticketStatus/ticketStatus-machine/:machineId', {
+        }).when('/ticketStatus/ticketStatus-machine/:id', {
             templateUrl: './components/ticketStatus/ticketStatus-edit-view.html',
             controller: 'TicketStatusEditController'
         }).when('/ticketStatus/ticketStatus-edit', {
