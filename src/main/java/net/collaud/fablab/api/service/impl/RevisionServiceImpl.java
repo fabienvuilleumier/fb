@@ -70,9 +70,4 @@ public class RevisionServiceImpl implements RevisionService {
         current.setActive(false);
         revisionDAO.saveAndFlush(current);
     }
-
-    @Override
-    public List<RevisionEO> listByMachine(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

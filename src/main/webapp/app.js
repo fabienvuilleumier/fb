@@ -113,13 +113,13 @@
         }).when('/revisions/revision-edit', {
             templateUrl: './components/revision/revision-edit-view.html',
             controller: 'RevisionNewController'
-        }).when('/revisions/revision-edit-code/:code', {
+        }).when('/revisions/revision-edit-machine/:machineId', {
             templateUrl: './components/revision/revision-edit-view.html',
             controller: 'RevisionNewCodeController'
         }).when('/ticketStatus', {
             templateUrl: './components/ticketStatus/ticketStatus-list-view.html',
             controller: 'TicketStatusListController'
-        }).when('/ticketStatus/ticketStatus-edit/:id', {
+        }).when('/ticketStatus/ticketStatus-machine/:machineId', {
             templateUrl: './components/ticketStatus/ticketStatus-edit-view.html',
             controller: 'TicketStatusEditController'
         }).when('/ticketStatus/ticketStatus-edit', {
@@ -134,6 +134,9 @@
         }).when('/tickets/ticket-edit', {
             templateUrl: './components/ticket/ticket-edit-view.html',
             controller: 'TicketNewController'
+        }).when('/tickets/ticket-edit-machine/:machineId', {
+            templateUrl: './components/ticket/ticket-edit-view.html',
+            controller: 'TicketNewCodeController'
         }).when('/supplies', {
             templateUrl: './components/supply/supply-list-view.html',
             controller: 'SupplyListController'

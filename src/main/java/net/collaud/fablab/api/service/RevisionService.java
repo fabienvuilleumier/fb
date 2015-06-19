@@ -10,6 +10,4 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
 */
 public interface RevisionService extends ReadWriteService<RevisionEO> {
 
-    public List<RevisionEO> listByMachine(Integer id);
-
 }

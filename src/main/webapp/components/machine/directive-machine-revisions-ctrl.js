@@ -3,9 +3,9 @@
     angular.module('Fablab').directive('machineRevisions',
             function ($filter, ngTableParams, $location) {
                 return {
-                    restrict: 'EA',
+                    restrict: 'E',
                     scope: {
-                        revisions: '=?'
+                        machine: '=machine'
                     },
                     templateUrl: 'components/machine/directive-machine-revisions-view.html',
                     controller: function ($scope, RevisionService) {
@@ -32,12 +32,11 @@
                             }
                         });
                         var updateRevisionList = function () {
-                            /*RevisionService.listByMachine($scope.machine.id, function (data) {
+                            RevisionService.listByMachine($scope.machine.id, function (data) {
                                 $scope.revisions = data;
                                 $scope.tableParams.reload();
-                            });*/
+                            });
                         };
-
                         updateRevisionList();
                     }
                 };

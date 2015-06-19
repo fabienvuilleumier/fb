@@ -74,9 +74,4 @@ public class TicketServiceImpl implements TicketService {
         current.setActive(false);
         ticketDAO.saveAndFlush(current);
     }
-
-    @Override
-    public List<TicketEO> listByMachine(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }

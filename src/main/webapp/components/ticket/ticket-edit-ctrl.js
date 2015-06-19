@@ -1,7 +1,8 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalTicketEditController', function ($scope, $rootScope, $location,
+app.controller('GlobalTicketEditController', function ($scope, $rootScope, $location,$routeParams,
         TicketService, NotificationService, StaticDataService, TicketStatusService) {
+    $scope.fromMachine = $routeParams.machineId ? true : false;
     $scope.selected = {ticket: undefined};
     $scope.loadTicket = function (id) {
         TicketService.get(id, function (data) {
@@ -28,7 +29,7 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
             });
         }
     };
-    
+
     $scope.reOpenTicket = function () {
         if (!$scope.newTicket) {
             $scope.ticket.closeDate = null;
@@ -115,6 +116,22 @@ app.controller('TicketNewController', function ($scope, $controller, $rootScope,
     };
     TicketStatusService.findByLabel("OPEN", function (data) {
         $scope.ticket.status = data;
+    });
+}
+);
+app.controller('TicketNewCodeController', function ($scope, $controller,
+        $rootScope, $routeParams, TicketStatusService, MachineService) {
+    $controller('GlobalTicketEditController', {$scope: $scope});
+    $scope.newTicket = true;
+    $scope.ticket = {
+        creationDate: new Date(),
+        creationUser: $rootScope.connectedUser.user
+    };
+    TicketStatusService.findByLabel("OPEN", function (data) {
+        $scope.ticket.status = data;
+    });
+    MachineService.get($routeParams.machineId, function (data) {
+        $scope.ticket.machine = data;
     });
 }
 );
