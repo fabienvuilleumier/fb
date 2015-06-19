@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Slf4j
-public class ConfigurationServiceImpl extends AbstractServiceImpl implements ConfigurationService {
+public class ConfigurationServiceImpl implements ConfigurationService {
 
     @Autowired
     private ConfigurationRepository configurationDao;
@@ -52,7 +52,13 @@ public class ConfigurationServiceImpl extends AbstractServiceImpl implements Con
     }
 
     @Override
-    public ConfigurationEO findByKey(String key) {
-       return configurationDao.findByKey(key);
+    public void softRemove(Integer id) {
+        //not implemented for a configuration
     }
+
+    @Override
+    public ConfigurationEO findByKey(String key) {
+        return configurationDao.findByKey(key);
+    }
+
 }

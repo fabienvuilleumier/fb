@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.MACHINE_MANAGE})
-public class MembershipTypeServiceImpl extends AbstractServiceImpl implements MembershipTypeService {
+public class MembershipTypeServiceImpl implements MembershipTypeService {
 
     @Autowired
     private MembershipTypeRepository membershipTypeDAO;

@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.RESERVATION_USE, Roles.PAYMENT_MANAGE, Roles.MACHINE_VIEW, Roles.MACHINE_MANAGE})
-public class MachineServiceImpl extends AbstractServiceImpl implements MachineService {
+public class MachineServiceImpl implements MachineService {
 
     @Autowired
     private MachineRepository machineDao;

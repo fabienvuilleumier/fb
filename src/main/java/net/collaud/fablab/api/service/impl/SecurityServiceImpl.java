@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class SecurityServiceImpl extends AbstractServiceImpl implements SecurityService {
+public class SecurityServiceImpl implements SecurityService {
 
 	private static final Logger LOG = LoggerFactory
 			.getLogger(SecurityServiceImpl.class);

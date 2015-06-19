@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
     @Secured({Roles.SUPPLY_MANAGE})
-public class MotionStockServiceImpl extends AbstractServiceImpl implements MotionStockService {
+public class MotionStockServiceImpl implements MotionStockService {
 
     @Autowired
     private MotionStockRepository motionStockDAO;

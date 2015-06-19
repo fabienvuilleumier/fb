@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
     @Secured({Roles.SUPPLY_VIEW})
-public class PurchaseServiceImpl extends AbstractServiceImpl implements PurchaseService {
+public class PurchaseServiceImpl implements PurchaseService {
 
     @Autowired
     private PurchaseRepository purchaseDAO;

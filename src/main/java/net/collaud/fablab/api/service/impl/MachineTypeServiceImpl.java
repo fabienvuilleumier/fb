@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.MACHINE_MANAGE})
-public class MachineTypeServiceImpl extends AbstractServiceImpl implements MachineTypeService {
+public class MachineTypeServiceImpl implements MachineTypeService {
 
     @Autowired
     private MachineTypeRepository machineTypeDao;

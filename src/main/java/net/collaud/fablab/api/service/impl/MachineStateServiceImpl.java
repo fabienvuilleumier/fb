@@ -5,11 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.api.dao.MachineStateRepository;
-import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.MachineStateEO;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.MachineStateService;
-import net.collaud.fablab.api.service.impl.AbstractServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.MACHINE_MANAGE})
-public class MachineStateServiceImpl extends AbstractServiceImpl implements MachineStateService {
+public class MachineStateServiceImpl implements MachineStateService {
 
     @Autowired
     private MachineStateRepository machineStateDAO;

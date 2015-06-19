@@ -18,7 +18,6 @@ app.controller('MachineListController', function ($scope, $filter, $location,
             }, $location.search()), {
         getData: function ($defer, params) {
             if ($scope.machines) {
-                console.log($scope.machines);
                 params.total($scope.machines.length);
                 $location.search(params.url());
                 var filteredData = params.filter() ? $filter('filter')($scope.machines, params.filter()) : $scope.machines;

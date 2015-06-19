@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.ADMIN})
-public class SupplyServiceImpl extends AbstractServiceImpl implements SupplyService {
+public class SupplyServiceImpl implements SupplyService {
 
     @Autowired
     private SupplyRepository supplyDAO;

@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Slf4j
-public class UserServiceImpl extends AbstractServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     public static final String PROP_RECAPTCHA_SITE = "google.recaptcha.site";
     public static final String PROP_RECAPTCHA_SECRET = "google.recaptcha.secret";

@@ -79,7 +79,7 @@ public class BackendBaseGenerator {
         str.append("@Transactional").append("\n");
 
         str.append(roles(roles));
-        str.append("public class ").append(CLASS_SERVICE_IMPL).append(" extends AbstractServiceImpl implements ").append(CLASS_SERVICE).append(" {").append("\n\n");
+        str.append("public class ").append(CLASS_SERVICE_IMPL).append(" implements ").append(CLASS_SERVICE).append(" {").append("\n\n");
 
         str.append("    ").append("@Autowired").append("\n");
         str.append("    ").append("private ").append(CLASS_REPOSITORY).append(" ").append(CLASS_DAO_ATTRIBUTE).append(";\n\n");
@@ -159,7 +159,6 @@ public class BackendBaseGenerator {
         str.append(";").append("\n");
         if (write) {
             str.append("import net.collaud.fablab.api.service.global.ReadWriteService;").append("\n");
-            str.append("import net.collaud.fablab.api.service.global.SoftRemoveService;").append("\n");
         } else {
             str.append("import net.collaud.fablab.api.service.global.ReadService;").append("\n\n");
         }
@@ -176,9 +175,6 @@ public class BackendBaseGenerator {
             str.append("ReadService");
         }
         str.append("<").append(CLASS_EO).append(">");
-        if (write) {
-            str.append(", SoftRemoveService<").append(CLASS_EO).append(">");
-        }
         str.append("{\n\n}");
         return str.toString();
     }

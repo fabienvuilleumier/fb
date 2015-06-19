@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Secured({Roles.ADMIN})
 @Slf4j
-public class ReservationServiceImpl extends AbstractServiceImpl implements ReservationService {
+public class ReservationServiceImpl implements ReservationService {
 
     @Autowired
     private ReservationRepository reservationDao;
