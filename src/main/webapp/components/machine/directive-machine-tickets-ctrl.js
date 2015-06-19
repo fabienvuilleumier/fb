@@ -5,10 +5,10 @@
                 return {
                     restrict: 'EA',
                     scope: {
-                        tickets: '=?'
+                        machine: '=?'
                     },
                     templateUrl: 'components/machine/directive-machine-tickets-view.html',
-                    controller: function ($scope) {
+                    controller: function ($scope, TicketService) {
                         $scope.tableParams = new ngTableParams(
                                 angular.extend({
                                     page: 1, // show first page
@@ -31,7 +31,18 @@
                                 }
                             }
                         });
-                        $scope.tableParams.reload();
+                        var updateTicketList = function () {
+                            console.log("machine " + $scope.machine);
+                            TicketService.listByMachine($scope.machine.id, function (data) {
+                                for (var i = 0; i < data.length; i++) {
+                                    data[i].statusLabel = ""; //initialization of new property 
+                                    data[i].statusLabel= data[i].status.label;  //set the data from nested obj into new property
+                                }
+                                $scope.tickets = data;
+                                $scope.tableParams.reload();
+                            });
+                        };
+                        updateTicketList();
                     }
                 };
             });

@@ -23,6 +23,12 @@ app.controller('PurchaseListController', function ($scope, $filter, $location,
     });
     var updatePurchaseList = function () {
         PurchaseService.list(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                data[i].supplyLabel = ""; //initialization of new property 
+                data[i].supplyLabel = data[i].supply.label + data[i].supply.code;  //set the data from nested obj into new property
+                data[i].userName = ""; //initialization of new property 
+                data[i].userName = data[i].user === null ? "FabLab" : $filter('prettyUser')(data[i].user);  //set the data from nested obj into new property
+            }
             $scope.purchases = data;
             $scope.tableParams.reload();
         });

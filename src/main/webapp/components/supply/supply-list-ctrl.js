@@ -24,6 +24,10 @@ app.controller('SupplyListController', function ($scope, $filter, $location, $mo
     });
     var updateSupplyList = function () {
         SupplyService.list(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                data[i].supplyTypeLabel = ""; //initialization of new property 
+                data[i].supplyTypeLabel = data[i].supplyType.label;  //set the data from nested obj into new property
+            }
             $scope.supplies = data;
             $scope.tableParams.reload();
         });
@@ -73,7 +77,7 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, supply) {
     $scope.supply = supply;
     $scope.newQuantity = 0;
     $scope.ok = function () {
-        $modalInstance.close({sup : $scope.supply, newQty: $scope.newQuantity});
+        $modalInstance.close({sup: $scope.supply, newQty: $scope.newQuantity});
     };
 
     $scope.cancel = function () {

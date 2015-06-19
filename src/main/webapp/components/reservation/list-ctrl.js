@@ -32,6 +32,12 @@
                 dateTo: $filter('cropToDate')($scope.criteria.dateTo)
             };
             ReservationService.search(criteria, function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    data[i].machineName = ""; //initialization of new property 
+                    data[i].machineName = data[i].machine.name;  //set the data from nested obj into new property
+                    data[i].userName = ""; //initialization of new property 
+                    data[i].userName = data[i].user === null ? "FabLab" : $filter('prettyUser')(data[i].user);  //set the data from nested obj into new property
+                }
                 $scope.reservations = data;
                 $scope.tableParams.reload();
                 updateCalendarEvent();
@@ -54,13 +60,13 @@
                 $scope.updateReservationList();
             });
         };
-        
+
         $scope.softRemove = function (reservation) {
-        ReservationService.softRemove(reservation.id, function () {
-            NotificationService.notify("success", "reservation.notification.removed");
-            updateReservationList();
-        });
-    };
+            ReservationService.softRemove(reservation.id, function () {
+                NotificationService.notify("success", "reservation.notification.removed");
+                updateReservationList();
+            });
+        };
 
         $scope.updateReservationList();
         var date = new Date();
