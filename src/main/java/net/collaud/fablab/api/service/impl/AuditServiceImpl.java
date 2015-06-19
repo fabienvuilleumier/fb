@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.ADMIN})
-public class AuditServiceImpl extends AbstractServiceImpl implements AuditService {
+public class AuditServiceImpl implements AuditService {
 
 	@Autowired
 	private AuditRepository auditDAO;

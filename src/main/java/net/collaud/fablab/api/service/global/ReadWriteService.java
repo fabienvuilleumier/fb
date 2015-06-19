@@ -8,4 +8,5 @@ package net.collaud.fablab.api.service.global;
 public interface ReadWriteService<T> extends ReadService<T>{
 	T save(T entity);
 	void remove(Integer id);
+        void softRemove(Integer id);
 }

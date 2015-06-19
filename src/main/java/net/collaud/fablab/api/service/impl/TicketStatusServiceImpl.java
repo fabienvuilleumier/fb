@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.TICKET_MANAGE, Roles.TICKET_VIEW})
-public class TicketStatusServiceImpl extends AbstractServiceImpl implements TicketStatusService {
+public class TicketStatusServiceImpl implements TicketStatusService {
 
     @Autowired
     private TicketStatusRepository ticketStatusDAO;

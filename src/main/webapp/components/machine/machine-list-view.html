@@ -38,19 +38,19 @@
             <td  
                 data-title="'machine.machineType' | translate" 
                 sortable="'machineType'"
-                filter="{'machineType':'text'}">
+                filter="{'machineType.name':'text'}">
                 {{machine.machineType.name}}
             </td>
             <td
                 data-title="'machine.machineStatus' | translate" 
                 sortable="'machineStatus'"
-                filter="{'machineStatus':'text'}">
+                filter="{'machineStatus.label':'text'}">
                 {{machine.machineStatus.label}}
             </td>
             <td style="width:100px" 
                 data-title="'machine.machineState' | translate" 
                 sortable="'machineState'"
-                filter="{'machineState':'text'}">
+                filter="{'machineState.label':'text'}">
                 {{machine.machineState.label}}
             </td>
             <td class="listBtn3">

@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.ADMIN})
-public class GroupServiceImpl extends AbstractServiceImpl implements GroupService {
+public class GroupServiceImpl implements GroupService {
 
 	@Autowired
 	private GroupRepository groupDao;

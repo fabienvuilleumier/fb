@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
     @Secured({Roles.SUPPLY_MANAGE})
-public class SupplyUnityServiceImpl extends AbstractServiceImpl implements SupplyUnityService {
+public class SupplyUnityServiceImpl implements SupplyUnityService {
 
     @Autowired
     private SupplyUnityRepository supplyUnityDAO;

@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.MACHINE_MANAGE})
-public class MachineStatusServiceImpl extends AbstractServiceImpl implements MachineStatusService {
+public class MachineStatusServiceImpl implements MachineStatusService {
 
     @Autowired
     private MachineStatusRepository machineStatusDAO;

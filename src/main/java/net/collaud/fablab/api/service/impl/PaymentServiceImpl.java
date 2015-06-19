@@ -48,7 +48,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Slf4j
-public class PaymentServiceImpl extends AbstractServiceImpl implements PaymentService {
+public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
 	private AuditService audtiService;

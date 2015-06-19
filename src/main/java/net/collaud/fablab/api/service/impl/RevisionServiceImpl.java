@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Secured({Roles.MACHINE_MANAGE})
-public class RevisionServiceImpl extends AbstractServiceImpl implements RevisionService {
+public class RevisionServiceImpl implements RevisionService {
 
     @Autowired
     private RevisionRepository revisionDAO;
