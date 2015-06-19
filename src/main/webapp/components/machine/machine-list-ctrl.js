@@ -22,6 +22,14 @@ app.controller('MachineListController', function ($scope, $filter, $location,
     });
     var updateMachineList = function () {
         MachineService.list(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                data[i].machineTypeName = ""; //initialization of new property 
+                data[i].machineTypeName = data[i].machineType.name;  //set the data from nested obj into new property
+                data[i].machineStatusLabel = ""; //initialization of new property 
+                data[i].machineStatusLabel = data[i].machineStatus.label;  //set the data from nested obj into new property
+                data[i].machineStateLabel = ""; //initialization of new property 
+                data[i].machineStateLabel = data[i].machineState.label;  //set the data from nested obj into new property
+            }
             $scope.machines = data;
             $scope.tableParams.reload();
         });

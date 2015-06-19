@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('ConfigurationListController', function ($scope, $filter, $location,
-        ngTableParams, ConfigurationService, NotificationService) {
+        ngTableParams, ConfigurationService) {
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page

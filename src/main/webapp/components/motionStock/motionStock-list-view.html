@@ -30,14 +30,14 @@
             </td>
             <td 
                 data-title="'motionStock.supply' | translate" 
-                sortable="'supply'"
-                filter="{'supply':'text'}">
+                sortable="'supplyLabel'"
+                filter="{'supplyLabel':'text'}">
                 {{motionStock.supply.code}} - {{motionStock.supply.label}}
             </td>
             <td 
                 data-title="'motionStock.user' | translate" 
-                sortable="'user'"
-                filter="{'user':'text'}">
+                sortable="'userName'"
+                filter="{'userName':'text'}">
                 {{motionStock.user ? (motionStock.user|prettyUser) : "FabLab"}}
             </td>
         </tr>

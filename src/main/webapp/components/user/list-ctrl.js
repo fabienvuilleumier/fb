@@ -29,6 +29,10 @@ app.controller('UserListController', function ($scope, $filter, $location,
 
     var updateUserList = function () {
         UserService.list(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                data[i].membershipTypeName = ""; //initialization of new property 
+                data[i].membershipTypeName = data[i].membershipType.name;  //set the data from nested obj into new property
+            }
             $scope.users = data;
             $scope.tableParams.reload();
         });

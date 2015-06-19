@@ -23,6 +23,10 @@ app.controller('RevisionListController', function ($scope, $filter, $location,
     });
     var updateRevisionList = function () {
         RevisionService.list(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                data[i].machineName = ""; //initialization of new property 
+                data[i].machineName = data[i].machine.name;  //set the data from nested obj into new property
+            }
             $scope.revisions = data;
             $scope.tableParams.reload();
         });
