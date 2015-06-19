@@ -29,6 +29,7 @@ public interface MachineRepository extends JpaRepository<MachineEO, Integer> {
             + " LEFT JOIN FETCH mt.priceList "
             + " LEFT JOIN FETCH m.machineStatus "
             + " LEFT JOIN FETCH m.machineState "
+            + " LEFT JOIN FETCH m.ticketList "
             + " WHERE m.id=:id")
     Optional<MachineEO> findOneDetails(@Param("id")Integer id);
     

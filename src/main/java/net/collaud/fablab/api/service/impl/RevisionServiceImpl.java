@@ -70,4 +70,9 @@ public class RevisionServiceImpl extends AbstractServiceImpl implements Revision
         current.setActive(false);
         revisionDAO.saveAndFlush(current);
     }
+
+    @Override
+    public List<RevisionEO> listByMachine(Integer id) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

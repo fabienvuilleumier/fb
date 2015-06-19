@@ -86,4 +86,28 @@
             </div>
         </div>
     </form>
+
+    <div ng-if="!newMachine" class="panel panel-default">
+        <div class="panel-heading">
+            <span translate="machine.lists"></span>
+        </div>
+        <div class="panel-body">
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#developReservations" aria-expanded="false" aria-controls="developReservations">
+                <span translate="machine.revisions"></span>
+            </button>
+            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#developTickets" aria-expanded="false" aria-controls="developTickets">
+                <span translate="machine.tickets"></span>
+            </button>
+            <div class="collapse" id="developReservations">
+                <div class="well">
+                    <machine-revisions machine="machine"></machine-revisions>
+                </div>
+            </div>
+            <div class="collapse" id="developTickets">
+                <div class="well">
+                    <machine-tickets machine="machine"></machine-tickets>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

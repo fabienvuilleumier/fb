@@ -31,10 +31,11 @@
                     <label class="col-sm-2 control-label" translate="purchase.supply"></label>
                     <div class="col-sm-8">
                         <select class="form-control" 
-                                required
-                                ng-disabled="!newPurchase"
-                                ng-model="purchase.supply"
-                                ng-options='s as (s.code + " - " + s.label) group by s.supplyType.label for s in supplyStock'></select>
+                                required 
+                                ng-disabled="!newPurchase" 
+                                ng-model="purchase.supply" 
+                                ng-options='s as (s.code + " - " + s.label) group by s.supplyType.label for s in supplyStock track by s.id'></select>
+                                <!--ng-options='s as (s.code + " - " + s.label) group by s.supplyType.label for s in supplyStock'></select>-->
                     </div>
                 </div>
                 <div class="form-group">

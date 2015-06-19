@@ -9,7 +9,7 @@
         <tr ng-repeat="motionStock in $data"
             ng-class="{ 'bg-warning':motionStock.io.toUpperCase() === 'CORRECTION',
                         'bg-danger':motionStock.io.toUpperCase() === 'OUTPUT',
-                        'bg-success':motionStock.io.toUpperCase() === 'INPUT'}">
+                        'bg-success':motionStock.io.toUpperCase() === 'INPUT' || motionStock.io === 'input [add]'}">
             <td 
                 data-title="'motionStock.motionDate' | translate" 
                 sortable="'motionDate'"

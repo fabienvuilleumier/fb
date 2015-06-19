@@ -20,7 +20,7 @@
                 $log.debug("ReservationService: remove...");
                 reservation.remove({id: id}, successFn);
             },
-             softRemove: function (id, successFn) {
+            softRemove: function (id, successFn) {
                 $http.get(App.API.RESERVATION_API + "/softRemove?id=" + id).success(successFn);
                 $log.debug("ReservationService: soft remove...");
             },
@@ -33,6 +33,9 @@
                 $log.debug("ReservationService: get...");
                 var prj = reservation.get({id: id}, successFn);
                 return prj;
+            },
+            listByMachine: function (id, successFn) {
+                $http.get(App.API.REVISION_API + "/listByMachine?id=" + id).success(successFn);
             }
         };
     });

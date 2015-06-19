@@ -30,6 +30,9 @@
                 $log.debug("TicketService: get...");
                 var ticketRes = ticket.get({id: id}, successFn);
                 return ticketRes;
+            },
+            listByMachine: function (id, successFn) {
+                $http.get(App.API.TICKET_API + "/listByMachine?id=" + id).success(successFn);
             }
         };
     });

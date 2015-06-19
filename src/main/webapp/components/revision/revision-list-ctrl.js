@@ -2,6 +2,7 @@
 var app = angular.module('Fablab');
 app.controller('RevisionListController', function ($scope, $filter, $location,
         ngTableParams, RevisionService, NotificationService) {
+    $scope.currency = App.CONFIG.CURRENCY;
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page

@@ -16,7 +16,7 @@ public interface SupplyRepository extends JpaRepository<SupplyEO, Integer>{
     @Query("SELECT DISTINCT s "
         + " FROM SupplyEO s  " 
         + " LEFT JOIN FETCH s.supplyType "
-        + " LEFT JOIN FETCH s.supplyUnity ")
+        + " LEFT JOIN FETCH s.supplyUnity u ")
     @Override
     List<SupplyEO> findAll();
     

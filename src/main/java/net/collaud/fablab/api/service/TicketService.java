@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.service;
 
+import java.util.List;
 import net.collaud.fablab.api.data.TicketEO;
 import net.collaud.fablab.api.service.global.ReadWriteService;
 import net.collaud.fablab.api.service.global.SoftRemoveService;
@@ -8,5 +9,7 @@ import net.collaud.fablab.api.service.global.SoftRemoveService;
 * @author Fabien Vuilleumier
 */
 public interface TicketService extends ReadWriteService<TicketEO>, SoftRemoveService<TicketEO> {
+
+    public List<TicketEO> listByMachine(Integer id);
 
 }
