@@ -40,7 +40,7 @@
 	</div>
 </div>
 
-<div class="row" ng-show="selected.user">
+<div class="row" ng-if="selected.user">
 	<div class="col-md-6">
 		<user-payment-add-usage user="selected.user" min-date="minDate" callback="reloadHistory()"/>
 	</div>
@@ -49,7 +49,7 @@
 	</div>
 </div>
 
-<div class="row" ng-show="selected.user">
+<div class="row" ng-if="selected.user">
 	<div class="col-md-12">
 		<user-payment-history user="selected.user" reload="reloadHistory" editable="true" need-reload-user="updateUser()" />
 	</div>

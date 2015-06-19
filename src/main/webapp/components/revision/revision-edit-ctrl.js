@@ -102,7 +102,7 @@ app.controller('RevisionEditController', function ($scope, $routeParams, $contro
     $scope.loadRevision($routeParams.id);
 }
 );
-app.controller('RevisionNewCodeController', function ($scope, $routeParams, $controller, MachineService) {
+app.controller('RevisionNewWithMachineController', function ($scope, $routeParams, $controller, MachineService) {
     $controller('GlobalRevisionEditController', {$scope: $scope});
     $scope.newRevision = true;
     $scope.revision = {

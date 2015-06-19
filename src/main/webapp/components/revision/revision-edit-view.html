@@ -58,8 +58,8 @@
                 </div>
             </div>
             <div class="panel-footer right">
-                <btn-cancel ng-show="!fromMachine" link="#/revisions"></btn-cancel>
-                <btn-cancel ng-show="fromMachine" link="#/machines"></btn-cancel>
+                <btn-cancel ng-if="!fromMachine" link="#/revisions"></btn-cancel>
+                <btn-cancel ng-if="fromMachine" link="#/machines"></btn-cancel>
                 <btn-submit form="editRevision"></btn-submit>
             </div>
         </div>

@@ -26,7 +26,7 @@
 					<td>{{h.detail}}</td>
 					<td>{{h.comment}}</td>
 					<td>
-						<a ng-show="editable && cansoftRemove(h)" href class="btn btn-xs btn-default" 
+						<a ng-if="editable && cansoftRemove(h)" href class="btn btn-xs btn-default" 
 						   ng-really-click="remove(h)"
 						   ng-really-message="{{'payment.confirmation.historyRemove'|translate}}">
 							<span class="glyphicon glyphicon-remove"></span>
