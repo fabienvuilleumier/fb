@@ -7,11 +7,7 @@ app.controller('MotionStockListController', function ($scope, $filter, $location
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    motionDate:'asc',
-                    quantity:'asc',
-                    io:'asc',
-                    supply:'asc',
-                    user:'asc'
+                    motionDate:'desc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

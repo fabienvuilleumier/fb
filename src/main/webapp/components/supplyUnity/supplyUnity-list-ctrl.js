@@ -7,8 +7,7 @@ app.controller('SupplyUnityListController', function ($scope, $filter, $location
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    label:'asc',
-                    floating:'asc'
+                    label:'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

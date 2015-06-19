@@ -9,13 +9,7 @@ app.controller('SupplyListController', function ($scope, $filter, $location, $mo
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    code: 'asc',
-                    label: 'asc',
-                    sellingPrice: 'asc',
-                    unityBuyingPrice: 'asc',
-                    orderAddress: 'asc',
-                    supplyType: 'asc',
-                    supplyUnity: 'asc'
+                    label: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

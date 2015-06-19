@@ -8,11 +8,7 @@ app.controller('PurchaseListController', function ($scope, $filter, $location,
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    purchaseDate: 'asc',
-                    quantity: 'asc',
-                    purchasePrice: 'asc',
-                    supply: 'asc',
-                    user: 'asc'
+                    purchaseDate: 'desc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {
