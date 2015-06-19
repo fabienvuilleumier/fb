@@ -2,9 +2,9 @@
     <form class="form-horizontal" name="editSupplyUnity" ng-submit="save(false)">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span ng-if="newSupplyUnity" translate="supplyUnity.create"></span>
-                <span ng-if="!newSupplyUnity" translate="supplyUnity.edit"></span>
-                <span ng-if="!newSupplyUnity"> {{supplyUnity.label}}</span>
+                <span ng-show="newSupplyUnity" translate="supplyUnity.create"></span>
+                <span ng-show="!newSupplyUnity" translate="supplyUnity.edit"></span>
+                <span ng-show="!newSupplyUnity"> {{supplyUnity.label}}</span>
             </div>
             <div class="panel-body">
                 <div class="form-group">

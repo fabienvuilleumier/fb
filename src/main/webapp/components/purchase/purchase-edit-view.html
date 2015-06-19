@@ -2,9 +2,9 @@
     <form class="form-horizontal" name="editPurchase" ng-submit="save(false)">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span ng-if="newPurchase" translate="purchase.create"></span>
-                <span ng-if="!newPurchase" translate="purchase.edit"></span>
-                <span ng-if="!newPurchase"> {{purchase.purchaseDate}}</span>
+                <span ng-show="newPurchase" translate="purchase.create"></span>
+                <span ng-show="!newPurchase" translate="purchase.edit"></span>
+                <span ng-show="!newPurchase"> {{purchase.purchaseDate}}</span>
             </div>
             <div class="panel-body">
                 <div class="form-group">
@@ -35,24 +35,23 @@
                                 ng-disabled="!newPurchase" 
                                 ng-model="purchase.supply" 
                                 ng-options='s as (s.code + " - " + s.label) group by s.supplyType.label for s in supplyStock track by s.id'></select>
-                                <!--ng-options='s as (s.code + " - " + s.label) group by s.supplyType.label for s in supplyStock'></select>-->
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" translate="purchase.quantity"></label>
-                    <div ng-if="purchase.supply" class="col-sm-7">
-                        <input ng-if="purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" min="0" max="{{purchase.supply.quantityStock}}" step="0.01" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
-                        <input ng-if="!purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" min="0" max="{{purchase.supply.quantityStock}}"  step="1" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
+                    <div ng-show="purchase.supply" class="col-sm-7">
+                        <input ng-show="purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" min="0" max="{{purchase.supply.quantityStock}}" step="0.01" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
+                        <input ng-show="!purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" min="0" max="{{purchase.supply.quantityStock}}"  step="1" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
                     </div>
-                    <div class="col-sm-1 unity" ng-if="purchase.supply">
+                    <div class="col-sm-1 unity" ng-show="purchase.supply">
                         <span> {{purchase.supply.supplyUnity.label}}</span>
                     </div>
                 </div>
-                <div class="form-group" ng-if="purchase.quantity">
+                <div class="form-group" ng-show="purchase.quantity">
                     <label class="col-sm-2 control-label" translate="purchase.discount"></label>
                     <div class="col-sm-7">
-                        <input ng-if="purchase.discountPercent" ng-readonly="!newPurchase" type="number" max="100" step="0.05" class="form-control" ng-model="purchase.discount" ng-change="updatePrice()"/>
-                        <input ng-if="!purchase.discountPercent" ng-readonly="!newPurchase" type="number" max="{{maxMoney()}}" step="0.05" class="form-control" ng-model="purchase.discount" ng-change="updatePrice()"/>
+                        <input ng-show="purchase.discountPercent" ng-readonly="!newPurchase" type="number" max="100" step="0.05" class="form-control" ng-model="purchase.discount" ng-change="updatePrice()"/>
+                        <input ng-show="!purchase.discountPercent" ng-readonly="!newPurchase" type="number" max="{{maxMoney()}}" step="0.05" class="form-control" ng-model="purchase.discount" ng-change="updatePrice()"/>
                     </div>
                     <div class="col-sm-1">
                         <select  class="form-control" 
@@ -78,12 +77,12 @@
                 </div>
             </div>
             <div class="panel-footer right">
-                <btn-cancel link="#/purchases" ng-if="newPurchase"></btn-cancel>
-                <a ng-if="!newPurchase" class="btn btn-default" href="#/purchases">
+                <btn-cancel link="#/purchases" ng-show="newPurchase"></btn-cancel>
+                <a ng-show="!newPurchase" class="btn btn-default" href="#/purchases">
                     <i class="fa fa-fw fa-arrow-left"></i>
                     <span translate="purchase.back"></span>
                 </a>
-                <btn-submit data-ng-disabled="{{purchase.purchaseQuantity > 0}}" ng-if="newPurchase" form="editPurchase"></btn-submit>
+                <btn-submit data-ng-disabled="{{purchase.purchaseQuantity > 0}}" ng-show="newPurchase" form="editPurchase"></btn-submit>
             </div>
         </div>
     </form>

@@ -2,9 +2,9 @@
     <form class="form-horizontal" name="editTicket" ng-submit="save(false)">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span ng-if="newTicket" translate="ticket.create"></span>
-                <span ng-if="!newTicket" translate="ticket.edit"></span>
-                <span ng-if="!newTicket"> {{ticket.title}}</span>
+                <span ng-show="newTicket" translate="ticket.create"></span>
+                <span ng-show="!newTicket" translate="ticket.edit"></span>
+                <span ng-show="!newTicket"> {{ticket.title}}</span>
             </div>
             <div class="panel-body">
                 <div class="row creation">
@@ -15,7 +15,7 @@
                         <span>{{ticket.creationUser|prettyUser}}</span>
                     </div>
                 </div>
-                <!--<div class="updateTicket" ng-if="!newTicket">-->
+                <!--<div class="updateTicket" ng-show="!newTicket">-->
                 <div class="updateTicket">
                     <div class="row status">
                         <div class="col-sm-offset-4 col-sm-3 block-status">
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                 </div>
-                 <div class="updateTicket" ng-if="!newTicket">
+                 <div class="updateTicket" ng-show="!newTicket">
                     <div class="row close-ticket">
                         <div class="col-sm-offset-8 col-sm-4">
                             <span translate="ticket.closeDate"></span>
@@ -79,13 +79,13 @@
                 </div>
             </div>
             <div class="panel-footer right">
-                <btn-cancel ng-show=="!fromMachine" link="#/tickets"></btn-cancel>
-                <btn-cancel ng-show=="fromMachine" link="#/machines"></btn-cancel>
-                <a ng-if="!newTicket && ticket.status.label.toUpperCase() === 'OPEN'" class="btn btn-primary" link="#/tickets" ng-click="closeTicket()">
+                <btn-cancel ng-show="!fromMachine" link="#/tickets"></btn-cancel>
+                <btn-cancel ng-show="fromMachine" link="#/machines"></btn-cancel>
+                <a ng-show="!newTicket && ticket.status.label.toUpperCase() === 'OPEN'" class="btn btn-primary" link="#/tickets" ng-click="closeTicket()">
                     <span translate="ticket.closeTicket"></span>
                     <i class="fa fa-fw fa-check"></i>
                 </a>
-                <a ng-if="!newTicket && ticket.status.label.toUpperCase() === 'CLOSED'" class="btn btn-primary" link="#/tickets" ng-click="reOpenTicket()">
+                <a ng-show="!newTicket && ticket.status.label.toUpperCase() === 'CLOSED'" class="btn btn-primary" link="#/tickets" ng-click="reOpenTicket()">
                     <span translate="ticket.reOpenTicket"></span>
                     <i class="fa fa-fw fa-check"></i>
                 </a>

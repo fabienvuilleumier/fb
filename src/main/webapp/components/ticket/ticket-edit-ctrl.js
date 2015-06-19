@@ -1,6 +1,6 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalTicketEditController', function ($scope, $rootScope, $location,$routeParams,
+app.controller('GlobalTicketEditController', function ($scope, $rootScope, $location, $routeParams,
         TicketService, NotificationService, StaticDataService, TicketStatusService) {
     $scope.fromMachine = $routeParams.machineId ? true : false;
     $scope.selected = {ticket: undefined};

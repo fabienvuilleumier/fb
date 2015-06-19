@@ -2,9 +2,9 @@
     <form class="form-horizontal" name="editSupplyType" ng-submit="save(false)">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <span ng-if="newSupplyType" translate="supplyType.create"></span>
-                <span ng-if="!newSupplyType" translate="supplyType.edit"></span>
-                <span ng-if="!newSupplyType"> {{supplyType.label}}</span>
+                <span ng-show="newSupplyType" translate="supplyType.create"></span>
+                <span ng-show="!newSupplyType" translate="supplyType.edit"></span>
+                <span ng-show="!newSupplyType"> {{supplyType.label}}</span>
             </div>
             <div class="panel-body">
                 <div class="form-group">

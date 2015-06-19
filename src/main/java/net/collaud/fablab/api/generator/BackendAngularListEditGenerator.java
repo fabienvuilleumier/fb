@@ -224,9 +224,9 @@ public class BackendAngularListEditGenerator {
         str.append("    ").append("<form class=\"form-horizontal\" name=\"edit").append(CLASS_NAME).append("\" ng-submit=\"save(false)\">").append("\n");
         str.append("        ").append("<div class=\"panel panel-default\">").append("\n");
         str.append("            ").append("<div class=\"panel-heading\">").append("\n");
-        str.append("                ").append("<span ng-if=\"new").append(CLASS_NAME).append("\" translate=\"").append(CLASS_ATTRIBUTE).append(".create\"></span>").append("\n");
-        str.append("                ").append("<span ng-if=\"!new").append(CLASS_NAME).append("\" translate=\"").append(CLASS_ATTRIBUTE).append(".edit\"></span>").append("\n");
-        str.append("                ").append("<span ng-if=\"!new").append(CLASS_NAME).append("\"> {{").append(CLASS_ATTRIBUTE).append(".").append(FIELDS[1].getName()).append("}}</span>").append("\n");
+        str.append("                ").append("<span ng-show=\"new").append(CLASS_NAME).append("\" translate=\"").append(CLASS_ATTRIBUTE).append(".create\"></span>").append("\n");
+        str.append("                ").append("<span ng-show=\"!new").append(CLASS_NAME).append("\" translate=\"").append(CLASS_ATTRIBUTE).append(".edit\"></span>").append("\n");
+        str.append("                ").append("<span ng-show=\"!new").append(CLASS_NAME).append("\"> {{").append(CLASS_ATTRIBUTE).append(".").append(FIELDS[1].getName()).append("}}</span>").append("\n");
         str.append("            ").append("</div>").append("\n");
         str.append("            ").append("<div class=\"panel-body\">").append("\n");
         for (Field f : FIELDS) {

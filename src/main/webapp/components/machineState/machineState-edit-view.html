@@ -1,9 +1,9 @@
 <form class="form-horizontal" name="editMachineState" ng-submit="save(false)">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<span ng-if="newMachineState" translate="machineState.create"></span>
-                        <span ng-if="!newMachineState" translate="machineState.edit"></span>
-			<span ng-if="!newMachineState"> {{machineState.label}}</span>
+			<span ng-show="newMachineState" translate="machineState.create"></span>
+                        <span ng-show="!newMachineState" translate="machineState.edit"></span>
+			<span ng-show="!newMachineState"> {{machineState.label}}</span>
 		</div>
 		<div class="panel-body">
 			<div class="form-group">

@@ -2,9 +2,9 @@
 <form class="form-horizontal" name="editMachineType" ng-submit="save(false)">
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<span ng-if="newMachineType" translate="machineType.create"></span>
-			<span ng-if="!newMachineType" translate="machineType.edit"></span>
-			<span ng-if="!newMachineType"> {{machineType.name}}</span>
+			<span ng-show="newMachineType" translate="machineType.create"></span>
+			<span ng-show="!newMachineType" translate="machineType.edit"></span>
+			<span ng-show="!newMachineType"> {{machineType.name}}</span>
 		</div>
 		<div class="panel-body">
 			<div class="form-group">
