@@ -5,7 +5,7 @@
                 return {
                     restrict: 'E',
                     scope: {
-                        machine: '=machine'
+                        machine: '@machine'
                     },
                     templateUrl: 'components/machine/directive-machine-revisions-view.html',
                     controller: function ($scope, RevisionService) {
@@ -32,7 +32,7 @@
                             }
                         });
                         var updateRevisionList = function () {
-                            RevisionService.listByMachine($scope.machine.id, function (data) {
+                            RevisionService.listByMachine($scope.machine, function (data) {
                                 $scope.revisions = data;
                                 $scope.tableParams.reload();
                             });

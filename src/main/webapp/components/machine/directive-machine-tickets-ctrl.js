@@ -4,7 +4,7 @@ angular.module('Fablab').directive('machineTickets',
             return {
                 restrict: 'E',
                 scope: {
-                    machine: '=machine'
+                    machine: '@machine'
                 },
                 templateUrl: 'components/machine/directive-machine-tickets-view.html',
                 controller: function ($scope, TicketService) {
@@ -32,7 +32,7 @@ angular.module('Fablab').directive('machineTickets',
                     });
                     var updateTicketList = function () {
                         console.log("machine id " + $scope.machine);
-                        TicketService.listByMachine($scope.machine.id, function (data) {
+                        TicketService.listByMachine($scope.machine, function (data) {
                             for (var i = 0; i < data.length; i++) {
                                 data[i].statusLabel = ""; //initialization of new property 
                                 data[i].statusLabel = data[i].status.label; //set the data from nested obj into new property

@@ -25,4 +25,10 @@ public interface RevisionRepository extends JpaRepository<RevisionEO, Integer> {
             + " LEFT JOIN FETCH r.machine "
             + " WHERE r.id=:id")
     Optional<RevisionEO> findOneDetails(@Param("id") Integer id);
+    
+    @Query(" SELECT r "
+            + " FROM RevisionEO r "
+            + " LEFT JOIN FETCH r.machine m "
+            + " WHERE m.id = :id ")
+    List<RevisionEO> listByMachine(@Param("id") Integer id);
 }

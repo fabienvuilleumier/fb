@@ -87,7 +87,7 @@
         </div>
     </form>
 
-    <div ng-if="!newMachine" class="panel panel-default">
+    <div ng-show="!newMachine" class="panel panel-default">
         <div class="panel-heading">
             <span translate="machine.lists"></span>
         </div>
@@ -100,12 +100,12 @@
             </button>
             <div class="collapse" id="developReservations">
                 <div class="well">
-                    <machine-revisions machine="machine"></machine-revisions>
+                    <machine-revisions  machine="{{machineId}}"></machine-revisions>
                 </div>
             </div>
             <div class="collapse" id="developTickets">
                 <div class="well">
-                    <machine-tickets machine="machine"></machine-tickets>
+                    <machine-tickets machine="{{machineId}}"></machine-tickets>
                 </div>
             </div>
         </div>
