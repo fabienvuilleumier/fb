@@ -43,6 +43,6 @@ public class RevisionWS extends ReadWriteRestWebservice<RevisionEO, RevisionServ
         
    @RequestMapping(value = "listByMachine", method = RequestMethod.GET)
     public List<RevisionEO> listByMachine(@RequestParam(value = "id") Integer id) {
-        return machineService.getById(id).get().getRevisionList();
+        return revisionService.listByMachine(id);
     }
 }

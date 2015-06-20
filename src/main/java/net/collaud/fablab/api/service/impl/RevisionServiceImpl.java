@@ -70,4 +70,11 @@ public class RevisionServiceImpl implements RevisionService {
         current.setActive(false);
         revisionDAO.saveAndFlush(current);
     }
+
+    @Override
+     @Secured({Roles.MACHINE_MANAGE})
+    public List<RevisionEO> listByMachine(Integer id) {
+        return revisionDAO.listByMachine(id);
+    }
+    
 }

@@ -22,19 +22,17 @@ public class Generator {
      {"java type", "java name", "nullable ? [t,f]", "db type"} 
      */
     /*FIRST*/
-    private final String CLASS_NAME = "MotionStock";
-    private final String TABLE_NAME = "t_motion_stock";
+    private final String CLASS_NAME = "PriceMachine";
+    private final String TABLE_NAME = "r_price_machine";
 
     private final String[][] FIELDS = new String[][]{
         {"Integer", "id", "f", "INT"},
-        {"Date", "motionDate", "f", "DATE"},
-        {"Double", "quantity", "f", "FLOAT"},
-        {"String", "io", "f", "VARCHAR"},
-        {"SupplyEO", "supply", "f", "INT"},
-        {"UserEO", "user", "f", "INT"}};
+        {"Float", "price", "f", "FLOAT"},
+        {"MachineTypeEO", "machineType", "f", "INT"},
+        {"MembershipTypeEO", "membershipType", "f", "INT"}};
 
-    private final boolean WRITE = false;
-    private final String[] ROLES = new String[]{"SUPPLY_MANAGE"};
+    private final boolean WRITE = true;
+    private final String[] ROLES = new String[]{"MACHINE_MANAGE"};
     private final Map<String, String> nestedObjectReprAttr = new HashMap<>();
 
     /*SECOND*/
@@ -42,8 +40,8 @@ public class Generator {
 
     public static void main(String[] args) {
         Generator agl = new Generator();
-        agl.getNestedObjectReprAttr().put("supply", "code");
-        agl.getNestedObjectReprAttr().put("user", "lastname");
+        agl.getNestedObjectReprAttr().put("machineType", "name");
+        agl.getNestedObjectReprAttr().put("membershipType", "name");
         //agl.runEO();
         agl.runBase();
         agl.runAngular(agl.getNestedObjectReprAttr());

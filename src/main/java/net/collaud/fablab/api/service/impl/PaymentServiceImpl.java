@@ -3,7 +3,6 @@ package net.collaud.fablab.api.service.impl;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +23,6 @@ import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditAction;
 import net.collaud.fablab.api.data.type.AuditObject;
-import static net.collaud.fablab.api.data.type.AuditObject.PAYMENT;
-import static net.collaud.fablab.api.data.type.AuditObject.SUBSCRIPTION;
-import static net.collaud.fablab.api.data.type.AuditObject.USAGE;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.data.virtual.HistoryEntryId;
 import net.collaud.fablab.api.data.virtual.UserPaymentHistory;
@@ -86,7 +82,7 @@ public class PaymentServiceImpl implements PaymentService {
 		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		MachineEO machine = machineRepository.findOne(machineId);
 		double hourPrice = machine.getMachineType().getPriceList().stream()
-				.filter(p -> p.getMembershipTypeId()==user.getMembershipType().getId())
+				.filter(p -> p.getMembershipType()==user.getMembershipType())
 				.findFirst()
 				.map(pm -> pm.getPrice())
 				.orElseThrow(() -> new RuntimeException("Cannot find price for usage"));

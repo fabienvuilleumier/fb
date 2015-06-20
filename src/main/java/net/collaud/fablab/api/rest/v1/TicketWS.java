@@ -43,6 +43,6 @@ public class TicketWS extends ReadWriteRestWebservice<TicketEO, TicketService> i
 
     @RequestMapping(value = "listByMachine", method = RequestMethod.GET)
     public List<TicketEO> listByMachine(@RequestParam(value = "id") Integer id) {
-        return machineService.getById(id).get().getTicketList();
+        return ticketService.listByMachine(id);
     }
 }

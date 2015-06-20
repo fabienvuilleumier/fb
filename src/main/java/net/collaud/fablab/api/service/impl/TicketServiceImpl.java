@@ -74,4 +74,10 @@ public class TicketServiceImpl implements TicketService {
         current.setActive(false);
         ticketDAO.saveAndFlush(current);
     }
+
+    @Override
+    @Secured({Roles.TICKET_MANAGE})
+    public List<TicketEO> listByMachine(Integer id) {
+        return ticketDAO.listByMachine(id);
+    }
 }

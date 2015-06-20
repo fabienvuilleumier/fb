@@ -1,8 +1,9 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalMachineEditController', function ($scope, $location,
+app.controller('GlobalMachineEditController', function ($scope, $location, $routeParams, 
         MachineService, NotificationService, StaticDataService) {
     $scope.selected = {machine: undefined};
+    $scope.machineId = $routeParams.id;
     $scope.loadMachine = function (id) {
         MachineService.get(id, function (data) {
             $scope.machine = data;

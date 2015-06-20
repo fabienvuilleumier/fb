@@ -10,4 +10,6 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
 */
 public interface TicketService extends ReadWriteService<TicketEO> {
 
+    List<TicketEO> listByMachine(Integer id);
+
 }
