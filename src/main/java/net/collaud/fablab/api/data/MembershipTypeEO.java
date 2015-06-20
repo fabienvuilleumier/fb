@@ -25,7 +25,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_membership_type")
 @Getter
 @Setter
-@ToString(exclude="userList")
+@ToString(exclude={"userList", "priceList"})
 @Where(clause = "active=1")
 public class MembershipTypeEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -42,9 +42,14 @@ public class MembershipTypeEO extends AbstractDataEO<Integer> implements Seriali
 
     @Column(name = "price", nullable = false)
     private double price;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "membershipType", fetch = FetchType.LAZY)
+    private List<PriceMachineEO> priceList;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "membershipType", fetch = FetchType.LAZY)
     private List<UserEO> userList;
+    
+    
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;

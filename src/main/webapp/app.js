@@ -176,6 +176,18 @@
         }).when('/motionStocks', {
             templateUrl: './components/motionStock/motionStock-list-view.html',
             controller: 'MotionStockListController'
+        }).when('/priceMachines', {
+            templateUrl: './components/priceMachine/priceMachine-list-view.html',
+            controller: 'PriceMachineListController'
+        }).when('/priceMachines/table', {
+            templateUrl: './components/priceMachine/priceMachine-table-view.html',
+            controller: 'PriceMachineTableController'
+        }).when('/priceMachines/priceMachine-edit/:id', {
+            templateUrl: './components/priceMachine/priceMachine-edit-view.html',
+            controller: 'PriceMachineEditController'
+        }).when('/priceMachines/priceMachine-edit', {
+            templateUrl: './components/priceMachine/priceMachine-edit-view.html',
+            controller: 'PriceMachineNewController'
         }).otherwise({
             redirectTo: '/'
         });

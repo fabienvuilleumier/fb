@@ -1,6 +1,7 @@
 (function () {
     'use strict';
-    angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentService, MachineService, NotificationService, StaticDataService) {
+    angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentService, MachineService,
+            MachineTypeService, NotificationService, StaticDataService) {
         return {
             restrict: 'EA',
             scope: {
@@ -32,8 +33,13 @@
                     if ($scope.addUsage.machine) {
                         var membershipTypeId = $scope.user.membershipType.id;
                         $scope.addUsage.total = -1;
-                        angular.forEach($scope.addUsage.machine.machineType.priceList, function (p) {
-                            if (p.membershipTypeId === membershipTypeId) {
+                        /*CHANGE HERE AFTER DISCUSS WITH B.FRITSCHER*/
+                        var machineTypeId = $scope.addUsage.machine.machineType.id;
+                        var priceList = MachineTypeService.getPricesValue(machineTypeId);
+                        console.log("priceList " + priceList);
+                        /*angular.forEach($scope.$scope.addUsage.machine.machineType.priceList, function (p) {*/
+                        angular.forEach(priceList, function (p) {
+                            if (p.membershipType.id === membershipTypeId) {
                                 var add = $scope.addUsage.additionalCost;
                                 var total = p.price * getMinutes() / 60 + add;
                                 $scope.addUsage.total = parseFloat($filter('number')(total, 2));

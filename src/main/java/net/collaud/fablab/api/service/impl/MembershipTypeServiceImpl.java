@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.api.dao.MembershipTypeRepository;
 import net.collaud.fablab.api.data.MembershipTypeEO;
+import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.MembershipTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,10 @@ public class MembershipTypeServiceImpl implements MembershipTypeService {
         MembershipTypeEO current = membershipTypeDAO.findOne(id);
         current.setActive(false);
         membershipTypeDAO.saveAndFlush(current);
+    }
+
+    @Override
+    public List<PriceMachineEO> getPrices(Integer id) {
+        return membershipTypeDAO.getPrices(id);
     }
 }
