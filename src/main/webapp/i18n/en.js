@@ -51,7 +51,9 @@ angular.module('Fablab').config(function ($translateProvider) {
             purchases: 'Purchases',
             addPurchase: 'Make a purchase',
             supplyUnities: 'Supply unities',
-            motionStocks : 'Stock motion'
+            motionStocks: 'Stock motion',
+            priceMachines : 'Use cost',
+            priceMachinesTable:'Use cost table'
         },
         loading: {
             title: 'Loading',
@@ -203,7 +205,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             revisions: 'Revisions',
             tickets: 'Tickets',
             toDoRevision: 'To-Do for revision',
-            lists:'Reservations & Tickets',
+            lists: 'Reservations & Tickets',
             create: 'Machinery creation',
             edit: 'Edit :',
             notification: {
@@ -425,6 +427,21 @@ angular.module('Fablab').config(function ($translateProvider) {
             io: 'Io',
             supply: 'Supply',
             user: 'User'
+        },
+        priceMachine: {
+            title: 'Use cost',
+            price: 'Price',
+            machineType: 'Machinery type',
+            membershipType: 'Membership type',
+            create: 'Use cost creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Use cost saved',
+                removed: 'Use cost removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this use cost ?'
+            }
         }
     });
 });

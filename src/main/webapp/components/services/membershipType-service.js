@@ -30,6 +30,9 @@
                 $log.debug("MembershipTypeService: get...");
                 var membershipTypeRes = membershipType.get({id: id}, successFn);
                 return membershipTypeRes;
+            }, 
+            getPrices: function (id, successFn) {
+                $http.get(App.API.MEMBERSHIP_TYPE_API + "/getPrices?id=" + id).success(successFn);
             }
         };
     });

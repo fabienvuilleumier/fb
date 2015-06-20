@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.api.dao.MachineTypeRepository;
 import net.collaud.fablab.api.data.MachineTypeEO;
+import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.MachineTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,10 @@ public class MachineTypeServiceImpl implements MachineTypeService {
         MachineTypeEO current = machineTypeDao.findOne(id);
         current.setActive(false);
         machineTypeDao.saveAndFlush(current);
+    }
+
+    @Override
+    public List<PriceMachineEO> getPrices(Integer id) {
+       return machineTypeDao.getPrices(id);
     }
 }

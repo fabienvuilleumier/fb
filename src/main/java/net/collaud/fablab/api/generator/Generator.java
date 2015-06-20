@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import net.collaud.fablab.api.data.MotionStockEO;
+import net.collaud.fablab.api.data.PriceMachineEO;
 
 /**
  *
@@ -36,7 +37,7 @@ public class Generator {
     private final Map<String, String> nestedObjectReprAttr = new HashMap<>();
 
     /*SECOND*/
-    private final Class KLAZZ = MotionStockEO.class;
+    private final Class KLAZZ = null;//PriceMachineEO.class;
 
     public static void main(String[] args) {
         Generator agl = new Generator();

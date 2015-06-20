@@ -153,7 +153,7 @@ public class BackendAngularListEditGenerator {
         str.append("                ").append("count: 25, // count per page").append("\n");
         str.append("                ").append("sorting: {").append("\n");
         if (FIELDS.length != 0) {
-            Field f = FIELDS[0];
+            Field f = FIELDS[1];
             if (f.getType().getSimpleName().toUpperCase().contains("DATE")) {
                 str.append("                    ").append(f.getName()).append(":'desc',").append("\n");
             } else {
@@ -184,7 +184,7 @@ public class BackendAngularListEditGenerator {
                     str.append("                ").append("data[i].").append(nestedObjectReprAtr(f)).append(" = \"\"; //initialization of new property ").append("\n");
                     str.append("                ").append("data[i].").append(nestedObjectReprAtr(f))
                             .append(" = data[i].")
-                            .append(NESTED_OBJECT_REPR_ATTR.get(f.getName()))
+                            .append(f.getName())
                             .append(".")
                             .append(NESTED_OBJECT_REPR_ATTR.get(f.getName()))
                             .append(";  //set the data from nested obj into new property").append("\n");
@@ -239,7 +239,7 @@ public class BackendAngularListEditGenerator {
                         str.append("                        ").append("<select class=\"form-control\" ").append("\n");
                         str.append("                        ").append("required").append("\n");
                         str.append("                        ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"").append("\n");
-                        str.append("                    ").append("ng-options=\"common.").append(nestedObjectReprAtr(f)).append(" for common in ").append(f.getName()).append("List track by common.id\"></select>").append("\n");
+                        str.append("                    ").append("ng-options=\"common.").append(NESTED_OBJECT_REPR_ATTR.get(f.getName())).append(" for common in ").append(f.getName()).append("List track by common.id\"></select>").append("\n");
                         str.append("                ").append("</div>").append("\n");
                         str.append("            ").append("</div>").append("\n");
                     } else if (f.getType().getSimpleName().toUpperCase().contains("DATE")) {
