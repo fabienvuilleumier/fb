@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('MotionStockListController', function ($scope, $filter, $location,
-        ngTableParams, MotionStockService, NotificationService) {
+        ngTableParams, MotionStockService) {
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page
