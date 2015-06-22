@@ -1,7 +1,8 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('GlobalMachineTypeEditController', function ($scope, $location,
-        MachineTypeService, NotificationService) {
+        MachineTypeService, NotificationService, MembershipTypeService, 
+        PriceMachineService) {
 
     $scope.selected = {machineType: undefined};
 
@@ -9,10 +10,18 @@ app.controller('GlobalMachineTypeEditController', function ($scope, $location,
         MachineTypeService.get(id, function (data) {
             $scope.machineType = data;
         });
+        PriceMachineService.getMachineType(id, function(data){
+           $scope.priceMachines = data;
+        });
     };
+
+    MembershipTypeService.list(function (data) {
+        $scope.membershipTypes = data;
+    });
 
     $scope.save = function () {
         var machineTypeCurrent = angular.copy($scope.machineType);
+        //SAVE PRICE MACHINE ???
         MachineTypeService.save(machineTypeCurrent, function (data) {
             $scope.machineType = data;
             NotificationService.notify("success", "machineType.notification.saved");

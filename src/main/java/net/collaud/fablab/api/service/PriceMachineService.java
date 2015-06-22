@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.service;
 
+import java.util.List;
 import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.service.global.ReadWriteService;
 /**
@@ -8,6 +9,10 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
 */
 public interface PriceMachineService extends ReadWriteService<PriceMachineEO>{
 
-    public PriceMachineEO getPriceMachineType(Integer machineTypeId, Integer membershipTypeId);
+    public PriceMachineEO getPriceMachine(Integer machineTypeId, Integer membershipTypeId);
+
+    public List<PriceMachineEO> getMachineType(Integer machineTypeId);
+
+    public List<PriceMachineEO> getMembershipType(Integer membershipTypeId);
 
 }

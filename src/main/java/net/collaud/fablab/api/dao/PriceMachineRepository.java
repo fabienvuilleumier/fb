@@ -3,7 +3,6 @@ package net.collaud.fablab.api.dao;
 import java.util.List;
 import net.collaud.fablab.api.data.PriceMachineEO;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -35,6 +34,18 @@ public interface PriceMachineRepository extends JpaRepository<PriceMachineEO, In
             + " LEFT JOIN FETCH p.membershipType mst "
             + " WHERE mt.id = :machineTypeId AND "
             + " mst.id = :membershipTypeId")
-    PriceMachineEO getPriceMachineType(@Param("machineTypeId") Integer machineTypeId,
+    PriceMachineEO getPriceMachine(@Param("machineTypeId") Integer machineTypeId,
             @Param("membershipTypeId") Integer membershipTypeId);
+
+    @Query("SELECT p "
+            + " FROM PriceMachineEO p "
+            + " LEFT JOIN FETCH p.membershipType mst "
+            + " WHERE mst.id = :membershipTypeId")
+    List<PriceMachineEO> getMembershipType(@Param("membershipTypeId") Integer membershipTypeId);
+
+    @Query("SELECT p "
+            + " FROM PriceMachineEO p "
+            + " LEFT JOIN FETCH p.machineType mt "
+            + " WHERE mt.id = :machineTypeId")
+    List<PriceMachineEO> getMachineType(@Param("machineTypeId") Integer machineTypeId);
 }

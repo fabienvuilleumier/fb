@@ -7,7 +7,7 @@ app.controller('PriceMachineListController', function ($scope, $filter, $locatio
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    machineType:'asc'
+                    machineTypeName:'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {
