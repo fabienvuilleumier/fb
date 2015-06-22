@@ -5,19 +5,23 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.audit.AuditUtils;
 import net.collaud.fablab.api.dao.MachineRepository;
+import net.collaud.fablab.api.dao.MachineTypeRepository;
 import net.collaud.fablab.api.dao.PaymentRepository;
 import net.collaud.fablab.api.dao.SubscriptionRepository;
 import net.collaud.fablab.api.dao.UsageRepository;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.PaymentEO;
+import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
@@ -66,7 +70,10 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
 	private MachineRepository machineRepository;
-
+        
+	@Autowired
+	private MachineTypeRepository machineTypeRepository;
+        
 	@Override
 	@Secured({Roles.PAYMENT_MANAGE})
 	public PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment) {
@@ -81,7 +88,8 @@ public class PaymentServiceImpl implements PaymentService {
 	public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment, boolean paidDirectly) {
 		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
 		MachineEO machine = machineRepository.findOne(machineId);
-		double hourPrice = machine.getMachineType().getPriceList().stream()
+                Set<PriceMachineEO> priceSet = new HashSet<>(machineTypeRepository.getPrices(machine.getMachineType().getId()));
+		double hourPrice = priceSet.stream()
 				.filter(p -> p.getMembershipType()==user.getMembershipType())
 				.findFirst()
 				.map(pm -> pm.getPrice())

@@ -134,6 +134,8 @@ public class BackendAngularListEditGenerator {
                 return "number";
             case "DOUBLE":
                 return "number\" step=\"0.05\"";
+            case "FLOAT":
+                return "number\" step=\"0.05\"";
             case "DATE":
                 return "date";
             default:
@@ -263,7 +265,7 @@ public class BackendAngularListEditGenerator {
                         str.append("                        ").append("<button type=\"button\" class=\"btn btn-default\" ng-click=\"open($event)\"><i class=\"glyphicon glyphicon-calendar\"></i></button>").append("\n");
                         str.append("                    ").append("</span>").append("\n");
                         str.append("                ").append("</p>").append("\n");
-                    } else {
+                    }else{
                         str.append("                ").append("<div class=\"form-group\">").append("\n");
                         str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"></label>").append("\n");
                         str.append("                    ").append("<div class=\"col-sm-8\">").append("\n");

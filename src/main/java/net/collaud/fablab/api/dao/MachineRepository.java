@@ -15,8 +15,7 @@ public interface MachineRepository extends JpaRepository<MachineEO, Integer> {
 
     @Query("SELECT DISTINCT m "
             + " FROM MachineEO m"
-            + " LEFT JOIN FETCH m.machineType mt "
-            + " LEFT JOIN FETCH mt.priceList "
+            + " LEFT JOIN FETCH m.machineType "
             + " LEFT JOIN FETCH m.machineStatus "
             + " LEFT JOIN FETCH m.machineState ")
     @Override
@@ -25,8 +24,7 @@ public interface MachineRepository extends JpaRepository<MachineEO, Integer> {
    
     @Query("SELECT m "
             + " FROM MachineEO m"
-            + " LEFT JOIN FETCH m.machineType mt "
-            + " LEFT JOIN FETCH mt.priceList "
+            + " LEFT JOIN FETCH m.machineType "
             + " LEFT JOIN FETCH m.machineStatus "
             + " LEFT JOIN FETCH m.machineState "
             + " WHERE m.id=:id")

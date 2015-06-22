@@ -46,6 +46,7 @@ public class TrainingServiceImpl implements TrainingService {
             TrainingEO old = trainingDAO.findOne(training.getId());
             old.setName(training.getName());
             old.setPrice(training.getPrice());
+            old.setNote(training.getNote());
             old.setTrainingLevel(training.getTrainingLevel());
             old.setMachineType(training.getMachineType());
             old.setActive(training.isActive());

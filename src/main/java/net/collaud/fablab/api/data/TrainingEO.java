@@ -14,9 +14,11 @@ import lombok.Getter;
 import org.hibernate.annotations.Where;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.Type;
 
 /**
  * This is the business class for a <tt>Training</tt>
+ *
  * @author Fabien Vuilleumier
  */
 @Entity
@@ -24,7 +26,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Where(clause="active=1")
+@Where(clause = "active=1")
 public class TrainingEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Id
@@ -32,11 +34,15 @@ public class TrainingEO extends AbstractDataEO<Integer> implements Serializable 
     @Column(name = "training_id", nullable = false)
     private Integer id;
 
-    @Column(name = "name", nullable = false )
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "price", nullable = true )
+    @Column(name = "price", nullable = true)
     private Float price;
+
+    @Column(name = "note", nullable = true)
+    @Type(type = "text")
+    private String note;
 
     @JoinColumn(name = "training_level_id", referencedColumnName = "training_level_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -46,7 +52,7 @@ public class TrainingEO extends AbstractDataEO<Integer> implements Serializable 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MachineTypeEO machineType;
 
-    @Column(name="active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
 
     public TrainingEO() {
