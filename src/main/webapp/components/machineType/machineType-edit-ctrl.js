@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('GlobalMachineTypeEditController', function ($scope, $location,
-        MachineTypeService, NotificationService, MembershipTypeService, 
+        MachineTypeService, NotificationService, MembershipTypeService,
         PriceMachineService) {
 
     $scope.selected = {machineType: undefined};
@@ -10,8 +10,8 @@ app.controller('GlobalMachineTypeEditController', function ($scope, $location,
         MachineTypeService.get(id, function (data) {
             $scope.machineType = data;
         });
-        PriceMachineService.getMachineType(id, function(data){
-           $scope.priceMachines = data;
+        PriceMachineService.getMachineType(id, function (data) {
+            $scope.priceMachines = data;
         });
     };
 
@@ -30,10 +30,10 @@ app.controller('GlobalMachineTypeEditController', function ($scope, $location,
     };
 
     var updateTechnicalName = function () {
-        var oldName = $scope.machineType.name.substring(0, $scope.machineType.name.length - 1);
         if (!$scope.machineType.technicalname) {
             $scope.machineType.technicalname = $scope.machineType.name;
         } else {
+            var oldName = $scope.machineType.name.substring(0, $scope.machineType.name.length - 1);
             if ($scope.machineType.technicalname === oldName) {
                 $scope.machineType.technicalname = $scope.machineType.name;
             }

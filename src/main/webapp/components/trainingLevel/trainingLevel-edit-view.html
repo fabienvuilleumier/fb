@@ -1,0 +1,24 @@
+<div class="trainingLevelEdit">
+    <form class="form-horizontal" name="editTrainingLevel" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newTrainingLevel" translate="trainingLevel.create"></span>
+                <span ng-show="!newTrainingLevel" translate="trainingLevel.edit"></span>
+                <span ng-show="!newTrainingLevel"> {{trainingLevel.label}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="trainingLevel.label"></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="trainingLevel.label" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel link="#/trainingLevels"></btn-cancel>
+                <btn-submit form="editTrainingLevel"></btn-submit>
+            </div>
+        </div>
+    </form>
+</div>
+

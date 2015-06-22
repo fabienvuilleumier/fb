@@ -52,8 +52,10 @@ angular.module('Fablab').config(function ($translateProvider) {
             addPurchase: 'Make a purchase',
             supplyUnities: 'Supply unities',
             motionStocks: 'Stock motion',
-            priceMachines : 'Use cost',
-            priceMachinesTable:'Use cost table'
+            priceMachines: 'Use cost',
+            priceMachinesTable: 'Use cost table',
+            trainingLevels: 'Training levels',
+            trainings: 'Trainings'
         },
         loading: {
             title: 'Loading',
@@ -442,6 +444,35 @@ angular.module('Fablab').config(function ($translateProvider) {
             },
             confirmation: {
                 remove: 'Do you really want to remove this use cost ?'
+            }
+        },
+        trainingLevel: {
+            title: 'Training level',
+            label: 'Label',
+            create: 'Training level creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Training level saved',
+                removed: 'Training level removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this training level ?'
+            }
+        },
+        training: {
+            title: 'Training',
+            name: 'Name',
+            price: 'Price',
+            trainingLevel: 'Training level',
+            machineType: 'Machine type',
+            create: 'Training creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Training saved',
+                removed: 'Training removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this training ?'
             }
         }
     });

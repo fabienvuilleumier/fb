@@ -27,7 +27,7 @@
                     <input type="checkbox" ng-model="machineType.restricted"/>
                 </div>
             </div>
-            <h2 translate="machineType.membershipTypes"></h2>
+            <h3 translate="machineType.membershipTypes"></h3>
             <table class="table">
                 <thead>
                     <tr>
@@ -39,8 +39,11 @@
                 <tbody>
                     <tr>
                         <!--Faire correspondre ? -->
-                        <td ng-repeat="priceMachine in priceMachines">
-                            <input type="number" min="0" step="0.05" ng-model="priceMachine"/>
+                        <td ng-if="!priceMachines" ng-repeat="membershipType in membershipTypes">
+                            <input type="number" class="form-control" min="0" step="0.05" ng-model="priceMachine" required/>
+                        </td>
+                        <td  ng-if="priceMachines" ng-repeat="priceMachine in priceMachines">
+                            <input type="number" class="form-control" min="0" step="0.05" ng-model="priceMachine" required/>
                         </td>
                     </tr>
                 </tbody>
