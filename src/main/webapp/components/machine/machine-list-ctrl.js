@@ -49,42 +49,5 @@ app.controller('MachineListController', function ($scope, $filter, $location,
     };
     $scope.currency = App.CONFIG.CURRENCY;
     updateMachineList();
-
-    var updateMemberShipList = function () {
-        MembershipTypeService.list(function (mst) {
-            $scope.membershipTypes = mst;
-            PriceMachineService.list(function (pm) {
-                $scope.priceMachines = pm;
-                var mti, msti, pmi;
-                var getCellule = function (mtId, mstId) {
-                    for (pmi = 0; pmi < pm.length; pmi++) {
-                        if (pm[pmi].machineType.id === mtId &&
-                                pm[pmi].membershipType.id === mstId) {
-                            return pm[pmi];
-                        }
-                    }
-                    return "";
-                };
-                var mtArray = [];
-                var prices = {};
-                for (mti = 0; mti < mt.length; mti++) {
-                    var machineType = {};
-                    machineType.machineType = mt[mti];
-                    mtArray.push(machineType);
-                    var mstArray = [];
-                    for (msti = 0; msti < mst.length; msti++) {
-                        var membershipType = {};
-                        membershipType.price = getCellule(mt[mti].id, mst[msti].id);
-                        mstArray.push(membershipType);
-                    }
-                    machineType.membershipTypes = mstArray;
-                }
-                prices.machineTypes = mtArray;
-                $scope.prices = prices;
-                console.log(prices);
-            });
-        });
-    };
-    updateMemberShipList();
 });
 
