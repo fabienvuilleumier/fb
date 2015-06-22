@@ -1,7 +1,8 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('GlobalMembershipTypeEditController', function ($scope, $location,
-    MembershipTypeService, NotificationService, MachineTypeService, PriceMachineService) {
+        MembershipTypeService, NotificationService, MachineTypeService, PriceMachineService) {
+    $scope.currency = App.CONFIG.CURRENCY;
     $scope.selected = {membershipType: undefined};
     $scope.loadMembershipType = function (id) {
         MembershipTypeService.get(id, function (data) {
@@ -9,15 +10,15 @@ app.controller('GlobalMembershipTypeEditController', function ($scope, $location
         });
         updateMachineTypeList();
     };
-    
-    MachineTypeService.list(function(mt){
+
+    MachineTypeService.list(function (mt) {
         $scope.machineTypes = mt;
     });
-    
+
     $scope.save = function () {
         var membershipTypeCurrent = angular.copy($scope.membershipType);
-         if ($scope.newMembershipType) {
-              MembershipTypeService.save(membershipTypeCurrent, function (data) {
+        if ($scope.newMembershipType) {
+            MembershipTypeService.save(membershipTypeCurrent, function (data) {
                 $scope.machineType = data;
                 NotificationService.notify("success", "membershipType.notification.saved");
                 MembershipTypeService.getId(data.name, function (withId) {
@@ -39,9 +40,9 @@ app.controller('GlobalMembershipTypeEditController', function ($scope, $location
                     });
                 }
             });
-         }
-        };
-        var updateMachineTypeList = function () {
+        }
+    };
+    var updateMachineTypeList = function () {
         MachineTypeService.list(function (mst) {
             $scope.machineTypes = mst;
             PriceMachineService.list(function (pm) {
@@ -72,7 +73,7 @@ app.controller('MembershipTypeNewController', function ($scope, $controller) {
     $scope.membershipType = {};
 }
 );
-    app.controller('MembershipTypeEditController', function ($scope, $routeParams, $controller) {
+app.controller('MembershipTypeEditController', function ($scope, $routeParams, $controller) {
     $controller('GlobalMembershipTypeEditController', {$scope: $scope});
     $scope.newMembershipType = false;
     $scope.loadMembershipType($routeParams.id);

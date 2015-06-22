@@ -206,15 +206,15 @@
         }).when('/trainings/training-edit', {
             templateUrl: './components/training/training-edit-view.html',
             controller: 'TrainingNewController'
-        }).when('/trainingInstances', {
-            templateUrl: './components/trainingInstance/trainingInstance-list-view.html',
-            controller: 'TrainingInstanceListController'
-        }).when('/trainingInstances/trainingInstance-edit/:id', {
-            templateUrl: './components/trainingInstance/trainingInstance-edit-view.html',
-            controller: 'TrainingInstanceEditController'
-        }).when('/trainingInstances/trainingInstance-edit', {
-            templateUrl: './components/trainingInstance/trainingInstance-edit-view.html',
-            controller: 'TrainingInstanceNewController'
+        }).when('/certifications', {
+            templateUrl: './components/certification/certification-list-view.html',
+            controller: 'CertificationListController'
+        }).when('/certifications/certification-edit/:id', {
+            templateUrl: './components/certification/certification-edit-view.html',
+            controller: 'CertificationEditController'
+        }).when('/certifications/certification-edit', {
+            templateUrl: './components/certification/certification-edit-view.html',
+            controller: 'CertificationNewController'
         }).otherwise({
             redirectTo: '/'
         });

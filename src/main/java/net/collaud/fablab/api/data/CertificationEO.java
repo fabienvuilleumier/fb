@@ -20,28 +20,28 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * This is the business class for a <tt>TrainingInstance</tt>
+ * This is the business class for a <tt>Certification</tt>
  * @author Fabien Vuilleumier
  */
 @Entity
-@Table(name = "t_training_instance")
+@Table(name = "t_certification")
 @Getter
 @Setter
 @ToString
 @Where(clause="active=1")
-public class TrainingInstanceEO extends AbstractDataEO<Integer> implements Serializable {
+public class CertificationEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "training_instance_id", nullable = false)
+    @Column(name = "certification_id", nullable = false)
     private Integer id;
 
-    @Column(name = "training_date", nullable = false )
+    @Column(name = "certification_date", nullable = false )
     @Temporal(TemporalType.DATE)
-    private Date trainingDate;
+    private Date certificationDate;
 
-    @Column(name = "training_price", nullable = true )
-    private Float trainingPrice;
+    @Column(name = "certification_price", nullable = true )
+    private Float certificationPrice;
 
     @Column(name = "note", nullable = true )
     @Type(type = "text")
@@ -54,11 +54,11 @@ public class TrainingInstanceEO extends AbstractDataEO<Integer> implements Seria
     @Column(name="active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
 
-    public TrainingInstanceEO() {
+    public CertificationEO() {
         this(null);
     }
 
-    public TrainingInstanceEO(Integer id) {
+    public CertificationEO(Integer id) {
         this.active = true;
         this.id = id;
     }

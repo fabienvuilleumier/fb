@@ -56,7 +56,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             priceMachinesTable: 'Use cost table',
             trainingLevels: 'Training levels',
             trainings: 'Trainings',
-            trainingInstances : 'Certification'
+            certification: 'Certification',
+            roles: 'Roles'
         },
         loading: {
             title: 'Loading',
@@ -268,6 +269,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             name: 'Name',
             duration: 'Duration',
             price: 'Price',
+            durationDay: 'Days',
             machineTypes: 'Machinery types',
             create: 'Membership type creation',
             edit: 'Edit :',
@@ -479,21 +481,21 @@ angular.module('Fablab').config(function ($translateProvider) {
                 remove: 'Do you really want to remove this training ?'
             }
         },
-        trainingInstance: {
-    title: 'Certificate',
-    trainingDate: 'Training date',
-    trainingPrice: 'Training price',
-    note: 'Note',
-    training: 'Training',
-    create:'Certificate creation',
-    edit:'Edit :',
-    notification: {
-        saved: 'Certificate saved',
-        removed: 'Certificate removed'
-    },
-    confirmation: {
-        remove: 'Do you really want to remove this certificate ?'
-    }
-}
+        certification: {
+            title: 'Certification',
+            certificationDate: 'Certification date',
+            certificationPrice: 'Certification price',
+            note: 'Note',
+            training: 'Training',
+            create: 'Certification creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Certification saved',
+                removed: 'Certification removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this certification ?'
+            }
+        }
     });
 });

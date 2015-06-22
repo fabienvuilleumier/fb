@@ -26,8 +26,7 @@
                 data-title="'machine.buyPrice' | translate" 
                 sortable="'buyPrice'"
                 filter="{'buyPrice':'text'}">
-                <span>{{machine.buyPrice}}</span>
-                <span> {{currency}}</span>
+                {{machine.buyPrice}} {{machine.buyPrice ? currency: ""}}
             </td>
             <td  style="width:145px"
                  data-title="'machine.acquisitionDate' | translate" 

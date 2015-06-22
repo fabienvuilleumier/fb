@@ -17,7 +17,7 @@
                 data-title="'training.price' | translate" 
                 sortable="'price'"
                 filter="{'price':'text'}">
-                {{training.price}}
+                {{training.price}} {{training.price ? currency: ""}}
             </td>
             <td 
                 data-title="'training.trainingLevel' | translate" 
