@@ -28,11 +28,11 @@
                 <div class="form-group">
                     <label ng-show="!supply.supplyUnity" class="col-sm-2 control-label" translate="supply.supplyUnity"></label>
                     <label ng-show="supply.supplyUnity" class="col-sm-2 control-label" translate="supply.unityBuyingPrice"></label>
-                    <div ng-if="supply.supplyUnity" class="col-sm-6">
+                    <div ng-if="supply.supplyUnity" class="col-sm-5">
                         <input type="number" min="0" step="0.05" class="form-control" ng-model="supply.unityBuyingPrice"/>
                     </div>
                     <label ng-if="supply.supplyUnity" class="col-sm-1 control-label">/</label>
-                    <div ng-if="supply.supplyUnity" class="col-sm-1">
+                    <div ng-if="supply.supplyUnity" class="col-sm-2">
                         <select class="form-control" 
                                 ng-model="supply.supplyUnity"
                                 ng-options="u.label for u in unityList track by u.id" required></select>
@@ -46,7 +46,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" translate="supply.orderAddress"></label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" ng-model="supply.orderAddress"/>
+                        <textarea class="form-control" ng-model="supply.orderAddress"></textarea>
                     </div>
                 </div>
                 <div class="form-group" ng-if="newSupply">

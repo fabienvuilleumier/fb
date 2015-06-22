@@ -35,11 +35,11 @@ public class PriceMachineEO extends AbstractDataEO<Integer> implements Serializa
     private Float price;
 
     @JoinColumn(name = "machine_type_id", referencedColumnName = "machine_type_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MachineTypeEO machineType;
 
     @JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MembershipTypeEO membershipType;
 
 }

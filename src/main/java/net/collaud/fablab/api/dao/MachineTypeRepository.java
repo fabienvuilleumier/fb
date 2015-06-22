@@ -18,8 +18,8 @@ public interface MachineTypeRepository extends JpaRepository<MachineTypeEO, Inte
     @Override
     List<MachineTypeEO> findAll();
 
-    @Query("SELECT m.priceList "
-            + " FROM MachineTypeEO m "
-            + " WHERE m.id = :id")
+    @Query("SELECT p "
+            + " FROM PriceMachineEO p "
+            + " WHERE p.machineType.id = :id")
     List<PriceMachineEO> getPrices(@Param("id")Integer id);
 }

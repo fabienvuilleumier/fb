@@ -26,7 +26,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_machine_type")
 @Getter
 @Setter
-@ToString(exclude = {"priceList", "machineList"})
+@ToString
 @Where(clause = "active=1")
 public class MachineTypeEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -43,25 +43,13 @@ public class MachineTypeEO extends AbstractDataEO<Integer> implements Serializab
 
     @Column(name = "restricted", nullable = false, columnDefinition = "TINYINT(1)")
     private boolean restricted;
-
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machineType", fetch = FetchType.LAZY)
-    private List<MachineEO> machineList;
-
+    
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "machineType", fetch = FetchType.LAZY)
-    private Set<PriceMachineEO> priceList;
+    private Set<PriceMachineEO> priceList;*/
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
-
-    /**
-     * Add a machinery to this type (bidirectionnal use).
-     *
-     * @param machine the machinery
-     */
-    public void addMachine(MachineEO machine) {
-        this.getMachineList().add(machine);
-        machine.setMachineType(this);
-    }
 
     public MachineTypeEO() {
         this(null);
