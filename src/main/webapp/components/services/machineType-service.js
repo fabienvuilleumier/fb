@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     var app = angular.module('Fablab');
-    app.factory('MachineTypeService', function ($log, $resource, $http, $q) {
+    app.factory('MachineTypeService', function ($log, $resource, $http) {
         var machineType = $resource(App.API.MACHINE_TYPE_API + "/:id", {id: '@id'});
         return {
             list: function (successFn) {
@@ -22,8 +22,8 @@
             },
             save: function (machineTypeParam, successFn, errorFn) {
                 $log.debug("MachineTypeService: save...");
-                console.log(machineTypeParam.restricted);
-                return machineType.save(machineTypeParam, successFn, errorFn);
+                var saved = machineType.save(machineTypeParam, successFn, errorFn);
+                return saved;
             },
             get: function (id, successFn) {
                 $log.debug("MachineTypeService: get...");
@@ -32,14 +32,8 @@
             getPrices: function (id, successFn) {
                 $http.get(App.API.MACHINE_TYPE_API + "/getPrices?id=" + id).success(successFn);
             },
-            getPricesValue: function (id) {
-                var temp = {};
-                var defer = $q.defer();
-                $http.get(App.API.MACHINE_TYPE_API + "/getPrices?id=" + id).success(function (data) {
-                    temp = data;
-                    defer.resolve(data);
-                });
-                return defer.promise;
+            getId: function (technicalname, successFn) {
+                $http.get(App.API.MACHINE_TYPE_API + "/getId?technicalname=" + technicalname).success(successFn);
             }
         };
     });

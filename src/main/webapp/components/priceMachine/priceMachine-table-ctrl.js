@@ -5,7 +5,7 @@ app.controller('PriceMachineTableController', function ($scope, $location,
 
     $scope.save = function () {
         var mt = $scope.prices.machineTypes;
-        var mti, msti, pmi;
+        var mti, msti;
         for (mti = 0; mti < mt.length; mti++) {
             var mst = mt[mti].membershipTypes;
             for (msti = 0; msti < mst.length; msti++) {
@@ -53,7 +53,6 @@ app.controller('PriceMachineTableController', function ($scope, $location,
                     }
                     prices.machineTypes = mtArray;
                     $scope.prices = prices;
-                    console.log(prices);
                 });
             });
         });
