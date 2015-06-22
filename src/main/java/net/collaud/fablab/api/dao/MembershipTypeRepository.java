@@ -24,4 +24,9 @@ public interface MembershipTypeRepository extends JpaRepository<MembershipTypeEO
             + " WHERE m.id = :id")
     List<PriceMachineEO> getPrices(@Param("id")Integer id);
 
+    @Query("SELECT mst "
+            + " FROM MembershipTypeEO mst "
+            + " WHERE UPPER(mst.name) = UPPER(:name) ")
+    MembershipTypeEO getId(@Param("name") String name);
+
 }
