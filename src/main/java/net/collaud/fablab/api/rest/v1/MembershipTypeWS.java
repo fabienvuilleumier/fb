@@ -42,5 +42,10 @@ public class MembershipTypeWS extends ReadWriteRestWebservice<MembershipTypeEO, 
     public List<PriceMachineEO> getPrices(@RequestParam(value = "id") Integer id) {
         return membershipTypeService.getPrices(id);
     }
+    
+    @RequestMapping(value = "getId", method = RequestMethod.GET)
+    public MembershipTypeEO getId(@RequestParam(value = "name") String name) {
+        return membershipTypeService.getId(name);
+    }
 
 }

@@ -74,4 +74,9 @@ public class MembershipTypeServiceImpl implements MembershipTypeService {
     public List<PriceMachineEO> getPrices(Integer id) {
         return membershipTypeDAO.getPrices(id);
     }
+
+    @Override
+    public MembershipTypeEO getId(String name) {
+        return membershipTypeDAO.getId(name);
+    }
 }

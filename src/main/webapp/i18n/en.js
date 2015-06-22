@@ -268,6 +268,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             name: 'Name',
             duration: 'Duration',
             price: 'Price',
+            machineTypes: 'Machinery types',
             create: 'Membership type creation',
             edit: 'Edit :',
             notification: {

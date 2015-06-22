@@ -12,4 +12,6 @@ public interface MembershipTypeService extends ReadWriteService<MembershipTypeEO
 
     public List<PriceMachineEO> getPrices(Integer id);
 
+    public MembershipTypeEO getId(String name);
+
 }
