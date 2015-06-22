@@ -3,7 +3,7 @@ var app = angular.module('Fablab');
 app.controller('GlobalMachineTypeEditController', function ($scope, $location,
         MachineTypeService, NotificationService, MembershipTypeService,
         PriceMachineService) {
-
+    $scope.currency = App.CONFIG.CURRENCY;
     $scope.selected = {machineType: undefined};
     $scope.loadMachineType = function (id) {
         MachineTypeService.get(id, function (data) {

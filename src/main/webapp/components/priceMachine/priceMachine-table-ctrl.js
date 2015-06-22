@@ -2,7 +2,7 @@
 var app = angular.module('Fablab');
 app.controller('PriceMachineTableController', function ($scope, $location,
         PriceMachineService, MachineTypeService, MembershipTypeService, NotificationService) {
-
+            $scope.currency = App.CONFIG.CURRENCY;
     $scope.save = function () {
         var mt = $scope.prices.machineTypes;
         var mti, msti;

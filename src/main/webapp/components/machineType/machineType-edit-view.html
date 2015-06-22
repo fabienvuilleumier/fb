@@ -41,7 +41,12 @@
                     <tbody>
                         <tr>
                             <td ng-repeat="p in prices">
-                                <input type="number" class="form-control" min="0" step="0.05" ng-model="p.price" required/>
+                                <div class="col-sm-9">
+                                <input type="number" class="form-control col-sm-9" min="0" step="0.05" ng-model="p.price" required/>
+                                </div>
+                                <div class="col-sm-1 currency">
+                                    <span>{{currency}}</span>
+                                </div>
                             </td>
                         </tr>
                     </tbody>

@@ -2,12 +2,13 @@
 var app = angular.module('Fablab');
 app.controller('TrainingListController', function ($scope, $filter, $location,
         ngTableParams, TrainingService, NotificationService) {
+    $scope.currency = App.CONFIG.CURRENCY;
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    name:'asc'
+                    name: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

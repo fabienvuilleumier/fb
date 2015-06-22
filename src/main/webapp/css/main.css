@@ -288,3 +288,8 @@ fieldset[disabled] .btn-alternate.active {
   color: #9f33b7;
   background-color: #fff;
 }
+
+.currency{
+    margin-top: 9px;
+    font-weight: bold;
+}

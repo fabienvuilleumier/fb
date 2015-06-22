@@ -1,0 +1,47 @@
+<h1 translate="certification.title"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <a class="btn btn-success" href="#/certifications/certification-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+    </div>
+</div>
+<div class="certificationList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="certification in $data">
+            <td 
+                data-title="'certification.certificationDate' | translate" 
+                sortable="'certificationDate'"
+                filter="{'certificationDate':'text'}">
+                {{certification.certificationDate}}
+            </td>
+            <td 
+                data-title="'certification.certificationPrice' | translate" 
+                sortable="'certificationPrice'"
+                filter="{'certificationPrice':'text'}">
+                {{certification.certificationPrice}} {{certification.certificationPrice ? currency: ""}}
+            </td>
+            <td 
+                data-title="'certification.note' | translate" 
+                sortable="'note'"
+                filter="{'note':'text'}">
+                {{certification.note}}
+            </td>
+            <td 
+                data-title="'certification.training' | translate" 
+                sortable="'trainingName'"
+                filter="{'trainingName':'text'}">
+                {{certification.training.name}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/certifications/certification-edit/{{certification.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(certification)"
+                        ng-really-message="{{'certification.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+
