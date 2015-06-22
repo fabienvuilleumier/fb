@@ -55,7 +55,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             priceMachines: 'Use cost',
             priceMachinesTable: 'Use cost table',
             trainingLevels: 'Training levels',
-            trainings: 'Trainings'
+            trainings: 'Trainings',
+            trainingInstances : 'Certification'
         },
         loading: {
             title: 'Loading',
@@ -437,6 +438,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             machineType: 'Machinery type',
             membershipType: 'Membership type',
             create: 'Use cost creation',
+            editAlter: 'Edit all prices',
             edit: 'Edit :',
             notification: {
                 saved: 'Use cost saved',
@@ -475,6 +477,22 @@ angular.module('Fablab').config(function ($translateProvider) {
             confirmation: {
                 remove: 'Do you really want to remove this training ?'
             }
-        }
+        },
+        trainingInstance: {
+    title: 'Certificate',
+    trainingDate: 'Training date',
+    trainingPrice: 'Training price',
+    note: 'Note',
+    training: 'Training',
+    create:'Certificate creation',
+    edit:'Edit :',
+    notification: {
+        saved: 'Certificate saved',
+        removed: 'Certificate removed'
+    },
+    confirmation: {
+        remove: 'Do you really want to remove this certificate ?'
+    }
+}
     });
 });

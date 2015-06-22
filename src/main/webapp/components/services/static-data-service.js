@@ -4,7 +4,8 @@
     angular.module('Fablab').service('StaticDataService', function (GroupService,
             MachineService, MachineTypeService, MachineStatusService, MachineStateService,
             MembershipTypeService, TicketStatusService, ConfigurationService, SupplyTypeService,
-            SupplyService, UserService, SupplyUnityService, TrainingLevelService) {
+            SupplyService, UserService, SupplyUnityService, TrainingLevelService,
+            TrainingService) {
 
         this.loadMemberShipTypes = function (successFn) {
             MembershipTypeService.list(successFn);
@@ -56,6 +57,9 @@
         };
         this.loadTrainingLevels = function (successFn) {
             TrainingLevelService.list(successFn);
+        };
+        this.loadTrainings = function (successFn) {
+            TrainingService.list(successFn);
         };
     });
 

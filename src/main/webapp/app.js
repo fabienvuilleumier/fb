@@ -206,6 +206,15 @@
         }).when('/trainings/training-edit', {
             templateUrl: './components/training/training-edit-view.html',
             controller: 'TrainingNewController'
+        }).when('/trainingInstances', {
+            templateUrl: './components/trainingInstance/trainingInstance-list-view.html',
+            controller: 'TrainingInstanceListController'
+        }).when('/trainingInstances/trainingInstance-edit/:id', {
+            templateUrl: './components/trainingInstance/trainingInstance-edit-view.html',
+            controller: 'TrainingInstanceEditController'
+        }).when('/trainingInstances/trainingInstance-edit', {
+            templateUrl: './components/trainingInstance/trainingInstance-edit-view.html',
+            controller: 'TrainingInstanceNewController'
         }).otherwise({
             redirectTo: '/'
         });

@@ -1,0 +1,47 @@
+<h1 translate="trainingInstance.title"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <a class="btn btn-success" href="#/trainingInstances/trainingInstance-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+    </div>
+</div>
+<div class="trainingInstanceList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="trainingInstance in $data">
+            <td 
+                data-title="'trainingInstance.trainingDate' | translate" 
+                sortable="'trainingDate'"
+                filter="{'trainingDate':'text'}">
+                {{trainingInstance.trainingDate}}
+            </td>
+            <td 
+                data-title="'trainingInstance.trainingPrice' | translate" 
+                sortable="'trainingPrice'"
+                filter="{'trainingPrice':'text'}">
+                {{trainingInstance.trainingPrice}}
+            </td>
+            <td 
+                data-title="'trainingInstance.note' | translate" 
+                sortable="'note'"
+                filter="{'note':'text'}">
+                {{trainingInstance.note}}
+            </td>
+            <td 
+                data-title="'trainingInstance.training' | translate" 
+                sortable="'trainingName'"
+                filter="{'trainingName':'text'}">
+                {{trainingInstance.training.name}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/trainingInstances/trainingInstance-edit/{{trainingInstance.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(trainingInstance)"
+                        ng-really-message="{{'trainingInstance.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

@@ -1,30 +1,38 @@
 <h1 translate="priceMachine.title"></h1>
 <div class="priceMachineList" >
-    <!--<table ng-table="tableParams" class="table" show-filter="true">-->
-     <span>{{getPM(1,1)}}</span>
-    <!--<table class="table">
-        <thead>s
-            <tr>
-                <th>
-                    <span translate="priceMachine.machineType"></span>
-                </th>
-                <th ng-repeat="machineType in machineTypes">
-                    {{machineType.name}}
-                </th> 
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="membershipType in membershipTypes">
-                <td>
-                    <span>{{membershipType.name}}</span>
-                </td>
-                <td ng-repeat="machineType in machineTypes">
-                    <!--<span>{{getCurrentPrice(machineType.id, membershipType.id).price}}</span>
-                    <span>{{getPM(machineType.id, membershipType.id)}}</span>
-                </td>
-            </tr>
-        </tbody>
-    </table> -->
+    <form class="form-horizontal" name="editPriceMachineTable" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span translate="priceMachine.editAlter"></span>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span translate="priceMachine.machineType"></span>
+                            </th>
+                            <th ng-repeat="membershipType in membershipTypes">
+                                {{membershipType.name}}
+                            </th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="machineType in prices.machineTypes">
+                            <td>
+                                <span>{{machineType.machineType.name}}</span>
+                            </td>
+                            <td ng-repeat="membershipType in machineType.membershipTypes">
+                                <input class="form-control" type="number" min="0" step="0.05" ng-model="membershipType.price.price"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer right">
+                <btn-submit form="editPriceMachineTable"></btn-submit>
+            </div>
+    </form>
 </div>
 
 

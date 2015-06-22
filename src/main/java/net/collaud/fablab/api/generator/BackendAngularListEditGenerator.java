@@ -245,27 +245,27 @@ public class BackendAngularListEditGenerator {
                         str.append("                ").append("</div>").append("\n");
                         str.append("            ").append("</div>").append("\n");
                     } else if (f.getType().getSimpleName().toUpperCase().contains("DATE")) {
-                        str.append("                ").append("<p class=\"input-group\">").append("\n");
-                        str.append("                    ").append("<div class=\"form-group\">").append("\n");
-                        str.append("                    ").append("<div class=\"form-group\">").append("\n");
-                        str.append("                        ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"></label>").append("\n");
-                        str.append("                        ").append("<div class=\"col-sm-8\">").append("\n");
-                        str.append("                        ").append("<input class=\"form-control\" ").append("\n");
-                        str.append("                        ").append("datepicker-popup=\"{{format}}\" ").append("\n");
-                        str.append("                            ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\" ").append("\n");
-                        str.append("                            ").append("is-open=\"opened\" ").append("\n");
-                        str.append("                            ").append("min-date=\"{{minDate}}\"").append("\n");
-                        str.append("                            ").append("datepicker-options=\"dateOptions\" ").append("\n");
-                        str.append("                            ").append("ng-required=\"true\" ").append("\n");
-                        str.append("                            ").append("close-text=\"Close\"").append("\n");
-                        str.append("                        ").append("required/>").append("\n");
-                        str.append("                        ").append("</div>").append("\n");
+                        str.append("                ").append("<div class=\"form-group\">").append("\n");
+                        str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"></label>").append("\n");
+                        str.append("                    ").append("<div class=\"col-sm-8\">").append("\n");
+                        str.append("                        ").append("<p class=\"input-group\">").append("\n");
+                        str.append("                            ").append("<input class=\"form-control\" ").append("\n");
+                        str.append("                            ").append("datepicker-popup=\"{{format}}\" ").append("\n");
+                        str.append("                                ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\" ").append("\n");
+                        str.append("                                ").append("is-open=\"opened\" ").append("\n");
+                        str.append("                                ").append("min-date=\"{{minDate}}\"").append("\n");
+                        str.append("                                ").append("datepicker-options=\"dateOptions\" ").append("\n");
+                        str.append("                                ").append("ng-required=\"true\" ").append("\n");
+                        str.append("                                ").append("close-text=\"Close\"").append("\n");
+                        str.append("                                ").append("required/>").append("\n");
+                        str.append("                            ").append("<span class=\"input-group-btn\">").append("\n");
+                        str.append("                                ").append("<button type=\"button\" class=\"btn btn-default\" ng-click=\"open($event)\"><i class=\"glyphicon glyphicon-calendar\"></i></button>").append("\n");
+                        str.append("                            ").append("</span>").append("\n");
+                        str.append("                        ").append("</p>").append("\n");
                         str.append("                    ").append("</div>").append("\n");
-                        str.append("                    ").append("<span class=\"input-group-btn\">").append("\n");
-                        str.append("                        ").append("<button type=\"button\" class=\"btn btn-default\" ng-click=\"open($event)\"><i class=\"glyphicon glyphicon-calendar\"></i></button>").append("\n");
-                        str.append("                    ").append("</span>").append("\n");
-                        str.append("                ").append("</p>").append("\n");
-                    }else{
+                        str.append("                ").append("</div>").append("\n");
+
+                    } else {
                         str.append("                ").append("<div class=\"form-group\">").append("\n");
                         str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"></label>").append("\n");
                         str.append("                    ").append("<div class=\"col-sm-8\">").append("\n");
