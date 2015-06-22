@@ -31,19 +31,27 @@
                 var priceMachineRes = priceMachine.get({id: id}, successFn);
                 return priceMachineRes;
             },
-            getPriceMachineType: function (machineTypeId, membershipTypeId, successFn) {
-                $http.get(App.API.PRICE_MACHINE_API + "/getPriceMachineType?machineTypeId="
+            getPriceMachine: function (machineTypeId, membershipTypeId, successFn) {
+                $http.get(App.API.PRICE_MACHINE_API + "/getPriceMachine?machineTypeId="
                         + machineTypeId + "&membershipTypeId=" + membershipTypeId).success(successFn);
             },
-            getPMT: function (machineTypeId, membershipTypeId) {
+            getPM: function (machineTypeId, membershipTypeId) {
                 var temp = {};
                 var defer = $q.defer();
-                $http.get(App.API.PRICE_MACHINE_API + "/getPriceMachineType?machineTypeId="
+                $http.get(App.API.PRICE_MACHINE_API + "/getPriceMachine?machineTypeId="
                         + machineTypeId + "&membershipTypeId=" + membershipTypeId).success(function (data) {
                     temp = data;
                     defer.resolve(data);
                 });
                 return defer.promise;
+            },
+            getMachineType: function(machineTypeId, successFn){
+                $http.get(App.API.PRICE_MACHINE_API + "/getMachineType?machineTypeId="
+                        + machineTypeId).success(successFn);
+            },
+            getMembershipType: function (membershipTypeId, successFn){
+                $http.get(App.API.PRICE_MACHINE_API + "/getMembershipType?membershipTypeId=" + 
+                        membershipTypeId).success(successFn);
             }
         };
     });

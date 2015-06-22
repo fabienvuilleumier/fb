@@ -24,7 +24,7 @@ app.controller('PriceMachineTableController', function ($scope, $filter, $locati
     $scope.getCurrentPrice = function (machineTypeId, membershipTypeId) {
         var temp = {};
         var defer = $q.defer();
-        $http.get(App.API.PRICE_MACHINE_API + "/getPriceMachineType?machineTypeId="
+        $http.get(App.API.PRICE_MACHINE_API + "/getPriceMachine?machineTypeId="
                 + machineTypeId + "&membershipTypeId=" + membershipTypeId).success(function (data) {
             temp = data;
             defer.resolve(data);
@@ -39,10 +39,6 @@ app.controller('PriceMachineTableController', function ($scope, $filter, $locati
         MembershipTypeService.list(function (data) {
             $scope.membershipTypes = data;
         });
-        console.log($scope.machineTypes);
-        console.log($scope.membershipTypes);
-
-
 
         PriceMachineService.list(function (data) {
             for (var i = 0; i < data.length; i++) {
@@ -53,8 +49,8 @@ app.controller('PriceMachineTableController', function ($scope, $filter, $locati
             $scope.tableParams.reload();
         });
     };
-    $scope.getPMT = function (machineTypeId, membershipTypeId) {
-        return PriceMachineService.getPMT(machineTypeId, membershipTypeId);
+    $scope.getPM = function (machineTypeId, membershipTypeId) {
+        return PriceMachineService.getPM(machineTypeId, membershipTypeId);
     };
     updatePriceMachineList();
 });

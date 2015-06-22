@@ -66,8 +66,18 @@ public class PriceMachineServiceImpl implements PriceMachineService {
     }
 
     @Override
-    public PriceMachineEO getPriceMachineType(Integer machineTypeId, Integer membershipTypeId) {
-        return priceMachineDAO.getPriceMachineType(machineTypeId, membershipTypeId);
+    public PriceMachineEO getPriceMachine(Integer machineTypeId, Integer membershipTypeId) {
+        return priceMachineDAO.getPriceMachine(machineTypeId, membershipTypeId);
+    }
+
+    @Override
+    public List<PriceMachineEO> getMachineType(Integer machineTypeId) {
+         return priceMachineDAO.getMachineType(machineTypeId);
+    }
+
+    @Override
+    public List<PriceMachineEO> getMembershipType(Integer membershipTypeId) {
+         return priceMachineDAO.getMembershipType(membershipTypeId);
     }
 }
 
