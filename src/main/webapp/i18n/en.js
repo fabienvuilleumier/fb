@@ -463,6 +463,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             title: 'Training',
             name: 'Name',
             price: 'Price',
+            note: 'note',
             trainingLevel: 'Training level',
             machineType: 'Machine type',
             create: 'Training creation',
