@@ -2,33 +2,23 @@
 <table class="table" ng-table="tableParams" show-filter="true">
     <tr ng-repeat="ticket in $data">
         <td 
-            data-title="'ticket.title' | translate" 
-            sortable="'title'"
-            filter="{'title':'text'}">
+            data-title="'ticket.title' | translate">
             {{ticket.title}}
         </td>
         <td 
-            data-title="'ticket.creationDateList' | translate" 
-            sortable="'creationDate'"
-            filter="{'creationDate':'text'}">
+            data-title="'ticket.creationDateList' | translate">
             {{ticket.creationDate}}
         </td>
         <td 
-            data-title="'ticket.previsionCloseDate' | translate" 
-            sortable="'previsionCloseDate'"
-            filter="{'previsionCloseDate':'text'}">
+            data-title="'ticket.previsionCloseDate' | translate">
             {{ticket.previsionCloseDate}}
         </td>
         <td 
-            data-title="'ticket.closeDateList' | translate" 
-            sortable="'closeDate'"
-            filter="{'closeDate':'text'}">
+            data-title="'ticket.closeDateList' | translate">
             {{ticket.closeDate}}
         </td>
         <td 
-            data-title="'ticket.status' | translate" 
-            sortable="'statusLabel'"
-            filter="{'statusLabel':'text'}">
+            data-title="'ticket.status' | translate">
             {{ticket.status.label}}
         </td>
     </tr>

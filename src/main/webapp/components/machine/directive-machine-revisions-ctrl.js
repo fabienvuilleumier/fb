@@ -13,13 +13,7 @@
                         $scope.tableParams = new ngTableParams(
                                 angular.extend({
                                     page: 1, // show first page
-                                    count: 25, // count per page
-                                    sorting: {
-                                        revisionDate: 'asc',
-                                        note: 'asc',
-                                        cost: 'asc',
-                                        machine: 'asc'
-                                    }
+                                    count: 25 // count per page
                                 }, $location.search()), {
                             getData: function ($defer, params) {
                                 if ($scope.revisions) {
