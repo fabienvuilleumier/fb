@@ -17,7 +17,8 @@
                 <label class="col-sm-2 control-label" translate="machineType.technicalname"></label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" ng-model="machineType.technicalname" 
-                           ng-init="machineType.technicalname = machineType.name"
+                           ng-init="machineType.technicalname = machineType.name" 
+                           uppercase
                            required/>
                 </div>
             </div>
@@ -27,27 +28,25 @@
                     <input type="checkbox" ng-model="machineType.restricted"/>
                 </div>
             </div>
-            <h3 translate="machineType.membershipTypes"></h3>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th ng-repeat="membershipType in membershipTypes">
-                            {{membershipType.name}}
-                        </th> 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <!--Faire correspondre ? -->
-                        <td ng-if="!priceMachines" ng-repeat="membershipType in membershipTypes">
-                            <input type="number" class="form-control" min="0" step="0.05" ng-model="priceMachine" required/>
-                        </td>
-                        <td  ng-if="priceMachines" ng-repeat="priceMachine in priceMachines">
-                            <input type="number" class="form-control" min="0" step="0.05" ng-model="priceMachine" required/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div ng-show="!newMachineType">
+                <h3 translate="machineType.membershipTypes"></h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th ng-repeat="membershipType in membershipTypes">
+                                {{membershipType.name}}
+                            </th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td ng-repeat="p in prices">
+                                <input type="number" class="form-control" min="0" step="0.05" ng-model="p.price" required/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="panel-footer right">
             <btn-cancel link="#/machineTypes"></btn-cancel>

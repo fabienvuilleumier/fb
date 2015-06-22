@@ -14,4 +14,6 @@ public interface MachineTypeService extends ReadWriteService<MachineTypeEO> {
 
     public List<PriceMachineEO> getPrices(Integer id);
 
+    MachineTypeEO getId(String technicalname);
+
 }

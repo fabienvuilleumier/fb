@@ -42,4 +42,9 @@ public class MachineTypeWS extends ReadWriteRestWebservice<MachineTypeEO, Machin
     public List<PriceMachineEO> getPrices(@RequestParam(value = "id") Integer id) {
         return machineTypeService.getPrices(id);
     }
+    
+    @RequestMapping(value = "getId", method = RequestMethod.GET)
+    public MachineTypeEO getId(@RequestParam(value = "technicalname") String technicalname) {
+        return machineTypeService.getId(technicalname);
+    }
 }

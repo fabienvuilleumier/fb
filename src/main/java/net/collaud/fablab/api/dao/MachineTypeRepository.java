@@ -22,4 +22,9 @@ public interface MachineTypeRepository extends JpaRepository<MachineTypeEO, Inte
             + " FROM PriceMachineEO p "
             + " WHERE p.machineType.id = :id")
     List<PriceMachineEO> getPrices(@Param("id")Integer id);
+
+    @Query("SELECT mt "
+            + " FROM MachineTypeEO mt"
+            + " WHERE upper(mt.technicalname) = upper(:technicalname)")
+    MachineTypeEO getId(@Param("technicalname")String technicalname);
 }

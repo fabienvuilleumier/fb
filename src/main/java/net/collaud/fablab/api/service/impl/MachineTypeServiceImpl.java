@@ -73,4 +73,9 @@ public class MachineTypeServiceImpl implements MachineTypeService {
     public List<PriceMachineEO> getPrices(Integer id) {
        return machineTypeDao.getPrices(id);
     }
+
+    @Override
+    public MachineTypeEO getId(String technicalname) {
+        return machineTypeDao.getId(technicalname);
+    }
 }
