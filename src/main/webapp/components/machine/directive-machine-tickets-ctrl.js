@@ -11,14 +11,7 @@ angular.module('Fablab').directive('machineTickets',
                     $scope.tableParams = new ngTableParams(
                             angular.extend({
                                 page: 1, // show first page
-                                count: 25, // count per page
-                                sorting: {
-                                    title: 'asc',
-                                    creationDate: 'asc',
-                                    previsionCloseDate: 'asc',
-                                    closeDate: 'asc',
-                                    status: 'asc'
-                                }
+                                count: 25 // count per page
                             }, $location.search()), {
                         getData: function ($defer, params) {
                             if ($scope.tickets) {
