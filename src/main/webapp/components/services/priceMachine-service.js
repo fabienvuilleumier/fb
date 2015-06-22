@@ -35,16 +35,6 @@
                 $http.get(App.API.PRICE_MACHINE_API + "/getPriceMachine?machineTypeId="
                         + machineTypeId + "&membershipTypeId=" + membershipTypeId).success(successFn);
             },
-            getPM: function (machineTypeId, membershipTypeId) {
-                var temp = {};
-                var defer = $q.defer();
-                $http.get(App.API.PRICE_MACHINE_API + "/getPriceMachine?machineTypeId="
-                        + machineTypeId + "&membershipTypeId=" + membershipTypeId).success(function (data) {
-                    temp = data;
-                    defer.resolve(data);
-                });
-                return defer.promise;
-            },
             getMachineType: function(machineTypeId, successFn){
                 $http.get(App.API.PRICE_MACHINE_API + "/getMachineType?machineTypeId="
                         + machineTypeId).success(successFn);

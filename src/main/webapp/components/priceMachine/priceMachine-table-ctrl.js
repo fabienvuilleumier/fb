@@ -1,56 +1,62 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('PriceMachineTableController', function ($scope, $filter, $location,
-        ngTableParams, PriceMachineService, MachineTypeService, MembershipTypeService) {
-    $scope.tableParams = new ngTableParams(
-            angular.extend({
-                page: 1, // show first page
-                count: 25, // count per page
-                sorting: {
-                    price: 'asc'
-                }
-            }, $location.search()), {
-        getData: function ($defer, params) {
-            if ($scope.priceMachines) {
-                params.total($scope.priceMachines.length);
-                $location.search(params.url());
-                var filteredData = params.filter() ? $filter('filter')($scope.priceMachines, params.filter()) : $scope.priceMachines;
-                var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
-                $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+app.controller('PriceMachineTableController', function ($scope, $location,
+        PriceMachineService, MachineTypeService, MembershipTypeService, NotificationService) {
+
+    $scope.save = function () {
+        var mt = $scope.prices.machineTypes;
+        var mti, msti, pmi;
+        for (mti = 0; mti < mt.length; mti++) {
+            var mst = mt[mti].membershipTypes;
+            for (msti = 0; msti < mst.length; msti++) {
+                var price = mst[msti].price;
+                var priceMachineCurrent = angular.copy(price);
+                PriceMachineService.save(priceMachineCurrent, function (data) {
+                    price = data;
+                    NotificationService.notify("success", "priceMachine.notification.saved");
+                    $location.path("priceMachines/table");
+                });
             }
         }
-    });
-
-    $scope.getCurrentPrice = function (machineTypeId, membershipTypeId) {
-        var temp = {};
-        var defer = $q.defer();
-        $http.get(App.API.PRICE_MACHINE_API + "/getPriceMachine?machineTypeId="
-                + machineTypeId + "&membershipTypeId=" + membershipTypeId).success(function (data) {
-            temp = data;
-            defer.resolve(data);
-        });
-        return defer.promise;
     };
 
     var updatePriceMachineList = function () {
-        MachineTypeService.list(function (data) {
-            $scope.machineTypes = data;
+        MachineTypeService.list(function (mt) {
+            $scope.machineTypes = mt;
+            MembershipTypeService.list(function (mst) {
+                $scope.membershipTypes = mst;
+                PriceMachineService.list(function (pm) {
+                    $scope.priceMachines = pm;
+                    var mti, msti, pmi;
+                    var getCellule = function (mtId, mstId) {
+                        for (pmi = 0; pmi < pm.length; pmi++) {
+                            if (pm[pmi].machineType.id === mtId &&
+                                    pm[pmi].membershipType.id === mstId) {
+                                return pm[pmi];
+                            }
+                        }
+                        return "";
+                    };
+                    var mtArray = [];
+                    var prices = {};
+                    for (mti = 0; mti < mt.length; mti++) {
+                        var machineType = {};
+                        machineType.machineType = mt[mti];
+                        mtArray.push(machineType);
+                        var mstArray = [];
+                        for (msti = 0; msti < mst.length; msti++) {
+                            var membershipType = {};
+                            membershipType.price = getCellule(mt[mti].id, mst[msti].id);
+                            mstArray.push(membershipType);
+                        }
+                        machineType.membershipTypes = mstArray;
+                    }
+                    prices.machineTypes = mtArray;
+                    $scope.prices = prices;
+                    console.log(prices);
+                });
+            });
         });
-        MembershipTypeService.list(function (data) {
-            $scope.membershipTypes = data;
-        });
-
-        PriceMachineService.list(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                data[i].membershipTypeName = ""; //initialization of new property 
-                data[i].membershipTypeName = data[i].membershipType.name;  //set the data from nested obj into new property
-            }
-            $scope.priceMachines = data;
-            $scope.tableParams.reload();
-        });
-    };
-    $scope.getPM = function (machineTypeId, membershipTypeId) {
-        return PriceMachineService.getPM(machineTypeId, membershipTypeId);
     };
     updatePriceMachineList();
 });

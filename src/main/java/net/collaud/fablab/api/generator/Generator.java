@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import net.collaud.fablab.api.data.TrainingEO;
+import net.collaud.fablab.api.data.TrainingInstanceEO;
 
 /**
  *
@@ -22,27 +23,26 @@ public class Generator {
      {"java type", "java name", "nullable ? [t,f]", "db type"} 
      */
     /*FIRST*/
-    private final String CLASS_NAME = "Training";
-    private final String TABLE_NAME = "t_training";
+    private final String CLASS_NAME = "TrainingInstance";
+    private final String TABLE_NAME = "t_training_instance";
 
     private final String[][] FIELDS = new String[][]{
         {"Integer", "id", "f", "INT"},
-        {"String", "name", "f", "VARCHAR"},
-        {"Float", "price", "t", "FLOAT"}, 
-        {"TrainingLevelEO", "trainingLevel", "f", "INT"}, 
-        {"MachineTypeEO", "machineType", "f", "INT"}};
+        {"Date", "trainingDate", "f", "DATE"},
+        {"Float", "trainingPrice", "t", "FLOAT"},
+        {"String", "note", "t", "TEXT"},
+        {"TrainingEO", "training", "f", "INT"}};
 
     private final boolean WRITE = true;
     private final String[] ROLES = new String[]{"TRAINING_MANAGE"};
     private final Map<String, String> nestedObjectReprAttr = new HashMap<>();
 
     /*SECOND*/
-    private final Class KLAZZ = TrainingEO.class;//PriceMachineEO.class;
+    private final Class KLAZZ = TrainingInstanceEO.class;//PriceMachineEO.class;
 
     public static void main(String[] args) {
         Generator agl = new Generator();
-        agl.getNestedObjectReprAttr().put("trainingLevel", "label");
-        agl.getNestedObjectReprAttr().put("machineType", "name");
+        agl.getNestedObjectReprAttr().put("training", "name");
         //agl.runEO();
         agl.runBase();
         agl.runAngular(agl.getNestedObjectReprAttr());
