@@ -1,0 +1,47 @@
+<h1 translate="training.title"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <a class="btn btn-success" href="#/trainings/training-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+    </div>
+</div>
+<div class="trainingList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="training in $data">
+            <td 
+                data-title="'training.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{training.name}}
+            </td>
+            <td 
+                data-title="'training.price' | translate" 
+                sortable="'price'"
+                filter="{'price':'text'}">
+                {{training.price}}
+            </td>
+            <td 
+                data-title="'training.trainingLevel' | translate" 
+                sortable="'trainingLevelLabel'"
+                filter="{'trainingLevelLabel':'text'}">
+                {{training.trainingLevel.label}}
+            </td>
+            <td 
+                data-title="'training.machineType' | translate" 
+                sortable="'machineTypeName'"
+                filter="{'machineTypeName':'text'}">
+                {{training.machineType.name}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/trainings/training-edit/{{training.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(training)"
+                        ng-really-message="{{'training.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

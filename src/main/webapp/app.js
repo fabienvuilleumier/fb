@@ -188,6 +188,24 @@
         }).when('/priceMachines/priceMachine-edit', {
             templateUrl: './components/priceMachine/priceMachine-edit-view.html',
             controller: 'PriceMachineNewController'
+        }).when('/trainingLevels', {
+            templateUrl: './components/trainingLevel/trainingLevel-list-view.html',
+            controller: 'TrainingLevelListController'
+        }).when('/trainingLevels/trainingLevel-edit/:id', {
+            templateUrl: './components/trainingLevel/trainingLevel-edit-view.html',
+            controller: 'TrainingLevelEditController'
+        }).when('/trainingLevels/trainingLevel-edit', {
+            templateUrl: './components/trainingLevel/trainingLevel-edit-view.html',
+            controller: 'TrainingLevelNewController'
+        }).when('/trainings', {
+            templateUrl: './components/training/training-list-view.html',
+            controller: 'TrainingListController'
+        }).when('/trainings/training-edit/:id', {
+            templateUrl: './components/training/training-edit-view.html',
+            controller: 'TrainingEditController'
+        }).when('/trainings/training-edit', {
+            templateUrl: './components/training/training-edit-view.html',
+            controller: 'TrainingNewController'
         }).otherwise({
             redirectTo: '/'
         });

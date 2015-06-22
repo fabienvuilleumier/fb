@@ -1,0 +1,48 @@
+<div class="trainingEdit">
+    <form class="form-horizontal" name="editTraining" ng-submit="save(false)">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span ng-show="newTraining" translate="training.create"></span>
+                <span ng-show="!newTraining" translate="training.edit"></span>
+                <span ng-show="!newTraining"> {{training.name}}</span>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="training.name"></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="training.name" required/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" translate="training.price"></label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" ng-model="training.price" required/>
+                    </div>
+                </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" translate="training.trainingLevel"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                        required
+                        ng-model="training.trainingLevel"
+                    ng-options="common.label for common in trainingLevelList track by common.id"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label" translate="training.machineType"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                        required
+                        ng-model="training.machineType"
+                    ng-options="common.name for common in machineTypeList track by common.id"></select>
+                </div>
+            </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel link="#/trainings"></btn-cancel>
+                <btn-submit form="editTraining"></btn-submit>
+            </div>
+        </div>
+    </form>
+</div>
+
