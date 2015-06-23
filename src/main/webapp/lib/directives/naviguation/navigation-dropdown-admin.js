@@ -28,7 +28,7 @@ naviguation.directive('fabNavDropdownAdmin', function () {
                 + '     <li fab-nav-item-af link="configurations" icon="key"'
                 + '         label="menu.key"'
                 + '         show="hasAnyRole(\'ADMIN\')"></li>'
-                + '     <li fab-nav-item-af link="roles" icon="key"'
+                + '     <li fab-nav-item-af link="roles" icon="bookmark"'
                 + '         label="menu.roles"'
                 + '         show="hasAnyRole(\'ADMIN\')"></li>'
                 + '</ul>'

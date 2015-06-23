@@ -7,10 +7,10 @@
         return {
             list: function (successFn) {
                 $http(
-                    {
-                        method: 'GET',
-                        url: App.API.CERTIFICATION_API
-                    }
+                        {
+                            method: 'GET',
+                            url: App.API.CERTIFICATION_API
+                        }
                 ).success(successFn);
             },
             remove: function (id, successFn) {
@@ -18,8 +18,8 @@
                 certification.remove({id: id}, successFn);
             },
             softRemove: function (id, successFn) {
-            $http.get(App.API.CERTIFICATION_API + "/softRemove?id=" + id).success(successFn);
-            $log.debug("CertificationService: soft remove...");
+                $http.get(App.API.CERTIFICATION_API + "/softRemove?id=" + id).success(successFn);
+                $log.debug("CertificationService: soft remove...");
             },
             save: function (certificationParam, successFn, errorFn) {
                 $log.debug("CertificationService: save...");
@@ -30,6 +30,9 @@
                 $log.debug("CertificationService: get...");
                 var certificationRes = certification.get({id: id}, successFn);
                 return certificationRes;
+            },
+            getId: function (trainingName, successFn) {
+                $http.get(App.API.CERTIFICATION_API + "/getId?trainingName=" + trainingName).success(successFn);
             }
         };
     });

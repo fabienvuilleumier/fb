@@ -7,23 +7,30 @@ import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
 import net.collaud.fablab.api.service.CertificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *This is the WS class for a <tt>Certification</tt>.
-* @author Fabien Vuilleumier
-*/
+ * This is the WS class for a <tt>Certification</tt>.
+ *
+ * @author Fabien Vuilleumier
+ */
 @RestController()
 @RequestMapping("/v1/certification")
 @JavascriptAPIConstant("CERTIFICATION_API")
-public class CertificationWS extends ReadWriteRestWebservice<CertificationEO, CertificationService>{
+public class CertificationWS extends ReadWriteRestWebservice<CertificationEO, CertificationService> {
 
     @Autowired
     private CertificationService certificationService;
 
     @PostConstruct
-    public void postConstruct(){
+    public void postConstruct() {
         super.setService(certificationService);
     }
-}
 
+    @RequestMapping(value = "getID", method = RequestMethod.GET)
+    public CertificationEO getId(@RequestParam(value = "trainingName") String trainingName){
+        return certificationService.getId(trainingName);
+}
+}

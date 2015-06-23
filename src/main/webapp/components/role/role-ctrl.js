@@ -13,11 +13,10 @@ app.controller('RoleController', function ($scope,
             if ($scope.group) {
                 var availableRoles = [];
                 var assignedRoles = $scope.group.roles;
-
-                var ari;
-                for (ari = 0; ari < roles.length; ari++) {
-                    if (assignedRoles.id !== roles[ari].id) {
-                        availableRoles.push(roles[ari]);
+                var ri;
+                for (ri = 0; ri < roles.length; ri++) {
+                        if (assignedRoles.id !== roles[ri].id) {
+                            availableRoles.push(roles[ri]);
                     }
                 }
                 $scope.availableRoles = availableRoles;
@@ -29,7 +28,7 @@ app.controller('RoleController', function ($scope,
     $scope.save = function () {
         $scope.group.roles = $scope.assignedRoles;
         var groupCurrent = angular.copy($scope.group);
-        GroupService.save(groupCurrent, function(data) {
+        GroupService.save(groupCurrent, function (data) {
             $scope.group = data;
             NotificationService.notify("success", "role.notification.saved");
         });

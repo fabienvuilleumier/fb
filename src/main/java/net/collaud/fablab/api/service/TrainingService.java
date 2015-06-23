@@ -8,4 +8,6 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
 */
 public interface TrainingService extends ReadWriteService<TrainingEO>{
 
+    public TrainingEO getId(String name);
+
 }

@@ -43,11 +43,12 @@ public class CertificationServiceImpl implements CertificationService {
             certification.setId(0);
         }
         if (certification.getId() > 0) {
-            CertificationEO old = certificationDAO.findOne(certification.getId());
+            CertificationEO old = certificationDAO.findOneDetails(certification.getId()).get();
             old.setCertificationDate(certification.getCertificationDate());
             old.setCertificationPrice(certification.getCertificationPrice());
             old.setNote(certification.getNote());
             old.setTraining(certification.getTraining());
+            old.setUsers(certification.getUsers());
             old.setActive(certification.isActive());
             return certificationDAO.saveAndFlush(old);
         } else {
@@ -67,6 +68,11 @@ public class CertificationServiceImpl implements CertificationService {
         CertificationEO current = certificationDAO.findOne(id);
         current.setActive(false);
         certificationDAO.saveAndFlush(current);
+    }
+
+    @Override
+    public CertificationEO getId(String trainingName) {
+        return certificationDAO.getId(trainingName);
     }
 }
 

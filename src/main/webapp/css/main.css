@@ -293,3 +293,7 @@ fieldset[disabled] .btn-alternate.active {
     margin-top: 9px;
     font-weight: bold;
 }
+
+.shuttle{
+    margin-top: 100px;
+}

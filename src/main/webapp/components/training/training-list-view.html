@@ -31,14 +31,17 @@
                 filter="{'machineTypeName':'text'}">
                 {{training.machineType.name}}
             </td>
-            <td class="listBtn2">
+            <td class="listBtn3">
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" href="#/trainings/training-edit/{{training.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
                     <button class="btn btn-sm btn-danger" 
-                        ng-really-click="softRemove(training)"
-                        ng-really-message="{{'training.confirmation.remove'|translate}}">
+                            ng-really-click="softRemove(training)"
+                            ng-really-message="{{'training.confirmation.remove'|translate}}">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
+                    <a title="Make certification" class="btn btn-sm btn-alternate" href="#/certifications/certification-edit-training/{{training.id}}">
+                        <span class="fa fa-fw fa-check-square-o"> </span>
+                    </a>
                 </div>
             </td>
         </tr>

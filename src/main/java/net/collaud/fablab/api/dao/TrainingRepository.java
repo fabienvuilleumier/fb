@@ -7,22 +7,32 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 /**
- *This is the DAO interface for a <tt>Training</tt>.
+ * This is the DAO interface for a <tt>Training</tt>.
+ *
  * @author Fabien Vuilleumier
  */
-public interface TrainingRepository extends JpaRepository<TrainingEO, Integer>{
+public interface TrainingRepository extends JpaRepository<TrainingEO, Integer> {
 
     @Query("SELECT t "
-        + " FROM TrainingEO t  " 
-        + " LEFT JOIN FETCH t.trainingLevel  " 
-        + " LEFT JOIN FETCH t.machineType  " )
+            + " FROM TrainingEO t  "
+            + " LEFT JOIN FETCH t.trainingLevel  "
+            + " LEFT JOIN FETCH t.machineType  ")
     @Override
     List<TrainingEO> findAll();
+
     @Query("SELECT t "
-        + " FROM TrainingEO t "
-        + " LEFT JOIN FETCH t.trainingLevel "
-        + " LEFT JOIN FETCH t.machineType "
-        + " WHERE t.id=:id")
-    Optional<TrainingEO> findOneDetails(@Param("id")Integer id);
+            + " FROM TrainingEO t "
+            + " LEFT JOIN FETCH t.trainingLevel "
+            + " LEFT JOIN FETCH t.machineType "
+            + " WHERE t.id=:id")
+    Optional<TrainingEO> findOneDetails(@Param("id") Integer id);
+
+    @Query("SELECT t "
+            + " FROM TrainingEO t"
+            + " LEFT JOIN FETCH t.trainingLevel "
+            + " LEFT JOIN FETCH t.machineType "
+            + " WHERE UPPER(t.name)=UPPER(:name)")
+    TrainingEO getId(@Param("name") String name);
 }
