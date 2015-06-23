@@ -1,6 +1,9 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import org.hibernate.annotations.Where;
@@ -25,7 +30,7 @@ import org.hibernate.annotations.Type;
 @Table(name = "t_training")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"prerequisits", "dependents"})
 @Where(clause = "active=1")
 public class TrainingEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -51,6 +56,18 @@ public class TrainingEO extends AbstractDataEO<Integer> implements Serializable 
     @JoinColumn(name = "machine_type_id", referencedColumnName = "machine_type_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MachineTypeEO machineType;
+
+    @JoinTable(name = "r_training_prerequisite",
+            joinColumns = {
+                @JoinColumn(name = "prerequire_training_id", referencedColumnName = "training_id", nullable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "dependent_training_id", referencedColumnName = "training_id", nullable = false)})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<TrainingEO> prerequisits;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "prerequisits", fetch = FetchType.LAZY)
+    private Set<TrainingEO> dependents;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;

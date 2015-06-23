@@ -21,16 +21,15 @@ public class Generator {
      {"java type", "java name", "nullable ? [t,f]", "db type"} 
      */
     /*FIRST*/
-    private final String CLASS_NAME = "Group";
-    private final String TABLE_NAME = "t_group";
+    private final String CLASS_NAME = "Prerequisit";
+    private final String TABLE_NAME = "r_training_prerequisite";
 
     private final String[][] FIELDS = new String[][]{
-        {"Integer", "id", "f", "INT"},
-        {"String", "technicalname", "f", "VARCHAR"},
-        {"String", "name", "f", "VARCHAR"}};
+        {"TrainingEO", "prerequire", "f", "INT"},
+        {"TrainingEO", "dependent", "f", "INT"}};
 
     private final boolean WRITE = true;
-    private final String[] ROLES = new String[]{"ADMIN"};
+    private final String[] ROLES = new String[]{"TRAINING_MANAGE"};
     private final Map<String, String> nestedObjectReprAttr = new HashMap<>();
 
     /*SECOND*/
@@ -38,8 +37,9 @@ public class Generator {
 
     public static void main(String[] args) {
         Generator agl = new Generator();
-        //agl.getNestedObjectReprAttr().put("training", "name");
-        //agl.runEO();
+        agl.getNestedObjectReprAttr().put("prerequire", "name");
+        agl.getNestedObjectReprAttr().put("dependent", "name");
+        agl.runEO();
         //agl.runBase();
         //agl.runAngular(agl.getNestedObjectReprAttr());
     }

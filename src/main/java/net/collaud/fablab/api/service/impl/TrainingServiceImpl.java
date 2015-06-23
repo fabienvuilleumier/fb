@@ -69,5 +69,10 @@ public class TrainingServiceImpl implements TrainingService {
         current.setActive(false);
         trainingDAO.saveAndFlush(current);
     }
+
+    @Override
+    public TrainingEO getId(String name) {
+        return trainingDAO.getId(name);
+    }
 }
 

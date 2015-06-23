@@ -30,6 +30,9 @@
                 $log.debug("TrainingService: get...");
                 var trainingRes = training.get({id: id}, successFn);
                 return trainingRes;
+            }, 
+            getId: function(name, successFn) {
+                $http.get(App.API.TRAINING_API + "/getId?name=" + name).success(successFn);
             }
         };
     });

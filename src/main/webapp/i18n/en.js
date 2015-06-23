@@ -489,6 +489,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             training: 'Training',
             create: 'Certification creation',
             edit: 'Edit :',
+            nonSelectedListLabel: 'Available users',
+            selectedListLabel: 'Certified users',
             notification: {
                 saved: 'Certification saved',
                 removed: 'Certification removed'

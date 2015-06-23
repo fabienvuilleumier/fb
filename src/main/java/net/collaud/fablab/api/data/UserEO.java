@@ -41,7 +41,7 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_user")
 @Getter
 @Setter
-@ToString(exclude={"payments", "subscriptions", "ticketCloseList", "ticketCreationList", "groups"})
+@ToString(exclude = {"payments", "subscriptions", "ticketCloseList", "ticketCreationList", "groups", "certifications"})
 @AllArgsConstructor
 @Where(clause = "active=1")
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {
@@ -138,11 +138,17 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserBalanceEO balance;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "creationUser", fetch = FetchType.LAZY)
     private List<TicketEO> ticketCreationList;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "closeUser", fetch = FetchType.LAZY)
     private List<TicketEO> ticketCloseList;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private Set<CertificationEO> certifications;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;

@@ -215,6 +215,9 @@
         }).when('/certifications/certification-edit', {
             templateUrl: './components/certification/certification-edit-view.html',
             controller: 'CertificationNewController'
+        }).when('/certifications/certification-edit-training/:trainingId', {
+            templateUrl: './components/certification/certification-edit-view.html',
+            controller: 'CertificationNewWithTrainingController'
         }).when('/roles', {
             templateUrl: './components/role/role-view.html',
             controller: 'RoleController'

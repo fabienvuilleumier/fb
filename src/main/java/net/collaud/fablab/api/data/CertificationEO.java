@@ -10,6 +10,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
 import java.util.Date;
+import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.Type;
@@ -53,6 +57,15 @@ public class CertificationEO extends AbstractDataEO<Integer> implements Serializ
 
     @Column(name="active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
+    
+     @JoinTable(name = "r_user_certification",
+            joinColumns = {
+                @JoinColumn(name = "certification_id", referencedColumnName = "certification_id", nullable = false)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)})
+    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.ALL)
+    private Set<UserEO> users;
+    
 
     public CertificationEO() {
         this(null);
