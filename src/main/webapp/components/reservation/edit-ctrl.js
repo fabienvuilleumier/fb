@@ -87,6 +87,7 @@
                 $scope.reservation.dateStart = day.clone().hour(start.hour()).minute(start.minute()).startOf('minute');
                 $scope.reservation.dateEnd = day.clone().hour(end.hour()).minute(end.minute()).startOf('minute');
                 ReservationService.save($scope.reservation, function (data) {
+                    console.log("datas "+ data);
                     NotificationService.notify("success", "Reservation enregistrée");
                     $location.path("reservations");
                 });

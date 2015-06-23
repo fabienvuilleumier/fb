@@ -1,6 +1,5 @@
 (function () {
     'use strict';
-
     var app = angular.module('Fablab');
     app.factory('RevisionService', function ($log, $resource, $http) {
         var revision = $resource(App.API.REVISION_API + "/:id", {id: '@id'});

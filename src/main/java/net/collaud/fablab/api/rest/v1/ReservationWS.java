@@ -5,9 +5,7 @@ import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.ReservationEO;
-import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
-import net.collaud.fablab.api.rest.v1.base.SoftRemoveWebService;
 import net.collaud.fablab.api.rest.v1.criteria.PeriodSearchCriteria;
 import net.collaud.fablab.api.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/v1/reservation")
 @JavascriptAPIConstant("RESERVATION_API")
 @Slf4j
-public class ReservationWS extends ReadWriteRestWebservice<ReservationEO, ReservationService> implements SoftRemoveWebService {
+public class ReservationWS extends ReadWriteRestWebservice<ReservationEO, ReservationService>{
 
     @Autowired
     private ReservationService reservationService;
@@ -42,10 +40,4 @@ public class ReservationWS extends ReadWriteRestWebservice<ReservationEO, Reserv
                 criteria.getDateTo());
         return list;
     }
-
-    @Override
-    public void softRemove(Integer id) throws FablabException {
-        reservationService.softRemove(id);
-    }
-
 }

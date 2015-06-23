@@ -16,6 +16,7 @@
         <link href="./ext-lib/ng-notify/dist/ng-notify.min.css" rel="stylesheet"/>
         <link href="./ext-lib/angular-ui-select/dist/select.min.css" rel="stylesheet"/>
         <link href="./ext-lib/template/sb-admin.css" rel="stylesheet"/>
+        <link href="./ext-lib/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css" rel="stylesheet"/>
         <link href="./css/main.css" rel="stylesheet"/>
 
 
@@ -48,6 +49,7 @@
         <link href="./components/trainingLevel/style.css" rel="stylesheet">
         <link href="./components/training/style.css" rel="stylesheet">
         <link href="./components/certification/style.css" rel="stylesheet">
+        <link href="./components/role/style.css" rel="stylesheet">
         <!-- endbuild -->
 
     </head>
@@ -144,11 +146,12 @@
     <script src="./ext-lib/angular-translate/angular-translate.min.js"></script>
     <script src="./ext-lib/ng-table/dist/ng-table.min.js"></script>
     <script src="./ext-lib/angular-ui-select/dist/select.min.js"></script>
+    <script src="./ext-lib/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js"></script>
+    <script src="./ext-lib/angular-bootstrap-duallistbox/dist/angular-bootstrap-duallistbox.min.js"></script>
 
     <script src="./ext-lib/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="./ext-lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="./ext-lib/ng-notify/dist/ng-notify.min.js"></script>
-    <!--<script src="./ext-lib/angular-modules/ng-toast/ngToast.min.js"></script>-->
 
     <script src="./app.js"></script>
 
@@ -174,6 +177,7 @@
     <script src="./lib/directives/form/date.js"></script>
     <script src="./lib/directives/form/autocapitalize.js"></script>
     <script src="./lib/directives/calendar/calendar.js"></script>
+    <script src="./lib/directives/shuttle/duallistbox.js"></script>
 
 
 
@@ -182,6 +186,8 @@
 
     <script src="./components/services/accounting-service.js"></script>
     <script src="./components/services/auth-service.js"></script>
+    <script src="./components/services/group-service.js"></script>
+    <script src="./components/services/role-service.js"></script>
     <script src="./components/services/configuration-service.js"></script>
     <script src="./components/services/machine-service.js"></script>
     <script src="./components/services/machineType-service.js"></script>
@@ -285,6 +291,8 @@
 
     <script src="./components/certification/certification-list-ctrl.js"></script>
     <script src="./components/certification/certification-edit-ctrl.js"></script>
+    
+    <script src="./components/role/role-ctrl.js"></script>
 
     <script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>

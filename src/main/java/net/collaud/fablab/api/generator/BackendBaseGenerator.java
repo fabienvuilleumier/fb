@@ -135,8 +135,8 @@ public class BackendBaseGenerator {
             str.append("        ").append("current.setActive(false);").append("\n");
             str.append("        ").append(CLASS_DAO_ATTRIBUTE).append(".saveAndFlush(current);").append("\n");
             str.append("    ").append("}").append("\n");
-            str.append("}").append("\n");
         }
+        str.append("}").append("\n");
         return str.toString();
     }
 

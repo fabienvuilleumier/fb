@@ -9,7 +9,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" translate="reservation.user"></label>
                         <div class="col-sm-9">
-                            <input type="date" class="form-control" value="{{value.reservationUser|prettyUser}}" disabled />
+                            <input type="text" class="form-control" value="{{value.reservationUser|prettyUser}}" disabled />
                         </div>
                     </div>
 
@@ -26,12 +26,6 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label" translate="reservation.date"></label>
                         <div class="col-sm-9">
-                            <!--<input type="date" class="form-control"
-                                   required
-                                   ng-model="value.reservationDate"
-                                   min="{{limit.min}}"
-                                   max="{{limit.max}}"
-                                   />-->
                             <p class="input-group">
                                 <input class="form-control" 
                                        datepicker-popup="{{format}}" 

@@ -4,9 +4,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.MachineEO;
-import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
-import net.collaud.fablab.api.rest.v1.base.SoftRemoveWebService;
 import net.collaud.fablab.api.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController()
 @RequestMapping("/v1/machine")
 @JavascriptAPIConstant("MACHINE_API")
-public class MachineWS extends ReadWriteRestWebservice<MachineEO, MachineService> implements SoftRemoveWebService {
+public class MachineWS extends ReadWriteRestWebservice<MachineEO, MachineService>{
 
     @Autowired
     private MachineService machineService;
@@ -41,10 +39,4 @@ public class MachineWS extends ReadWriteRestWebservice<MachineEO, MachineService
     public MachineEO findSimpleByCode(@RequestParam(value = "code") String code) {
         return machineService.findSimpleByCode(code);
     }
-
-    @Override
-    public void softRemove(Integer id) throws FablabException {
-        machineService.softRemove(id);
-    }
-
 }

@@ -1,9 +1,9 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalRevisionEditController', function ($scope, $location, $routeParams, 
+app.controller('GlobalRevisionEditController', function ($scope, $location, $routeParams,
         RevisionService, NotificationService, StaticDataService) {
-            $scope.currency = App.CONFIG.CURRENCY;
-            $scope.fromMachine = $routeParams.machineId ? true : false;
+    $scope.currency = App.CONFIG.CURRENCY;
+    $scope.fromMachine = $routeParams.machineId ? true : false;
     $scope.selected = {revision: undefined};
     $scope.loadRevision = function (id) {
         RevisionService.get(id, function (data) {
