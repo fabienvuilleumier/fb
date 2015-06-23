@@ -7,15 +7,28 @@ app.controller('GlobalTrainingEditController', function ($scope, $location,
     $scope.loadTraining = function (id) {
         TrainingService.get(id, function (data) {
             $scope.training = data;
+            setList();
         });
     };
     $scope.save = function () {
-        var trainingCurrent = angular.copy($scope.training);
-        TrainingService.save(trainingCurrent, function (data) {
-            $scope.training = data;
-            NotificationService.notify("success", "training.notification.saved");
-            $location.path("trainings");
-        });
+        if ($scope.newTraining) {
+            var trainingCurrent = angular.copy($scope.training);
+            TrainingService.save(trainingCurrent, function (data) {
+                $scope.training = data;
+                NotificationService.notify("success", "training.notification.saved");
+                TrainingService.getId(data.training.name, function (withId) {
+                    $location.path("trainings/training-edit/" + withId.id);
+                });
+            });
+        } else {
+            $scope.training.prerequisites = $scope.assignedPrerequisites;
+            var trainingCurrent = angular.copy($scope.training);
+            TrainingService.save(trainingCurrent, function (data) {
+                $scope.training = data;
+                NotificationService.notify("success", "training.notification.saved");
+                $location.path("trainings");
+            });
+        }
     };
     StaticDataService.loadTrainingLevels(function (data) {
         $scope.trainingLevelList = data;
@@ -23,6 +36,24 @@ app.controller('GlobalTrainingEditController', function ($scope, $location,
     StaticDataService.loadMachineTypes(function (data) {
         $scope.machineTypeList = data;
     });
+
+    var setList = function () {
+        TrainingService.list(function (training) {
+            if ($scope.training) {
+                $scope.availablePrerequisites = training;
+                $scope.assignedPrerequisites = $scope.training.prerequisites;
+            }
+        });
+    };
+
+    $scope.settings = {
+        bootstrap2: false,
+        moveOnSelect: false,
+        postfix: '_helperz',
+        selectMinHeight: 200,
+        filter: true,
+        filterValues: true
+    };
 }
 );
 app.controller('TrainingNewController', function ($scope, $controller) {

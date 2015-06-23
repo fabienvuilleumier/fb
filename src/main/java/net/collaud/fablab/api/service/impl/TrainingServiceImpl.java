@@ -43,12 +43,13 @@ public class TrainingServiceImpl implements TrainingService {
             training.setId(0);
         }
         if (training.getId() > 0) {
-            TrainingEO old = trainingDAO.findOne(training.getId());
+            TrainingEO old = trainingDAO.findOneDetails(training.getId()).get();
             old.setName(training.getName());
             old.setPrice(training.getPrice());
             old.setNote(training.getNote());
             old.setTrainingLevel(training.getTrainingLevel());
             old.setMachineType(training.getMachineType());
+            old.setPrerequisites(training.getPrerequisites());
             old.setActive(training.isActive());
             return trainingDAO.saveAndFlush(old);
         } else {
