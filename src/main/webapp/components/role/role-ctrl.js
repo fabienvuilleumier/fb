@@ -11,16 +11,8 @@ app.controller('RoleController', function ($scope,
     $scope.setLists = function () {
         RoleService.list(function (roles) {
             if ($scope.group) {
-                var availableRoles = [];
-                var assignedRoles = $scope.group.roles;
-                var ri;
-                for (ri = 0; ri < roles.length; ri++) {
-                        if (assignedRoles.id !== roles[ri].id) {
-                            availableRoles.push(roles[ri]);
-                    }
-                }
-                $scope.availableRoles = availableRoles;
-                $scope.assignedRoles = assignedRoles;
+                $scope.availableRoles = roles;
+                $scope.assignedRoles = $scope.group.roles;
             }
         });
     };
