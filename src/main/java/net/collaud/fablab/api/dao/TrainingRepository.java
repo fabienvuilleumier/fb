@@ -26,6 +26,7 @@ public interface TrainingRepository extends JpaRepository<TrainingEO, Integer> {
             + " FROM TrainingEO t "
             + " LEFT JOIN FETCH t.trainingLevel "
             + " LEFT JOIN FETCH t.machineType "
+            + " LEFT JOIN FETCH t.prerequisites "
             + " WHERE t.id=:id")
     Optional<TrainingEO> findOneDetails(@Param("id") Integer id);
 
@@ -33,6 +34,7 @@ public interface TrainingRepository extends JpaRepository<TrainingEO, Integer> {
             + " FROM TrainingEO t"
             + " LEFT JOIN FETCH t.trainingLevel "
             + " LEFT JOIN FETCH t.machineType "
+            + " LEFT JOIN FETCH t.prerequisites "
             + " WHERE UPPER(t.name)=UPPER(:name)")
     TrainingEO getId(@Param("name") String name);
 }

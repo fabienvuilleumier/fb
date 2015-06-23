@@ -471,6 +471,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             note: 'note',
             trainingLevel: 'Training level',
             machineType: 'Machine type',
+            nonSelectedListLabel: 'Available trainings as prerequisites',
+            selectedListLabel: 'Prerequisites',
             create: 'Training creation',
             edit: 'Edit :',
             notification: {

@@ -46,6 +46,39 @@
                                 ng-options="common.name for common in machineTypeList track by common.id"></select>
                     </div>
                 </div>
+                <div ng-show="training.id" class="shuttle">
+                    <select  multiple="multiple" 
+                             name="selectedRoles" 
+                             bs-duallistbox 
+                             style="min-height:250px;" 
+                             ng-model="assignedPrerequisites"                          
+                             ng-options="t.name for t in availablePrerequisites track by t.id"
+                             bootstrap2="{{ settings.bootstrap2}}"
+                             move-on-select="{{ settings.moveOnSelect}}"
+                             postfix="{{ settings.postfix}}"
+                             select-min-height="{{ settings.selectMinHeight}}"
+                             filter="{{ settings.filter}}"
+                             filter-values="{{ settings.filterValues}}"
+
+                             non-selected-list-label="{{ 'training.nonSelectedListLabel'|translate}}"
+                             selected-list-label="{{ 'training.selectedListLabel'|translate}}"
+
+                             preserve-selection="{{ 'duallist.preserveSelection'|translate}}"
+                             move-selected-label="{{ 'duallist.moveSelectedLabel'|translate}}"
+                             move-all-label="{{ 'duallist.moveAllLabel'|translate}}"
+                             remove-selected-label="{{ 'duallist.removeSelectedLabel'|translate}}"
+                             remove-all-label="{{ 'duallist.removeAllLabel'|translate}}"
+                             filter-non-selected="settings.filterNonSelected"
+                             filter-selected="settings.filterSelected"
+                             filter-placeholder="{{ 'duallist.filterPlaceholder'|translate}}"
+                             filter-clear="{{ 'duallist.filterClear'|translate}}"
+                             info-all="{{ 'duallist.infoAll'|translate}}"
+                             info-filtered="{{ 'duallist.infoFiltered'|translate}}"
+                             info-empty="{{ 'duallist.infoEmpty'|translate}}"
+                             >
+                    </select>
+                    <br>
+                </div>
             </div>
             <div class="panel-footer right">
                 <btn-cancel link="#/trainings"></btn-cancel>

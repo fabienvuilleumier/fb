@@ -3,7 +3,6 @@ package net.collaud.fablab.api.data;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +29,7 @@ import org.hibernate.annotations.Type;
 @Table(name = "t_training")
 @Getter
 @Setter
-@ToString(exclude = {"prerequisits", "dependents"})
+@ToString(exclude = {"prerequisites", "dependents"})
 @Where(clause = "active=1")
 public class TrainingEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -62,11 +61,11 @@ public class TrainingEO extends AbstractDataEO<Integer> implements Serializable 
                 @JoinColumn(name = "prerequire_training_id", referencedColumnName = "training_id", nullable = false)},
             inverseJoinColumns = {
                 @JoinColumn(name = "dependent_training_id", referencedColumnName = "training_id", nullable = false)})
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<TrainingEO> prerequisits;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<TrainingEO> prerequisites;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "prerequisits", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "prerequisites", fetch = FetchType.LAZY)
     private Set<TrainingEO> dependents;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
