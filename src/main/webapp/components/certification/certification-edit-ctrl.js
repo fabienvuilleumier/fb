@@ -50,16 +50,8 @@ app.controller('GlobalCertificationEditController', function ($scope, $routePara
     var setLists = function () {
         UserService.list(function (users) {
             if ($scope.certification) {
-                var availableUsers = [];
-                var certifiedUsers = $scope.certification.users;
-                var ari;
-                for (ari = 0; ari < users.length; ari++) {
-                    if (certifiedUsers.id !== users[ari].id) {
-                        availableUsers.push(users[ari]);
-                    }
-                }
-                $scope.availableUsers = availableUsers;
-                $scope.certifiedUsers = certifiedUsers;
+                $scope.availableUsers = users;
+                $scope.certifiedUsers = $scope.certification.users;
             }
         });
     };
