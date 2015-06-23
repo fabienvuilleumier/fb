@@ -27,7 +27,7 @@
             remove: function (id, successFn) {
                 User.remove({id: id}, successFn);
             },
-             softRemove: function (id, successFn) {
+            softRemove: function (id, successFn) {
                 $http.get(App.API.USER_API + "/softRemove?id=" + id).success(successFn);
                 $log.debug("UserService: soft remove...");
             },
@@ -47,37 +47,37 @@
             }
         };
     });
-
-    app.factory('GroupService', function ($log, $resource, $http) {
-
-        var Group = $resource(App.API.GROUP_API + "/:id", {id: '@id'});
-
-        return {
-            list: function (successFn) {
-                $http(
-                        {
-                            method: 'GET',
-                            url: App.API.GROUP_API
-                        }
-                ).success(successFn);
-            }
-//				remove: function (id, successFn) {
-//					$log.debug("UserService: remove...");
-//					User.remove({id: id}, successFn);
-//					$log.debug("UserService: remove done.");
-//				},
-//				save: function (user, successFn, errorFn) {
-//					$log.debug("UserService: save...");
-//					var saved = User.save(user, successFn, errorFn);
-//					$log.debug("UserService: save done.");
-//					return saved;
-//				},
-//				get: function (id, successFn) {
-//					$log.debug("UserService: get...");
-//					var prj = User.get({id: id}, successFn);
-//					$log.debug("UserService: get done.");
-//					return prj;
-//				},
-        };
-    });
+    /*
+     app.factory('GroupService', function ($log, $resource, $http) {
+     
+     var Group = $resource(App.API.GROUP_API + "/:id", {id: '@id'});
+     
+     return {
+     list: function (successFn) {
+     $http(
+     {
+     method: 'GET',
+     url: App.API.GROUP_API
+     }
+     ).success(successFn);
+     }
+     remove: function (id, successFn) {
+     $log.debug("UserService: remove...");
+     User.remove({id: id}, successFn);
+     $log.debug("UserService: remove done.");
+     },
+     save: function (user, successFn, errorFn) {
+     $log.debug("UserService: save...");
+     var saved = User.save(user, successFn, errorFn);
+     $log.debug("UserService: save done.");
+     return saved;
+     },
+     get: function (id, successFn) {
+     $log.debug("UserService: get...");
+     var prj = User.get({id: id}, successFn);
+     $log.debug("UserService: get done.");
+     return prj;
+     },
+     };
+     });*/
 }());

@@ -70,6 +70,7 @@ public class ReservationEO extends AbstractDataEO<Integer> implements Serializab
     }
 
     public ReservationEO(Integer id) {
+        this.active = true;
         this.id = id;
     }
 

@@ -496,6 +496,29 @@ angular.module('Fablab').config(function ($translateProvider) {
             confirmation: {
                 remove: 'Do you really want to remove this certification ?'
             }
+        },
+        role: {
+            title: 'Groups roles',
+            group: 'Select a group',
+            roles: 'Roles',
+            selectedListLabel: 'Assigned roles',
+            nonSelectedListLabel: 'Available roles',
+            notification: {
+                saved: 'Role saved'
+            }
+
+        },
+        duallist: {
+            filterClear: 'Show all',
+            filterPlaceholder: 'Filter',
+            moveSelectedLabel: 'Move selected only',
+            moveAllLabel: 'Move all',
+            removeSelectedLabel: 'Remove selected only',
+            removeAllLabel: 'Remove all',
+            preserveSelection: 'moved',
+            infoAll: 'Showing all {0}',
+            infoFiltered: '<span class="label label-warning">Filtered</span> {0} from {1}',
+            infoEmpty: 'Empty list!'
         }
     });
 });

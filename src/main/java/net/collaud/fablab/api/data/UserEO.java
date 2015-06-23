@@ -116,12 +116,11 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
     @JoinTable(name = "r_group_user",
             joinColumns = {
                 @JoinColumn(name = "user_id",
-                        referencedColumnName = "user_id", nullable = false,
-                        updatable = false)},
+                        referencedColumnName = "user_id", nullable = false)},
             inverseJoinColumns = {
                 @JoinColumn(name = "group_id",
                         referencedColumnName = "group_id",
-                        nullable = false, updatable = false)})
+                        nullable = false)})
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Set<GroupEO> groups;
 

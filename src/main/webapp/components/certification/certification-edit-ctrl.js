@@ -10,12 +10,21 @@ app.controller('GlobalCertificationEditController', function ($scope, $location,
         });
     };
     $scope.save = function () {
-        var certificationCurrent = angular.copy($scope.certification);
-        CertificationService.save(certificationCurrent, function (data) {
-            $scope.certification = data;
-            NotificationService.notify("success", "certification.notification.saved");
-            $location.path("certifications");
-        });
+        if (newCertification) {
+            var certificationCurrent = angular.copy($scope.certification);
+            CertificationService.save(certificationCurrent, function (data) {
+                $scope.certification = data;
+                NotificationService.notify("success", "certification.notification.saved");
+                $location.path("certifications");
+            });
+        } else {
+            var certificationCurrent = angular.copy($scope.certification);
+            CertificationService.save(certificationCurrent, function (data) {
+                $scope.certification = data;
+                NotificationService.notify("success", "certification.notification.saved");
+                $location.path("certifications");
+            });
+        }
     };
     $scope.minDate = new Date();
     $scope.today = function () {

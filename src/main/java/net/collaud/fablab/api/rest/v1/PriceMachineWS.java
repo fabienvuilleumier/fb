@@ -5,8 +5,6 @@ import javax.annotation.PostConstruct;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
-import net.collaud.fablab.api.rest.v1.base.SoftRemoveWebService;
-import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.service.PriceMachineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController()
 @RequestMapping("/v1/priceMachine")
 @JavascriptAPIConstant("PRICE_MACHINE_API")
-public class PriceMachineWS extends ReadWriteRestWebservice<PriceMachineEO, PriceMachineService> implements SoftRemoveWebService {
+public class PriceMachineWS extends ReadWriteRestWebservice<PriceMachineEO, PriceMachineService>{
 
     @Autowired
     private PriceMachineService priceMachineService;
@@ -30,11 +28,6 @@ public class PriceMachineWS extends ReadWriteRestWebservice<PriceMachineEO, Pric
     @PostConstruct
     public void postConstruct() {
         super.setService(priceMachineService);
-    }
-
-    @Override
-    public void softRemove(Integer id) throws FablabException {
-        priceMachineService.softRemove(id);
     }
 
     @RequestMapping(value = "getPriceMachine", method = RequestMethod.GET)

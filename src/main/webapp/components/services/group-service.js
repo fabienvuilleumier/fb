@@ -11,8 +11,10 @@ app.factory('GroupService', function ($log, $resource, $http) {
                     }
             ).success(successFn);
         },
-        save: function () {
-            console.log("TEST SAVE");
+        save: function (groupParam, successFn, errorFn) {
+            $log.debug("GroupService: save...");
+            var saved = group.save(groupParam, successFn, errorFn);
+            return saved;
         },
         softRemove: function (id, successFn) {
             $http.get(App.API.GROUP_API + "/softRemove?id=" + id).success(successFn);
