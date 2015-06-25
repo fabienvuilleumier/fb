@@ -5,6 +5,11 @@ app.controller('GlobalMachineTypeEditController', function ($scope, $location,
         PriceMachineService) {
     $scope.currency = App.CONFIG.CURRENCY;
     $scope.selected = {machineType: undefined};
+    
+    MachineTypeService.list(function (mt){
+        $scope.machineTypes = mt;
+    });
+    
     $scope.loadMachineType = function (id) {
         MachineTypeService.get(id, function (data) {
             $scope.machineType = data;

@@ -12,11 +12,17 @@
                 $scope.selected.user = data;
             });
         };
-
         $scope.onSelectUser = function (user) {
             $location.path('/payments/' + user.id);
             $log.info(user);
         };
+
+        UserService.hasRole(App.connectedUser.user.id, 'PAYMENT_MANAGE', function (hasRole) {
+            if (!hasRole) {
+                $scope.onSelectUser(App.connectedUser.user);
+            }
+        });
+
 
         UserService.list(function (data) {
             $log.info("reload user");
