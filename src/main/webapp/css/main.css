@@ -307,3 +307,8 @@ fieldset[disabled] .btn-alternate.active {
     color: #777;
     line-height: 20px;
 }
+
+.warning-msg{
+    margin-left : 2px;
+    margin-right : 2px;
+}

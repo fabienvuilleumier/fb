@@ -1,11 +1,15 @@
 <form class="form-horizontal" name="editMachineStatus" ng-submit="save(false)">
+    <div class="row warning-msg">
+        <div class="col-sm-12 alert alert-warning">
+            <span ng-show="newMachineStatus"translate="machineStatus.warningCreate"></span>
+            <span ng-show="!newMachineStatus"translate="machineStatus.warningEdit"></span>
+        </div> 
+    </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <span ng-show="newMachineStatus" translate="machineStatus.create"></span>
             <span ng-show="!newMachineStatus" translate="machineStatus.edit"></span>
             <span ng-show="!newMachineStatus"> {{machineStatus.label}}</span>
-            <span  ng-show="newMachineStatus"translate="machineStatus.warningCreate"></span>
-            <span  ng-show="!newMachineStatus"translate="machineStatus.warningEdit"></span>
         </div>
         <div class="panel-body">
             <div class="form-group">
