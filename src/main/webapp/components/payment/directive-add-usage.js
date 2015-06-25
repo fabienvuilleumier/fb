@@ -12,6 +12,7 @@
             templateUrl: 'components/payment/directive-add-usage.html',
             controller: function ($scope, $filter) {
                 var resetValues = function () {
+                    $scope.canUse = true;
                     $scope.addUsage = {
                         date: new Date(),
                         time: new Date(0, 0, 0, 1, 0, 0),

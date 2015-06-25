@@ -54,7 +54,7 @@
                         "/&userId=" + userId).success(successFn);
             }, 
             getPrice: function (machineTypeId, userId, successFn) {
-                $http.get(App.API.USER_API + "/getPrice?machineTypeId=" + machineTypeId +
+                $http.get(App.API.PAYMENT_API + "/getPrice?machineTypeId=" + machineTypeId +
                         "&userId=" + userId).success(successFn);
             }
         };
