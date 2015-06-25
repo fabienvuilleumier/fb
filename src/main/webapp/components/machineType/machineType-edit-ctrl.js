@@ -5,11 +5,15 @@ app.controller('GlobalMachineTypeEditController', function ($scope, $location,
         PriceMachineService) {
     $scope.currency = App.CONFIG.CURRENCY;
     $scope.selected = {machineType: undefined};
-    
-    MachineTypeService.list(function (mt){
-        $scope.machineTypes = mt;
+
+    MachineTypeService.list(function (mt) {
+        var res = [];
+        for (var i = 0; i < mt.length; i++) {
+            res.push(mt[i].technicalname.toUpperCase());
+        }
+        $scope.existingValues = res;
     });
-    
+
     $scope.loadMachineType = function (id) {
         MachineTypeService.get(id, function (data) {
             $scope.machineType = data;
@@ -46,22 +50,22 @@ app.controller('GlobalMachineTypeEditController', function ($scope, $location,
             });
         }
     };
-    var updateTechnicalName = function () {
+
+    $scope.updateTechnicalName = function () {
         if (!$scope.machineType.technicalname) {
             if ($scope.machineType.name) {
                 $scope.machineType.technicalname = $scope.machineType.name.toUpperCase();
             }
         } else {
-            var oldName = $scope.machineType.name.toUpperCase().substring(0, $scope.machineType.name.length - 1);
-            if ($scope.machineType.technicalname === oldName) {
-                $scope.machineType.technicalname = $scope.machineType.name.toUpperCase();
+            if ($scope.machineType.name) {
+                var oldName = $scope.machineType.name.toUpperCase().substring(0, $scope.machineType.name.length - 1);
+                if ($scope.machineType.technicalname === oldName) {
+                    $scope.machineType.technicalname = $scope.machineType.name.toUpperCase();
+                }
             }
         }
     };
-    var initialName = function () {
-        return $scope.machineType.name;
-    };
-    $scope.$watch(initialName, updateTechnicalName);
+
     var updateMemberShipList = function () {
         MembershipTypeService.list(function (mst) {
             $scope.membershipTypes = mst;
