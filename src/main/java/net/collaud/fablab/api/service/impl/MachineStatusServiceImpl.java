@@ -67,4 +67,9 @@ public class MachineStatusServiceImpl implements MachineStatusService {
         current.setActive(false);
         machineStatusDAO.saveAndFlush(current);
     }
+
+    @Override
+    public MachineStatusEO getByLabel(String label) {
+        return machineStatusDAO.getByLabel(label);
+    }
 }

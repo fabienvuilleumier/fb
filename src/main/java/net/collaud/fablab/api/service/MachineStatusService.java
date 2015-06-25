@@ -8,4 +8,6 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
 */
 public interface MachineStatusService extends ReadWriteService<MachineStatusEO> {
 
+    MachineStatusEO getByLabel(String label);
+
 }

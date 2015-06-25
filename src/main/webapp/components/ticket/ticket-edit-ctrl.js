@@ -1,7 +1,8 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('GlobalTicketEditController', function ($scope, $rootScope, $location, $routeParams,
-        TicketService, NotificationService, StaticDataService, TicketStatusService) {
+        TicketService, NotificationService, StaticDataService, TicketStatusService,
+        MachineStatusService, MachineService) {
     $scope.fromMachine = $routeParams.machineId ? true : false;
     $scope.selected = {ticket: undefined};
     $scope.loadTicket = function (id) {
@@ -11,6 +12,31 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
 
     };
     $scope.save = function () {
+        if (!$scope.ticket.closeDate) {
+            MachineStatusService.getByLabel("Indisponible", function (data) {
+                MachineService.saveStatus($scope.ticket.machine.id, data.id, function (status) {
+                    $scope.ticket.machine.machineStatus = status;
+                });
+            });
+        } else {
+            TicketService.list(function (tickets) {
+                var res = false;
+                for (var ti = 0; ti < tickets.length; ti++) {
+                    if (tickets[ti].id !== $scope.ticket.id) {
+                        //if res = false then alll ticket closed for this machine
+                        //Maintient de l'état vrai
+                        res = res || (tickets[ti].closeDate === null && tickets[ti].machine.id === $scope.ticket.machine.id);
+                    }
+                }
+                if (!res) {
+                    MachineStatusService.getByLabel("Disponible ", function (data) {
+                        MachineService.saveStatus($scope.ticket.machine.id, data.id, function (status) {
+                            $scope.ticket.machine.machineStatus = status;
+                        });
+                    });
+                }
+            });
+        }
         var ticketCurrent = angular.copy($scope.ticket);
         TicketService.save(ticketCurrent, function (data) {
             $scope.ticket = data;

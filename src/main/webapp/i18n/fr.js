@@ -1,5 +1,5 @@
 angular.module('Fablab').config(function ($translateProvider) {
-	$translateProvider.translations('en', {
+	$translateProvider.translations('fr', {
 		auth: {
 			result: {
 				ok: 'Bienvenue',

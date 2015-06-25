@@ -44,40 +44,15 @@
                     method: 'GET',
                     url: App.API.USER_API + "/updateMailingList"
                 }).success(successFn);
+            },
+            canUse: function (machineTypeId, userId, successFn) {
+                $http.get(App.API.USER_API + "/canUse?machineTypeId=" + machineTypeId +
+                        "&userId=" + userId).success(successFn);
+            },
+            hasRole: function (userId, role, successFn) {
+                $http.get(App.API.USER_API + "/hasRole?userId=" + userId +
+                        "&role=" + role).success(successFn);
             }
         };
     });
-    /*
-     app.factory('GroupService', function ($log, $resource, $http) {
-     
-     var Group = $resource(App.API.GROUP_API + "/:id", {id: '@id'});
-     
-     return {
-     list: function (successFn) {
-     $http(
-     {
-     method: 'GET',
-     url: App.API.GROUP_API
-     }
-     ).success(successFn);
-     }
-     remove: function (id, successFn) {
-     $log.debug("UserService: remove...");
-     User.remove({id: id}, successFn);
-     $log.debug("UserService: remove done.");
-     },
-     save: function (user, successFn, errorFn) {
-     $log.debug("UserService: save...");
-     var saved = User.save(user, successFn, errorFn);
-     $log.debug("UserService: save done.");
-     return saved;
-     },
-     get: function (id, successFn) {
-     $log.debug("UserService: get...");
-     var prj = User.get({id: id}, successFn);
-     $log.debug("UserService: get done.");
-     return prj;
-     },
-     };
-     });*/
 }());

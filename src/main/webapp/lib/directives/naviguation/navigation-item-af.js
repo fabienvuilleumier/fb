@@ -9,7 +9,7 @@ naviguation.directive('fabNavItemAf', function () {
 			show: '='
 		},
 		template: '<a ng-show="show===undefined || show" href="#/{{link}}">'
-				+ '	<i class="fa fa-fw fa-{{icon}}"></i> {{label | translate}}'
+				+ '	<span class="fa fa-fw fa-{{icon}}"></span> {{label | translate}}'
 				+ '</a>'
 	};
 });

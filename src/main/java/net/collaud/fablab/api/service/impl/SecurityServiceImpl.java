@@ -131,5 +131,4 @@ public class SecurityServiceImpl implements SecurityService {
 			throw new FablabSecurityException("Current user has not roles "+roles);
 		}
 	}
-
 }

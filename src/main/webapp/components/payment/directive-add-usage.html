@@ -4,18 +4,28 @@
         </div>
         <div class="panel-body">
             <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h2 ng-show="!canUse" style="color : red" translate="payment.userNotAllowed"></h2>
+                    </div>
+                    <div class="col-sm-offset-1">
+                        <span ng-show="!canUse" style="color : red;" translate="payment.userNotAllowed2"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-4 control-label" translate="payment.date"></label>
                 <div class="col-sm-8">
                     <p class="input-group">
                         <input class="form-control" 
                                datepicker-popup="{{format}}" 
-                           ng-model="addUsage.date" 
-                           is-open="opened" 
-                           min-date="{{minDate}}"
-                           datepicker-options="dateOptions" 
-                           ng-required="true" 
-                           close-text="Close"
-                           required/>
+                               ng-model="addUsage.date" 
+                               is-open="opened" 
+                               min-date="{{minDate}}"
+                               datepicker-options="dateOptions" 
+                               ng-required="true" 
+                               close-text="Close"
+                               required/>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
@@ -28,7 +38,8 @@
                     <select class="form-control"
                             required
                             ng-model="addUsage.machine"
-                            ng-options="m as m.name group by m.machineType.name for m in machines"></select>
+                            ng-options="m as m.name group by m.machineType.name for m in machines" 
+                            ng-change="canUseMachinery()"></select>
                 </div>
             </div>
 

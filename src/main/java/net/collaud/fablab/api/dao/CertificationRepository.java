@@ -1,33 +1,52 @@
 package net.collaud.fablab.api.dao;
 
+import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.api.data.CertificationEO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
+import net.collaud.fablab.api.data.TrainingEO;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
 /**
- *This is the DAO interface for a <tt>Certification</tt>.
+ * This is the DAO interface for a <tt>Certification</tt>.
+ *
  * @author Fabien Vuilleumier
  */
-public interface CertificationRepository extends JpaRepository<CertificationEO, Integer>{
+public interface CertificationRepository extends JpaRepository<CertificationEO, Integer> {
 
     @Query("SELECT c "
-        + " FROM CertificationEO c  " 
-        + " LEFT JOIN FETCH c.training  " )
+            + " FROM CertificationEO c  "
+            + " LEFT JOIN FETCH c.training  ")
     @Override
     List<CertificationEO> findAll();
+
     @Query("SELECT c "
-        + " FROM CertificationEO c "
-        + " LEFT JOIN FETCH c.training "
-        + " LEFT JOIN FETCH c.users "
-        + " WHERE c.id=:id")
-    Optional<CertificationEO> findOneDetails(@Param("id")Integer id);
+            + " FROM CertificationEO c "
+            + " LEFT JOIN FETCH c.training "
+            + " LEFT JOIN FETCH c.users "
+            + " WHERE c.id=:id")
+    Optional<CertificationEO> findOneDetails(@Param("id") Integer id);
+
+    @Query("SELECT c "
+            + " FROM CertificationEO c "
+            + " LEFT JOIN FETCH c.training "
+            + " LEFT JOIN FETCH c.users "
+            + " WHERE UPPER(c.name) = UPPER(:name)")
+    CertificationEO getId(@Param("name") String name);
 
     @Query("SELECT c "
             + " FROM CertificationEO c "
             + " LEFT JOIN FETCH c.training t "
-            + " LEFT JOIN FETCH c.users "
-            + " WHERE UPPER(t.name) = UPPER(:trainingName)")
-    CertificationEO getId(@Param("trainingName") String trainingName);
+            + " LEFT JOIN FETCH t.machineType "
+            + " LEFT JOIN FETCH c.users u "
+            + " WHERE u.id = :id ")
+    List<CertificationEO> getCertificationsByUserId(@Param("id") Integer userId);
+
+    @Query("SELECT c "
+            + " FROM CertificationEO c "
+            + " WHERE c.training.id = :trainingId")
+    CertificationEO getCertification(@Param("trainingId") Integer trainingId);
+    
 }

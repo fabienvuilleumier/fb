@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.api.dao.MachineRepository;
 import net.collaud.fablab.api.data.MachineEO;
+import net.collaud.fablab.api.data.MachineStatusEO;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.MachineService;
+import net.collaud.fablab.api.service.MachineStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class MachineServiceImpl implements MachineService {
 
     @Autowired
     private MachineRepository machineDao;
+
+    @Autowired
+    private MachineStatusService machineStatusService;
 
     @Override
     @Secured({Roles.RESERVATION_USE, Roles.PAYMENT_MANAGE, Roles.MACHINE_VIEW})
@@ -80,5 +85,15 @@ public class MachineServiceImpl implements MachineService {
     @Secured({Roles.MACHINE_MANAGE})
     public List<MachineEO> getByStatusLabel(String label) {
         return machineDao.getByStatusLabel(label);
+    }
+
+    @Override
+    public MachineStatusEO saveStatus(Integer machineId, Integer machineStatusId) {
+        MachineEO machine = machineDao.findOne(machineId);
+        MachineStatusEO machineStatus = machineStatusService.getById(machineStatusId).get();
+        MachineEO old = machineDao.findOne(machine.getId());
+        old.setMachineStatus(machineStatus);
+        machineDao.saveAndFlush(old);
+        return machineStatus;
     }
 }

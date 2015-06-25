@@ -7,6 +7,8 @@ import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
 import net.collaud.fablab.api.service.MachineStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,4 +28,10 @@ public class MachineStatusWS extends ReadWriteRestWebservice<MachineStatusEO, Ma
     public void postConstruct() {
         super.setService(machineStatusService);
     }
+    
+    @RequestMapping(value="getByLabel", method = RequestMethod.GET)
+    public MachineStatusEO getByLabel(@RequestParam("label") String label){
+        return machineStatusService.getByLabel(label);
+    }
+    
 }

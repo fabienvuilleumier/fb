@@ -16,7 +16,7 @@ app.controller('GlobalTrainingEditController', function ($scope, $location,
             TrainingService.save(trainingCurrent, function (data) {
                 $scope.training = data;
                 NotificationService.notify("success", "training.notification.saved");
-                TrainingService.getId(data.training.name, function (withId) {
+                TrainingService.getId(data.name, function (withId) {
                     $location.path("trainings/training-edit/" + withId.id);
                 });
             });

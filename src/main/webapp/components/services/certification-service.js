@@ -31,8 +31,11 @@
                 var certificationRes = certification.get({id: id}, successFn);
                 return certificationRes;
             },
-            getId: function (trainingName, successFn) {
-                $http.get(App.API.CERTIFICATION_API + "/getId?trainingName=" + trainingName).success(successFn);
+            getId: function (name, successFn) {
+                $http.get(App.API.CERTIFICATION_API + "/getId?name=" + name.latinise()).success(successFn);
+            },
+            failedUser : function (certificationId, userIds, successFn) {
+                $http.get(App.API.CERTIFICATION_API + "/failedUser?certificationId=" + certificationId + "&userIds=" + userIds).success(successFn);
             }
         };
     });

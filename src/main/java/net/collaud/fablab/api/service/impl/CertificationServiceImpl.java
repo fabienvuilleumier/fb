@@ -4,25 +4,33 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import net.collaud.fablab.api.dao.CertificationRepository;
 import net.collaud.fablab.api.data.CertificationEO;
+import net.collaud.fablab.api.data.TrainingEO;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.CertificationService;
+import net.collaud.fablab.api.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * This is the service implementation class for a <tt>Certification</tt>.
+ *
  * @author Fabien Vuilleumier
  */
 @Service
 @Transactional
-    @Secured({Roles.TRAINING_MANAGE})
+@Secured({Roles.TRAINING_MANAGE})
 public class CertificationServiceImpl implements CertificationService {
 
     @Autowired
     private CertificationRepository certificationDAO;
+
+    @Autowired
+    private TrainingService trainingService;
 
     @Override
     @Secured({Roles.TRAINING_MANAGE})
@@ -36,7 +44,7 @@ public class CertificationServiceImpl implements CertificationService {
         return certificationDAO.findOneDetails(id);
     }
 
-     @Override
+    @Override
     @Secured({Roles.TRAINING_MANAGE})
     public CertificationEO save(CertificationEO certification) {
         if (certification.getId() == null) {
@@ -44,6 +52,7 @@ public class CertificationServiceImpl implements CertificationService {
         }
         if (certification.getId() > 0) {
             CertificationEO old = certificationDAO.findOneDetails(certification.getId()).get();
+            old.setName(certification.getName());
             old.setCertificationDate(certification.getCertificationDate());
             old.setCertificationPrice(certification.getCertificationPrice());
             old.setNote(certification.getNote());
@@ -71,8 +80,73 @@ public class CertificationServiceImpl implements CertificationService {
     }
 
     @Override
-    public CertificationEO getId(String trainingName) {
-        return certificationDAO.getId(trainingName);
+    public CertificationEO getId(String name) {
+        return certificationDAO.getId(name);
+    }
+
+    @Override
+    public boolean canCertify(Integer certificationId, Integer userId) {
+        List<CertificationEO> userCertifications = certificationDAO.getCertificationsByUserId(userId);
+        TrainingEO trainingOfCurrentCertification = getById(certificationId).get().getTraining();
+        List<CertificationEO> trainingOfCurrentCertificationPrerequisitesCertifications = getCertifications(trainingOfCurrentCertification.getPrerequisites());
+        /*printforCheck(certificationId, trainingOfCurrentCertification, userId, userCertifications,
+         trainingOfCurrentCertificationPrerequisitesCertifications);*/
+        if (!trainingOfCurrentCertificationPrerequisitesCertifications.isEmpty()) {
+            return userCertifications.containsAll(trainingOfCurrentCertificationPrerequisitesCertifications);
+        } else {
+            return false;
+        }
+    }
+
+    private void printforCheck(Integer certificationId, TrainingEO trainingOfCurrentCertification,
+            Integer userId, List<CertificationEO> userCertifications,
+            List<CertificationEO> trainingOfCurrentCertificationPrerequisitesCertifications) {
+        System.out.println("Prerequisite of certification " + getById(certificationId).get().getName() + " : ");
+        for (TrainingEO t : trainingOfCurrentCertification.getPrerequisites()) {
+            System.out.println(t.getName() + " => " + certificationDAO.getCertification(t.getId()).getName());
+        }
+        System.out.println("(OU ALORS )");
+        for (CertificationEO c : getCertifications(trainingOfCurrentCertification.getPrerequisites())) {
+            System.out.println(c.getName());
+        }
+        System.out.println("Certification of user " + userId + " : ");
+        for (CertificationEO c : userCertifications) {
+            System.out.println(c.getName());
+        }
+        System.out.println("RESULT : " + userCertifications.containsAll(trainingOfCurrentCertificationPrerequisitesCertifications));
+        //List<Integer> userCertificationsIds = new ArrayList<>();
+        for (CertificationEO c : userCertifications) {
+            for (CertificationEO c2 : trainingOfCurrentCertificationPrerequisitesCertifications) {
+                System.out.println(c.getName() + " " + c2.getName() + " " + c.equals(c2));
+            }
+        }
+    }
+
+    @Override
+    @Secured({Roles.TRAINING_MANAGE})
+    public List<Integer> failedUser(Integer certificationId, List<Integer> userIds) {
+        List<Integer> res = new ArrayList<>();
+        CertificationEO c = getById(certificationId).get();
+        if (c != null) {
+            if (!c.getTraining().getPrerequisites().isEmpty()) {
+                for (Integer userId : userIds) {
+                    if (!canCertify(certificationId, userId)) {
+                        res.add(userId);
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    private List<CertificationEO> getCertifications(Set<TrainingEO> prerequisites) {
+        List<CertificationEO> res = new ArrayList<>();
+        for (TrainingEO p : prerequisites) {
+            CertificationEO c = certificationDAO.getCertification(p.getId());
+            if (c != null) {
+                res.add(c);
+            }
+        }
+        return res;
     }
 }
-

@@ -30,4 +30,6 @@ public interface PaymentService {
 	List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search);
 
 	HistoryEntryId removeHistoryEntry(HistoryEntryId entry);
+        
+        Float getPrice(Integer machineTypeId, Integer userId);
 }

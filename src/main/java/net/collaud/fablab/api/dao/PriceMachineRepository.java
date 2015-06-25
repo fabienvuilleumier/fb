@@ -48,4 +48,11 @@ public interface PriceMachineRepository extends JpaRepository<PriceMachineEO, In
             + " LEFT JOIN FETCH p.machineType mt "
             + " WHERE mt.id = :machineTypeId")
     List<PriceMachineEO> getMachineType(@Param("machineTypeId") Integer machineTypeId);
+
+    @Query("SELECT p "
+            + " FROM PriceMachineEO p "
+            + " LEFT JOIN FETCH p.membershipType "
+            + " LEFT JOIN FETCH p.machineType "
+            + " WHERE p.machineType.id = :machineTypeId AND p.membershipType.id = :membershipTypeId")
+    PriceMachineEO find(@Param("machineTypeId") Integer machineTypeId, @Param("membershipTypeId") Integer membershipTypeId);
 }

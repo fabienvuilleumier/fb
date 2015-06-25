@@ -22,7 +22,7 @@ naviguation.directive('fabNavSide', function () {
                 + '  <li fab-nav-dropdown-accounting class="dropdown" '
                 + '    icon="euro" '
                 + '    label="menu.accounting" '
-                + '    show="hasAnyRole(\'ACCOUNTING_VIEW\')"></li>'
+                + '    show="hasAnyRole(\'ACCOUNTING_MANAGE\')"></li>'
                 + '  <li fab-nav-item link="reservations" icon="calendar" '
                 + '    label="menu.reservation" '
                 + '    show="hasAnyRole(\'RESERVATION_VIEW\')"></li> '

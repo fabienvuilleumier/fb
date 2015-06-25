@@ -1,7 +1,8 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('MachineListController', function ($scope, $filter, $location,
+app.controller('MachineListController', function ($scope, $filter,$rootScope, $location,
         ngTableParams, MachineService, NotificationService) {
+            console.log($rootScope.hasAnyRole('MACHINE_MANAGE'));
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page

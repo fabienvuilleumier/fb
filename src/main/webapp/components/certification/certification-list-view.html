@@ -8,10 +8,16 @@
     <table ng-table="tableParams" class="table" show-filter="true">
         <tr ng-repeat="certification in $data">
             <td 
+                data-title="'certification.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{certification.name}}
+            </td>
+            <td 
                 data-title="'certification.certificationDate' | translate" 
                 sortable="'certificationDate'"
                 filter="{'certificationDate':'text'}">
-                {{certification.certificationDate}}
+                {{certification.certificationDate|prettyDate}}
             </td>
             <td 
                 data-title="'certification.certificationPrice' | translate" 

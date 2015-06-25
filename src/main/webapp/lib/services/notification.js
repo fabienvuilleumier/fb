@@ -19,6 +19,7 @@ angular.module('Notification', [], function ($provide) {
 //				var content = "<b>" + $translate.instant(title) + "</b><br/>";
 				var content = $translate.instant(title);
 				if (html) {
+					content += " ";
 					content += html;
 				}
 				ngNotify.set(content, {

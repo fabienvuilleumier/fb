@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -59,5 +60,11 @@ public class PaymentWS {
 	public BaseModel confirmSubscriptionForCurrentUser() {
 		return new DataModel(paymentService.addSubscriptionConfirmationForCurrentUser());
 	}
+        
+        @RequestMapping(value = "getPrice", method = RequestMethod.GET)
+        public Float getPrice(@RequestParam("machineTypeId") Integer machineTypeId, 
+                @RequestParam("userId") Integer userId){
+            return paymentService.getPrice(machineTypeId, userId);
+        }
 
 }

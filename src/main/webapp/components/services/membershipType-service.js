@@ -35,7 +35,7 @@
                 $http.get(App.API.MEMBERSHIP_TYPE_API + "/getPrices?id=" + id).success(successFn);
             },
             getId: function (name, successFn) {
-                $http.get(App.API.MEMBERSHIP_TYPE_API + "/getId?name=" + name).success(successFn);
+                $http.get(App.API.MEMBERSHIP_TYPE_API + "/getId?name=" + name.latinise()).success(successFn);
             }
         };
     });
