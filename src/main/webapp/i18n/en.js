@@ -254,8 +254,8 @@ angular.module('Fablab').config(function ($translateProvider) {
         machineStatus: {
             title: 'Machinery status',
             label: 'Label',
-            warningEdit: ' ! Warning ! If you change some value, the list red-yellow-green will not work good unless you midify the source code.',
-            warningCreate: ' ! Warning ! If you add some value, the list red-yellow-green will not work good unless you midify the source code.',
+            warningEdit: '<strong>Warning !</strong> If you change some value, the list red-yellow-green will not work good unless you midify the source code.',
+            warningCreate: '<strong>Warning !</strong> If you add some value, the list red-yellow-green will not work good unless you midify the source code.',
             create: 'Machinery status creation',
             edit: 'Edit :',
             notification: {
@@ -346,9 +346,10 @@ angular.module('Fablab').config(function ($translateProvider) {
             value: 'Value',
             name: 'Common Name',
             create: 'Configuration creation',
+            warningEdit: '<strong>Warning !</strong> Changes will be visible after a window refresh (F5 for most common browsers)',
             edit: 'Edit :',
             notification: {
-                saved: 'Configuration saved',
+                saved: 'Configuration saved; Don\'t forget to refresh the window (F5) to see changes in FabLab - Manager applicaiton.',
                 removed: 'Configuration removed'
             },
             confirmation: {
@@ -513,7 +514,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             selectedListLabel: 'Assigned roles',
             nonSelectedListLabel: 'Available roles',
             notification: {
-                saved: 'Role saved'
+                saved: 'Roles saved'
             }
 
         },
