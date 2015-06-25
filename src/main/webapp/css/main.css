@@ -299,6 +299,12 @@ fieldset[disabled] .btn-alternate.active {
     font-weight: bold;
 }
 
+.error-text{
+    margin-top: 9px;
+    font-weight: bold;
+    color: red;
+}
+
 .shuttle{
     margin-top: 100px;
 }

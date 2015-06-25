@@ -227,6 +227,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             name: 'Name',
             technicalname: 'Technical name',
             restricted: 'Restricted ?',
+            alreadyExist: 'Technical name does already exist!',
             membershipTypes: 'Price per membership type',
             create: 'Machinery type creation',
             edit: 'Edit :',
