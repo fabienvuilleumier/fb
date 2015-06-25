@@ -17,25 +17,52 @@ app.controller('GlobalCertificationEditController', function ($scope, $routePara
             CertificationService.save(certificationCurrent, function (data) {
                 $scope.certification = data;
                 NotificationService.notify("success", "certification.notification.saved");
-                CertificationService.getId(data.training.name, function (withId) {
+                CertificationService.getId(data.name, function (withId) {
                     $location.path("certifications/certification-edit/" + withId.id);
                 });
             });
         } else {
             $scope.certification.users = $scope.certifiedUsers;
-            var certificationCurrent = angular.copy($scope.certification);
-            CertificationService.save(certificationCurrent, function (data) {
-                $scope.certification = data;
-                NotificationService.notify("success", "certification.notification.saved");
-                $location.path("certifications");
+            var userIds = [];
+            var ui;
+            for (ui = 0; ui < $scope.certification.users.length; ui++) {
+                userIds.push($scope.certification.users[ui].id);
+            }
+            //Control of prerequisites 
+            CertificationService.failedUser($scope.certification.id, userIds, function (failedUsers) {
+                if (failedUsers.length !== 0) {
+                    var fui;
+                    var fuNames = "";
+                    for (fui = 0; fui < failedUsers.length; fui++) {
+                        fuNames += failedUsers[fui];
+                        fuNames += ", ";
+                    }
+                    fuNames = fuNames.substring(0, parseInt(fuNames.length - 2));
+                    NotificationService.notify("error", "certification.notification.failed", fuNames.toString());
+                } else {
+                    var certificationCurrent = angular.copy($scope.certification);
+                    CertificationService.save(certificationCurrent, function (data) {
+                        $scope.certification = data;
+                        NotificationService.notify("success", "certification.notification.saved");
+                        $location.path("certifications");
+                    });
+                }
             });
+
+
         }
     };
 
-
-    $scope.uploadPrice = function () {
-        if ($scope.certification.training) {
-            $scope.certification.certificationPrice = $scope.certification.training.price;
+    $scope.uploadPriceAndSetName = function () {
+        if ($scope.certification) {
+            if ($scope.certification.training) {
+                $scope.certification.certificationPrice = $scope.certification.training.price;
+            }
+            if (!$scope.certification.name) {
+                if ($scope.certification.training) {
+                    $scope.certification.name = "Certification " + $scope.certification.training.name;
+                }
+            }
         }
     };
 

@@ -16,10 +16,12 @@ import net.collaud.fablab.api.audit.AuditUtils;
 import net.collaud.fablab.api.dao.MachineRepository;
 import net.collaud.fablab.api.dao.MachineTypeRepository;
 import net.collaud.fablab.api.dao.PaymentRepository;
+import net.collaud.fablab.api.dao.PriceMachineRepository;
 import net.collaud.fablab.api.dao.SubscriptionRepository;
 import net.collaud.fablab.api.dao.UsageRepository;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.MachineEO;
+import net.collaud.fablab.api.data.MembershipTypeEO;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
@@ -36,6 +38,7 @@ import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.AuditService;
 import net.collaud.fablab.api.service.PaymentService;
 import net.collaud.fablab.api.service.SecurityService;
+import net.collaud.fablab.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -50,191 +53,205 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class PaymentServiceImpl implements PaymentService {
 
-	@Autowired
-	private AuditService audtiService;
+    @Autowired
+    private AuditService audtiService;
 
-	@Autowired
-	private SecurityService securityService;
+    @Autowired
+    private SecurityService securityService;
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-	@Autowired
-	private PaymentRepository paymentRepository;
+    @Autowired
+    private UserService userService;
 
-	@Autowired
-	private SubscriptionRepository subscriptionRepository;
+    @Autowired
+    private PaymentRepository paymentRepository;
 
-	@Autowired
-	private UsageRepository usageRepository;
+    @Autowired
+    private SubscriptionRepository subscriptionRepository;
 
-	@Autowired
-	private MachineRepository machineRepository;
-        
-	@Autowired
-	private MachineTypeRepository machineTypeRepository;
-        
-	@Override
-	@Secured({Roles.PAYMENT_MANAGE})
-	public PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment) {
-		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
-		PaymentEO payment = new PaymentEO(datePayment, amount, user, securityService.getCurrentUser().get(), comment);
-		payment = paymentRepository.save(payment);
-		return payment;
-	}
+    @Autowired
+    private UsageRepository usageRepository;
 
-	@Override
-	@Secured({Roles.PAYMENT_MANAGE})
-	public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment, boolean paidDirectly) {
-		UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
-		MachineEO machine = machineRepository.findOne(machineId);
-                Set<PriceMachineEO> priceSet = new HashSet<>(machineTypeRepository.getPrices(machine.getMachineType().getId()));
-		double hourPrice = priceSet.stream()
-				.filter(p -> p.getMembershipType()==user.getMembershipType())
-				.findFirst()
-				.map(pm -> pm.getPrice())
-				.orElseThrow(() -> new RuntimeException("Cannot find price for usage"));
-		double amount = hourPrice*minutes/60+additionalCost;
-		UsageEO usage = new UsageEO(startDate, hourPrice, minutes, additionalCost, comment, user, machine, user.getMembershipType());
-		usage = usageRepository.save(usage);
-		
-		if(paidDirectly){
-			//the user paid directly
-			addPayment(userId, startDate, amount, comment);
-		}
-		
-		return usage;
-	}
+    @Autowired
+    private MachineRepository machineRepository;
 
-	@Override
-	@Secured({Roles.ACCOUNTING_VIEW})
-	public List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search) {
-		if (search.isOneDateNull()) {
-			throw new FablabException("Dates cannot be null");
-		}
-		List<UsageEO> listUsage = usageRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
-		List<PaymentEO> listPayment = paymentRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
-		List<SubscriptionEO> listSubscription = subscriptionRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
-		return convertToHistoryEntry(listUsage, listPayment, listSubscription);
-	}
+    @Autowired
+    private PriceMachineRepository priceMachineDao;
 
-	@Override
-	public UserPaymentHistory getLastPaymentEntries(Integer userId) {
-		if(!securityService.getCurrentUserId().equals(userId)){
-			securityService.checkRoles(Roles.PAYMENT_MANAGE);
-		}
-		
-		List<HistoryEntry> listHistory = getHistoryEntriesForuser(userId);
-		double balance = userRepository.getUserBalanceFromUserId(userId)
-				.map(ub -> ub.getValue())
-				.orElse(0d);
-		return new UserPaymentHistory(listHistory, balance);
-	}
+    @Autowired
+    private MachineTypeRepository machineTypeRepository;
 
-	protected List<HistoryEntry> getHistoryEntriesForuser(Integer userId) {
-		List<UsageEO> listUsage = usageRepository.getByUser(userId);
-		List<PaymentEO> listPayment = paymentRepository.getByUser(userId);
-		List<SubscriptionEO> listSubscription = subscriptionRepository.getByUser(userId);
+    @Override
+    @Secured({Roles.PAYMENT_MANAGE})
+    public PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment) {
+        UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
+        PaymentEO payment = new PaymentEO(datePayment, amount, user, securityService.getCurrentUser().get(), comment);
+        payment = paymentRepository.save(payment);
+        return payment;
+    }
 
-		return convertToHistoryEntry(listUsage, listPayment, listSubscription);
-	}
+    @Override
+    @Secured({Roles.PAYMENT_MANAGE})
+    public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment, boolean paidDirectly) {
+        UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
+        MachineEO machine = machineRepository.findOne(machineId);
+        Set<PriceMachineEO> priceSet = new HashSet<>(machineTypeRepository.getPrices(machine.getMachineType().getId()));
+        double hourPrice = priceSet.stream()
+                .filter(p -> p.getMembershipType() == user.getMembershipType())
+                .findFirst()
+                .map(pm -> pm.getPrice())
+                .orElseThrow(() -> new RuntimeException("Cannot find price for usage"));
+        double amount = hourPrice * minutes / 60 + additionalCost;
+        UsageEO usage = new UsageEO(startDate, hourPrice, minutes, additionalCost, comment, user, machine, user.getMembershipType());
+        usage = usageRepository.save(usage);
 
-	protected List<HistoryEntry> convertToHistoryEntry(List<UsageEO> listUsage, List<PaymentEO> listPayment, List<SubscriptionEO> listSubscription) {
-		final List<HistoryEntry> listHistory = Stream.concat(
-				Stream.concat(
-						listUsage.stream()
-						.map(u -> new HistoryEntry(u)),
-						listPayment.stream()
-						.map(p -> new HistoryEntry(p))),
-				listSubscription.stream()
-				.map(s -> new HistoryEntry(s)))
-				.sorted()
-				.collect(Collectors.toList());
-		return listHistory;
-	}
+        if (paidDirectly) {
+            //the user paid directly
+            addPayment(userId, startDate, amount, comment);
+        }
 
-	@Override
-	@Secured({Roles.PAYMENT_MANAGE})
-	public SubscriptionEO addSubscriptionConfirmation(Integer userId) {
-		return addSubscriptionConfirmationIntern(userId);
-	}
+        return usage;
+    }
 
-	@Override
-	public SubscriptionEO addSubscriptionConfirmationForCurrentUser() {
-		return addSubscriptionConfirmationIntern(securityService.getCurrentUserId());
-	}
+    @Override
+    @Secured({Roles.ACCOUNTING_VIEW})
+    public List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search) {
+        if (search.isOneDateNull()) {
+            throw new FablabException("Dates cannot be null");
+        }
+        List<UsageEO> listUsage = usageRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
+        List<PaymentEO> listPayment = paymentRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
+        List<SubscriptionEO> listSubscription = subscriptionRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
+        return convertToHistoryEntry(listUsage, listPayment, listSubscription);
+    }
 
-	private SubscriptionEO addSubscriptionConfirmationIntern(Integer userId) {
-		Date now = new Date();
+    @Override
+    public UserPaymentHistory getLastPaymentEntries(Integer userId) {
+        if (!securityService.getCurrentUserId().equals(userId)) {
+            securityService.checkRoles(Roles.PAYMENT_MANAGE);
+        }
 
-		//save user last subscription date
-		UserEO user = userRepository.findOneDetails(userId)
-				.orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
+        List<HistoryEntry> listHistory = getHistoryEntriesForuser(userId);
+        double balance = userRepository.getUserBalanceFromUserId(userId)
+                .map(ub -> ub.getValue())
+                .orElse(0d);
+        return new UserPaymentHistory(listHistory, balance);
+    }
 
-		//Check if there is a current subscription
-		user.getSubscriptions().stream()
-				.sorted(Comparator.comparing(SubscriptionEO::getDateSubscription).reversed())
-				.findFirst()
-				.ifPresent(s -> {
-					Instant end = s.getDateSubscription().toInstant().plus(s.getDuration(), ChronoUnit.DAYS);
-					if (end.isAfter(Instant.now())) {
-						throw new RuntimeException("Last subscription has not ended yet !");
-					}
-				});
+    protected List<HistoryEntry> getHistoryEntriesForuser(Integer userId) {
+        List<UsageEO> listUsage = usageRepository.getByUser(userId);
+        List<PaymentEO> listPayment = paymentRepository.getByUser(userId);
+        List<SubscriptionEO> listSubscription = subscriptionRepository.getByUser(userId);
 
-		//insert subscription
-		SubscriptionEO subscription = new SubscriptionEO();
-		subscription.setUser(user);
-		subscription.setDateSubscription(now);
-		subscription.setDuration(user.getMembershipType().getDuration());
-		subscription.setPrice(user.getMembershipType().getPrice());
-		subscription.setMembershipType(user.getMembershipType());
-		return subscriptionRepository.save(subscription);
-	}
+        return convertToHistoryEntry(listUsage, listPayment, listSubscription);
+    }
 
-	@Override
-	@Secured({Roles.PAYMENT_MANAGE})
-	public HistoryEntryId removeHistoryEntry(HistoryEntryId historyId) {
-		final int id = historyId.getId();
-		switch (historyId.getType()) {
-			case PAYMENT:
-				PaymentEO payment = Optional.ofNullable(paymentRepository.getOne(id))
-						.orElseThrow(() -> new RuntimeException("Cannot find payment with id " + id));
-				checkDateAccounting(payment.getDatePayment());
-				paymentRepository.delete(payment);
-				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-						"Payment (amount " + payment.getTotal() + ") removed for user " + payment.getUser().getFirstLastName());
-				break;
-			case USAGE:
-				UsageEO usage = Optional.ofNullable(usageRepository.getOne(id))
-						.orElseThrow(() -> new RuntimeException("Cannot find usage with id " + id));
-				checkDateAccounting(usage.getDateStart());
-				usageRepository.delete(usage);
-				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-						"Machine usage (amount " + (-usage.getTotalPrice()) + ") removed for user " + usage.getUser().getFirstLastName());
-				break;
-			case SUBSCRIPTION:
-				SubscriptionEO subscription = Optional.ofNullable(subscriptionRepository.getOne(id))
-						.orElseThrow(() -> new RuntimeException("Cannot find usage with id " + id));
-				checkDateAccounting(subscription.getDateSubscription());
-				subscriptionRepository.delete(subscription);
-				AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-						"Subscription (type: "+subscription.getMembershipType().getName()+", amount:" + (-subscription.getPrice()) + ") removed for user " + subscription.getUser().getFirstLastName());
-				break;
-			default:
-				log.error("Cannot remove {} history entry", historyId.getType());
-				return null;
-		}
-		return historyId;
-	}
+    protected List<HistoryEntry> convertToHistoryEntry(List<UsageEO> listUsage, List<PaymentEO> listPayment, List<SubscriptionEO> listSubscription) {
+        final List<HistoryEntry> listHistory = Stream.concat(
+                Stream.concat(
+                        listUsage.stream()
+                        .map(u -> new HistoryEntry(u)),
+                        listPayment.stream()
+                        .map(p -> new HistoryEntry(p))),
+                listSubscription.stream()
+                .map(s -> new HistoryEntry(s)))
+                .sorted()
+                .collect(Collectors.toList());
+        return listHistory;
+    }
 
-	private void checkDateAccounting(Date date) {
-		Duration duration = Duration.between(date.toInstant(), Instant.now());
-		long limit = 7;
-		final long days = duration.toDays();
-		if (days > limit) {
-			throw new RuntimeException("Cannot edit accounting information of more than " + limit + " days (current was " + days + " day old)");
-		}
-	}
+    @Override
+    @Secured({Roles.PAYMENT_MANAGE})
+    public SubscriptionEO addSubscriptionConfirmation(Integer userId) {
+        return addSubscriptionConfirmationIntern(userId);
+    }
+
+    @Override
+    public SubscriptionEO addSubscriptionConfirmationForCurrentUser() {
+        return addSubscriptionConfirmationIntern(securityService.getCurrentUserId());
+    }
+
+    private SubscriptionEO addSubscriptionConfirmationIntern(Integer userId) {
+        Date now = new Date();
+
+        //save user last subscription date
+        UserEO user = userRepository.findOneDetails(userId)
+                .orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
+
+        //Check if there is a current subscription
+        user.getSubscriptions().stream()
+                .sorted(Comparator.comparing(SubscriptionEO::getDateSubscription).reversed())
+                .findFirst()
+                .ifPresent(s -> {
+                    Instant end = s.getDateSubscription().toInstant().plus(s.getDuration(), ChronoUnit.DAYS);
+                    if (end.isAfter(Instant.now())) {
+                        throw new RuntimeException("Last subscription has not ended yet !");
+                    }
+                });
+
+        //insert subscription
+        SubscriptionEO subscription = new SubscriptionEO();
+        subscription.setUser(user);
+        subscription.setDateSubscription(now);
+        subscription.setDuration(user.getMembershipType().getDuration());
+        subscription.setPrice(user.getMembershipType().getPrice());
+        subscription.setMembershipType(user.getMembershipType());
+        return subscriptionRepository.save(subscription);
+    }
+
+    @Override
+    @Secured({Roles.PAYMENT_MANAGE})
+    public HistoryEntryId removeHistoryEntry(HistoryEntryId historyId) {
+        final int id = historyId.getId();
+        switch (historyId.getType()) {
+            case PAYMENT:
+                PaymentEO payment = Optional.ofNullable(paymentRepository.getOne(id))
+                        .orElseThrow(() -> new RuntimeException("Cannot find payment with id " + id));
+                checkDateAccounting(payment.getDatePayment());
+                paymentRepository.delete(payment);
+                AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
+                        "Payment (amount " + payment.getTotal() + ") removed for user " + payment.getUser().getFirstLastName());
+                break;
+            case USAGE:
+                UsageEO usage = Optional.ofNullable(usageRepository.getOne(id))
+                        .orElseThrow(() -> new RuntimeException("Cannot find usage with id " + id));
+                checkDateAccounting(usage.getDateStart());
+                usageRepository.delete(usage);
+                AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
+                        "Machine usage (amount " + (-usage.getTotalPrice()) + ") removed for user " + usage.getUser().getFirstLastName());
+                break;
+            case SUBSCRIPTION:
+                SubscriptionEO subscription = Optional.ofNullable(subscriptionRepository.getOne(id))
+                        .orElseThrow(() -> new RuntimeException("Cannot find usage with id " + id));
+                checkDateAccounting(subscription.getDateSubscription());
+                subscriptionRepository.delete(subscription);
+                AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
+                        "Subscription (type: " + subscription.getMembershipType().getName() + ", amount:" + (-subscription.getPrice()) + ") removed for user " + subscription.getUser().getFirstLastName());
+                break;
+            default:
+                log.error("Cannot remove {} history entry", historyId.getType());
+                return null;
+        }
+        return historyId;
+    }
+
+    @Override
+    @Secured({Roles.USER_VIEW})
+    public Float getPrice(Integer machineTypeId, Integer userId) {
+        UserEO u = userService.getById(userId).get();
+        MembershipTypeEO mt = u.getMembershipType();
+        return priceMachineDao.find(machineTypeId, mt.getId()).getPrice();
+    }
+
+    private void checkDateAccounting(Date date) {
+        Duration duration = Duration.between(date.toInstant(), Instant.now());
+        long limit = 7;
+        final long days = duration.toDays();
+        if (days > limit) {
+            throw new RuntimeException("Cannot edit accounting information of more than " + limit + " days (current was " + days + " day old)");
+        }
+    }
 
 }

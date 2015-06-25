@@ -30,6 +30,9 @@
                 $log.debug("MachineStatusService: get...");
                 var machineStatusRes = machineStatus.get({id: id}, successFn);
                 return machineStatusRes;
+            },
+            getByLabel: function (label, successFn) {
+                $http.get(App.API.MACHINE_STATUS_API + "/getByLabel?label=" + label).success(successFn);
             }
         };
     });

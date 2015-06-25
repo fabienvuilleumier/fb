@@ -229,7 +229,7 @@
         $httpProvider.interceptors.push('httpInterceptor');
         $translateProvider.preferredLanguage('en');
         $translateProvider.useSanitizeValueStrategy('escaped');
-    }).run(function ($log, LoaderService, NotificationService, $rootScope, $location, AuthService) {
+    }).run(function ($log, LoaderService, NotificationService, $rootScope, $location, AuthService, UserService) {
         App.interceptors.errorInterceptor.loaderService = LoaderService;
         App.interceptors.errorInterceptor.notificationService = NotificationService;
 

@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentService, MachineService,
-            MachineTypeService, NotificationService, StaticDataService) {
+            MachineTypeService, NotificationService, StaticDataService,TrainingService,UserService) {
         return {
             restrict: 'EA',
             scope: {
@@ -31,24 +31,25 @@
                 };
                 var updateTotalPrice = function () {
                     if ($scope.addUsage.machine) {
-                        var membershipTypeId = $scope.user.membershipType.id;
                         $scope.addUsage.total = -1;
-                        /*CHANGE HERE AFTER DISCUSS WITH B.FRITSCHER*/
                         var machineTypeId = $scope.addUsage.machine.machineType.id;
-                        var priceList = MachineTypeService.getPricesValue(machineTypeId);
-                        console.log("priceList " + priceList);
-                        /*angular.forEach($scope.$scope.addUsage.machine.machineType.priceList, function (p) {*/
-                        angular.forEach(priceList, function (p) {
-                            if (p.membershipType.id === membershipTypeId) {
-                                var add = $scope.addUsage.additionalCost;
-                                var total = p.price * getMinutes() / 60 + add;
-                                $scope.addUsage.total = parseFloat($filter('number')(total, 2));
-                            }
+                        PaymentService.getPrice(machineTypeId, $scope.user.id, function (price) {
+                            var add = $scope.addUsage.additionalCost;
+                            var total = price * getMinutes() / 60 + add;
+                            $scope.addUsage.total = parseFloat($filter('number')(total, 2));
                         });
                     } else {
                         delete $scope.addUsage.total;
                     }
+                };                
+                $scope.canUse = true;
+                
+                $scope.canUseMachinery = function() {
+                    UserService.canUse($scope.addUsage.machine.machineType.id,App.connectedUser.user.id, function(data){
+                         $scope.canUse = data;
+                    });
                 };
+
                 var updateMachineList = function () {
                     MachineService.getByStatusLabel("Disponible", function (data) {
                         $scope.machines = data;

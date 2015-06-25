@@ -32,7 +32,7 @@
                 return trainingRes;
             }, 
             getId: function(name, successFn) {
-                $http.get(App.API.TRAINING_API + "/getId?name=" + name).success(successFn);
+                $http.get(App.API.TRAINING_API + "/getId?name=" + name.latinise()).success(successFn);
             }
         };
     });

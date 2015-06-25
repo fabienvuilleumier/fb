@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.MachineEO;
+import net.collaud.fablab.api.data.MachineStatusEO;
 import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
 import net.collaud.fablab.api.service.MachineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController()
 @RequestMapping("/v1/machine")
 @JavascriptAPIConstant("MACHINE_API")
-public class MachineWS extends ReadWriteRestWebservice<MachineEO, MachineService>{
+public class MachineWS extends ReadWriteRestWebservice<MachineEO, MachineService> {
 
     @Autowired
     private MachineService machineService;
@@ -38,5 +39,11 @@ public class MachineWS extends ReadWriteRestWebservice<MachineEO, MachineService
     @RequestMapping(value = "findSimpleByCode", method = RequestMethod.GET)
     public MachineEO findSimpleByCode(@RequestParam(value = "code") String code) {
         return machineService.findSimpleByCode(code);
+    }
+
+    @RequestMapping(value = "saveStatus", method = RequestMethod.GET)
+    public MachineStatusEO saveStatus(@RequestParam(value = "machineId") Integer machineId,
+            @RequestParam(value = "machineStatusId") Integer machineStatusId) {
+        return machineService.saveStatus(machineId, machineStatusId);
     }
 }

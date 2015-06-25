@@ -5,16 +5,21 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import static java.util.stream.Collectors.toList;
 import lombok.extern.slf4j.Slf4j;
+import net.collaud.fablab.api.dao.CertificationRepository;
 import net.collaud.fablab.api.dao.GroupRepository;
 import net.collaud.fablab.api.dao.MembershipTypeRepository;
 import net.collaud.fablab.api.dao.UserRepository;
+import net.collaud.fablab.api.data.CertificationEO;
 import net.collaud.fablab.api.data.GroupEO;
+import net.collaud.fablab.api.data.RoleEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.security.PasswordUtils;
 import net.collaud.fablab.api.security.Roles;
+import net.collaud.fablab.api.service.CertificationService;
 import net.collaud.fablab.api.service.MailService;
 import net.collaud.fablab.api.service.UserService;
 import net.collaud.fablab.api.service.util.recaptcha.ReCaptchaChecker;
@@ -41,6 +46,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private CertificationRepository certificationDAO;
 
     @Autowired
     private UserRepository userDao;
@@ -175,4 +183,28 @@ public class UserServiceImpl implements UserService {
         mailService.sendPlainTextMail("Update mailing list", sb.toString(), "mailingListUpdater@gmail.com");
     }
 
+    @Override
+    @Secured({Roles.USER_VIEW})
+    public boolean canUse(Integer machineTypeId, Integer userId) {
+        List<CertificationEO> userCertifications = certificationDAO.getCertificationsByUserId(userId);
+        boolean res = false;
+        for (CertificationEO c : userCertifications) {
+            //maintient de l'état vrai
+            res = res || Objects.equals(c.getTraining().getMachineType().getId(), machineTypeId);
+        }
+        return res;
+    }
+
+    @Override
+    public boolean hasRole(Integer userId, String role) {
+        boolean res = false;
+        UserEO u = userDao.findOneByIdAndFetchRoles(userId).get();
+        for(GroupEO g : u.getGroups()){
+            for(RoleEO r : g.getRoles()){
+                //maintient de l'état vrai
+                res = res || (role.equals(r.getTechnicalname()));
+            }
+        }
+        return res;
+    }
 }

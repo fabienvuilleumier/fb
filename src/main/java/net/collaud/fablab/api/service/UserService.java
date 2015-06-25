@@ -10,11 +10,15 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
  */
 public interface UserService extends ReadWriteService<UserEO> {
 
-	Optional<UserEO> findByLogin(String login);
-	
-	void signup(UserEO user, String recaptcha);
-	
-	void forgotPassword(String email, String recaptchaResponse);
+    Optional<UserEO> findByLogin(String login);
 
-	public void updateMailingList();
+    void signup(UserEO user, String recaptcha);
+
+    void forgotPassword(String email, String recaptchaResponse);
+
+    void updateMailingList();
+
+    boolean canUse(Integer machineTypeId, Integer userId);
+
+    boolean hasRole(Integer userId, String role);
 }

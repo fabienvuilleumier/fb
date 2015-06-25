@@ -12,13 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * This is the service implementation class for a <tt>Training</tt>.
+ *
  * @author Fabien Vuilleumier
  */
 @Service
 @Transactional
-    @Secured({Roles.TRAINING_MANAGE})
+@Secured({Roles.TRAINING_MANAGE})
 public class TrainingServiceImpl implements TrainingService {
 
     @Autowired
@@ -36,7 +38,7 @@ public class TrainingServiceImpl implements TrainingService {
         return trainingDAO.findOneDetails(id);
     }
 
-     @Override
+    @Override
     @Secured({Roles.TRAINING_MANAGE})
     public TrainingEO save(TrainingEO training) {
         if (training.getId() == null) {
@@ -76,4 +78,3 @@ public class TrainingServiceImpl implements TrainingService {
         return trainingDAO.getId(name);
     }
 }
-

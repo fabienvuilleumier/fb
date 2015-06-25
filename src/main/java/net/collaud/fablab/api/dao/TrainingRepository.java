@@ -3,7 +3,6 @@ package net.collaud.fablab.api.dao;
 import java.util.List;
 import net.collaud.fablab.api.data.TrainingEO;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +17,8 @@ public interface TrainingRepository extends JpaRepository<TrainingEO, Integer> {
     @Query("SELECT t "
             + " FROM TrainingEO t  "
             + " LEFT JOIN FETCH t.trainingLevel  "
-            + " LEFT JOIN FETCH t.machineType  ")
+            + " LEFT JOIN FETCH t.machineType "
+            + " LEFT JOIN FETCH t.prerequisites ")
     @Override
     List<TrainingEO> findAll();
 

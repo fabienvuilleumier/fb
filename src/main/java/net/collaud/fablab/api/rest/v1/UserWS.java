@@ -8,6 +8,7 @@ import net.collaud.fablab.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController()
 @RequestMapping("/v1/user")
 @JavascriptAPIConstant("USER_API")
-public class UserWS extends ReadWriteRestWebservice<UserEO, UserService>{
+public class UserWS extends ReadWriteRestWebservice<UserEO, UserService> {
 
     @Autowired
     private UserService userService;
@@ -31,5 +32,17 @@ public class UserWS extends ReadWriteRestWebservice<UserEO, UserService>{
     @RequestMapping(value = "updateMailingList", method = RequestMethod.GET)
     public void updateMailingList() {
         userService.updateMailingList();
+    }
+
+    @RequestMapping(value = "canUse", method = RequestMethod.GET)
+    public boolean canUse(@RequestParam("machineTypeId") Integer machineTypeId,
+            @RequestParam("userId") Integer userId) {
+        return userService.canUse(machineTypeId, userId);
+    }
+    
+    @RequestMapping(value = "hasRole", method = RequestMethod.GET)
+    public boolean hasRole(@RequestParam("userId") Integer userId,
+            @RequestParam("role") String role) {
+        return userService.hasRole(userId, role);
     }
 }

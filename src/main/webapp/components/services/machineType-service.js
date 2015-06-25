@@ -33,7 +33,7 @@
                 $http.get(App.API.MACHINE_TYPE_API + "/getPrices?id=" + id).success(successFn);
             },
             getId: function (technicalname, successFn) {
-                $http.get(App.API.MACHINE_TYPE_API + "/getId?technicalname=" + technicalname).success(successFn);
+                $http.get(App.API.MACHINE_TYPE_API + "/getId?technicalname=" + technicalname.latinise()).success(successFn);
             }
         };
     });

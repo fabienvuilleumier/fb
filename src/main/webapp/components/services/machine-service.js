@@ -35,6 +35,10 @@
             },
             findSimpleByCode: function (code, successFn) {
                 $http.get(App.API.MACHINE_API + "/findSimpleByCode?code=" + code).success(successFn);
+            },
+            saveStatus: function(machineId,machineStatusId, successFn){
+                $http.get(App.API.MACHINE_API + "/saveStatus?machineId=" + machineId +
+                        "&machineStatusId=" + machineStatusId).success(successFn);
             }
         };
     });

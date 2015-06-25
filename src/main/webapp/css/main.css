@@ -47,6 +47,11 @@ hr{
         margin-top : 20px;
     }
 
+    .user-name {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
     .nav-side-ul{
         direction: initial;
     }
@@ -254,14 +259,14 @@ a:active, a:hover {
 .btn-alternate:active,
 .btn-alternate.active,
 .open > .dropdown-toggle.btn-alternate {
-  color: #fff;
-  background-color: #751f89;
-  border-color: #76158c;
+    color: #fff;
+    background-color: #751f89;
+    border-color: #76158c;
 }
 .btn-alternate:active,
 .btn-alternate.active,
 .open > .dropdown-toggle.btn-alternate {
-  background-image: none;
+    background-image: none;
 }
 .btn-alternate.disabled,
 .btn-alternate[disabled],
@@ -281,12 +286,12 @@ fieldset[disabled] .btn-alternate:active,
 .btn-alternate.disabled.active,
 .btn-alternate[disabled].active,
 fieldset[disabled] .btn-alternate.active {
-  background-color: #a037b8;
-  border-color: #89299f;
+    background-color: #a037b8;
+    border-color: #89299f;
 }
 .btn-alternate .badge {
-  color: #9f33b7;
-  background-color: #fff;
+    color: #9f33b7;
+    background-color: #fff;
 }
 
 .currency{
@@ -296,4 +301,9 @@ fieldset[disabled] .btn-alternate.active {
 
 .shuttle{
     margin-top: 100px;
+}
+
+.user-name{
+    color: #777;
+    line-height: 20px;
 }

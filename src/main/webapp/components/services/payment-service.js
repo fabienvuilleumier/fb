@@ -48,6 +48,14 @@
                     method: 'GET',
                     url: App.API.PAYMENT_API + '/subscription/confirm'
                 }).success(successFn);
+            },
+            canUse: function (machineId, userId, successFn) {
+                $http.get(App.API.USER_API + "/canUse?machineId=" + machineId +
+                        "/&userId=" + userId).success(successFn);
+            }, 
+            getPrice: function (machineTypeId, userId, successFn) {
+                $http.get(App.API.USER_API + "/getPrice?machineTypeId=" + machineTypeId +
+                        "&userId=" + userId).success(successFn);
             }
         };
     });

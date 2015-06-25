@@ -86,7 +86,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             pleaseSignIn: 'Please sign in',
             email: 'Email address',
             password: 'Password',
-            signiIn: 'Sign In',
+            signIn: 'Sign In',
             signUp: 'Sign Up',
             captcha: 'Are you human ?',
             forgotPasswordQuestion: "Forgot your password ?",
@@ -159,6 +159,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             userTitle: 'User',
             usageTitle: 'Add an usage',
             paymentTitle: 'Add a payment',
+            userNotAllowed: 'The connected user is not allowed to use this machine !',
+            userNotAllowed2: 'A certification for the chosen machinery is required',
             enterName: 'Enter a name',
             machine: 'Machinery',
             date: 'Date',
@@ -473,6 +475,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             machineType: 'Machine type',
             nonSelectedListLabel: 'Available trainings as prerequisites',
             selectedListLabel: 'Prerequisites',
+            havePrerequisites: 'Have one or more prerequisites',
             create: 'Training creation',
             edit: 'Edit :',
             notification: {
@@ -485,6 +488,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         },
         certification: {
             title: 'Certification',
+            name: 'Name',
             certificationDate: 'Certification date',
             certificationPrice: 'Certification price',
             note: 'Note',
@@ -495,7 +499,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             selectedListLabel: 'Certified users',
             notification: {
                 saved: 'Certification saved',
-                removed: 'Certification removed'
+                removed: 'Certification removed',
+                failed: 'Error, the following users do not have all the prerequisites certifications : '
             },
             confirmation: {
                 remove: 'Do you really want to remove this certification ?'

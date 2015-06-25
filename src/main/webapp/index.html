@@ -89,15 +89,19 @@
                             show="hasAnyRole('ADMIN')"></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li fab-nav-item link="signup" icon="heart" 
+                        <!--<li fab-nav-item link="signup" icon="heart" 
                             label="menu.signup"
                             show="!connectedUser.connected"></li>
+                        Not implemented yet-->
                         <li fab-nav-item link="login" icon="log-in" 
                             label="menu.login"
                             show="!connectedUser.connected"></li>
-                        <li fab-nav-item link="profil" icon="cog"
+                        <li fab-nav-item link="users/edit/{{connectedUser.user.id}}" icon="cog"
                             label="{{connectedUser.user| prettyUser}}"
-                            show="connectedUser.connected"></li>
+                            show="hasAnyRole('ADMIN')"></li>
+                        <li class="user-name" ng-show="!hasAnyRole('ADMIN') && connectedUser.connected">
+                            <span ng-show="!hasAnyRole('ADMIN') && connectedUser.connected">{{connectedUser.user| prettyUser}}</span>
+                        </li>
                         <li fab-nav-item link="logout" icon="log-out"
                             label="menu.logout"
                             show="connectedUser.connected"></li>
@@ -176,6 +180,7 @@
     <script src="./lib/directives/form/form.js"></script>
     <script src="./lib/directives/form/date.js"></script>
     <script src="./lib/directives/form/autocapitalize.js"></script>
+    <script src="./lib/directives/form/latin.js"></script>
     <script src="./lib/directives/calendar/calendar.js"></script>
     <script src="./lib/directives/shuttle/duallistbox.js"></script>
 
@@ -291,7 +296,7 @@
 
     <script src="./components/certification/certification-list-ctrl.js"></script>
     <script src="./components/certification/certification-edit-ctrl.js"></script>
-    
+
     <script src="./components/role/role-ctrl.js"></script>
 
     <script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
