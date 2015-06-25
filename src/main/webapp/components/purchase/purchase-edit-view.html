@@ -82,7 +82,11 @@
                     <i class="fa fa-fw fa-arrow-left"></i>
                     <span translate="purchase.back"></span>
                 </a>
-                <btn-submit data-ng-disabled="{{purchase.purchaseQuantity > 0}}" ng-if="newPurchase" form="editPurchase"></btn-submit>
+                <button ng-if="newPurchase" type="submit" class="btn btn-success btn-glyph" 
+                        ng-disabled="editPurchase.$invalid || purchase.quantity===0">
+                    <span translate="button.save"></span>
+                    <span class="glyphicon glyphicon-floppy-disk"></span>
+                </button>
             </div>
         </div>
     </form>

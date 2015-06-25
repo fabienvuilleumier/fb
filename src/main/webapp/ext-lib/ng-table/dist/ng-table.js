@@ -480,7 +480,7 @@ app.factory('NgTableParams', ['$q', '$log', 'ngTableDefaults', function($q, $log
             total: 0,
             defaultSort: 'desc',
             filterDelay: 750,
-            counts: [10, 25, 50, 100],
+            counts: [10, 25, 50, 120],
             sortingIndicator: 'span',
             getGroups: this.getGroups,
             getData: this.getData
