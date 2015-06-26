@@ -17,6 +17,7 @@
         <link href="./ext-lib/angular-ui-select/dist/select.min.css" rel="stylesheet"/>
         <link href="./ext-lib/template/sb-admin.css" rel="stylesheet"/>
         <link href="./ext-lib/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css" rel="stylesheet"/>
+        <link href="./ext-lib/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"/>
         <link href="./css/main.css" rel="stylesheet"/>
 
 
@@ -24,7 +25,6 @@
         <!--		<link href="./ext-lib/angular-modules/ng-toast/ngToast.min.css" rel="stylesheet">
                         <link href="./ext-lib/angular-modules/ui-select-0.9.6/select.min.css" rel="stylesheet">-->
 
-        <!--<link href="./css/application.css" rel="stylesheet"/>-->
 
         <link href="./components/accounting/style.css" rel="stylesheet"/>
         <link href="./components/machine/style.css" rel="stylesheet"/>
@@ -93,6 +93,7 @@
                             label="menu.signup"
                             show="!connectedUser.connected"></li>
                         Not implemented yet-->
+                        <li> <a href="#/tests">Test</a></li>
                         <li fab-nav-item link="login" icon="log-in" 
                             label="menu.login"
                             show="!connectedUser.connected"></li>
@@ -106,8 +107,35 @@
                             label="menu.logout"
                             show="connectedUser.connected"></li>
                     </ul>
-                    <div fab-nav-side show="connectedUser.connected">
-                    </div>
+                    <!--
+                <ul ng-show="connectedUser.connected" class="nav navbar-nav side-nav">
+                    <li fab-nav-dropdown-machine 
+                        icon="connectdevelop"
+                        label="menu.machines"
+                        show="hasAnyRole('MACHINE_VIEW')"></li>
+                    <li fab-nav-dropdown-training 
+                        icon="briefcase"
+                        label="menu.trainings"
+                        show="hasAnyRole('TRAINING_VIEW')"></li>
+                    <li fab-nav-dropdown-supply class="dropdown"
+                        icon="barcode"
+                        label="menu.supplies"
+                        show="hasAnyRole('SUPPLY_VIEW')"></li>'
+                    <li fab-nav-dropdown-accounting class="dropdown"
+                        icon="euro"
+                        label="menu.accounting"
+                        show="hasAnyRole('ACCOUNTING_MANAGE')"></li>'
+                    <li fab-nav-item link="reservations" icon="calendar"
+                        label="menu.reservation"
+                        show="hasAnyRole('RESERVATION_VIEW')"></li>
+                    <li fab-nav-item link="payments" icon="shopping-cart"
+                        label="menu.payment"
+                        show="hasAnyRole('PAYMENT_VIEW')"></li>
+                    <li>
+                        <img src="./images/logoFabLabManager.png" alt="logo" height="220" width="220" id="faviconLeft" class="img-circle"/>
+                    </li>
+                </ul>-->
+                    <div fab-nav-side show="connectedUser.connected"></div>
                 </div>
             </div>
         </nav>
@@ -132,6 +160,8 @@
 
     <script src="./ext-lib/jquery/dist/jquery.min.js"></script>
     <script src="./ext-lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./ext-lib/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="./lib/datatablesPlugins/columnFilter.js"></script>
 
     <script src="./ext-lib/angular/angular.min.js"></script>
     <script src="./ext-lib/angular-route/angular-route.min.js"></script>
@@ -156,6 +186,17 @@
     <script src="./ext-lib/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="./ext-lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="./ext-lib/ng-notify/dist/ng-notify.min.js"></script>
+
+
+    <script src="./ext-lib/angular-datatables/dist/angular-datatables.min.js"></script>
+
+    <script src="./ext-lib/angular-datatables/dist/plugins/columnfilter/angular-datatables.columnfilter.min.js"></script>
+    <script src="./ext-lib/angular-datatables/dist/plugins/tabletools/angular-datatables.tabletools.min.js"></script>
+    <script src="./ext-lib/angular-datatables/dist/plugins/colvis/angular-datatables.colvis.min.js"></script>
+    <script src="./ext-lib/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.min.js"></script>
+
+
+
 
     <script src="./app.js"></script>
 
@@ -184,6 +225,7 @@
     <script src="./lib/directives/form/latin.js"></script>
     <script src="./lib/directives/calendar/calendar.js"></script>
     <script src="./lib/directives/shuttle/duallistbox.js"></script>
+
 
 
 
@@ -299,6 +341,7 @@
     <script src="./components/certification/certification-edit-ctrl.js"></script>
 
     <script src="./components/role/role-ctrl.js"></script>
+
     <script src="./components/machineTest/test-ctrl.js"></script>
 
     <script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>

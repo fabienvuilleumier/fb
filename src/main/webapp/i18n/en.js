@@ -13,6 +13,9 @@ angular.module('Fablab').config(function ($translateProvider) {
             user: 'User',
             detail: 'Detail',
             comment: 'Comment',
+            table: {
+                action: 'Action'
+            },
             form: {
                 duration: 'Duration'
             }
