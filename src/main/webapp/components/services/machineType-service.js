@@ -5,7 +5,7 @@
         var machineType = $resource(App.API.MACHINE_TYPE_API + "/:id", {id: '@id'});
         return {
             list: function (successFn) {
-                $http(
+                return $http(
                         {
                             method: 'GET',
                             url: App.API.MACHINE_TYPE_API

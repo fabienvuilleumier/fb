@@ -318,3 +318,13 @@ fieldset[disabled] .btn-alternate.active {
     margin-left : 2px;
     margin-right : 2px;
 }
+
+table.dataTable tbody tr .bg-warning{
+    background-color: #fcf8e3;
+}
+table.dataTable tbody tr .bg-danger{
+      background-color: #f2dede;
+}
+table.dataTable tbody tr .bg-success{
+      background-color: #dff0d8;
+}

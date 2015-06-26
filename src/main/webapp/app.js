@@ -4,7 +4,8 @@
     angular.module('Fablab', [
         //ext-lib
         'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 'ngNotify',
-        'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha',
+        'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha', 'datatables',
+        'datatables.columnfilter', 'datatables.bootstrap', 
         // Core
         'Notification', 'Loader', 'httpInterceptor'
     ]).config(function ($routeProvider, $httpProvider, $translateProvider) {
@@ -221,6 +222,9 @@
         }).when('/roles', {
             templateUrl: './components/role/role-view.html',
             controller: 'RoleController'
+        }).when('/tests', {
+            templateUrl: './components/machineTest/test-view.html',
+            controller: 'MachineTestListController'
         }).otherwise({
             redirectTo: '/'
         });
