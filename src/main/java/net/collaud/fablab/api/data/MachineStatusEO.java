@@ -35,6 +35,9 @@ public class MachineStatusEO extends AbstractDataEO<Integer> implements Serializ
 
     @Column(name = "label", nullable = false)
     private String label;
+    
+    @Column(name = "color", nullable = false)
+    private String color;
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "machineStatus", fetch = FetchType.LAZY)
     private List<MachineEO> machineList;

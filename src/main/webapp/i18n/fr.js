@@ -267,6 +267,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         machineStatus: {
             title: 'Statut de machine',
             label: 'Libellé',
+            color: 'Couleur',
             warningEdit: '<strong>Attention !</strong> Si vous utilisez les nouvelles valeurs, la coloration des lignes de la liste ne prendra effet sur les nouvelles valeur qu\'en cas de modificaiton du code source.',
             warningCreate: '<strong>Attention !</strong> Si vous utilisez les nouvelles valeurs, la coloration des lignes de la liste ne prendra effet sur les nouvelles valeur qu\'en cas de modificaiton du code source.',
             alreadyExist: 'Le libellé spécifié existe déjà !',
