@@ -20,20 +20,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.MACHINE_MANAGE})
+@Secured({Roles.MACHINE_VIEW})
 public class MachineStateServiceImpl implements MachineStateService {
 
     @Autowired
     private MachineStateRepository machineStateDAO;
 
     @Override
-    @Secured({Roles.MACHINE_MANAGE})
+    @Secured({Roles.MACHINE_MANAGE, Roles.MACHINE_VIEW})
     public List<MachineStateEO> findAll() {
         return new ArrayList(new HashSet(machineStateDAO.findAll()));
     }
 
     @Override
-    @Secured({Roles.MACHINE_MANAGE})
+    @Secured({Roles.MACHINE_MANAGE, Roles.MACHINE_VIEW})
     public Optional<MachineStateEO> getById(Integer id) {
         return Optional.ofNullable(machineStateDAO.findOne(id));
     }

@@ -20,20 +20,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.TRAINING_MANAGE})
+@Secured({Roles.TRAINING_VIEW})
 public class TrainingServiceImpl implements TrainingService {
 
     @Autowired
     private TrainingRepository trainingDAO;
 
     @Override
-    @Secured({Roles.TRAINING_MANAGE})
+    @Secured({Roles.TRAINING_MANAGE, Roles.TRAINING_VIEW})
     public List<TrainingEO> findAll() {
         return new ArrayList(new HashSet(trainingDAO.findAll()));
     }
 
     @Override
-    @Secured({Roles.TRAINING_MANAGE})
+    @Secured({Roles.TRAINING_MANAGE, Roles.TRAINING_VIEW})
     public Optional<TrainingEO> getById(Integer id) {
         return trainingDAO.findOneDetails(id);
     }
@@ -66,7 +66,7 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    @Secured({Roles.TRAINING_MANAGE})
+
     public void softRemove(Integer id) {
         TrainingEO current = trainingDAO.findOne(id);
         current.setActive(false);
@@ -74,6 +74,7 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
+    @Secured({Roles.TRAINING_MANAGE, Roles.TRAINING_VIEW})
     public TrainingEO getId(String name) {
         return trainingDAO.getId(name);
     }

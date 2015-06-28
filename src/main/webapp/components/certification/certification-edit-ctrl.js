@@ -1,8 +1,10 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('GlobalCertificationEditController', function ($scope, $routeParams, $location,
-        CertificationService, NotificationService, StaticDataService, UserService) {
+        $rootScope, CertificationService, NotificationService, StaticDataService, UserService) {
     $scope.currency = App.CONFIG.CURRENCY;
+
+    $scope.showRole = $rootScope.hasAnyRole('TRAINING_MANAGE');
     $scope.fromTraining = $routeParams.trainingId ? true : false;
     $scope.selected = {certification: undefined};
     $scope.loadCertification = function (id) {

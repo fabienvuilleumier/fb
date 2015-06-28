@@ -1,7 +1,7 @@
 <h1 translate="certification.title"></h1>
 <div class="header-control">
     <div class="btn-group" >
-        <a class="btn btn-success" href="#/certifications/certification-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+        <btn-create ng-show="showRole" link="#/certifications/certification-edit"></btn-create>      
     </div>
 </div>
 <div class="certificationList" >
@@ -37,14 +37,15 @@
                 filter="{'trainingName':'text'}">
                 {{certification.training.name}}
             </td>
-            <td class="listBtn2">
+            <td  class="listBtn2">
                 <div class="btn-group">
-                    <a class="btn btn-sm btn-default" href="#/certifications/certification-edit/{{certification.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <button class="btn btn-sm btn-danger" 
-                        ng-really-click="softRemove(certification)"
-                        ng-really-message="{{'certification.confirmation.remove'|translate}}">
+                    <a ng-show="showRole" class="btn btn-sm btn-default" href="#/certifications/certification-edit/{{certification.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button ng-show="showRole" class="btn btn-sm btn-danger" 
+                            ng-really-click="softRemove(certification)"
+                            ng-really-message="{{'certification.confirmation.remove'|translate}}">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
+                    <btn-show ng-show="!showRole" link="#/certifications/certification-edit/{{certification.id}}"></btn-show>
                 </div>
             </td>
         </tr>

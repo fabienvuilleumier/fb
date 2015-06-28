@@ -1,8 +1,10 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalTrainingEditController', function ($scope, $location,
+app.controller('GlobalTrainingEditController', function ($scope, $location, $rootScope,
         TrainingService, NotificationService, StaticDataService) {
     $scope.currency = App.CONFIG.CURRENCY;
+
+    $scope.showRole = $rootScope.hasAnyRole('TRAINING_MANAGE');
     $scope.selected = {training: undefined};
     $scope.loadTraining = function (id) {
         TrainingService.get(id, function (data) {
@@ -10,7 +12,7 @@ app.controller('GlobalTrainingEditController', function ($scope, $location,
             setList();
         });
     };
-    
+
     TrainingService.list(function (mstate) {
         var res = [];
         for (var i = 0; i < mstate.length; i++) {
@@ -18,7 +20,7 @@ app.controller('GlobalTrainingEditController', function ($scope, $location,
         }
         $scope.existingValues = res;
     });
-    
+
     $scope.save = function () {
         if ($scope.newTraining) {
             var trainingCurrent = angular.copy($scope.training);

@@ -28,17 +28,14 @@
                     <div class="col-sm-8">
                         <input type="number" step="1" min="0" class="form-control  col-sm-7" ng-model="membershipType.duration" required>
                     </div>
-                    <div class="col-sm-1 currency">
-                        <span translate="membershipType.durationDay"></span>
-                    </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" translate="membershipType.price"></label>
                     <div class="col-sm-8">
-                        <input class="form-control" type="number" step="0.05" min="0" ng-model="membershipType.price" required>
-                    </div>
-                    <div class="col-sm-1 currency">
-                        <span>{{currency}}</span>
+                        <div class="input-group">
+                            <input class="form-control" type="number" step="0.05" min="0" ng-model="membershipType.price" required>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,10 +53,10 @@
                         <tr>
                             <td ng-repeat="p in prices">
                                 <div class="col-sm-9">
-                                    <input type="number" class="form-control" min="0" step="0.05" ng-model="p.price" required/>
-                                </div>
-                                <div class="col-sm-1 currency">
-                                    <span>{{currency}}</span>
+                                    <div class="input-group">
+                                        <input type="number" class="form-control" min="0" step="0.05" ng-model="p.price" required/>
+                                        <div class="input-group-addon">{{currency}}</div>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

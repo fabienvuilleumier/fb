@@ -5,7 +5,7 @@
         //ext-lib
         'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 'ngNotify',
         'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha', 'datatables',
-        'datatables.columnfilter', 'datatables.bootstrap',
+        'datatables.columnfilter', 'datatables.bootstrap', 'colorpicker.module',
         // Core
         'Notification', 'Loader', 'httpInterceptor'
     ]).config(function ($routeProvider, $httpProvider, $translateProvider) {

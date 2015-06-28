@@ -18,20 +18,20 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-    @Secured({Roles.TRAINING_MANAGE})
+    @Secured({Roles.TRAINING_VIEW})
 public class TrainingLevelServiceImpl implements TrainingLevelService {
 
     @Autowired
     private TrainingLevelRepository trainingLevelDAO;
 
     @Override
-    @Secured({Roles.TRAINING_MANAGE})
+    @Secured({Roles.TRAINING_MANAGE, Roles.TRAINING_VIEW})
     public List<TrainingLevelEO> findAll() {
         return new ArrayList(new HashSet(trainingLevelDAO.findAll()));
     }
 
     @Override
-    @Secured({Roles.TRAINING_MANAGE})
+    @Secured({Roles.TRAINING_MANAGE,Roles.TRAINING_VIEW})
     public Optional<TrainingLevelEO> getById(Integer id) {
         return Optional.ofNullable(trainingLevelDAO.findOne(id));
     }

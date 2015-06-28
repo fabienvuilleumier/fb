@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.ADMIN})
+@Secured({Roles.SUPPLY_VIEW})
 public class SupplyServiceImpl implements SupplyService {
 
     @Autowired

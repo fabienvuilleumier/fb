@@ -78,20 +78,20 @@ public class BackendBaseGenerator {
         str.append("@Service").append("\n");
         str.append("@Transactional").append("\n");
 
-        str.append(roles(roles));
+        str.append(rolesView(roles));
         str.append("public class ").append(CLASS_SERVICE_IMPL).append(" implements ").append(CLASS_SERVICE).append(" {").append("\n\n");
 
         str.append("    ").append("@Autowired").append("\n");
         str.append("    ").append("private ").append(CLASS_REPOSITORY).append(" ").append(CLASS_DAO_ATTRIBUTE).append(";\n\n");
 
         str.append("    ").append("@Override").append("\n");
-        str.append(roles(roles));
+        str.append(rolesView(roles));
         str.append("    ").append("public List<").append(CLASS_EO).append("> findAll() {").append("\n");
         str.append("        ").append("return new ArrayList(new HashSet(").append(CLASS_DAO_ATTRIBUTE).append(".findAll()));").append("\n");
         str.append("    ").append("}").append("\n\n");
 
         str.append("    ").append("@Override").append("\n");
-        str.append(roles(roles));
+        str.append(rolesView(roles));
         str.append("    ").append("public Optional<").append(CLASS_EO).append("> getById(Integer id) {").append("\n");
         if (hasEO) {
             str.append("        ").append("return ").append(CLASS_DAO_ATTRIBUTE).append(".findOneDetails(id);").append("\n");
@@ -147,6 +147,27 @@ public class BackendBaseGenerator {
             str.append("Roles.").append(s).append(",");
         }
         str.deleteCharAt(str.length() - 1);
+        str.append("})").append("\n");
+        return str;
+    }
+
+    private StringBuilder rolesView(String... roles) {
+        StringBuilder str = new StringBuilder();
+        boolean containView = false;
+        str.append("    @Secured({");
+        for (String s : roles) {
+            containView = containView || s.toUpperCase().contains("VIEW");
+            str.append("Roles.").append(s).append(",");
+        }
+        str.deleteCharAt(str.length() - 1);
+        if (!containView) {
+            for (String s : roles) {
+                String[] views = s.split("_");
+                if (views.length > 0) {
+                    str.append("Roles.").append(views[0]).append("_VIEW,");
+                }
+            }
+        }
         str.append("})").append("\n");
         return str;
     }

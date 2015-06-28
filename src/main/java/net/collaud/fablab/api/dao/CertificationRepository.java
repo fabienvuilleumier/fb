@@ -18,7 +18,8 @@ public interface CertificationRepository extends JpaRepository<CertificationEO, 
 
     @Query("SELECT c "
             + " FROM CertificationEO c  "
-            + " LEFT JOIN FETCH c.training  ")
+            + " LEFT JOIN FETCH c.training "
+            + " LEFT JOIN FETCH c.users ")
     @Override
     List<CertificationEO> findAll();
 

@@ -82,7 +82,7 @@ public class BackendAngularListEditGenerator {
         str.append("<h1 translate=\"").append(CLASS_ATTRIBUTE).append(".title\"></h1>").append("\n");
         str.append("<div class=\"header-control\">").append("\n");
         str.append("    ").append("<div class=\"btn-group\" >").append("\n");
-        str.append("        ").append("<a class=\"btn btn-success\" href=\"#/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit\">{{'button.create'| translate}} <span class=\"glyphicon glyphicon-plus\"> </span></a>").append("\n");
+        str.append("        ").append("<btn-create link=\"#/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit\"></btn-create>").append("\n");
         str.append("    ").append("</div>").append("\n");
         str.append("</div>").append("\n");
         str.append("<div class=\"").append(CLASS_ATTRIBUTE).append("List\" >").append("\n");
