@@ -39,7 +39,7 @@ public class MailServiceTest extends BaseTest {
 				"subject",
 				MailServiceImpl.Template.FORGOT_PASSWORD,
 				scopes,
-				"gaetancollaud@gmail.com");
+				"fablabmanagerhegarc@gmail.com");
 	}
 
 }

@@ -11,7 +11,17 @@ app.controller('RoleController', function ($scope,
     $scope.setLists = function () {
         RoleService.list(function (roles) {
             if ($scope.group) {
-                $scope.availableRoles = roles;
+                var availableRoles = [];
+                if ($scope.group.technicalname.toUpperCase() === 'ADMIN') {
+                    for (var i = 0; i < roles.length; i++) {
+                        if (roles[i].technicalname !== 'ROLE_ADMIN') {
+                            availableRoles.push(roles[i]);
+                        }
+                    }
+                } else {
+                    availableRoles = roles;
+                }
+                $scope.availableRoles = availableRoles;
                 $scope.assignedRoles = $scope.group.roles;
             }
         });
@@ -27,7 +37,7 @@ app.controller('RoleController', function ($scope,
     };
     $scope.settings = {
         bootstrap2: false,
-        moveOnSelect: false,
+        moveOnSelect: true,
         postfix: '_helperz',
         selectMinHeight: 200,
         filter: true,

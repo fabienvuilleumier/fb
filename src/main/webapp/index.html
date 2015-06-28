@@ -83,59 +83,184 @@
                     <ul class="nav navbar-nav">
                         <li fab-nav-item link="" icon="home" 
                             label="menu.home"></li>
-                        <li fab-nav-dropdown-admin class="dropdown" 
-                            icon="cogs"
-                            label="menu.admin" 
-                            show="hasAnyRole('ADMIN')"></li>
+                        <!--ADMINISTRATION DROPDOWN-->
+                        <li>
+                            <a data-toggle="dropdown" class="dropdown-toggle" ng-show="hasAnyRole('ADMIN')" href="javascript:;">
+                                <i class="fa fa-fw fa-cogs"></i> 
+                                <span translate="menu.admin"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-header" show="hasAnyRole('ADMIN')">
+                                    <span translate="menu.users"></span>
+                                </li> 
+                                <li fab-nav-item-af link="users" icon="user" 
+                                    label="menu.users" 
+                                    show="hasAnyRole('ADMIN')"></li>
+                                <li fab-nav-item-af link="membershipTypes" 
+                                    label="menu.membershipTypes" icon="user-secret"
+                                    show="hasAnyRole('ADMIN')"></li>
+                                <li fab-nav-item-af link="groups" icon="users"
+                                    label="menu.groups"
+                                    show="hasAnyRole('GROUP_MANAGE')"></li>
+                                <li class="divider" show="hasAnyRole('ADMIN')"></li>
+                                <li class="dropdown-header" show="hasAnyRole('ADMIN')">
+                                    <span translate="menu.configurations"></span>
+                                </li> 
+                                <li fab-nav-item-af link="configurations" icon="key"
+                                    label="menu.key"
+                                    show="hasAnyRole('ADMIN')"></li>
+                                <li fab-nav-item-af link="roles" icon="bookmark"
+                                    label="menu.roles"
+                                    show="hasAnyRole('ADMIN')"></li>
+                            </ul>
+                        <li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <!--<li fab-nav-item link="signup" icon="heart" 
                             label="menu.signup"
                             show="!connectedUser.connected"></li>
                         Not implemented yet-->
-                        <li> <a href="#/tests">Test</a></li>
-                        <li fab-nav-item link="login" icon="log-in" 
-                            label="menu.login"
-                            show="!connectedUser.connected"></li>
-                        <li fab-nav-item link="users/edit/{{connectedUser.user.id}}" icon="cog"
+
+                        <!-- <li> <a href="#/tests">Test Datatable</a></li>-->
+
+                        <li fab-nav-item link="users/user-edit/{{connectedUser.user.id}}" icon="cog"
                             label="{{connectedUser.user| prettyUser}}"
                             show="hasAnyRole('ADMIN')"></li>
                         <li class="user-name" ng-show="!hasAnyRole('ADMIN') && connectedUser.connected">
-                            <span ng-show="!hasAnyRole('ADMIN') && connectedUser.connected">{{connectedUser.user| prettyUser}}</span>
+                            <span ng-show="!hasAnyRole('ADMIN') && connectedUser.connected" translate="connectedUser.user| prettyUser"></span>
                         </li>
+                        <li>
+                            <a href="" class="i-flag" ng-show="curentLanguage !== 'fr'" ng-click="translate('fr')">
+                                <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
+                                <span translate="general.toFr"></span>
+                            </a>
+                            <a href="" class="i-flag" ng-show="curentLanguage !== 'en'" ng-click="translate('en')">
+                                <img src="./images/en.png" alt="toEn" height="15" width="22"/>
+                                <span translate="general.toEn"></span>
+                            </a>
+                        </li>
+                        <li fab-nav-item link="login" icon="log-in" 
+                            label="menu.login"
+                            show="!connectedUser.connected"></li>
                         <li fab-nav-item link="logout" icon="log-out"
                             label="menu.logout"
                             show="connectedUser.connected"></li>
                     </ul>
-                    <!--
-                <ul ng-show="connectedUser.connected" class="nav navbar-nav side-nav">
-                    <li fab-nav-dropdown-machine 
-                        icon="connectdevelop"
-                        label="menu.machines"
-                        show="hasAnyRole('MACHINE_VIEW')"></li>
-                    <li fab-nav-dropdown-training 
-                        icon="briefcase"
-                        label="menu.trainings"
-                        show="hasAnyRole('TRAINING_VIEW')"></li>
-                    <li fab-nav-dropdown-supply class="dropdown"
-                        icon="barcode"
-                        label="menu.supplies"
-                        show="hasAnyRole('SUPPLY_VIEW')"></li>'
-                    <li fab-nav-dropdown-accounting class="dropdown"
-                        icon="euro"
-                        label="menu.accounting"
-                        show="hasAnyRole('ACCOUNTING_MANAGE')"></li>'
-                    <li fab-nav-item link="reservations" icon="calendar"
-                        label="menu.reservation"
-                        show="hasAnyRole('RESERVATION_VIEW')"></li>
-                    <li fab-nav-item link="payments" icon="shopping-cart"
-                        label="menu.payment"
-                        show="hasAnyRole('PAYMENT_VIEW')"></li>
-                    <li>
-                        <img src="./images/logoFabLabManager.png" alt="logo" height="220" width="220" id="faviconLeft" class="img-circle"/>
-                    </li>
-                </ul>-->
-                    <div fab-nav-side show="connectedUser.connected"></div>
+                    <ul ng-show="connectedUser.connected" class="nav navbar-nav side-nav">
+                        <!--MACHINERIES DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#machineListDD" ng-show="hasAnyRole('MACHINE_VIEW')" href="javascript:;">
+                                <i class="fa fa-fw fa-connectdevelop"></i> 
+                                <span translate="menu.machines"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="machineListDD" class="collapse">
+                                <li fab-nav-item-af link="machines" icon="sliders" 
+                                    label="menu.machines" 
+                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li fab-nav-item-af link="machineTypes" icon="print" 
+                                    label="menu.machineTypes" 
+                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li fab-nav-item-af link="machineStates" icon="file-text-o" 
+                                    label="menu.machineState" 
+                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li fab-nav-item-af link="machineStatus" icon="exclamation-triangle" 
+                                    label="menu.machineStatus" 
+                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li fab-nav-item-af link="priceMachines/table" icon="euro" 
+                                    label="menu.priceMachinesTable" 
+                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <hr show="hasAnyRole('MACHINE_MANAGE')"></hr>
+                                <li fab-nav-item-af link="revisions" icon="check-square-o" 
+                                    label="menu.revision" 
+                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <hr show="hasAnyRole('MACHINE_MANAGE')"></hr>
+                                <li fab-nav-item-af link="tickets" icon="ticket" 
+                                    label="menu.tickets" 
+                                    show="hasAnyRole('TICKET_MANAGE')"></li>
+                                <li fab-nav-item-af link="ticketStatus" icon="terminal" 
+                                    label="menu.ticketStatus" 
+                                    show="hasAnyRole('TICKET_MANAGE')"></li>
+                                <li fab-nav-item-af link="tickets/ticket-edit" icon="bolt" 
+                                    label="menu.addFailure" 
+                                    show="hasAnyRole('TICKET_VIEW')"></li>
+                            </ul>
+                        </li>
+                        <!--TRAINING DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#trainingListDD" ng-show="'TRAINING_VIEW'" href="javascript:;">
+                                <i class="fa fa-fw fa-briefcase"></i> 
+                                <span translate="menu.trainings"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="trainingListDD" class="collapse">
+                                <li fab-nav-item-af link="trainings" icon="book" 
+                                    label="menu.trainings" 
+                                    show="hasAnyRole('TRAINING_MANAGE')"></li>
+                                <li fab-nav-item-af link="trainingLevels" icon="list" 
+                                    label="menu.trainingLevels" 
+                                    show="hasAnyRole('TRAINING_MANAGE')"></li>
+                                <li fab-nav-item-af link="certifications" icon="mortar-board" 
+                                    label="menu.certification" 
+                                    show="hasAnyRole('TRAINING_MANAGE')"></li>
+                            </ul>
+                        </li>
+                        <!--SUPPLIES DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#supplyListDD" ng-show="hasAnyRole('SUPPLY_VIEW')"  href="javascript:;">
+                                <i class="fa fa-fw fa-barcode"></i>
+                                <span translate="menu.supplies"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="supplyListDD" class="collapse">
+                                <li fab-nav-item-af link="supplies" icon="wrench" 
+                                    label="menu.supplies" 
+                                    show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                <li fab-nav-item-af link="supplyTypes" icon="newspaper-o" 
+                                    label="menu.supplyTypes" 
+                                    show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                <li ng-show="hasAnyRole('SUPPLY_MANAGE')">
+                                    <a href="#/supplyUnities">
+                                        <span class="iconify">m<sup>2</sup></span>
+                                        <span translate = "menu.supplyUnities"></span>
+                                    </a>
+                                </li>
+                                <hr show="hasAnyRole('SUPPLY_MANAGE')"></hr>
+                                <li fab-nav-item-af link="purchases" icon="barcode" 
+                                    label="menu.purchases" 
+                                    show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                <li fab-nav-item-af link="purchases/purchase-edit" icon = "plus-circle" 
+                                    label="menu.addPurchase" 
+                                    show="hasAnyRole('SUPPLY_VIEW')"></li>
+                                <li fab-nav-item-af link="motionStocks" icon="database"
+                                    label="menu.motionStocks"
+                                    show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                            </ul>
+                        </li>
+                        <!--ACCOUNTING DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#accountingListDD" ng-show="hasAnyRole('ACCOUNTING_MANAGE')"  href="javascript:;">
+                                <i class="fa fa-fw fa-euro"></i>
+                                <span translate="menu.accounting"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="accountingListDD" class="collapse">
+                                <li fab-nav-item-af link="accounting"
+                                    label="menu.inOut" icon="exchange"
+                                    show="hasAnyRole('ACCOUNTING_VIEW')"></li>
+                            </ul>
+                        </li>
+                        <li fab-nav-item link="reservations" icon="calendar"
+                            label="menu.reservation"
+                            show="hasAnyRole('RESERVATION_VIEW')"></li>
+                        <li fab-nav-item link="payments" icon="shopping-cart"
+                            label="menu.payment"
+                            show="hasAnyRole('PAYMENT_VIEW')"></li>
+                        <li>
+                            <img src="./images/logoFabLabManager.png" alt="logo" height="220" width="220" id="faviconLeft" class="img-circle"/>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -147,11 +272,13 @@
         </div>
     </div>
     <div id="footer">
+        <!-- This is only G.Collaud's implementation    
         <a href="https://github.com/gaetancollaud/fablab-api">
             <img class="github" src="images/github.png" alt="github logo">
             Fablab Manager
         </a>
         is an open-source application
+        -->
     </div>
 
     <script src="./api/constants.js"></script>
@@ -209,14 +336,8 @@
     <script src="./lib/filters/date-filter-ch.js"></script>
     <script src="./lib/filters/select.js"></script>
     <script src="./lib/filters/currency.js"></script>
-    <script src="./lib/directives/naviguation/navigation-dropdown-accounting.js"></script>
-    <script src="./lib/directives/naviguation/navigation-dropdown-machine.js"></script>
-    <script src="./lib/directives/naviguation/navigation-dropdown-admin.js"></script>
-    <script src="./lib/directives/naviguation/navigation-dropdown-supply.js"></script>
-    <script src="./lib/directives/naviguation/navigation-dropdown-training.js"></script>
     <script src="./lib/directives/naviguation/navigation-item-af.js"></script>
     <script src="./lib/directives/naviguation/navigation-item.js"></script>
-    <script src="./lib/directives/naviguation/navigation-nav-side.js"></script>
     <script src="./lib/directives/confirm/reallyClick.js"></script>
     <script src="./lib/directives/form/form.js"></script>
     <script src="./lib/directives/form/date.js"></script>
@@ -274,15 +395,15 @@
     <script src="./components/user/user-filters.js"></script>
     <script src="./components/user/directive-groups.js"></script>
     <script src="./components/user/directive-subscription.js"></script>
-    <script src="./components/user/list-ctrl.js"></script>
-    <script src="./components/user/edit-ctrl.js"></script>
+    <script src="./components/user/user-list-ctrl.js"></script>
+    <script src="./components/user/user-edit-ctrl.js"></script>
     <script src="./components/user/profil-ctrl.js"></script>
 
     <script src="./components/membershipType/membershipType-list-ctrl.js"></script>
     <script src="./components/membershipType/membershipType-edit-ctrl.js"></script>
 
-    <script src="./components/reservation/list-ctrl.js"></script>
-    <script src="./components/reservation/edit-ctrl.js"></script>
+    <script src="./components/reservation/reservation-list-ctrl.js"></script>
+    <script src="./components/reservation/reservation-edit-ctrl.js"></script>
     <script src="./components/reservation/directive-reservation-day.js"></script>
 
     <script src="./components/payment/by-user-ctrl.js"></script>
@@ -341,6 +462,8 @@
     <script src="./components/certification/certification-edit-ctrl.js"></script>
 
     <script src="./components/role/role-ctrl.js"></script>
+    <script src="./components/group/group-list-ctrl.js"></script>
+    <script src="./components/group/group-edit-ctrl.js"></script>
 
     <script src="./components/machineTest/test-ctrl.js"></script>
 

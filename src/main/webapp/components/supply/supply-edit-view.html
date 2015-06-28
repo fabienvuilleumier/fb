@@ -10,7 +10,18 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" translate="supply.code"></label>
                     <div class="col-sm-8">
-                        <input maxlength="5" type="text" class="form-control" ng-model="supply.code" required uppercase/>
+                        <input maxlength="5" 
+                               type="text" 
+                               name="code"
+                               class="form-control" 
+                               ng-model="supply.code"  
+                               uppercase
+                               duplicate="existingValues"
+                               required/>
+                    </div>
+                    <div class="col-sm-2 error-text">
+                        <span ng-show="editSupply.code.$error.duplicate" translate="supply.alreadyExist"></span>
+                        <span ng-show="editSupply.code.$error.required" ></span>
                     </div>
                 </div>
                 <div class="form-group">

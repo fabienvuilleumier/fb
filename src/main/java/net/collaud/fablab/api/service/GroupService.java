@@ -9,4 +9,6 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
 */
 public interface GroupService extends ReadWriteService<GroupEO>{
 
+    GroupEO getId(String technicalname);
+
 }

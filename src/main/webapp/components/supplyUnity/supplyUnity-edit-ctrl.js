@@ -8,6 +8,15 @@ app.controller('GlobalSupplyUnityEditController', function ($scope, $location,
             $scope.supplyUnity = data;
         });
     };
+
+    SupplyUnityService.list(function (mstate) {
+        var res = [];
+        for (var i = 0; i < mstate.length; i++) {
+            res.push(mstate[i].label.toUpperCase());
+        }
+        $scope.existingValues = res;
+    });
+
     $scope.save = function () {
         var supplyUnityCurrent = angular.copy($scope.supplyUnity);
         SupplyUnityService.save(supplyUnityCurrent, function (data) {

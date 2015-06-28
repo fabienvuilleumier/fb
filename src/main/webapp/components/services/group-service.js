@@ -24,7 +24,10 @@ app.factory('GroupService', function ($log, $resource, $http) {
             $log.debug("GroupService: get...");
             var groupRes = group.get({id: id}, successFn);
             return groupRes;
-        }
+        },
+        getId: function (technicalname, successFn) {
+                $http.get(App.API.GROUP_API + "/getId?technicalname=" + technicalname.latinise()).success(successFn);
+            }
     };
 });
 

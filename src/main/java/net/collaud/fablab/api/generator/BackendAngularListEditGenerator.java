@@ -442,7 +442,7 @@ public class BackendAngularListEditGenerator {
     public void genere(boolean write, String styleContent, String... roles) throws IOException {
         createDirectory();
         init();
-        createFile(genereServiceJS(write), SERVICE_FP, "js");
+        //createFile(genereServiceJS(write), SERVICE_FP, "js");
         if (write) {
             createFile(genereEditJS(), EDIT_JS_FP, "js");
             createFile(genereEditVIEW(), EDIT_VIEW_FP, "html");
@@ -474,15 +474,15 @@ public class BackendAngularListEditGenerator {
         str.append("#####IN INDEX.HTML FILE#####").append("\n");
         str.append("        ").append("<link href=\"./components/").append(CLASS_ATTRIBUTE).append("/style.css\" rel=\"stylesheet\">").append("\n");
         str.append("\n");
-        str.append("        + '    ").append("<li fab-nav-item-af link=\"").append(endWithS(CLASS_ATTRIBUTE)).append("\" icon=\"\" ").append("'\n");
-        str.append("        + '        ").append("label=\"menu.");
-        str.append(endWithS(CLASS_ATTRIBUTE)).append("\" ").append("'\n");
-        str.append("        + '        ").append("show=\"hasAnyRole(\\'");
+        str.append("            ").append("<li fab-nav-item-af link=\"").append(endWithS(CLASS_ATTRIBUTE)).append("\" icon=\"\" ").append("\n");
+        str.append("                ").append("label=\"menu.");
+        str.append(endWithS(CLASS_ATTRIBUTE)).append("\" ").append("\n");
+        str.append("                ").append("show=\"hasAnyRole(\\'");
         for (String s : roles) {
             str.append(s).append(",");
         }
         str.deleteCharAt(str.length() - 1);
-        str.append("\\')\"></li>").append("'\n");
+        str.append("\\')\"></li>").append("\n");
         str.append("\n");
         str.append("        ").append("<script src=\"./components/services/").append(CLASS_ATTRIBUTE).append("-service.js\"></script>").append("\n");
         str.append("\n");
@@ -530,10 +530,35 @@ public class BackendAngularListEditGenerator {
         }
         str.append("}").append("\n");
         str.append("########################\n\n").append("\n");
+        str.append("#####IN FR.JS FILE#####").append("\n");
+        str.append("IN MENU : ").append("\n");
+        str.append("    ,").append(endWithS(CLASS_ATTRIBUTE)).append("").append(" : '").append(endWithS(CLASS_NAME)).append("'");
+        str.append("\n");
+        str.append("EACH ").append("\n");
+        str.append(",").append(CLASS_ATTRIBUTE).append(": {").append("\n");
+        str.append("    ").append("title: '").append(CLASS_NAME).append("',").append("\n");
+        for (Field f : FIELDS) {
+            if (!f.getName().equals("id") && !f.getName().equals("active") && !f.getType().getSimpleName().contains("List")) {
+                str.append("    ").append(f.getName()).append(": '").append((f.getName().substring(0, 1)).toUpperCase()).append(f.getName().substring(1)).append("',").append("\n");
+            }
+        }
+        if (write) {
+            str.append("    ").append("create:'Création de ").append(CLASS_NAME).append("',").append("\n");
+            str.append("    ").append("edit:'Edition de ',").append("\n");
+            str.append("    ").append("notification: {").append("\n");
+            str.append("        ").append("saved: '").append(CLASS_NAME).append(" sauvegardé',").append("\n");
+            str.append("        ").append("removed: '").append(CLASS_NAME).append(" supprimé'").append("\n");
+            str.append("    ").append("},").append("\n");
+            str.append("    ").append("confirmation: {").append("\n");
+            str.append("        ").append("remove: 'Voulez-vous réellement supprimer \\'").append(CLASS_ATTRIBUTE).append("\\' ?'").append("\n");
+            str.append("    ").append("}").append("\n");
+        }
+        str.append("}").append("\n");
+        str.append("########################\n\n").append("\n");
         str.append("#####IN ROLES FILE (net.collaud.fablab.api.security)#####").append("\n");
-        for (String s : roles) {
-            str.append("        ").append("public static final String ").append(s).append(" = \"").append(s).append("\";\n");
-            str.append(",").append("\n").append("    ").append(s).append("\n");
+        for (String role : roles) {
+            str.append("        ").append("public static final String ").append(role).append(" = \"ROLE_").append(role).append("\";\n");
+            str.append(",").append("\n").append("    ").append(role).append("\n");
         }
         str.append("########################\n\n").append("\n");
 

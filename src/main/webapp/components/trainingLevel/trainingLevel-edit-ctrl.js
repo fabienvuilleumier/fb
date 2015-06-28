@@ -8,6 +8,15 @@ app.controller('GlobalTrainingLevelEditController', function ($scope, $location,
             $scope.trainingLevel = data;
         });
     };
+    
+    TrainingLevelService.list(function (mstate) {
+        var res = [];
+        for (var i = 0; i < mstate.length; i++) {
+            res.push(mstate[i].label.toUpperCase());
+        }
+        $scope.existingValues = res;
+    });
+    
     $scope.save = function () {
         var trainingLevelCurrent = angular.copy($scope.trainingLevel);
         TrainingLevelService.save(trainingLevelCurrent, function (data) {

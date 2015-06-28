@@ -43,7 +43,7 @@
             {{'button.search'| translate}} 
             <span class="glyphicon glyphicon-search"> </span>
         </a>
-        <a class="btn btn-success" href="#/reservations/edit">
+        <a class="btn btn-success" href="#/reservations/reservation-edit">
             {{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> 
             </span></a>
     </div>
@@ -76,7 +76,7 @@
         </td>
         <td  class="listBtn2">
             <div class="btn-group">
-                <a class="btn btn-sm btn-default" href="#/reservations/edit/{{reservation.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a class="btn btn-sm btn-default" href="#/reservations/reservation-edit/{{reservation.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
                 <button class="btn btn-sm btn-danger" href=""
                         ng-really-click="softRemove(reservation)"
                         ng-really-message="Really remove this reservation ?">

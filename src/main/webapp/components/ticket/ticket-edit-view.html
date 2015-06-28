@@ -15,7 +15,6 @@
                         <span>{{ticket.creationUser|prettyUser}}</span>
                     </div>
                 </div>
-                <!--<div class="updateTicket" ng-if="!newTicket">-->
                 <div class="updateTicket">
                     <div class="row status">
                         <div class="col-sm-offset-4 col-sm-3 block-status">
@@ -28,9 +27,19 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label" translate="ticket.title"></label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" ng-model="ticket.title" required/>
-                        </div>
-                    </div>
+                            <input type="text" class="form-control" 
+                                   ng-model="ticket.title" 
+                                   name="title"
+                           duplicate="existingValues" 
+                           uppercase 
+                           required/>
+                </div>
+                <div class="col-sm-2 error-text">
+                    <span ng-show="editTicket.title.$error.duplicate" 
+                          translate="ticket.alreadyExist"></span>
+                    <span ng-show="editTicket.title.$error.required" ></span>
+                </div>
+            </div>
                 </div>
 
                 <div class="row description">

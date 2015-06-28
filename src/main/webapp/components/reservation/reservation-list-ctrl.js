@@ -48,10 +48,11 @@
             $scope.events.length = 0;
             for (var i = 0; i < $scope.reservations.length; i++) {
                 var r = $scope.reservations[i];
-                $scope.events[$scope.events.length] = {
+                console.log("r " + r);
+                $scope.events.push({
                     title: r.machine.name,
                     start: new Date(r.dateStart),
-                    end: new Date(r.dateEnd)};
+                    end: new Date(r.dateEnd)});
             }
         };
 
@@ -64,11 +65,11 @@
         $scope.softRemove = function (reservation) {
             ReservationService.softRemove(reservation.id, function () {
                 NotificationService.notify("success", "reservation.notification.removed");
-                updateReservationList();
+                $scope.updateReservationList();
             });
         };
 
-        $scope.updateReservationList();
+        
         var date = new Date();
         var d = date.getDate();
         var m = date.getMonth();
@@ -76,31 +77,34 @@
 
         /* event source that pulls from google.com */
         $scope.dataSourceGoogleAgenda = {
-            url: "https://www.google.com/calendar/feeds/nulu08ntleed9c5peukoeaifl8%40group.calendar.google.com/public/basic",
+            url: App.CONFIG.GOOGLE_CALENDAR_URL,
             className: 'gcal-event',
-            currentTimezone: 'Europe/Zurich',
-            color: 'yellow',
+            currentTimezone: App.CONFIG.CALENDAR_TIME_ZONE,
+            color:  App.CONFIG.CALENDAR_AGENDA_COLOR,
             textColor: 'black'
         };
+        
+        //$scope.events=[];
         /* event source that contains custom events on the scope */
-        $scope.events = [
+        /*$scope.events = [
             {title: 'All Day Event', start: new Date(y, m, 1)},
             {title: 'Long Event', start: new Date(y, m, d - 5), end: new Date(y, m, d - 2)},
             {id: 999, title: 'Repeating Event', start: new Date(y, m, d - 3, 16, 0), allDay: false},
             {id: 999, title: 'Repeating Event', start: new Date(y, m, d + 4, 16, 0), allDay: false},
             {title: 'Birthday Party', start: new Date(y, m, d + 1, 19, 0), end: new Date(y, m, d + 1, 22, 30), allDay: false},
             {title: 'Click for Google', start: new Date(y, m, 28), end: new Date(y, m, 29), url: 'http://google.com/'}
-        ];
+        ];*/
+        $scope.updateReservationList();
 
         $scope.dataSourceReservation = {
             events: $scope.events,
-            color: 'red'
+            color: App.CONFIG.CALENDAR_RESERVATION_COLOR
         };
 
         /* config object */
         $scope.uiConfig = {
             calendar: {
-                googleCalendarApiKey: 'AIzaSyB6WpKyvia6OD1ePfE6JGlYXBWIjBJGOLk',
+                googleCalendarApiKey: App.CONFIG.GOOGLE_CALENDAR_API_KEY,
                 height: 450,
                 editable: false,
                 firstDay: 1,

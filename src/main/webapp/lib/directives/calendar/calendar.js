@@ -16,7 +16,7 @@ angular.module('Fablab').directive('fablabCalendar', function () {
 			$scope.dataSourceGoogleAgenda = {
 				url: App.CONFIG.GOOGLE_CALENDAR_URL,
 				className: 'gcal-event',
-				currentTimezone: 'Europe/Zurich',
+				currentTimezone: App.CONFI.CALENDAR_TIME_ZONE,
 				color: App.CONFI.CALENDAR_AGENDA_COLOR,
 				textColor: 'black'
 			};

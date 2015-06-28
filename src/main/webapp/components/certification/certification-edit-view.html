@@ -14,14 +14,24 @@
                                 required
                                 ng-model="certification.training"
                                 ng-options="common.name for common in trainingList track by common.id" 
-                                ng-change="uploadPriceAndSetName()"></select>
+                                ng-change="updatePriceAndSetName()"></select>
                     </div>
                 </div>
                  <div class="form-group">
                     <label class="col-sm-2 control-label" translate="certification.name"></label>
                     <div class="col-sm-8">
-                        <input type="text" ng-model="certification.name" class="form-control" required/>
-                    </div>
+                        <input type="text" 
+                               name="name" 
+                               ng-model="certification.name" 
+                               class="form-control" 
+                              duplicate="existingValues"
+                           required/>
+                </div>
+                <div class="col-sm-2 error-text">
+                    <span ng-show="editCertification.name.$error.duplicate" 
+                          translate="certification.alreadyExist"></span>
+                    <span ng-show="editCertification.name.$error.required" ></span>
+                </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" translate="certification.certificationDate"></label>

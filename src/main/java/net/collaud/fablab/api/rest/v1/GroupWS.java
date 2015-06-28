@@ -7,6 +7,8 @@ import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
 import net.collaud.fablab.api.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,5 +27,10 @@ public class GroupWS extends ReadWriteRestWebservice<GroupEO, GroupService> {
     @PostConstruct
     public void postConstruct() {
         super.setService(groupService);
+    }
+    
+    @RequestMapping(value = "getId", method = RequestMethod.GET)
+    public GroupEO getId(@RequestParam(value = "technicalname") String technicalname) {
+        return groupService.getId(technicalname);
     }
 }

@@ -11,6 +11,14 @@ app.controller('GlobalMembershipTypeEditController', function ($scope, $location
         updateMachineTypeList();
     };
 
+    MembershipTypeService.list(function (mstate) {
+        var res = [];
+        for (var i = 0; i < mstate.length; i++) {
+            res.push(mstate[i].name.toUpperCase());
+        }
+        $scope.existingValues = res;
+    });
+
     MachineTypeService.list(function (mt) {
         $scope.machineTypes = mt;
     });

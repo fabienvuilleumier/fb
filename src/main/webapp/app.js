@@ -5,7 +5,7 @@
         //ext-lib
         'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 'ngNotify',
         'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha', 'datatables',
-        'datatables.columnfilter', 'datatables.bootstrap', 
+        'datatables.columnfilter', 'datatables.bootstrap',
         // Core
         'Notification', 'Loader', 'httpInterceptor'
     ]).config(function ($routeProvider, $httpProvider, $translateProvider) {
@@ -34,22 +34,22 @@
             templateUrl: './components/configuration/configuration-edit-view.html',
             controller: 'ConfigurationEditController'
         }).when('/users', {
-            templateUrl: './components/user/list-view.html',
+            templateUrl: './components/user/user-list-view.html',
             controller: 'UserListController'
-        }).when('/users/edit/:id', {
-            templateUrl: './components/user/edit-view.html',
+        }).when('/users/user-edit/:id', {
+            templateUrl: './components/user/user-edit-view.html',
             controller: 'UserEditController'
-        }).when('/users/edit', {
-            templateUrl: './components/user/edit-view.html',
+        }).when('/users/user-edit', {
+            templateUrl: './components/user/user-edit-view.html',
             controller: 'UserNewController'
         }).when('/reservations', {
-            templateUrl: './components/reservation/list-view.html',
+            templateUrl: './components/reservation/reservation-list-view.html',
             controller: 'ReservationListController'
-        }).when('/reservations/edit/:id', {
-            templateUrl: './components/reservation/edit-view.html',
+        }).when('/reservations/reservation-edit/:id', {
+            templateUrl: './components/reservation/reservation-edit-view.html',
             controller: 'ReservationEditController'
-        }).when('/reservations/edit', {
-            templateUrl: './components/reservation/edit-view.html',
+        }).when('/reservations/reservation-edit', {
+            templateUrl: './components/reservation/reservation-edit-view.html',
             controller: 'ReservationNewController'
         }).when('/payments', {
             templateUrl: './components/payment/by-user-view.html',
@@ -222,6 +222,15 @@
         }).when('/roles', {
             templateUrl: './components/role/role-view.html',
             controller: 'RoleController'
+        }).when('/groups', {
+            templateUrl: './components/group/group-list-view.html',
+            controller: 'GroupListController'
+        }).when('/groups/group-edit/:id', {
+            templateUrl: './components/group/group-edit-view.html',
+            controller: 'GroupEditController'
+        }).when('/groups/group-edit', {
+            templateUrl: './components/group/group-edit-view.html',
+            controller: 'GroupNewController'
         }).when('/tests', {
             templateUrl: './components/machineTest/test-view.html',
             controller: 'MachineTestListController'
@@ -231,11 +240,21 @@
 
         // HTTP Interceptor
         $httpProvider.interceptors.push('httpInterceptor');
-        $translateProvider.preferredLanguage('en');
+        $translateProvider.preferredLanguage('fr');
         $translateProvider.useSanitizeValueStrategy('escaped');
-    }).run(function ($log, LoaderService, NotificationService, $rootScope, $location, AuthService, UserService) {
+
+    }).run(function ($log, LoaderService, NotificationService, $rootScope,
+            $translate, $location, AuthService) {
         App.interceptors.errorInterceptor.loaderService = LoaderService;
         App.interceptors.errorInterceptor.notificationService = NotificationService;
+
+
+        $rootScope.translate = function (langage) {
+            $translate.use(langage);
+            $rootScope.curentLanguage = $translate.use();
+        };
+
+        $rootScope.curentLanguage = $translate.use();
 
         $rootScope.updateCurrentUser = function () {
             AuthService.getCurrentUser(function (data) {

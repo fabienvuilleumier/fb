@@ -7,7 +7,7 @@ app.directive('duplicate', function () {
         link: function (scope, elm, attrs, ctrl) {
             ctrl.$parsers.unshift(function (viewValue) {
                 var duplicate = scope[attrs.duplicate];
-                if (duplicate.indexOf(viewValue) !== -1) {
+                if (duplicate.indexOf(viewValue.toUpperCase()) !== -1) {
                     ctrl.$setValidity('duplicate', false);
                     return undefined;
                 } else {
