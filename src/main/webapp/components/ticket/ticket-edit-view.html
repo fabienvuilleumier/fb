@@ -30,16 +30,15 @@
                             <input type="text" class="form-control" 
                                    ng-model="ticket.title" 
                                    name="title"
-                           duplicate="existingValues" 
-                           uppercase 
-                           required/>
-                </div>
-                <div class="col-sm-2 error-text">
-                    <span ng-show="editTicket.title.$error.duplicate" 
-                          translate="ticket.alreadyExist"></span>
-                    <span ng-show="editTicket.title.$error.required" ></span>
-                </div>
-            </div>
+                                   duplicate="existingValues"  
+                                   required/>
+                        </div>
+                        <div class="col-sm-2 error-text">
+                            <span ng-show="editTicket.title.$error.duplicate" 
+                                  translate="ticket.alreadyExist"></span>
+                            <span ng-show="editTicket.title.$error.required" ></span>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row description">

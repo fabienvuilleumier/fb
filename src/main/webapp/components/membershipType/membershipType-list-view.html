@@ -11,7 +11,7 @@
                 data-title="'membershipType.name' | translate" 
                 sortable="'name'"
                 filter="{'name':'text'}">
-                {{membershipType.name}}
+                {{membershipType.name | lowercase}}
             </td>
             <td 
                 data-title="'membershipType.duration' | translate" 

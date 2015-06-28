@@ -11,15 +11,16 @@
                 data-title="'machineStatus.label' | translate" 
                 sortable="'label'"
                 filter="{'label':'text'}">
-                {{machineStatus.label}}
+                {{machineStatus.label | lowercase}}
+            </td>
+            <td 
+                data-title="'machineStatus.color' | translate" 
+                sortable="'color'"
+                filter="{'color':'text'}">
+                {{machineStatus.color}}
             </td>
             <td class="listBtn2">
-                <div class="btn-group" 
-                     ng-if="machineStatus.label.toUpperCase() !== 'DISPONIBLE' 
-                            && machineStatus.label.toUpperCase() !== 'EN RÉPARATION'
-                            && machineStatus.label.toUpperCase() !== 'ENDOMMAGÉ'
-                            && machineStatus.label.toUpperCase() !== 'INDISPONIBLE'
-                            && machineStatus.label.toUpperCase() !== 'PRÊTÉ - EN LOCATION'">
+                <div class="btn-group" >
                     <a class="btn btn-sm btn-default" href="#/machineStatus/machineStatus-edit/{{machineStatus.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
                     <button class="btn btn-sm btn-danger" 
                             ng-really-click="softRemove(machineStatus)"

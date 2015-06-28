@@ -47,6 +47,7 @@ public class MachineStatusServiceImpl implements MachineStatusService {
         if (machineStatus.getId() > 0) {
             MachineStatusEO old = machineStatusDAO.findOne(machineStatus.getId());
             old.setLabel(machineStatus.getLabel());
+            old.setColor(machineStatus.getColor());
             old.setMachineList(machineStatus.getMachineList());
             return machineStatusDAO.saveAndFlush(old);
         } else {

@@ -267,6 +267,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         machineStatus: {
             title: 'Machinery status',
             label: 'Label',
+            color: 'Color',
             warningEdit: '<strong>Warning !</strong> If you change some value, the list red-yellow-green will not work good unless you midify the source code.',
             warningCreate: '<strong>Warning !</strong> If you add some value, the list red-yellow-green will not work good unless you midify the source code.',
             alreadyExist: 'The specified label already exist !',
@@ -477,8 +478,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         trainingLevel: {
             title: 'Training level',
             label: 'Label',
-                        alreadyExist: 'The specified label already exist !',
-
+            alreadyExist: 'The specified label already exist !',
             create: 'Training level creation',
             edit: 'Edit :',
             notification: {
@@ -496,8 +496,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             note: 'Note',
             trainingLevel: 'Training level',
             machineType: 'Machine type',
-                        alreadyExist: 'The specified name already exist !',
-
+            alreadyExist: 'The specified name already exist !',
             nonSelectedListLabel: 'Available trainings as prerequisites',
             selectedListLabel: 'Prerequisites',
             havePrerequisites: 'Have one or more prerequisites',
