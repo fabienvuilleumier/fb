@@ -11,6 +11,15 @@ app.controller('GlobalCertificationEditController', function ($scope, $routePara
             setLists();
         });
     };
+
+    CertificationService.list(function (certif) {
+        var res = [];
+        for (var i = 0; i < certif.length; i++) {
+            res.push(certif[i].name.toUpperCase());
+        }
+        $scope.existingValues = res;
+    });
+
     $scope.save = function () {
         if ($scope.newCertification) {
             var certificationCurrent = angular.copy($scope.certification);
@@ -53,7 +62,7 @@ app.controller('GlobalCertificationEditController', function ($scope, $routePara
         }
     };
 
-    $scope.uploadPriceAndSetName = function () {
+    $scope.updatePriceAndSetName = function () {
         if ($scope.certification) {
             if ($scope.certification.training) {
                 $scope.certification.certificationPrice = $scope.certification.training.price;

@@ -18,27 +18,27 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.ADMIN})
+@Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
 public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private GroupRepository groupDAO;
 
     @Override
-    @Secured({Roles.ADMIN})
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
     public List<GroupEO> findAll() {
         return groupDAO.findAll();
     }
 
     @Override
-    @Secured({Roles.ADMIN})
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
     public Optional<GroupEO> getById(Integer id) {
         Optional<GroupEO> g = groupDAO.findOneDetails(id);
         return g;
     }
 
     @Override
-    @Secured({Roles.ADMIN})
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
     public GroupEO save(GroupEO group) {
         if (group.getId() == null) {
             group.setId(0);
@@ -59,16 +59,22 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    @Secured({Roles.ADMIN})
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
     public void remove(Integer id) {
         groupDAO.delete(id);
     }
 
     @Override
-    @Secured({Roles.ADMIN})
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
     public void softRemove(Integer id) {
         GroupEO current = groupDAO.findOne(id);
         current.setActive(false);
         groupDAO.saveAndFlush(current);
+    }
+
+    @Override
+    @Secured({Roles.ADMIN, Roles.GROUP_MANAGE})
+    public GroupEO getId(String technicalname) {
+       return groupDAO.getId(technicalname);
     }
 }

@@ -11,6 +11,15 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
         });
 
     };
+    
+    TicketService.list(function (mstate) {
+        var res = [];
+        for (var i = 0; i < mstate.length; i++) {
+            res.push(mstate[i].title.toUpperCase());
+        }
+        $scope.existingValues = res;
+    });
+    
     $scope.save = function () {
         if (!$scope.ticket.closeDate) {
             MachineStatusService.getByLabel("Indisponible", function (data) {

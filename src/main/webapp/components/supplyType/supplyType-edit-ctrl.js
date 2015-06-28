@@ -8,6 +8,15 @@ app.controller('GlobalSupplyTypeEditController', function ($scope, $location,
             $scope.supplyType = data;
         });
     };
+    
+    SupplyTypeService.list(function (mstate) {
+        var res = [];
+        for (var i = 0; i < mstate.length; i++) {
+            res.push(mstate[i].label.toUpperCase());
+        }
+        $scope.existingValues = res;
+    });
+    
     $scope.save = function () {
         var supplyTypeCurrent = angular.copy($scope.supplyType);
         SupplyTypeService.save(supplyTypeCurrent, function (data) {

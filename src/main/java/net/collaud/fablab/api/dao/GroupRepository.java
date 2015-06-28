@@ -25,4 +25,10 @@ public interface GroupRepository extends JpaRepository<GroupEO, Integer> {
             + " LEFT JOIN FETCH g.roles "
             + " WHERE g.id=:id")
     Optional<GroupEO> findOneDetails(@Param("id") Integer id);
+
+    @Query("SELECT g "
+            + " FROM GroupEO g"
+            + " LEFT JOIN FETCH g.roles "
+            + " WHERE upper(g.technicalname) = upper(:technicalname)")
+    GroupEO getId(@Param("technicalname")String technicalname);
 }

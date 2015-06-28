@@ -13,6 +13,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             user: 'User',
             detail: 'Detail',
             comment: 'Comment',
+            toFr: 'Fr',
+            toEn: 'En',
             table: {
                 action: 'Action'
             },
@@ -60,7 +62,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             trainingLevels: 'Training levels',
             trainings: 'Trainings',
             certification: 'Certification',
-            roles: 'Roles'
+            roles: 'Roles',
+            groups: 'Groups'
         },
         loading: {
             title: 'Loading',
@@ -126,7 +129,7 @@ angular.module('Fablab').config(function ($translateProvider) {
                     user: 'The user {{user.firstname}} {{user.lastname}} has not confirm its subription yet !'
                 },
                 expired: {
-                    myself: 'Your subscription has expired since {{epirationDate}} ({{dayLeft}} days left)',
+                    myself: 'Your subscription has expired since {{epirationDate}} ({{dayLeft}} days)',
                     user: 'The subscription of the user {{user.firstname}} {{user.lastname}} has expired since {{epirationDate}} ({{dayLeft}} days)'
                 },
                 ok: {
@@ -148,12 +151,16 @@ angular.module('Fablab').config(function ($translateProvider) {
             end: 'End',
             user: 'User',
             machine: 'Machinery',
-            type: 'type',
+            type: 'Type',
             date: 'Date',
             from: 'From',
             to: 'To',
             hours: 'Hours',
             reservationForDay: 'Reservation for {{date}}',
+            notification: {
+                saved: 'Reservation saved',
+                removed: 'Reservation removed'
+            },
             edit: {
                 title: "Book a machinery"
             }
@@ -177,7 +184,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             addUsage: 'Add usage',
             details: 'Details',
             history: 'History',
-            balanceText: 'Balance for user <i>{{firstname}} {{lastname}}</i> : <b>{{balance}}</b>',
+            balanceText: 'Balance for user {{firstname}} {{lastname}} : <b>{{balance}}</b>',
             confirmation: {
                 historyRemove: 'Do you really want to remove this history entry ?'
             },
@@ -213,6 +220,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             machineStatus: 'Status',
             revisions: 'Revisions',
             tickets: 'Tickets',
+            alreadyExist: 'The specified code already exist !',
             toDoRevision: 'To-Do for revision',
             lists: 'Reservations & Tickets',
             create: 'Machinery creation',
@@ -230,7 +238,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             name: 'Name',
             technicalname: 'Technical name',
             restricted: 'Restricted ?',
-            alreadyExist: 'Technical name does already exist!',
+            alreadyExist: 'The technical name specified already exists !',
             membershipTypes: 'Price per membership type',
             create: 'Machinery type creation',
             edit: 'Edit :',
@@ -245,6 +253,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         machineState: {
             title: 'Machinery state',
             label: 'Label',
+            alreadyExist: 'The label specified already exists !',
             create: 'Machinery state creation',
             edit: 'Edit :',
             notification: {
@@ -260,6 +269,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             label: 'Label',
             warningEdit: '<strong>Warning !</strong> If you change some value, the list red-yellow-green will not work good unless you midify the source code.',
             warningCreate: '<strong>Warning !</strong> If you add some value, the list red-yellow-green will not work good unless you midify the source code.',
+            alreadyExist: 'The specified label already exist !',
             create: 'Machinery status creation',
             edit: 'Edit :',
             notification: {
@@ -276,6 +286,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             duration: 'Duration',
             price: 'Price',
             durationDay: 'Days',
+            alreadyExist: 'The specified name already exist !',
             machineTypes: 'Machinery types',
             create: 'Membership type creation',
             edit: 'Edit :',
@@ -295,7 +306,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             cost: 'Cost',
             machine: 'Machinery',
             create: 'Revision creation',
-            edit: 'Edit reservation @',
+            edit: 'Edit revision @',
             notification: {
                 saved: 'Revision saved',
                 removed: 'Revision removed'
@@ -307,6 +318,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         ticketStatus: {
             title: 'Ticket status',
             label: 'Label',
+            alreadyExist: 'The specified label already exist !',
             create: 'Ticket status creation',
             edit: 'Edit :',
             notification: {
@@ -334,6 +346,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             closeUser: 'by',
             create: 'Ticket creation',
             edit: 'Edit :',
+            alreadyExist: 'The specified title already exist !',
             closeTicket: 'Close this ticket',
             reOpenTicket: 'Re-Open this ticket',
             notification: {
@@ -366,6 +379,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             label: 'Label',
             sellingPrice: 'Selling price',
             unityBuyingPrice: 'Unity buying price',
+            alreadyExist: 'The specified code already exist !',
             orderAddress: 'Order address',
             supplyType: 'Supply type',
             note: 'Note',
@@ -389,6 +403,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         supplyType: {
             title: 'Supply type',
             label: 'Label',
+            alreadyExist: 'The specified label already exist !',
             create: 'Supply type creation',
             edit: 'Edit :',
             notification: {
@@ -424,6 +439,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             title: 'Supply unity',
             label: 'Label',
             floating: 'isFloating ? ',
+            alreadyExist: 'The specified label already exist !',
             create: 'Supply unity creation',
             edit: 'Edit :',
             notification: {
@@ -435,8 +451,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             }
         },
         motionStock: {
-            title: 'MotionStock',
-            motionDate: 'MotionDate',
+            title: 'Stock motion',
+            motionDate: 'Motion date',
             quantity: 'Quantity',
             io: 'Io',
             supply: 'Supply',
@@ -461,6 +477,8 @@ angular.module('Fablab').config(function ($translateProvider) {
         trainingLevel: {
             title: 'Training level',
             label: 'Label',
+                        alreadyExist: 'The specified label already exist !',
+
             create: 'Training level creation',
             edit: 'Edit :',
             notification: {
@@ -475,9 +493,11 @@ angular.module('Fablab').config(function ($translateProvider) {
             title: 'Training',
             name: 'Name',
             price: 'Price',
-            note: 'note',
+            note: 'Note',
             trainingLevel: 'Training level',
             machineType: 'Machine type',
+                        alreadyExist: 'The specified name already exist !',
+
             nonSelectedListLabel: 'Available trainings as prerequisites',
             selectedListLabel: 'Prerequisites',
             havePrerequisites: 'Have one or more prerequisites',
@@ -496,6 +516,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             name: 'Name',
             certificationDate: 'Certification date',
             certificationPrice: 'Certification price',
+            alreadyExist: 'The specified name already exist !',
             note: 'Note',
             training: 'Training',
             create: 'Certification creation',
@@ -505,7 +526,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             notification: {
                 saved: 'Certification saved',
                 removed: 'Certification removed',
-                failed: 'Error, the following users do not have all the prerequisites certifications : '
+                failed: '<strong>Error !</strong> the following users do not have all the prerequisites certifications : '
             },
             confirmation: {
                 remove: 'Do you really want to remove this certification ?'
@@ -520,7 +541,24 @@ angular.module('Fablab').config(function ($translateProvider) {
             notification: {
                 saved: 'Roles saved'
             }
-
+        },
+        group: {
+            title: 'Group',
+            technicalname: 'Technical name',
+            name: 'Name',
+            roles: 'Roles',
+            alreadyExist: 'The technical name specified already exists',
+            nonSelectedListLabel: 'Assigned roles',
+            selectedListLabel: 'Available roles',
+            create: 'Group creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Group saved',
+                removed: 'Group removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this group ?'
+            }
         },
         duallist: {
             filterClear: 'Show all',

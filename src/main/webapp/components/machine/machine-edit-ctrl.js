@@ -1,6 +1,6 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalMachineEditController', function ($scope, $location, $routeParams, 
+app.controller('GlobalMachineEditController', function ($scope, $location, $routeParams,
         MachineService, NotificationService, StaticDataService) {
     $scope.selected = {machine: undefined};
     $scope.currency = App.CONFIG.CURRENCY;
@@ -13,6 +13,15 @@ app.controller('GlobalMachineEditController', function ($scope, $location, $rout
             }
         });
     };
+
+    MachineService.list(function (mt) {
+        var res = [];
+        for (var i = 0; i < mt.length; i++) {
+            res.push(mt[i].code.toUpperCase());
+        }
+        $scope.existingValues = res;
+    });
+
     $scope.save = function () {
         var machineCurrent = angular.copy($scope.machine);
         MachineService.save(machineCurrent, function (data) {

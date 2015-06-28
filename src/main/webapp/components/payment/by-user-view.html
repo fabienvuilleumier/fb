@@ -10,6 +10,7 @@
             <ui-select 
                 ng-model="selected.user"
                 on-select="onSelectUser($item)"
+                ng-change="setSelected(true)"
                 theme="bootstrap">
                 <ui-select-match placeholder="{{'payment.enterName'|translate}}" >
                     {{$select.selected.firstname}} {{$select.selected.lastname}} 

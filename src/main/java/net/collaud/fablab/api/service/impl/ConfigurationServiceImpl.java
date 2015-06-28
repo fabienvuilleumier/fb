@@ -39,6 +39,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
         }
         if (conf.getId() > 0) {
             ConfigurationEO old = configurationDao.findOne(conf.getId());
+            old.setName(conf.getName());
             old.setValue(conf.getValue());
             return configurationDao.saveAndFlush(old);
         } else {

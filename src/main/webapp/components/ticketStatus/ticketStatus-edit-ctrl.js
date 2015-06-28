@@ -8,6 +8,15 @@ app.controller('GlobalTicketStatusEditController', function ($scope, $location,
             $scope.ticketStatus = data;
         });
     };
+    
+    TicketStatusService.list(function (mstate) {
+        var res = [];
+        for (var i = 0; i < mstate.length; i++) {
+            res.push(mstate[i].label.toUpperCase());
+        }
+        $scope.existingValues = res;
+    });
+    
     $scope.save = function () {
         var ticketStatusCurrent = angular.copy($scope.ticketStatus);
         TicketStatusService.save(ticketStatusCurrent, function (data) {

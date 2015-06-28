@@ -10,6 +10,15 @@ app.controller('GlobalTrainingEditController', function ($scope, $location,
             setList();
         });
     };
+    
+    TrainingService.list(function (mstate) {
+        var res = [];
+        for (var i = 0; i < mstate.length; i++) {
+            res.push(mstate[i].name.toUpperCase());
+        }
+        $scope.existingValues = res;
+    });
+    
     $scope.save = function () {
         if ($scope.newTraining) {
             var trainingCurrent = angular.copy($scope.training);
@@ -48,7 +57,7 @@ app.controller('GlobalTrainingEditController', function ($scope, $location,
 
     $scope.settings = {
         bootstrap2: false,
-        moveOnSelect: false,
+        moveOnSelect: true,
         postfix: '_helperz',
         selectMinHeight: 200,
         filter: true,
