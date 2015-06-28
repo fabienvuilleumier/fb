@@ -84,7 +84,7 @@ public class PaymentServiceImpl implements PaymentService {
     private MachineTypeRepository machineTypeRepository;
 
     @Override
-    @Secured({Roles.PAYMENT_MANAGE})
+    @Secured({Roles.PAYMENT_VIEW})
     public PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment) {
         UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
         PaymentEO payment = new PaymentEO(datePayment, amount, user, securityService.getCurrentUser().get(), comment);
@@ -93,7 +93,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Secured({Roles.PAYMENT_MANAGE})
+    @Secured({Roles.PAYMENT_VIEW})
     public UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes, double additionalCost, String comment, boolean paidDirectly) {
         UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
         MachineEO machine = machineRepository.findOne(machineId);
@@ -116,7 +116,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Secured({Roles.ACCOUNTING_VIEW})
+    @Secured({Roles.PAYMENT_VIEW})
     public List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search) {
         if (search.isOneDateNull()) {
             throw new FablabException("Dates cannot be null");
@@ -128,6 +128,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
+    @Secured({Roles.PAYMENT_VIEW})
     public UserPaymentHistory getLastPaymentEntries(Integer userId) {
         if (!securityService.getCurrentUserId().equals(userId)) {
             securityService.checkRoles(Roles.PAYMENT_MANAGE);
@@ -163,12 +164,14 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Secured({Roles.PAYMENT_MANAGE})
+    @Secured({Roles.PAYMENT_VIEW})
     public SubscriptionEO addSubscriptionConfirmation(Integer userId) {
         return addSubscriptionConfirmationIntern(userId);
     }
 
     @Override
+    @Secured({Roles.PAYMENT_VIEW})
+
     public SubscriptionEO addSubscriptionConfirmationForCurrentUser() {
         return addSubscriptionConfirmationIntern(securityService.getCurrentUserId());
     }
@@ -202,7 +205,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Secured({Roles.PAYMENT_MANAGE})
+    @Secured({Roles.PAYMENT_VIEW})
     public HistoryEntryId removeHistoryEntry(HistoryEntryId historyId) {
         final int id = historyId.getId();
         switch (historyId.getType()) {

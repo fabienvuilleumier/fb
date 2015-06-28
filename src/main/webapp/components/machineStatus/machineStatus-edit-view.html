@@ -1,10 +1,4 @@
 <form class="form-horizontal" name="editMachineStatus" ng-submit="save(false)">
-    <div class="row warning-msg">
-        <div class="col-sm-12 alert alert-warning">
-            <span ng-show="newMachineStatus"translate="machineStatus.warningCreate"></span>
-            <span ng-show="!newMachineStatus"translate="machineStatus.warningEdit"></span>
-        </div> 
-    </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <span ng-show="newMachineStatus" translate="machineStatus.create"></span>
@@ -34,9 +28,10 @@
                     <input type="text" 
                            class="form-control" 
                            name="color"
-                           ng-model="machineStatus.color"
                            uppercase
-                           required/>
+                           required
+                           ng-model="machineStatus.color"
+                           colorpicker="hex"  />
                 </div>
             </div>
         </div>

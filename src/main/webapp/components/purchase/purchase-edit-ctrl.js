@@ -52,7 +52,6 @@ app.controller('GlobalPurchaseEditController', function ($scope, $location,
             value: false
         }];
 
-    $scope.minDate = new Date();
     $scope.today = function () {
         $scope.dt = new Date();
     };

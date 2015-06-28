@@ -18,6 +18,7 @@
         <link href="./ext-lib/template/sb-admin.css" rel="stylesheet"/>
         <link href="./ext-lib/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css" rel="stylesheet"/>
         <link href="./ext-lib/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"/>
+        <link href="./ext-lib/angular-bootstrap-colorpicker/css/colorpicker.min.css" rel="stylesheet"/>
         <link href="./css/main.css" rel="stylesheet"/>
 
 
@@ -128,7 +129,7 @@
                             label="{{connectedUser.user| prettyUser}}"
                             show="hasAnyRole('ADMIN')"></li>
                         <li class="user-name" ng-show="!hasAnyRole('ADMIN') && connectedUser.connected">
-                            <span ng-show="!hasAnyRole('ADMIN') && connectedUser.connected" translate="connectedUser.user| prettyUser"></span>
+                            <span>{{connectedUser.user|prettyUser}}</span>
                         </li>
                         <li>
                             <a href="" class="i-flag" ng-show="curentLanguage !== 'fr'" ng-click="translate('fr')">
@@ -158,33 +159,42 @@
                             <ul id="machineListDD" class="collapse">
                                 <li fab-nav-item-af link="machines" icon="sliders" 
                                     label="menu.machines" 
-                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                    show="hasAnyRole('MACHINE_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
                                 <li fab-nav-item-af link="machineTypes" icon="print" 
                                     label="menu.machineTypes" 
-                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                    show="hasAnyRole('MACHINE_MANAGE')"  
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
                                 <li fab-nav-item-af link="machineStates" icon="file-text-o" 
                                     label="menu.machineState" 
-                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                    show="hasAnyRole('MACHINE_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
                                 <li fab-nav-item-af link="machineStatus" icon="exclamation-triangle" 
                                     label="menu.machineStatus" 
-                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                    show="hasAnyRole('MACHINE_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
                                 <li fab-nav-item-af link="priceMachines/table" icon="euro" 
                                     label="menu.priceMachinesTable" 
-                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
-                                <hr show="hasAnyRole('MACHINE_MANAGE')"></hr>
+                                    show="hasAnyRole('MACHINE_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <hr ng-show="hasAnyRole('MACHINE_MANAGE')"></hr>
                                 <li fab-nav-item-af link="revisions" icon="check-square-o" 
                                     label="menu.revision" 
-                                    show="hasAnyRole('MACHINE_MANAGE')"></li>
-                                <hr show="hasAnyRole('MACHINE_MANAGE')"></hr>
+                                    show="hasAnyRole('MACHINE_MANAGE')"
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <hr ng-show="hasAnyRole('MACHINE_MANAGE')"></hr>
                                 <li fab-nav-item-af link="tickets" icon="ticket" 
                                     label="menu.tickets" 
-                                    show="hasAnyRole('TICKET_MANAGE')"></li>
+                                    show="hasAnyRole('TICKET_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
                                 <li fab-nav-item-af link="ticketStatus" icon="terminal" 
                                     label="menu.ticketStatus" 
-                                    show="hasAnyRole('TICKET_MANAGE')"></li>
+                                    show="hasAnyRole('TICKET_MANAGE')" 
+                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
                                 <li fab-nav-item-af link="tickets/ticket-edit" icon="bolt" 
                                     label="menu.addFailure" 
-                                    show="hasAnyRole('TICKET_VIEW')"></li>
+                                    show="hasAnyRole('TICKET_VIEW')"
+                                    ng-show="hasAnyRole('TICKET_VIEW')"></li>
                             </ul>
                         </li>
                         <!--TRAINING DROPDOWN-->
@@ -197,18 +207,22 @@
                             <ul id="trainingListDD" class="collapse">
                                 <li fab-nav-item-af link="trainings" icon="book" 
                                     label="menu.trainings" 
-                                    show="hasAnyRole('TRAINING_MANAGE')"></li>
+                                    show="hasAnyRole('TRAINING_VIEW')" 
+                                    ng-show="hasAnyRole('TRAINING_VIEW')"></li>
                                 <li fab-nav-item-af link="trainingLevels" icon="list" 
                                     label="menu.trainingLevels" 
-                                    show="hasAnyRole('TRAINING_MANAGE')"></li>
+                                    show="hasAnyRole('TRAINING_MANAGE')" 
+                                    ng-show="hasAnyRole('TRAINING_MANAGE')"></li>
                                 <li fab-nav-item-af link="certifications" icon="mortar-board" 
                                     label="menu.certification" 
-                                    show="hasAnyRole('TRAINING_MANAGE')"></li>
+                                    show="hasAnyRole('TRAINING_VIEW')" 
+                                    ng-show="hasAnyRole('TRAINING_VIEW')"></li>
                             </ul>
                         </li>
                         <!--SUPPLIES DROPDOWN-->
                         <li>
-                            <a data-toggle="collapse" data-target="#supplyListDD" ng-show="hasAnyRole('SUPPLY_VIEW')"  href="javascript:;">
+                            <a data-toggle="collapse" data-target="#supplyListDD" 
+                               ng-show="hasAnyRole('SUPPLY_VIEW')"  href="javascript:;">
                                 <i class="fa fa-fw fa-barcode"></i>
                                 <span translate="menu.supplies"></span>
                                 <b class="caret"></b>
@@ -216,31 +230,37 @@
                             <ul id="supplyListDD" class="collapse">
                                 <li fab-nav-item-af link="supplies" icon="wrench" 
                                     label="menu.supplies" 
-                                    show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                    show="hasAnyRole('SUPPLY_MANAGE')" 
+                                    ng-show="hasAnyRole('SUPPLY_MANAGE')"></li>
                                 <li fab-nav-item-af link="supplyTypes" icon="newspaper-o" 
                                     label="menu.supplyTypes" 
-                                    show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                    show="hasAnyRole('SUPPLY_MANAGE')" 
+                                    ng-show="hasAnyRole('SUPPLY_MANAGE')"></li>
                                 <li ng-show="hasAnyRole('SUPPLY_MANAGE')">
                                     <a href="#/supplyUnities">
                                         <span class="iconify">m<sup>2</sup></span>
                                         <span translate = "menu.supplyUnities"></span>
                                     </a>
                                 </li>
-                                <hr show="hasAnyRole('SUPPLY_MANAGE')"></hr>
+                                <hr ng-show="hasAnyRole('SUPPLY_MANAGE')"></hr>
                                 <li fab-nav-item-af link="purchases" icon="barcode" 
                                     label="menu.purchases" 
-                                    show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                    show="hasAnyRole('SUPPLY_MANAGE')" 
+                                    ng-show="hasAnyRole('SUPPLY_MANAGE')"></li>
                                 <li fab-nav-item-af link="purchases/purchase-edit" icon = "plus-circle" 
                                     label="menu.addPurchase" 
-                                    show="hasAnyRole('SUPPLY_VIEW')"></li>
+                                    show="hasAnyRole('SUPPLY_VIEW')" 
+                                    ng-show="hasAnyRole('SUPPLY_VIEW')"></li>
                                 <li fab-nav-item-af link="motionStocks" icon="database"
                                     label="menu.motionStocks"
-                                    show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                                    show="hasAnyRole('SUPPLY_MANAGE')" 
+                                    ng-show="hasAnyRole('SUPPLY_MANAGE')"></li>
                             </ul>
                         </li>
                         <!--ACCOUNTING DROPDOWN-->
                         <li>
-                            <a data-toggle="collapse" data-target="#accountingListDD" ng-show="hasAnyRole('ACCOUNTING_MANAGE')"  href="javascript:;">
+                            <a data-toggle="collapse" data-target="#accountingListDD" 
+                               ng-show="hasAnyRole('ACCOUNTING_MANAGE')"  href="javascript:;">
                                 <i class="fa fa-fw fa-euro"></i>
                                 <span translate="menu.accounting"></span>
                                 <b class="caret"></b>
@@ -248,7 +268,8 @@
                             <ul id="accountingListDD" class="collapse">
                                 <li fab-nav-item-af link="accounting"
                                     label="menu.inOut" icon="exchange"
-                                    show="hasAnyRole('ACCOUNTING_VIEW')"></li>
+                                    show="hasAnyRole('ACCOUNTING_VIEW')"
+                                    ng-show="hasAnyRole('ACCOUNTING_VIEW')"></li>
                             </ul>
                         </li>
                         <li fab-nav-item link="reservations" icon="calendar"
@@ -313,6 +334,8 @@
     <script src="./ext-lib/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="./ext-lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="./ext-lib/ng-notify/dist/ng-notify.min.js"></script>
+
+    <script src="./ext-lib/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.min.js"></script>
 
 
     <script src="./ext-lib/angular-datatables/dist/angular-datatables.min.js"></script>

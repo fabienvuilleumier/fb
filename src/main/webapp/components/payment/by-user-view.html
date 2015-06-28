@@ -1,5 +1,5 @@
 
-<div class="panel panel-default" ng-show="hasAnyRole('PAYMENT_MANAGE')" >
+<div class="panel panel-default" >
     <div class="panel-heading"  translate="payment.userTitle">
     </div>
     <div class="panel-body form-horizontal">
@@ -11,9 +11,10 @@
                 ng-model="selected.user"
                 on-select="onSelectUser($item)"
                 ng-change="setSelected(true)"
+                ng-disabled="!showRole"
                 theme="bootstrap">
                 <ui-select-match placeholder="{{'payment.enterName'|translate}}" >
-                    {{$select.selected.firstname}} {{$select.selected.lastname}} 
+                    {{$select.selected|prettyUser}} 
                 </ui-select-match>
                 <ui-select-choices repeat="u in users | propsFilter:{firstname: $select.search, lastname: $select.search}">
                     <div ng-bind-html="u.firstname | highlight: $select.search"></div>

@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.MACHINE_MANAGE})
+@Secured({Roles.MACHINE_VIEW})
 public class MachineTypeServiceImpl implements MachineTypeService {
 
     @Autowired
@@ -70,11 +70,13 @@ public class MachineTypeServiceImpl implements MachineTypeService {
     }
 
     @Override
+    @Secured({Roles.MACHINE_MANAGE, Roles.MACHINE_VIEW})
     public List<PriceMachineEO> getPrices(Integer id) {
        return machineTypeDao.getPrices(id);
     }
 
     @Override
+    @Secured({Roles.MACHINE_MANAGE, Roles.MACHINE_VIEW})
     public MachineTypeEO getId(String technicalname) {
         return machineTypeDao.getId(technicalname);
     }

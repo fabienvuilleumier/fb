@@ -4,6 +4,7 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
         TicketService, NotificationService, StaticDataService, TicketStatusService,
         MachineStatusService, MachineService) {
     $scope.fromMachine = $routeParams.machineId ? true : false;
+    $scope.showRole = $rootScope.hasAnyRole('TICKET_MANAGE');
     $scope.selected = {ticket: undefined};
     $scope.loadTicket = function (id) {
         TicketService.get(id, function (data) {
@@ -11,7 +12,7 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
         });
 
     };
-    
+
     TicketService.list(function (mstate) {
         var res = [];
         for (var i = 0; i < mstate.length; i++) {
@@ -19,7 +20,7 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
         }
         $scope.existingValues = res;
     });
-    
+
     $scope.save = function () {
         if (!$scope.ticket.closeDate) {
             MachineStatusService.getByLabel("Indisponible", function (data) {
@@ -50,7 +51,11 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
         TicketService.save(ticketCurrent, function (data) {
             $scope.ticket = data;
             NotificationService.notify("success", "ticket.notification.saved");
-            $location.path("tickets");
+            if ($rootScope.hasAnyRole('TICKET_MANAGE')) {
+                $location.path("tickets");
+            } else {
+                $location.path("");
+            }
         });
     };
 

@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.TRAINING_MANAGE})
+@Secured({Roles.TRAINING_MANAGE, Roles.TRAINING_VIEW})
 public class CertificationServiceImpl implements CertificationService {
 
     @Autowired
@@ -33,13 +33,13 @@ public class CertificationServiceImpl implements CertificationService {
     private TrainingService trainingService;
 
     @Override
-    @Secured({Roles.TRAINING_MANAGE})
+    @Secured({Roles.TRAINING_MANAGE, Roles.TRAINING_VIEW})
     public List<CertificationEO> findAll() {
         return new ArrayList(new HashSet(certificationDAO.findAll()));
     }
 
     @Override
-    @Secured({Roles.TRAINING_MANAGE})
+    @Secured({Roles.TRAINING_MANAGE, Roles.TRAINING_VIEW})
     public Optional<CertificationEO> getById(Integer id) {
         return certificationDAO.findOneDetails(id);
     }
@@ -80,11 +80,13 @@ public class CertificationServiceImpl implements CertificationService {
     }
 
     @Override
+    @Secured({Roles.TRAINING_MANAGE, Roles.TRAINING_VIEW})
     public CertificationEO getId(String name) {
         return certificationDAO.getId(name);
     }
 
     @Override
+    @Secured({Roles.TRAINING_MANAGE})
     public boolean canCertify(Integer certificationId, Integer userId) {
         List<CertificationEO> userCertifications = certificationDAO.getCertificationsByUserId(userId);
         TrainingEO trainingOfCurrentCertification = getById(certificationId).get().getTraining();
@@ -123,7 +125,7 @@ public class CertificationServiceImpl implements CertificationService {
     }
 
     @Override
-    @Secured({Roles.TRAINING_MANAGE})
+    @Secured({Roles.TRAINING_MANAGE, Roles.TRAINING_VIEW})
     public List<Integer> failedUser(Integer certificationId, List<Integer> userIds) {
         List<Integer> res = new ArrayList<>();
         CertificationEO c = getById(certificationId).get();

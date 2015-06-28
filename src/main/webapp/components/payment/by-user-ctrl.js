@@ -4,6 +4,7 @@
     angular.module('Fablab').controller('PaymentByUserController', function ($scope,
             $log, $filter, $rootScope, $location, $routeParams, UserService) {
         $scope.selected = {user: undefined};
+        $scope.showRole = $rootScope.hasAnyRole('PAYMENT_MANAGE');
 
         $scope.minDate = moment().subtract(App.CONFIG.ACCOUNTING_EDIT_HISTORY_LIMIT, 'days').format('YYYY-MM-DD');
 
@@ -17,7 +18,7 @@
             $log.info(user);
         };
 
-        if ($rootScope.hasAnyRole('PAYMENT_MANAGE')) {
+        if (!$rootScope.hasAnyRole('PAYMENT_MANAGE')) {
             $scope.selected.user = App.connectedUser.user;
         }
 

@@ -1,8 +1,9 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('CertificationListController', function ($scope, $filter, $location,
+app.controller('CertificationListController', function ($scope, $filter, $location, $rootScope,
         ngTableParams, CertificationService, NotificationService) {
     $scope.currency = App.CONFIG.CURRENCY;
+    $scope.showRole = $rootScope.hasAnyRole('TRAINING_MANAGE');
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page

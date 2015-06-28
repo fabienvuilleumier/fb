@@ -41,13 +41,13 @@ public class MachineServiceImpl implements MachineService {
     }
 
     @Override
-    @Secured({Roles.MACHINE_MANAGE})
+    @Secured({Roles.MACHINE_MANAGE, Roles.MACHINE_VIEW})
     public MachineEO findSimpleByCode(String code) {
         return machineDao.findSimpleByCode(code);
     }
 
     @Override
-    @Secured({Roles.MACHINE_MANAGE})
+    @Secured(Roles.MACHINE_MANAGE)
     public MachineEO save(MachineEO machine) {
         if (machine.getId() == null) {
             machine.setId(0);
@@ -68,13 +68,13 @@ public class MachineServiceImpl implements MachineService {
     }
 
     @Override
-    @Secured({Roles.MACHINE_MANAGE})
+    @Secured(Roles.MACHINE_MANAGE)
     public void remove(Integer id) {
         machineDao.delete(id);
     }
 
     @Override
-    @Secured({Roles.MACHINE_MANAGE})
+    @Secured(Roles.MACHINE_MANAGE)
     public void softRemove(Integer id) {
         MachineEO current = machineDao.findOne(id);
         current.setActive(false);
@@ -82,12 +82,13 @@ public class MachineServiceImpl implements MachineService {
     }
 
     @Override
-    @Secured({Roles.MACHINE_MANAGE})
+    @Secured({Roles.MACHINE_MANAGE, Roles.MACHINE_VIEW})
     public List<MachineEO> getByStatusLabel(String label) {
         return machineDao.getByStatusLabel(label);
     }
 
     @Override
+    @Secured({Roles.MACHINE_MANAGE, Roles.MACHINE_VIEW})
     public MachineStatusEO saveStatus(Integer machineId, Integer machineStatusId) {
         MachineEO machine = machineDao.findOne(machineId);
         MachineStatusEO machineStatus = machineStatusService.getById(machineStatusId).get();

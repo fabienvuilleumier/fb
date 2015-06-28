@@ -20,26 +20,25 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.TICKET_MANAGE, Roles.TICKET_VIEW})
 public class TicketStatusServiceImpl implements TicketStatusService {
 
     @Autowired
     private TicketStatusRepository ticketStatusDAO;
 
     @Override
-    @Secured({Roles.TICKET_MANAGE, Roles.TICKET_VIEW})
+    @Secured(Roles.TICKET_VIEW)
     public List<TicketStatusEO> findAll() {
         return new ArrayList(new HashSet(ticketStatusDAO.findAll()));
     }
 
     @Override
-    @Secured({Roles.TICKET_VIEW, Roles.TICKET_VIEW})
+    @Secured(Roles.TICKET_VIEW)
     public Optional<TicketStatusEO> getById(Integer id) {
         return Optional.ofNullable(ticketStatusDAO.findOne(id));
     }
 
     @Override
-    @Secured({Roles.TICKET_MANAGE})
+    @Secured(Roles.TICKET_MANAGE)
     public TicketStatusEO save(TicketStatusEO ticketStatus) {
         if (ticketStatus.getId() == null) {
             ticketStatus.setId(0);
@@ -54,22 +53,22 @@ public class TicketStatusServiceImpl implements TicketStatusService {
     }
 
     @Override
-    @Secured({Roles.TICKET_MANAGE})
+    @Secured(Roles.TICKET_MANAGE)
     public void remove(Integer id) {
         ticketStatusDAO.delete(id);
     }
-    
-        @Override
-    @Secured({Roles.TICKET_MANAGE})
+
+    @Override
+    @Secured(Roles.TICKET_MANAGE)
     public void softRemove(Integer id) {
         TicketStatusEO current = ticketStatusDAO.findOne(id);
         current.setActive(false);
         ticketStatusDAO.saveAndFlush(current);
     }
-    
+
     @Override
-    @Secured({Roles.TICKET_MANAGE})
-     public TicketStatusEO findByLabel(String label){
-         return ticketStatusDAO.findByLabel(label);
-     }
+    @Secured(Roles.TICKET_VIEW) 
+    public TicketStatusEO findByLabel(String label) {
+        return ticketStatusDAO.findByLabel(label);
+    }
 }

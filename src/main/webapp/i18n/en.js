@@ -72,6 +72,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         button: {
             cancel: 'Cancel',
             save: 'Save',
+            return: 'Return',
             create: 'Create',
             export: 'Export',
             search: 'Search',
@@ -268,8 +269,6 @@ angular.module('Fablab').config(function ($translateProvider) {
             title: 'Machinery status',
             label: 'Label',
             color: 'Color',
-            warningEdit: '<strong>Warning !</strong> If you change some value, the list red-yellow-green will not work good unless you midify the source code.',
-            warningCreate: '<strong>Warning !</strong> If you add some value, the list red-yellow-green will not work good unless you midify the source code.',
             alreadyExist: 'The specified label already exist !',
             create: 'Machinery status creation',
             edit: 'Edit :',

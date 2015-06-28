@@ -71,19 +71,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Secured({Roles.USER_MANAGE})
+    @Secured(Roles.USER_VIEW)
     public List<UserEO> findAll() {
         return userDao.findAll();
     }
 
     @Override
-    @Secured({Roles.USER_MANAGE})
+    @Secured(Roles.USER_VIEW)
     public Optional<UserEO> getById(Integer id) {
         return userDao.findOneDetails(id);
     }
 
     @Override
-    @Secured({Roles.USER_MANAGE})
+    @Secured(Roles.USER_MANAGE)
     public UserEO save(UserEO user) {
         if (user.getId() == null) {
             user.setId(0);
@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Secured({Roles.USER_MANAGE})
+    @Secured(Roles.USER_MANAGE)
     public void remove(Integer id) {
         UserEO user = userDao.findOne(id);
         user.setEnabled(false);
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Secured({Roles.USER_MANAGE})
+    @Secured(Roles.USER_MANAGE)
     public void softRemove(Integer id) {
         UserEO current = userDao.findOne(id);
         current.setActive(false);
@@ -174,7 +174,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Secured({Roles.USER_MANAGE})
+    @Secured(Roles.USER_VIEW)
     public void updateMailingList() {
         //FIXME fit the mailing list API
         StringBuilder sb = new StringBuilder();
@@ -184,7 +184,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Secured({Roles.USER_VIEW})
+    @Secured(Roles.USER_VIEW)
     public boolean canUse(Integer machineTypeId, Integer userId) {
         List<CertificationEO> userCertifications = certificationDAO.getCertificationsByUserId(userId);
         boolean res = false;
@@ -199,8 +199,8 @@ public class UserServiceImpl implements UserService {
     public boolean hasRole(Integer userId, String role) {
         boolean res = false;
         UserEO u = userDao.findOneByIdAndFetchRoles(userId).get();
-        for(GroupEO g : u.getGroups()){
-            for(RoleEO r : g.getRoles()){
+        for (GroupEO g : u.getGroups()) {
+            for (RoleEO r : g.getRoles()) {
                 //maintient de l'état vrai
                 res = res || (role.equals(r.getTechnicalname()));
             }
