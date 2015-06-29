@@ -15,7 +15,10 @@
                            ng-model="machineStatus.label" 
                            duplicate="existingValues"
                            uppercase
-                           required/>
+                           required
+                           ng-disabled="!newMachineStatus &&
+                                       (machineStatus.label.toUpperCase() === 'INDISPONIBLE' ||
+                                               machineStatus.label.toUpperCase() === 'DISPONIBLE')"/>
                 </div>
                 <div class="col-sm-2 error-text">
                     <span ng-show="editMachineStatus.label.$error.duplicate" translate="machineStatus.alreadyExist"></span>
