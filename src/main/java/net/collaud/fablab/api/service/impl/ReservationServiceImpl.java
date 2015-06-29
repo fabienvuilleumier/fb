@@ -58,9 +58,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     @Secured({Roles.RESERVATION_VIEW})
-    public List<ReservationEO> findReservations(Date dateFrom, Date dateTo) {
-        log.debug("find reservation from " + dateFrom + " to " + dateTo);
-        return reservationDao.findReservations(dateFrom, dateTo);
+    public List<ReservationEO> findReservations(Date from, Date to) {
+        log.debug("find reservation from " + from + " to " + to);
+        return reservationDao.findReservations(from, to);
     }
 
     @Override

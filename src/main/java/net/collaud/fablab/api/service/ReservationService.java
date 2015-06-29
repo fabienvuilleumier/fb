@@ -11,6 +11,6 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
  */
 public interface ReservationService extends ReadWriteService<ReservationEO> {
 
-	List<ReservationEO> findReservations(Date dateStart, Date dateEnd);
+	List<ReservationEO> findReservations(Date from, Date to);
 	
 }

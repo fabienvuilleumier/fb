@@ -227,6 +227,9 @@ a:active, a:hover {
     color:#A0A0A0;
 }
 
+.calendar{
+    margin-bottom: 20px;
+}
 .bg-danger, bg-info, bg-warning, bg-success{
     padding:15px;
     -webkit-border-radius: 10px;
