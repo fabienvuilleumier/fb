@@ -3,6 +3,8 @@ var app = angular.module('Fablab');
 app.controller('MachineListController', function ($scope, $filter,$rootScope, $location,
         ngTableParams, MachineService, NotificationService) {
             console.log($rootScope.hasAnyRole('MACHINE_MANAGE'));
+            $scope.btnTitleRevision =  $filter('translate')('machine.btnTitleRevision');
+            $scope.btnTitleTicket =  $filter('translate')('machine.btnTitleTicket');
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page

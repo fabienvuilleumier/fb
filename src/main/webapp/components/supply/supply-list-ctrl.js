@@ -1,8 +1,9 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('SupplyListController', function ($scope, $filter, $location, $modal,
+app.controller('SupplyListController', function ($scope, $filter, $location, $modal, MotionStockService,
         ngTableParams, SupplyService, NotificationService) {
     $scope.newQuantity = 0;
+    $scope.addQuantity = $filter('translate')('supply.addQuantity');
     $scope.currency = App.CONFIG.CURRENCY;
     $scope.tableParams = new ngTableParams(
             angular.extend({
@@ -26,7 +27,7 @@ app.controller('SupplyListController', function ($scope, $filter, $location, $mo
         SupplyService.list(function (data) {
             for (var i = 0; i < data.length; i++) {
                 data[i].supplyTypeLabel = ""; //initialization of new property 
-                data[i].supplyTypeLabel = data[i].supplyType.label;  //set the data from nested obj into new property
+                data[i].supplyTypeLabel = data[i].supplyType.label; //set the data from nested obj into new property
             }
             $scope.supplies = data;
             $scope.tableParams.reload();
@@ -38,11 +39,22 @@ app.controller('SupplyListController', function ($scope, $filter, $location, $mo
             updateSupplyList();
         });
     };
-
-    var addQuantity = function (supplyId, quantity) {
+    var addQuantityAfter = function (supplyId, quantity) {
         SupplyService.addQuantity(supplyId, quantity, function () {
             NotificationService.notify("success", "supply.notification.addQuantity");
-            updateSupplyList();
+            SupplyService.getById(supplyId, function (supplyCurrent) {
+                var motionStock = {
+                    motionDate: new Date(),
+                    quantity: quantity,
+                    io: "Entrée [ajout]",
+                    active: true,
+                    supply: supplyCurrent,
+                    user: App.connectedUser.user
+                };
+                MotionStockService.save(motionStock, function (data) {
+                    updateSupplyList();
+                });
+            });
         });
     };
     $scope.softRemove = function (supply) {
@@ -52,7 +64,6 @@ app.controller('SupplyListController', function ($scope, $filter, $location, $mo
         });
     };
     updateSupplyList();
-
     $scope.open = function (data) {
 
         var modalInstance = $modal.open({
@@ -65,21 +76,17 @@ app.controller('SupplyListController', function ($scope, $filter, $location, $mo
                 }
             }
         });
-
         modalInstance.result.then(function (res) {
-            addQuantity(res.sup.id, res.newQty);
+            addQuantityAfter(res.sup.id, res.newQty);
         });
     };
 });
-
-
 app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, supply) {
     $scope.supply = supply;
     $scope.newQuantity = 0;
     $scope.ok = function () {
         $modalInstance.close({sup: $scope.supply, newQty: $scope.newQuantity});
     };
-
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };

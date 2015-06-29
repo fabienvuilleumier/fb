@@ -32,7 +32,7 @@
     app.directive('btnShow', [function () {
             return {
                 restrict: "EA",
-                template: '<a href="{{link}}" class="btn btn-default btn-glyph">'
+                template: '<a href="{{link}}" class="btn btn-default btn-sm">'
                         + '  <span class="glyphicon glyphicon-search"></span>'
                         + '</a>',
                 scope: {

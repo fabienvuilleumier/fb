@@ -14,9 +14,9 @@
                         <input type="text" class="form-control" 
                                ng-model="training.name" 
                                name="name"
-                               duplicate="existingValues" 
-                               uppercase 
-                               required/>
+                               duplicate="existingValues"  
+                               required
+                               ng-disabled="!showRole"/>
                     </div>
                     <div class="col-sm-2 error-text">
                         <span ng-show="editTraining.name.$error.duplicate" 
@@ -94,14 +94,12 @@
                         </select>
                         <br>
                     </div>
-                    <div>
-                    </div>
-                    <div class="panel-footer right">
-                        <btn-cancel ng-show="showRole" link="#/trainings"></btn-cancel>
-                        <btn-submit ng-show="showRole" form="editTraining"></btn-submit>
-                        <btn-return ng-show="!showRole" link="#training"></btn-return>
-                    </div>
                 </div>
+            </div>
+            <div class="panel-footer right">
+                <btn-cancel ng-show="showRole" link="#/trainings"></btn-cancel>
+                <btn-submit ng-show="showRole" form="editTraining"></btn-submit>
+                <btn-return ng-show="!showRole" link="#training"></btn-return>
             </div>
         </div>
     </form>

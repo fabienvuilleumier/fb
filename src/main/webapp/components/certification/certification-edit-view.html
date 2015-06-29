@@ -60,7 +60,7 @@
                         <div class="input-group">
                             <input type="number" step="0.05" class="form-control" 
                                    ng-model="certification.certificationPrice" 
-                                   ng-disabled="!showRole"/>
+                                   disabled/>
                             <div class="input-group-addon">{{currency}}</div>
                         </div>
                     </div>
@@ -72,40 +72,38 @@
                                   ng-disabled="!showRole"></textarea>
                     </div>
                 </div>
-                <div ng-show="showRole">
-                    <div ng-show="certification.id" class="shuttle">
-                        <select  multiple="multiple" 
-                                 name="selectedRoles" 
-                                 bs-duallistbox 
-                                 style="min-height:250px;" 
-                                 ng-model="certifiedUsers"                          
-                                 ng-options="(u.lastname.toUpperCase() + ' ' + u.firstname) for u in availableUsers track by u.id"
-                                 bootstrap2="{{ settings.bootstrap2}}"
-                                 move-on-select="{{ settings.moveOnSelect}}"
-                                 postfix="{{ settings.postfix}}"
-                                 select-min-height="{{ settings.selectMinHeight}}"
-                                 filter="{{ settings.filter}}"
-                                 filter-values="{{ settings.filterValues}}"
+                <div ng-show="certification.id" class="shuttle">
+                    <select  multiple="multiple" 
+                             name="selectedRoles" 
+                             bs-duallistbox 
+                             style="min-height:250px;" 
+                             ng-model="certifiedUsers"                          
+                             ng-options="(u.lastname.toUpperCase() + ' ' + u.firstname) for u in availableUsers track by u.id"
+                             bootstrap2="{{ settings.bootstrap2}}"
+                             move-on-select="{{ settings.moveOnSelect}}"
+                             postfix="{{ settings.postfix}}"
+                             select-min-height="{{ settings.selectMinHeight}}"
+                             filter="{{ settings.filter}}"
+                             filter-values="{{ settings.filterValues}}"
 
-                                 non-selected-list-label="{{ 'certification.nonSelectedListLabel'|translate}}"
-                                 selected-list-label="{{ 'certification.selectedListLabel'|translate}}"
+                             non-selected-list-label="{{ 'certification.nonSelectedListLabel'|translate}}"
+                             selected-list-label="{{ 'certification.selectedListLabel'|translate}}"
 
-                                 preserve-selection="{{ 'duallist.preserveSelection'|translate}}"
-                                 move-selected-label="{{ 'duallist.moveSelectedLabel'|translate}}"
-                                 move-all-label="{{ 'duallist.moveAllLabel'|translate}}"
-                                 remove-selected-label="{{ 'duallist.removeSelectedLabel'|translate}}"
-                                 remove-all-label="{{ 'duallist.removeAllLabel'|translate}}"
-                                 filter-non-selected="settings.filterNonSelected"
-                                 filter-selected="settings.filterSelected"
-                                 filter-placeholder="{{ 'duallist.filterPlaceholder'|translate}}"
-                                 filter-clear="{{ 'duallist.filterClear'|translate}}"
-                                 info-all="{{ 'duallist.infoAll'|translate}}"
-                                 info-filtered="{{ 'duallist.infoFiltered'|translate}}"
-                                 info-empty="{{ 'duallist.infoEmpty'|translate}}"
-                                 >
-                        </select>
-                        <br>
-                    </div>
+                             preserve-selection="{{ 'duallist.preserveSelection'|translate}}"
+                             move-selected-label="{{ 'duallist.moveSelectedLabel'|translate}}"
+                             move-all-label="{{ 'duallist.moveAllLabel'|translate}}"
+                             remove-selected-label="{{ 'duallist.removeSelectedLabel'|translate}}"
+                             remove-all-label="{{ 'duallist.removeAllLabel'|translate}}"
+                             filter-non-selected="settings.filterNonSelected"
+                             filter-selected="settings.filterSelected"
+                             filter-placeholder="{{ 'duallist.filterPlaceholder'|translate}}"
+                             filter-clear="{{ 'duallist.filterClear'|translate}}"
+                             info-all="{{ 'duallist.infoAll'|translate}}"
+                             info-filtered="{{ 'duallist.infoFiltered'|translate}}"
+                             info-empty="{{ 'duallist.infoEmpty'|translate}}"
+                             >
+                    </select>
+                    <br>
                 </div>
             </div>
             <div class="panel-footer right">
@@ -118,3 +116,6 @@
     </form>    
 </div>
 
+<script ng-if="!showRole">
+            $(".bootstrap-duallistbox-container").find("*").prop("disabled", true);
+</script>

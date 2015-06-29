@@ -36,6 +36,9 @@
             },
             addQuantity : function (id, quantity, successFn) {
                 $http.get(App.API.SUPPLY_API + "/addQuantity?id=" + id + "&quantity=" + quantity).success(successFn);
+            },
+            getById: function (id, successFn) {
+                $http.get(App.API.SUPPLY_API + "/getById?id=" + id).success(successFn);
             }
         };
     });

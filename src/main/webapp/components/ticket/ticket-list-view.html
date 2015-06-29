@@ -41,7 +41,7 @@
                 data-title="'ticket.status' | translate" 
                 sortable="'statusLabel'"
                 filter="{'statusLabel':'text'}">
-                {{ticket.status.label}}
+                {{ticket.status.label|lowercase}}
             </td>
             <td  class="listBtn2">
                 <div class="btn-group">

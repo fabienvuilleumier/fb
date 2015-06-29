@@ -329,7 +329,35 @@ table.dataTable tbody tr .bg-success{
     background-color: #dff0d8;
 }
 
-.i-flag img{
-    padding-bottom:  3px;
+.lang-menu{
+    color: #777;
+    height:35px;
+    margin-top: 15px;
+}
 
+.lang-menu img{
+    padding-bottom: 3px;
+}
+
+.lang-menu > span > a{
+    text-decoration: underline;
+    color: #777;
+}
+
+.lang-menu > span > a:focus, .lang-menu > a:hover {
+    color: #333;
+}
+.lang-menu > span > p:focus{
+    color: #333;
+}
+
+.navbar-nav>li>span {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
+    padding-left : 15px;
+}
+
+.lang-divider{
+    margin-bottom:2px;
 }

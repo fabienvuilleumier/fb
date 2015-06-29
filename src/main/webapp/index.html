@@ -83,7 +83,8 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse" id="navbar">
                     <ul class="nav navbar-nav">
                         <li fab-nav-item link="" icon="home" 
-                            label="menu.home"></li>
+                            label="menu.home"
+                            show="connectedUser.connected"></li>
                         <!--ADMINISTRATION DROPDOWN-->
                         <li>
                             <a data-toggle="dropdown" class="dropdown-toggle" ng-show="hasAnyRole('ADMIN')" href="javascript:;">
@@ -131,15 +132,29 @@
                         <li class="user-name" ng-show="!hasAnyRole('ADMIN') && connectedUser.connected">
                             <span>{{connectedUser.user|prettyUser}}</span>
                         </li>
-                        <li>
-                            <a href="" class="i-flag" ng-show="curentLanguage !== 'fr'" ng-click="translate('fr')">
-                                <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
-                                <span translate="general.toFr"></span>
-                            </a>
-                            <a href="" class="i-flag" ng-show="curentLanguage !== 'en'" ng-click="translate('en')">
-                                <img src="./images/en.png" alt="toEn" height="15" width="22"/>
-                                <span translate="general.toEn"></span>
-                            </a>
+                        <li class="lang-menu">
+                            <span ng-show="curentLanguage === 'fr'">
+                                <span>
+                                    <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
+                                    <span translate="general.toFr"></span>
+                                </span>
+                                <span>|</span>
+                                <a href="" ng-click="translate('en')">
+                                    <span translate="general.toEn"></span>
+                                    <img src="./images/en.png" alt="toEn" height="15" width="22"/>
+                                </a>
+                            </span>
+                            <span ng-show="curentLanguage === 'en'">
+                                <a href="" ng-click="translate('fr')">
+                                    <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
+                                    <span translate="general.toFr"></span>
+                                </a>
+                                <span>|</span>
+                                <span href="">
+                                    <span translate="general.toEn"></span>
+                                    <img src="./images/en.png" alt="toEn" height="15" width="22"/>
+                                </span>
+                            </span>
                         </li>
                         <li fab-nav-item link="login" icon="log-in" 
                             label="menu.login"
