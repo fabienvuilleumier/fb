@@ -79,7 +79,7 @@ public class BackendAngularListEditGenerator {
     private String genereListVIEW(boolean write) {
 
         StringBuilder str = new StringBuilder();
-        str.append("<h1 translate=\"").append(CLASS_ATTRIBUTE).append(".title\"></h1>").append("\n");
+        str.append("<h1 translate=\"menu.").append(endWithS(CLASS_ATTRIBUTE)).append("\"></h1>").append("\n");
         str.append("<div class=\"header-control\">").append("\n");
         str.append("    ").append("<div class=\"btn-group\" >").append("\n");
         str.append("        ").append("<btn-create link=\"#/").append(endWithS(CLASS_ATTRIBUTE)).append("/").append(CLASS_ATTRIBUTE).append("-edit\"></btn-create>").append("\n");

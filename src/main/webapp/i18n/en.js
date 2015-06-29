@@ -61,7 +61,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             priceMachinesTable: 'Use cost table',
             trainingLevels: 'Training levels',
             trainings: 'Trainings',
-            certification: 'Certification',
+            certification: 'Certifications',
             roles: 'Roles',
             groups: 'Groups'
         },
