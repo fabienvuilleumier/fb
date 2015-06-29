@@ -3,7 +3,6 @@ package net.collaud.fablab.api.dao;
 import java.util.List;
 import net.collaud.fablab.api.data.MotionStockEO;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

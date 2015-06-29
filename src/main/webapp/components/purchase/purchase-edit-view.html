@@ -39,8 +39,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" translate="purchase.quantity"></label>
                     <div ng-if="purchase.supply" class="col-sm-7">
-                        <input ng-if="purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" min="0" max="{{purchase.supply.quantityStock}}" step="0.01" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
-                        <input ng-if="!purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" min="0" max="{{purchase.supply.quantityStock}}"  step="1" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
+                        <input ng-if="purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" max="{{purchase.supply.quantityStock}}" step="0.01" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
+                        <input ng-if="!purchase.supply.supplyUnity.floating" ng-readonly="!newPurchase" type="number" max="{{purchase.supply.quantityStock}}"  step="1" class="form-control" ng-model="purchase.quantity" required ng-change="updatePrice()"/>
                     </div>
                     <div class="col-sm-1 unity" ng-if="purchase.supply">
                         <span> {{purchase.supply.supplyUnity.label}}</span>
@@ -56,7 +56,7 @@
                         <select  class="form-control" 
                                  ng-model="purchase.discountPercent"
                                  ng-change="updatePrice()"
-                                 ng-init="purchase.discountPercent = true"
+                                 ng-init="purchase.discountPercent = firstPercent"
                                  ng-options="op.value as op.name for op in optionsPercent"
                                  ng-disabled="!newPurchase">
                         </select> 
@@ -65,7 +65,10 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" translate="purchase.purchasePrice"></label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" ng-model="purchase.purchasePrice" disabled/>
+                        <div class="input-group">
+                            <input type="text" class="form-control" ng-model="purchase.purchasePrice" disabled/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -82,7 +85,7 @@
                     <span translate="purchase.back"></span>
                 </a>
                 <button ng-if="newPurchase" type="submit" class="btn btn-success btn-glyph" 
-                        ng-disabled="editPurchase.$invalid || purchase.quantity===0">
+                        ng-disabled="editPurchase.$invalid || purchase.quantity === 0">
                     <span translate="button.save"></span>
                     <span class="glyphicon glyphicon-floppy-disk"></span>
                 </button>

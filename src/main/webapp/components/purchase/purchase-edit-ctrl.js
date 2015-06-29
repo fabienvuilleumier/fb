@@ -1,8 +1,9 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('GlobalPurchaseEditController', function ($scope, $location,
-        PurchaseService, NotificationService, StaticDataService) {
+        PurchaseService, NotificationService, StaticDataService, SupplyService) {
     $scope.selected = {purchase: undefined};
+    $scope.currency = App.CONFIG.CURRENCY;
     $scope.loadPurchase = function (id) {
         PurchaseService.get(id, function (data) {
             $scope.purchase = data;
@@ -17,10 +18,14 @@ app.controller('GlobalPurchaseEditController', function ($scope, $location,
             $location.path("purchases");
         });
     };
-    
-    var updateStock = function(){
+
+    var updateStock = function () {
         var stockInit = $scope.purchase.supply.quantityStock;
         $scope.purchase.supply.quantityStock = parseFloat(stockInit) - parseFloat($scope.purchase.quantity);
+        var supplyCurrent = angular.copy($scope.purchase.supply);
+        SupplyService.save(supplyCurrent, function (data) {
+            $scope.purchase.supply = data;
+        });
     };
 
     $scope.maxMoney = function () {
@@ -29,7 +34,7 @@ app.controller('GlobalPurchaseEditController', function ($scope, $location,
 
     $scope.updatePrice = function () {
         var interTotal = parseFloat($scope.purchase.quantity) * parseFloat($scope.purchase.supply.sellingPrice);
-        if ($scope.purchase.discount === undefined) {
+        if ($scope.purchase.discount === undefined || !$scope.purchase.discount) {
             $scope.purchase.purchasePrice = interTotal;
         } else {
             if ($scope.purchase.discountPercent) {
@@ -43,7 +48,8 @@ app.controller('GlobalPurchaseEditController', function ($scope, $location,
 
     };
 
-    $scope.firstPercent = App.CONFIG.FIRST_PERCENT === "PERCENT";
+    $scope.firstPercent = App.CONFIG.FIRST_PERCENT.toUpperCase() === "PERCENT";
+    console.log($scope.firstPercent);
     $scope.optionsPercent = [{
             name: "%",
             value: true

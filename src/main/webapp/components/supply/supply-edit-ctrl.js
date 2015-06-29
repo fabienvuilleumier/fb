@@ -3,12 +3,13 @@ var app = angular.module('Fablab');
 app.controller('GlobalSupplyEditController', function ($scope, $location,
         SupplyService, NotificationService, StaticDataService) {
     $scope.selected = {supply: undefined};
+    $scope.currency = App.CONFIG.CURRENCY;
     $scope.loadSupply = function (id) {
         SupplyService.get(id, function (data) {
             $scope.supply = data;
         });
     };
-    
+
     SupplyService.list(function (supply) {
         var res = [];
         for (var i = 0; i < supply.length; i++) {
@@ -16,7 +17,7 @@ app.controller('GlobalSupplyEditController', function ($scope, $location,
         }
         $scope.existingValues = res;
     });
-    
+
     $scope.save = function () {
         var supplyCurrent = angular.copy($scope.supply);
         SupplyService.save(supplyCurrent, function (data) {
@@ -29,7 +30,7 @@ app.controller('GlobalSupplyEditController', function ($scope, $location,
     StaticDataService.loadSupplyTypes(function (data) {
         $scope.supplyTypeList = data;
     });
-    
+
     StaticDataService.loadSupplyUnities(function (data) {
         $scope.unityList = data;
     });
@@ -38,7 +39,9 @@ app.controller('GlobalSupplyEditController', function ($scope, $location,
 app.controller('SupplyNewController', function ($scope, $controller) {
     $controller('GlobalSupplyEditController', {$scope: $scope});
     $scope.newSupply = true;
-    $scope.supply = new Object();
+    $scope.supply = {
+        creationUser: App.connectedUser.user
+    };
 }
 );
 app.controller('SupplyEditController', function ($scope, $routeParams, $controller) {

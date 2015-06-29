@@ -1,6 +1,7 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalTicketEditController', function ($scope, $rootScope, $location, $routeParams,
+app.controller('GlobalTicketEditController', function ($scope,
+        $filter, $rootScope, $location, $routeParams,
         TicketService, NotificationService, StaticDataService, TicketStatusService,
         MachineStatusService, MachineService) {
     $scope.fromMachine = $routeParams.machineId ? true : false;
@@ -21,7 +22,7 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
         $scope.existingValues = res;
     });
 
-    $scope.save = function () {
+    $scope.save = function (ticketId) {
         if (!$scope.ticket.closeDate) {
             MachineStatusService.getByLabel("Indisponible", function (data) {
                 MachineService.saveStatus($scope.ticket.machine.id, data.id, function (status) {
@@ -52,7 +53,12 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
             $scope.ticket = data;
             NotificationService.notify("success", "ticket.notification.saved");
             if ($rootScope.hasAnyRole('TICKET_MANAGE')) {
-                $location.path("tickets");
+                if (ticketId) {
+                    //re-open the ticket
+                    $location.path("tickets/ticket-edit/" + ticketId);
+                } else {
+                    $location.path("tickets");
+                }
             } else {
                 $location.path("");
             }
@@ -63,20 +69,29 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
         if (!$scope.newTicket) {
             $scope.ticket.closeDate = new Date();
             $scope.ticket.closeUser = $rootScope.connectedUser.user;
-            TicketStatusService.findByLabel("CLOSED", function (data) {
+            TicketStatusService.findByLabel("CLOS", function (data) {
                 $scope.ticket.status = data;
                 $scope.save();
             });
         }
     };
 
-    $scope.reOpenTicket = function () {
+    $scope.reOpenTicket = function (ticketId) {
         if (!$scope.newTicket) {
+            if (ticketId) {
+                //re-open the ticket and save info in note
+                $scope.ticket.description += "\n" + $filter('translate')('ticket.reopenDescr') +
+                        moment($scope.ticket.closeDate).format('DD.MM.YYYY') + $filter('translate')('ticket.by') +
+                        $filter('prettyUser')($scope.ticket.closeUser) + ";";
+                $scope.ticket.description += "\n" + $filter('translate')('ticket.reopenDescr2') +
+                        moment(new Date()).format('DD.MM.YYYY') + $filter('translate')('ticket.by') +
+                        $filter('prettyUser')(App.connectedUser.user) + ";";
+            }
             $scope.ticket.closeDate = null;
             $scope.ticket.closeUser = null;
-            TicketStatusService.findByLabel("OPEN", function (data) {
+            TicketStatusService.findByLabel("OUVERT", function (data) {
                 $scope.ticket.status = data;
-                $scope.save();
+                $scope.save(ticketId);
             });
         }
     };
@@ -87,7 +102,6 @@ app.controller('GlobalTicketEditController', function ($scope, $rootScope, $loca
     StaticDataService.loadMachineries(function (data) {
         $scope.machines = data;
     });
-
     $scope.today = function () {
         $scope.dt = new Date();
     };
@@ -154,7 +168,7 @@ app.controller('TicketNewController', function ($scope, $controller, $rootScope,
         creationDate: new Date(),
         creationUser: $rootScope.connectedUser.user
     };
-    TicketStatusService.findByLabel("OPEN", function (data) {
+    TicketStatusService.findByLabel("OUVERT", function (data) {
         $scope.ticket.status = data;
     });
 }
@@ -167,7 +181,7 @@ app.controller('TicketNewWithMachineController', function ($scope, $controller,
         creationDate: new Date(),
         creationUser: $rootScope.connectedUser.user
     };
-    TicketStatusService.findByLabel("OPEN", function (data) {
+    TicketStatusService.findByLabel("OUVERT", function (data) {
         $scope.ticket.status = data;
     });
     MachineService.get($routeParams.machineId, function (data) {

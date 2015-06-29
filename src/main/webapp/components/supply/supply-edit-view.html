@@ -33,14 +33,20 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" translate="supply.sellingPrice"></label>
                     <div class="col-sm-8">
-                        <input type="number" min="0" step="0.05" class="form-control" ng-model="supply.sellingPrice" required/>
+                        <div class="input-group">
+                            <input type="number" min="0" step="0.05" class="form-control" ng-model="supply.sellingPrice" required/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label ng-show="!supply.supplyUnity" class="col-sm-2 control-label" translate="supply.supplyUnity"></label>
                     <label ng-show="supply.supplyUnity" class="col-sm-2 control-label" translate="supply.unityBuyingPrice"></label>
                     <div ng-if="supply.supplyUnity" class="col-sm-5">
-                        <input type="number" min="0" step="0.05" class="form-control" ng-model="supply.unityBuyingPrice"/>
+                        <div class="input-group">
+                            <input type="number" min="0" step="0.05" class="form-control" ng-model="supply.unityBuyingPrice"/>
+                            <div class="input-group-addon">{{currency}}</div>
+                        </div>
                     </div>
                     <label ng-if="supply.supplyUnity" class="col-sm-1 control-label">/</label>
                     <div ng-if="supply.supplyUnity" class="col-sm-2">

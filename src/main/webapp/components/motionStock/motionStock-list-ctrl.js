@@ -26,7 +26,7 @@ app.controller('MotionStockListController', function ($scope, $filter, $location
                 data[i].supplyLabel = ""; //initialization of new property 
                 data[i].supplyLabel = data[i].supply.label + data[i].supply.code;  //set the data from nested obj into new property
                 data[i].userName = ""; //initialization of new property 
-                data[i].userName = data[i].user === null ? "FabLab" : $filter('prettyUser')(data[i].user);  //set the data from nested obj into new property
+                data[i].userName = $filter('prettyUser')(data[i].user);  //set the data from nested obj into new property
             }
             $scope.motionStocks = data;
             $scope.tableParams.reload();

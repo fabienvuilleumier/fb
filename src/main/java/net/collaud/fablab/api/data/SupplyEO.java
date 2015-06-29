@@ -61,6 +61,10 @@ public class SupplyEO extends AbstractDataEO<Integer> implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private SupplyUnityEO supplyUnity;
 
+    @JoinColumn(name = "creation_user_id", referencedColumnName = "user_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private UserEO creationUser;
+
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
 

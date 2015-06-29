@@ -30,6 +30,9 @@
                 $log.debug("MotionStockService: get...");
                 var motionStockRes = motionStock.get({id: id}, successFn);
                 return motionStockRes;
+            }, 
+            getById: function (id, successFn) {
+                $http.get(App.API.MOTION_STOCK_API + "/getById?id=" + id).success(successFn);
             }
         };
     });

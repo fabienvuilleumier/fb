@@ -32,13 +32,6 @@ abstract public class ReadWriteRestWebservice<ENTITY extends AbstractDataEO, SER
     public void create(@RequestBody ENTITY entity) {
         log.debug("create entity " + entity);
         service.save(entity);
-        /*
-        try{
-            
-        }
-        catch(Exception e){
-            e.getMessage();
-        }*/
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.POST)

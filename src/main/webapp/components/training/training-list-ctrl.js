@@ -4,6 +4,7 @@ app.controller('TrainingListController', function ($scope, $filter, $location, $
         ngTableParams, TrainingService, NotificationService) {
     $scope.currency = App.CONFIG.CURRENCY;
     $scope.showRole = $rootScope.hasAnyRole('TRAINING_MANAGE');
+    $scope.btnTitle =  $filter('translate')('certification.btnTitle');
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page

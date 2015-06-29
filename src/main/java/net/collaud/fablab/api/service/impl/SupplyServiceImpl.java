@@ -54,6 +54,7 @@ public class SupplyServiceImpl implements SupplyService {
             old.setSupplyType(supply.getSupplyType());
             old.setQuantityStock(supply.getQuantityStock());
             old.setSupplyUnity(supply.getSupplyUnity());
+            old.setCreationUser(supply.getCreationUser());
             old.setActive(supply.isActive());
             return supplyDAO.saveAndFlush(old);
         } else {
