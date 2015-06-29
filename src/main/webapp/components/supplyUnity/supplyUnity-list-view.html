@@ -1,7 +1,7 @@
 <h1 translate="supplyUnity.title"></h1>
 <div class="header-control">
     <div class="btn-group" >
-        <a class="btn btn-success" href="#/supplyUnities/supplyUnity-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+        <btn-create link="#/supplyUnities/supplyUnity-edit"></btn-create>
     </div>
 </div>
 <div class="supplyUnityList" >
@@ -11,7 +11,7 @@
                 data-title="'supplyUnity.label' | translate" 
                 sortable="'label'"
                 filter="{'label':'text'}">
-                {{supplyUnity.label | lowercase}}
+                {{supplyUnity.label| lowercase}}
             </td>
             <td 
                 data-title="'supplyUnity.floating' | translate" 
@@ -23,8 +23,8 @@
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" href="#/supplyUnities/supplyUnity-edit/{{supplyUnity.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
                     <button class="btn btn-sm btn-danger" 
-                        ng-really-click="softRemove(supplyUnity)"
-                        ng-really-message="{{'supplyUnity.confirmation.remove'|translate}}">
+                            ng-really-click="softRemove(supplyUnity)"
+                            ng-really-message="{{'supplyUnity.confirmation.remove'|translate}}">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </div>

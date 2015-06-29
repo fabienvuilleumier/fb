@@ -14,9 +14,14 @@
 .ticketEdit .status{
     margin-top: 30px;
 }
-.ticketEdit .status .block-status{
-    border : 2px solid #00cccc;
-    border-radius: 10px;
+.ticketEdit .status .block-status-open{
+    border : 2px solid #00cc00;
+    border-radius: 3px;
+    text-align: center;
+}
+.ticketEdit .status .block-status-close{
+    border : 2px solid #ff0000;
+    border-radius: 3px;
     text-align: center;
 }
 

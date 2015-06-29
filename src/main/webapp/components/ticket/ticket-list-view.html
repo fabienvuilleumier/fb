@@ -1,7 +1,7 @@
 <h1 translate="ticket.ticketTitle"></h1>
 <div class="header-control">
     <div class="btn-group" >
-        <a class="btn btn-success" href="#/tickets/ticket-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+        <btn-create link="#/tickets/ticket-edit"></btn-create>
     </div>
 </div>
 <div class="ticketList" >
@@ -47,8 +47,8 @@
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" href="#/tickets/ticket-edit/{{ticket.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
                     <button class="btn btn-sm btn-danger" 
-                        ng-really-click="softRemove(ticket)"
-                        ng-really-message="{{'ticket.confirmation.remove'|translate}}">
+                            ng-really-click="softRemove(ticket)"
+                            ng-really-message="{{'ticket.confirmation.remove'|translate}}">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </div>

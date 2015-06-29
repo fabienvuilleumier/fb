@@ -1,7 +1,7 @@
 <h1 translate="machineType.title"></h1>
 <div class="header-control">
     <div class="btn-group">
-        <a class="btn btn-success" href="#/machineTypes/machineType-edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+        <btn-create link="#/machineTypes/machineType-edit"></btn-create>          
     </div>
 </div>
 <div class="machine">
@@ -17,7 +17,7 @@
                 data-title="'machineType.technicalname' | translate" 
                 sortable="'technicalname'"
                 filter="{'technicalname':'text'}">
-                {{machineType.technicalname | lowercase}}
+                {{machineType.technicalname| lowercase}}
             </td>
             <td 
                 data-title="'machineType.restricted' | translate" 
