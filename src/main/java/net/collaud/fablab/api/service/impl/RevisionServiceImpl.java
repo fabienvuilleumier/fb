@@ -49,6 +49,7 @@ public class RevisionServiceImpl implements RevisionService {
             old.setRevisionDate(revision.getRevisionDate());
             old.setRevisionTime(revision.getRevisionTime());
             old.setNote(revision.getNote());
+            old.setUser(revision.getUser());
             old.setCost(revision.getCost());
             old.setMachine(revision.getMachine());
             return revisionDAO.saveAndFlush(old);

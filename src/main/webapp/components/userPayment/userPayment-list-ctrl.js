@@ -1,14 +1,14 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('UserPaymentListController', function ($scope, $filter, $location,
+app.controller('UserPaymentListController', function ($scope, $filter, $location,$rootScope,
         ngTableParams, UserPaymentService, NotificationService) {
-            $scope.currency = App.CONFIG.CURRENCY;
+    $scope.currency = App.CONFIG.CURRENCY;
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    total:'asc'
+                    total: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {
@@ -23,11 +23,23 @@ app.controller('UserPaymentListController', function ($scope, $filter, $location
     });
     var updateUserPaymentList = function () {
         UserPaymentService.list(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                data[i].userFirstname = ""; //initialization of new property 
-                data[i].userFirstname = $filter('prettyUser')(data[i].user);  //set the data from nested obj into new property
+            if ($rootScope.hasAnyRole('PAYMENT_MANAGE')) {
+                for (var i = 0; i < data.length; i++) {
+                    data[i].userFirstname = ""; //initialization of new property 
+                    data[i].userFirstname = $filter('prettyUser')(data[i].user);  //set the data from nested obj into new property
+                }
+                $scope.userPayments = data;
+            } else {
+                var res = [];
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].user.id === $rootScope.connectedUser.user.id) {
+                        data[i].userFirstname = ""; //initialization of new property 
+                        data[i].userFirstname = $filter('prettyUser')(data[i].user);  //set the data from nested obj into new property
+                        res.push(data[i]);
+                    }
+                }
+                $scope.userPayments = res;
             }
-            $scope.userPayments = data;
             $scope.tableParams.reload();
         });
     };

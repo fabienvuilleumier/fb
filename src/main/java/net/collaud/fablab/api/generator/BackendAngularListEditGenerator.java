@@ -133,9 +133,9 @@ public class BackendAngularListEditGenerator {
             case "INTEGER":
                 return "number";
             case "DOUBLE":
-                return "number\" step=\"0.05\"";
+                return "number\" step=\"0.05";
             case "FLOAT":
-                return "number\" step=\"0.05\"";
+                return "number\" step=\"0.05";
             case "DATE":
                 return "date";
             default:
@@ -442,7 +442,7 @@ public class BackendAngularListEditGenerator {
     public void genere(boolean write, String styleContent, String... roles) throws IOException {
         createDirectory();
         init();
-        //createFile(genereServiceJS(write), SERVICE_FP, "js");
+        createFile(genereServiceJS(write), SERVICE_FP, "js");
         if (write) {
             createFile(genereEditJS(), EDIT_JS_FP, "js");
             createFile(genereEditVIEW(), EDIT_VIEW_FP, "html");
@@ -477,12 +477,12 @@ public class BackendAngularListEditGenerator {
         str.append("            ").append("<li fab-nav-item-af link=\"").append(endWithS(CLASS_ATTRIBUTE)).append("\" icon=\"\" ").append("\n");
         str.append("                ").append("label=\"menu.");
         str.append(endWithS(CLASS_ATTRIBUTE)).append("\" ").append("\n");
-        str.append("                ").append("show=\"hasAnyRole(\\'");
+        str.append("                ").append("show=\"hasAnyRole('");
         for (String s : roles) {
             str.append(s).append(",");
         }
         str.deleteCharAt(str.length() - 1);
-        str.append("\\')\"></li>").append("\n");
+        str.append("')\"></li>").append("\n");
         str.append("\n");
         str.append("        ").append("<script src=\"./components/services/").append(CLASS_ATTRIBUTE).append("-service.js\"></script>").append("\n");
         str.append("\n");

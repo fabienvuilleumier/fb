@@ -52,6 +52,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             old.setNote(purchase.getNote());
             old.setSupply(purchase.getSupply());
             old.setUser(purchase.getUser());
+            old.setCashier(purchase.getCashier());
             old.setActive(purchase.isActive());
             return purchaseDAO.saveAndFlush(old);
         } else {

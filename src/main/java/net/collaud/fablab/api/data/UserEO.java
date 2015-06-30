@@ -41,7 +41,9 @@ import org.hibernate.annotations.Where;
 @Table(name = "t_user")
 @Getter
 @Setter
-@ToString(exclude = {"payments", "subscriptions", "ticketCloseList", "ticketCreationList", "groups", "certifications", "supplyList"})
+@ToString(exclude = {"payments", "subscriptions", "ticketCloseList", "ticketCreationList", 
+    "groups", "certifications", "supplyList", "paymentUserList", "paymentCashierList", 
+    "usageUserList", "usageCashierList"})
 @AllArgsConstructor
 @Where(clause = "active=1")
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {
@@ -111,7 +113,7 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user")
-    private Set<PaymentEO> payments;
+    private Set<UserPaymentEO> payments;
 
     @JoinTable(name = "r_group_user",
             joinColumns = {
@@ -149,6 +151,18 @@ public class UserEO extends AbstractDataEO<Integer> implements Serializable {
     @JsonIgnore
     @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
     private Set<CertificationEO> certifications;
+    @JsonIgnore
+   @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<UserPaymentEO> paymentUserList;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cashier", fetch = FetchType.LAZY)
+    private Set<UserPaymentEO> paymentCashierList;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<UsageEO> usageUserList;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "cashier", fetch = FetchType.LAZY)
+    private Set<UsageEO> usageCashierList;
     
     @JsonIgnore
     @ManyToMany(mappedBy = "creationUser", fetch = FetchType.LAZY)

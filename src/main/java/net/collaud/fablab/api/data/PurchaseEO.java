@@ -64,6 +64,10 @@ public class PurchaseEO extends AbstractDataEO<Integer> implements Serializable 
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private UserEO user;
+    
+    @JoinColumn(name = "cashier_id", referencedColumnName = "user_id")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    private UserEO cashier;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;

@@ -4,6 +4,7 @@ app.controller('GlobalUsageEditController', function ($scope, $location, $rootSc
         UsageService, NotificationService, StaticDataService, PaymentService, UserService) {
     $scope.selected = {usage: undefined};
     $scope.currency = App.CONFIG.CURRENCY;
+    $scope.showRole = $rootScope.hasAnyRole('PAYMENT_MANAGE');
     $scope.loadUsage = function (id) {
         UsageService.get(id, function (data) {
             $scope.usage = data;
@@ -75,6 +76,9 @@ app.controller('GlobalUsageEditController', function ($scope, $location, $rootSc
     };
     StaticDataService.loadCashiers(function (data) {
         $scope.cashierList = data;
+    });
+    StaticDataService.loadUsers(function (data) {
+        $scope.userList = data;
     });
     StaticDataService.loadMachineriesDispo(function (data) {
         $scope.machines = data;
