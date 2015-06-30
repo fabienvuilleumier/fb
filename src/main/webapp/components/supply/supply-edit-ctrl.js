@@ -36,11 +36,11 @@ app.controller('GlobalSupplyEditController', function ($scope, $location,
     });
 }
 );
-app.controller('SupplyNewController', function ($scope, $controller) {
+app.controller('SupplyNewController', function ($scope, $controller, $rootScope) {
     $controller('GlobalSupplyEditController', {$scope: $scope});
     $scope.newSupply = true;
     $scope.supply = {
-        creationUser: App.connectedUser.user
+        creationUser: $rootScope.connectedUser.user
     };
 }
 );

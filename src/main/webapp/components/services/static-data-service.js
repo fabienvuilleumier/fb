@@ -61,6 +61,12 @@
         this.loadTrainings = function (successFn) {
             TrainingService.list(successFn);
         };
+        this.loadUsers = function (successFn) {
+            UserService.list(successFn);
+        };
+        this.loadCashiers = function (successFn) {
+            UserService.list(successFn);
+        };
     });
 
 }());

@@ -364,3 +364,31 @@ table.dataTable tbody tr .bg-success{
 .lang-divider{
     margin-bottom:2px;
 }
+
+.second-ligne{
+    margin-left: 19px;
+}
+.third-ligne{
+    margin-left: 24px;
+}
+
+.toggle-switch .switch-left {
+    color: #fff;
+    background: #0033cc;
+}
+
+.toggle {
+    border: 1px solid #CCC;
+}
+
+.toggle-switch .switch-right {
+    color: #000;
+    background: #eeeeee;
+}
+
+.question {
+    cursor: help; 
+}
+.canUse {
+    color: red;
+}

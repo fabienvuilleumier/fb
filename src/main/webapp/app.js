@@ -5,6 +5,7 @@
         //ext-lib
         'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 'ngNotify',
         'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha', 'datatables',
+        'toggle-switch',
         'datatables.columnfilter', 'datatables.bootstrap', 'colorpicker.module',
         // Core
         'Notification', 'Loader', 'httpInterceptor'
@@ -234,6 +235,24 @@
         }).when('/tests', {
             templateUrl: './components/machineTest/test-view.html',
             controller: 'MachineTestListController'
+        }).when('/usages', {
+            templateUrl: './components/usage/usage-list-view.html',
+            controller: 'UsageListController'
+        }).when('/usages/usage-edit/:id', {
+            templateUrl: './components/usage/usage-edit-view.html',
+            controller: 'UsageEditController'
+        }).when('/usages/usage-edit', {
+            templateUrl: './components/usage/usage-edit-view.html',
+            controller: 'UsageNewController'
+        }).when('/userPayments', {
+            templateUrl: './components/userPayment/userPayment-list-view.html',
+            controller: 'UserPaymentListController'
+        }).when('/userPayments/userPayment-edit/:id', {
+            templateUrl: './components/userPayment/userPayment-edit-view.html',
+            controller: 'UserPaymentEditController'
+        }).when('/userPayments/userPayment-edit', {
+            templateUrl: './components/userPayment/userPayment-edit-view.html',
+            controller: 'UserPaymentNewController'
         }).otherwise({
             redirectTo: '/'
         });

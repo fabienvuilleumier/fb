@@ -15,6 +15,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             comment: 'Commentaire',
             toFr: 'Fr',
             toEn: 'En',
+            yes: 'Oui',
+            no: 'Non',
             table: {
                 action: 'Action'
             },
@@ -58,12 +60,15 @@ angular.module('Fablab').config(function ($translateProvider) {
             supplyUnities: 'Untités de mesure',
             motionStocks: 'Mouvements de stock',
             priceMachines: 'Coûts d\'utilisation machine',
-            priceMachinesTable: 'Table des coûts d\'utilisations machines',
+            priceMachinesTable: 'Table des coûts<br/><span class="third-ligne">d\'utilisations</span><br/><span class="third-ligne">machines</span>',
             trainingLevels: 'Niveaux de formations',
             trainings: 'Formations',
             certification: 'Certifications',
             roles: 'Droits sur l\'application',
-            groups: 'Groupes d\'utilisateurs'
+            groups: 'Groupes d\'utilisateurs',
+            usages: 'Utilisations machines',
+            paymentsUse: 'Paiements et <br/><span class="second-ligne">utilisations machines</span>',
+            userPayments: 'Paiements annexes'
         },
         loading: {
             title: 'Chargement',
@@ -466,7 +471,9 @@ angular.module('Fablab').config(function ($translateProvider) {
         },
         priceMachine: {
             title: 'Coûts    d\'utilisation',
+            titleList: 'Table des coûts d\'utilisations machines',
             price: 'Prix',
+            hour: '/ heure',
             machineType: 'Type de machine',
             membershipType: 'Type de membre',
             create: 'Création d\'un coût d\'utilisation',
@@ -518,6 +525,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         certification: {
             title: 'Certification',
             name: 'Nom',
+            machineType: 'Type de machine',
             certificationDate: 'Date de certification',
             certificationPrice: 'Prix de la certification',
             alreadyExist: 'Le nom spécifié existe déjà !',
@@ -576,6 +584,58 @@ angular.module('Fablab').config(function ($translateProvider) {
             infoAll: '{0} éléments affiché(s)',
             infoFiltered: '<span class="label label-warning">Filtré : </span> {0} de {1}',
             infoEmpty: 'Liste vide !'
+        },
+        usage: {
+            title: 'Utilisation d\'une machine',
+            dateStart: 'Date',
+            pricePerHour: 'Prix par heure',
+            discount: 'Rabais',
+            paidDirectly: 'L\'utilisateur a-t-il payé directement ?',
+            discountPercent: 'Rabais pourcent',
+            minutes: 'Temps d\'utilisation',
+            additionalCost: 'Coûts additionnels',
+            total: 'Total',
+            note: 'Remarques',
+            user: 'Utilisateur',
+            userNotAllowed: 'L\'utilisateur connecté n\'est pas autorisé à utiliser cette machine !',
+            userNotAllowed2: 'Une certification pour la machine sélectionnée est requise',
+            directPaid: 'Payé cash ?',
+            cashier: 'Utilisateur ayant encaissé',
+            machine: 'Machine',
+            membershipType: 'Type de membre',
+            create: 'Création d\'une utilisation',
+            edit: 'Edition de l\'utilisation du ',
+            notification: {
+                saved: 'Utilisation sauvegardé',
+                removed: 'Utilisation supprimé'
+            },
+            confirmation: {
+                remove: 'Voulez-vous réellement supprimer cette utilisation ?'
+            }
+        },
+        userPayment: {
+            title: 'Paiements anexes',
+            total: 'Total',
+            datePayment: 'Date',
+            discount: 'Rabais',
+            discountPercent: 'Rabais en pourcent',
+            amount: 'Montant',
+            label:'Libellé',
+            note: 'Remarques',
+            user: 'Utilisateur',
+            paidFablab: 'Paye pour le FabLab ? ',
+            paidDirectly: 'L\'utilisateur a-t-il payé directement ?',
+            cashier: 'Utilisateur ayant encaissé le paiement',
+            create: 'Création d\'un paiement annexe',
+            edit: 'Edition du paiement du ',
+            btnTitle: 'Est-ce que l\'utilisateur paye pour ses propres dépenses ou pour le FabLab ?',
+            notification: {
+                saved: 'Paiement annexe sauvegardé',
+                removed: 'Paiement annexe supprimé'
+            },
+            confirmation: {
+                remove: 'Voulez-vous réellement supprimer ce paiement annexe ?'
+            }
         }
     });
 });

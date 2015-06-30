@@ -15,6 +15,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             comment: 'Comment',
             toFr: 'Fr',
             toEn: 'En',
+            yes: 'Yes',
+            no: 'No',
             table: {
                 action: 'Action'
             },
@@ -63,7 +65,10 @@ angular.module('Fablab').config(function ($translateProvider) {
             trainings: 'Trainings',
             certification: 'Certifications',
             roles: 'Roles',
-            groups: 'Groups'
+            groups: 'Groups',
+            usage: 'Usages',
+            paymentsUse: 'Payment and usages',
+            userPayments: 'Annex payments'
         },
         loading: {
             title: 'Loading',
@@ -388,7 +393,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             orderAddress: 'Order address',
             supplyType: 'Supply type',
             note: 'Note',
-            addQuantity:'Add some quantity to this supply',
+            addQuantity: 'Add some quantity to this supply',
             quantityStockModal: 'Quantity',
             supplyUnity: 'Unity',
             back: 'Return',
@@ -465,7 +470,9 @@ angular.module('Fablab').config(function ($translateProvider) {
         },
         priceMachine: {
             title: 'Use cost',
+            titleList: 'Use cost table',
             price: 'Price',
+            hour: '/ hour',
             machineType: 'Machinery type',
             membershipType: 'Membership type',
             create: 'Use cost creation',
@@ -517,6 +524,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         certification: {
             title: 'Certification',
             name: 'Name',
+            machineType: 'Machinery type',
             certificationDate: 'Certification date',
             certificationPrice: 'Certification price',
             alreadyExist: 'The specified name already exist !',
@@ -575,6 +583,58 @@ angular.module('Fablab').config(function ($translateProvider) {
             infoAll: 'Showing all {0}',
             infoFiltered: '<span class="label label-warning">Filtered</span> {0} from {1}',
             infoEmpty: 'Empty list!'
+        },
+        usage: {
+            title: 'Usage',
+            dateStart: 'Date',
+            pricePerHour: 'Price per hour',
+            discount: 'Discount',
+            discountPercent: 'Discount percent',
+            minutes: 'Use time',
+            additionalCost: 'Additional cost',
+            total: 'Total',
+            note: 'Note',
+            user: 'User',
+            cashier: 'Cashier',
+            machine: 'Machine',
+            paidDirectly: 'Did the user pay directly ?',
+            membershipType: 'Membership type',
+            create: 'Usage creation',
+            directPaid: 'Direct payed ?',
+            userNotAllowed: 'The connected user is not allowed to use this machine !',
+            userNotAllowed2: 'A certification for the chosen machinery is required',
+            edit: 'Edit usage at ',
+            notification: {
+                saved: 'Usage saved',
+                removed: 'Usage removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this usage ?'
+            }
+        },
+        userPayment: {
+            title: 'Annex payment',
+            total: 'Total',
+            datePayment: 'Date',
+            discount: 'Discount',
+            discountPercent: 'Discount percent',
+            amount: 'Amount',
+            paidDirectly: 'Did the user pay directly ?',
+            paidFablab: 'Pay for the FabLab ? ',
+            label:'Label',
+            note: 'Note',
+            user: 'User',
+            cashier: 'Cashier',
+            create: 'Annex payment creation',
+            edit: 'Edit payment at :',
+            btnTitle: 'Does the current user pay for him or for the FabLab ?',
+            notification: {
+                saved: 'Annex payment saved',
+                removed: 'Annex payment removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this annex payment ?'
+            }
         }
     });
 });

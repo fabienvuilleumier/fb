@@ -1,4 +1,4 @@
-<form name="formAddPayment" class="form-horizontal" ng-submit="execute()">
+<form name="formUserPayment" class="form-horizontal" ng-submit="execute()">
     <div class="panel panel-default">
         <div class="panel-heading" translate="payment.paymentTitle">
         </div>
@@ -9,15 +9,16 @@
                     <p class="input-group">
                         <input class="form-control" 
                                datepicker-popup="{{format}}" 
-                               ng-model="addPayment.date" 
+                               ng-model="userPayment.date" 
                                is-open="opened" 
                                min-date="{{minDate}}"
                                datepicker-options="dateOptions" 
                                ng-required="true" 
                                close-text="Close"
-                               required/>
+                               required
+                               ng-disabled="editable"/>
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            <button ng-disabled="editable" type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
                         </span>
                     </p>
                 </div>
@@ -26,7 +27,7 @@
                 <label class="col-sm-4 control-label" translate="payment.amount"></label>
                 <div class="col-sm-8">
                     <div class="input-group">
-                        <input class="form-control" type="number" step="0.05" required ng-model="addPayment.amount" />
+                        <input class="form-control" type="number" step="0.05" required ng-model="userPayment.amount" ng-disabled="editable"/>
                         <div class="input-group-addon">{{currency}}</div>
                     </div>
                 </div>
@@ -34,13 +35,13 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label" translate="payment.comment"></label>
                 <div class="col-sm-8">
-                    <textarea class="form-control" ng-model="addPayment.comment"></textarea>
+                    <textarea class="form-control" ng-model="userPayment.note" ng-disabled="editable"></textarea>
                 </div>
             </div>
         </div>
-        <div class="panel-footer right">
+        <div class="panel-footer right" ng-show="!editable">
             <button type="submit" class="btn btn-success"
-                    ng-disabled="formAddPayment.$invalid"
+                    ng-disabled="formUserPayment.$invalid"
                     translate="payment.addPayment"></button>
         </div>
     </div>

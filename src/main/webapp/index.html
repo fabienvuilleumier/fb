@@ -19,6 +19,8 @@
         <link href="./ext-lib/bootstrap-duallistbox/dist/bootstrap-duallistbox.min.css" rel="stylesheet"/>
         <link href="./ext-lib/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet"/>
         <link href="./ext-lib/angular-bootstrap-colorpicker/css/colorpicker.min.css" rel="stylesheet"/>
+        <link href="./ext-lib/angular-toggle-switch/angular-toggle-switch-bootstrap.css" rel="stylesheet"/>
+        <link href="./ext-lib/angular-toggle-switch/angular-toggle-switch.css" rel="stylesheet"/>
         <link href="./css/main.css" rel="stylesheet"/>
 
 
@@ -51,6 +53,8 @@
         <link href="./components/training/style.css" rel="stylesheet">
         <link href="./components/certification/style.css" rel="stylesheet">
         <link href="./components/role/style.css" rel="stylesheet">
+        <link href="./components/usage/style.css" rel="stylesheet">
+        <link href="./components/userPayment/style.css" rel="stylesheet">
         <!-- endbuild -->
 
     </head>
@@ -188,10 +192,12 @@
                                     label="menu.machineStatus" 
                                     show="hasAnyRole('MACHINE_MANAGE')" 
                                     ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
-                                <li fab-nav-item-af link="priceMachines/table" icon="euro" 
-                                    label="menu.priceMachinesTable" 
-                                    show="hasAnyRole('MACHINE_MANAGE')" 
-                                    ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
+                                <li>
+                                    <a ng-show="hasAnyRole('MACHINE_MANAGE')" href="#/priceMachines/table">
+                                        <span class="fa fa-fw fa-euro"></span>
+                                        <span translate="menu.priceMachinesTable"></span>
+                                    </a>
+                                </li>
                                 <hr ng-show="hasAnyRole('MACHINE_MANAGE')"></hr>
                                 <li fab-nav-item-af link="revisions" icon="check-square-o" 
                                     label="menu.revision" 
@@ -287,12 +293,26 @@
                                     ng-show="hasAnyRole('ACCOUNTING_VIEW')"></li>
                             </ul>
                         </li>
+                        <!--PAYMENT DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#paymentListDD" 
+                               ng-show="hasAnyRole('PAYMENT_VIEW')"  href="javascript:;">
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                                <span translate="menu.paymentsUse"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="paymentListDD" class="collapse">
+                                <li fab-nav-item-af link="usages" icon="sliders" 
+                                    label="menu.usages" 
+                                    show="hasAnyRole('PAYMENT_VIEW')"></li>
+                                <li fab-nav-item-af link="userPayments" icon="money" 
+                                    label="menu.userPayments" 
+                                    show="hasAnyRole('PAYMENT_VIEW')"></li>
+                            </ul>
+                        </li>
                         <li fab-nav-item link="reservations" icon="calendar"
                             label="menu.reservation"
                             show="hasAnyRole('RESERVATION_VIEW')"></li>
-                        <li fab-nav-item link="payments" icon="shopping-cart"
-                            label="menu.payment"
-                            show="hasAnyRole('PAYMENT_VIEW')"></li>
                         <li>
                             <img src="./images/logoFabLabManager.png" alt="logo" height="220" width="220" id="faviconLeft" class="img-circle"/>
                         </li>
@@ -345,6 +365,7 @@
     <script src="./ext-lib/angular-ui-select/dist/select.min.js"></script>
     <script src="./ext-lib/bootstrap-duallistbox/dist/jquery.bootstrap-duallistbox.min.js"></script>
     <script src="./ext-lib/angular-bootstrap-duallistbox/dist/angular-bootstrap-duallistbox.min.js"></script>
+    <script src="./ext-lib/angular-toggle-switch/angular-toggle-switch.min.js"></script>
 
     <script src="./ext-lib/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="./ext-lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
@@ -416,6 +437,8 @@
     <script src="./components/services/ticketStatus-service.js"></script>
     <script src="./components/services/ticket-service.js"></script>
     <script src="./components/services/training-service.js"></script>
+    <script src="./components/services/usage-service.js"></script>
+    <script src="./components/services/userPayment-service.js"></script>
     <script src="./components/services/certification-service.js"></script>
     <script src="./components/services/trainingLevel-service.js"></script>
 
@@ -503,6 +526,11 @@
     <script src="./components/role/role-ctrl.js"></script>
     <script src="./components/group/group-list-ctrl.js"></script>
     <script src="./components/group/group-edit-ctrl.js"></script>
+
+    <script src="./components/usage/usage-list-ctrl.js"></script>
+    <script src="./components/usage/usage-edit-ctrl.js"></script>
+    <script src="./components/userPayment/userPayment-list-ctrl.js"></script>
+    <script src="./components/userPayment/userPayment-edit-ctrl.js"></script>
 
     <script src="./components/machineTest/test-ctrl.js"></script>
 

@@ -1,7 +1,8 @@
 (function () {
     'use strict';
 
-    angular.module('Fablab').controller('PaymentByUserController', function ($scope,
+    var app = angular.module('Fablab');
+    app.controller('PaymentByUserController', function ($scope,
             $log, $filter, $rootScope, $location, $routeParams, UserService) {
         $scope.selected = {user: undefined};
         $scope.showRole = $rootScope.hasAnyRole('PAYMENT_MANAGE');
@@ -19,7 +20,7 @@
         };
 
         if (!$rootScope.hasAnyRole('PAYMENT_MANAGE')) {
-            $scope.selected.user = App.connectedUser.user;
+            $scope.selected.user = $rootScope.connectedUser;
         }
 
 
@@ -45,6 +46,10 @@
         $scope.updateUser();
 
     });
-
-
 }());
+
+app.controller('PaymentByUserEditController', function ($scope, $routeParams, $controller) {
+    $controller('PaymentByUserController', {$scope: $scope});
+    $scope.loadUser($routeParams.id);
+}
+);

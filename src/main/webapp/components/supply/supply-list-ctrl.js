@@ -1,6 +1,6 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('SupplyListController', function ($scope, $filter, $location, $modal, MotionStockService,
+app.controller('SupplyListController', function ($scope, $filter, $rootScope, $location, $modal, MotionStockService,
         ngTableParams, SupplyService, NotificationService) {
     $scope.newQuantity = 0;
     $scope.addQuantity = $filter('translate')('supply.addQuantity');
@@ -49,7 +49,7 @@ app.controller('SupplyListController', function ($scope, $filter, $location, $mo
                     io: "Entrée [ajout]",
                     active: true,
                     supply: supplyCurrent,
-                    user: App.connectedUser.user
+                    user: $rootScope.connectedUser.user
                 };
                 MotionStockService.save(motionStock, function (data) {
                     updateSupplyList();

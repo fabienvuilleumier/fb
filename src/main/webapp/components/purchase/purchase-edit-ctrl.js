@@ -1,6 +1,6 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalPurchaseEditController', function ($scope, $location,
+app.controller('GlobalPurchaseEditController', function ($scope, $location, $filter, $window,
         PurchaseService, NotificationService, StaticDataService, SupplyService) {
     $scope.selected = {purchase: undefined};
     $scope.currency = App.CONFIG.CURRENCY;
@@ -35,21 +35,29 @@ app.controller('GlobalPurchaseEditController', function ($scope, $location,
     $scope.updatePrice = function () {
         var interTotal = parseFloat($scope.purchase.quantity) * parseFloat($scope.purchase.supply.sellingPrice);
         if ($scope.purchase.discount === undefined || !$scope.purchase.discount) {
-            $scope.purchase.purchasePrice = interTotal;
+            //0.05 cts ceil
+            var val = $window.Math.ceil(interTotal * 20) / 20;
+            $scope.purchase.purchasePrice = $filter('number')(val, 2);
+            ;
         } else {
             if ($scope.purchase.discountPercent) {
                 var discountInter = parseFloat(interTotal) * (parseFloat($scope.purchase.discount) / parseFloat(100));
-                var discountFinal = parseFloat(interTotal) - parseFloat(discountInter);
-                $scope.purchase.purchasePrice = (Math.ceil(discountFinal * 20) / 20).toFixed(2);
+                var total = parseFloat(interTotal) - parseFloat(discountInter);
+                //0.05 cts ceil
+                var val = $window.Math.ceil(total * 20) / 20;
+                $scope.purchase.purchasePrice = $filter('number')(val, 2);
             } else {
-                $scope.purchase.purchasePrice = parseFloat(interTotal) - parseFloat($scope.purchase.discount);
+                var total = parseFloat(interTotal) - parseFloat($scope.purchase.discount);
+                //0.05 cts ceil
+                var val = $window.Math.ceil(total * 20) / 20;
+                $scope.purchase.purchasePrice = $filter('number')(val, 2);
             }
         }
 
     };
 
     $scope.firstPercent = App.CONFIG.FIRST_PERCENT.toUpperCase() === "PERCENT";
-    console.log($scope.firstPercent);
+
     $scope.optionsPercent = [{
             name: "%",
             value: true

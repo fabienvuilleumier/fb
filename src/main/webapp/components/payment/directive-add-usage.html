@@ -59,6 +59,21 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-4 control-label" translate="purchase.discount"></label>
+                <div class="col-sm-6">
+                    <input ng-if="addUsage.discountPercent" type="number" max="100" step="0.05" class="form-control" ng-model="addUsage.discount" ng-change="updateTotalPrice()"/>
+                    <input ng-if="!addUsage.discountPercent" type="number" max="{{maxMoney()}}" step="0.05" class="form-control" ng-model="addUsage.discount" ng-change="updateTotalPrice()"/>
+                </div>
+                <div class="col-sm-2">
+                    <select  class="form-control" 
+                             ng-model="addUsage.discountPercent"
+                             ng-change="updateTotalPrice()"
+                             ng-init="addUsage.discountPercent = firstPercent"
+                             ng-options="op.value as op.name for op in optionsPercent">
+                    </select> 
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-4 control-label" translate="payment.comment"></label>
                 <div class="col-sm-8">
                     <textarea class="form-control" ng-model="addUsage.comment"></textarea>
