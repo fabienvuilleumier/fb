@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -24,26 +25,24 @@ import org.hibernate.annotations.Where;
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
 @Entity
-@Table(name = "t_usage")
+@Table(name = "t_payment")
 @Getter
 @Setter
 @ToString
 @Where(clause = "active=1")
-public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class UserPaymentEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "usage_id", nullable = false)
+    @Column(name = "payment_id", nullable = false)
     private Integer id;
 
-    @Column(name = "date_start", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateStart;
+    @Column(name = "total", nullable = false)
+    private double total;
 
-    @Column(name = "price_hour", nullable = false)
-    private double pricePerHour;
+    @Column(name = "date_payement", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date datePayment;
 
     @Column(name = "discount", nullable = true)
     private Double discount;
@@ -51,45 +50,50 @@ public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
     @Column(name = "discount_percent", nullable = true, columnDefinition = "TINYINT(1)")
     private boolean discountPercent;
 
-    @Column(name = "minutes")
-    private int minutes;
-
-    @Column(name = "additional_cost", nullable = true)
-    private double additionalCost;
-
-    @Column(name = "total", nullable = false)
-    private double total;
+    @Column(name = "amount", nullable = false)
+    private Double amount;
+    
+    @Column(name = "label", nullable = false)
+    private String label;
 
     @Column(name = "note", nullable = true)
     @Type(type = "text")
     private String note;
 
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional=false, fetch = FetchType.LAZY)
     private UserEO user;
 
     @JoinColumn(name = "cashier_id", referencedColumnName = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional=true, fetch = FetchType.LAZY)
     private UserEO cashier;
 
-    @JoinColumn(name = "machine_id", referencedColumnName = "machine_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MachineEO machine;
-
-    @JoinColumn(name = "membership_type_id", referencedColumnName = "membership_type_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MembershipTypeEO membershipType;
-
+    @Column(name = "payed_for_fab_lab", nullable = true, columnDefinition = "TINYINT(1) DEFAULT 1")
+    private Boolean payedForFabLab;
+    
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
 
-    public UsageEO() {
+    public UserPaymentEO() {
         this(null);
     }
 
-    public UsageEO(Integer id) {
+    public UserPaymentEO(Integer id) {
         this.active = true;
-        this.discount = 0.0;
+        this.payedForFabLab = false;
         this.id = id;
     }
+
+    public UserPaymentEO(Date datePayment, Double amount, UserEO user, UserEO cashier, String note) {
+        this.active = true;
+        this.payedForFabLab = false;
+        this.datePayment = datePayment;
+        this.amount = amount;
+        this.note = note;
+        this.user = user;
+        this.cashier = cashier;
+    }
+    
+    
+
 }

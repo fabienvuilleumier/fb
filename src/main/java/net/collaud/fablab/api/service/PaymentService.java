@@ -2,7 +2,7 @@ package net.collaud.fablab.api.service;
 
 import java.util.Date;
 import java.util.List;
-import net.collaud.fablab.api.data.PaymentEO;
+import net.collaud.fablab.api.data.UserPaymentEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
@@ -16,20 +16,20 @@ import net.collaud.fablab.api.rest.v1.criteria.PeriodSearchCriteria;
  */
 public interface PaymentService {
 
-	SubscriptionEO addSubscriptionConfirmation(Integer userId);
+    SubscriptionEO addSubscriptionConfirmation(Integer userId);
 
-	SubscriptionEO addSubscriptionConfirmationForCurrentUser();
+    SubscriptionEO addSubscriptionConfirmationForCurrentUser();
 
-	PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment);
+    UserPaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment);
 
-	UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes,
-			double additionalCost, String comment, boolean paidDirectly);
+    UsageEO useMachine(Integer userId, Integer machineId, Date startDate, int minutes,
+            double additionalCost, String comment, boolean paidDirectly);
 
-	UserPaymentHistory getLastPaymentEntries(Integer userId);
+    UserPaymentHistory getLastPaymentEntries(Integer userId);
 
-	List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search);
+    List<HistoryEntry> getPaymentEntries(PeriodSearchCriteria search);
 
-	HistoryEntryId removeHistoryEntry(HistoryEntryId entry);
-        
-        Float getPrice(Integer machineTypeId, Integer userId);
+    HistoryEntryId removeHistoryEntry(HistoryEntryId entry);
+
+    Float getPrice(Integer machineTypeId, Integer userId);
 }

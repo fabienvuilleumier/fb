@@ -125,11 +125,16 @@ app.controller('GlobalPurchaseEditController', function ($scope, $location, $fil
     StaticDataService.loadSupplyStock(function (data) {
         $scope.supplyStock = data;
     });
+
+    StaticDataService.loadCashiers(function (data) {
+        $scope.cashierList = data;
+    });
 }
 );
 app.controller('PurchaseNewController', function ($scope, $controller, $rootScope) {
     $controller('GlobalPurchaseEditController', {$scope: $scope});
     $scope.newPurchase = true;
+    $scope.paidDirectly = false;
     $scope.purchase = {
         purchaseDate: new Date(),
         user: $rootScope.connectedUser.user

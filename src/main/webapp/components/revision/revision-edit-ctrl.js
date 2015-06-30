@@ -103,12 +103,13 @@ app.controller('RevisionEditController', function ($scope, $routeParams, $contro
     $scope.loadRevision($routeParams.id);
 }
 );
-app.controller('RevisionNewWithMachineController', function ($scope, $routeParams, $controller, MachineService) {
+app.controller('RevisionNewWithMachineController', function ($scope, $routeParams, $controller, MachineService, $rootScope) {
     $controller('GlobalRevisionEditController', {$scope: $scope});
     $scope.newRevision = true;
     $scope.revision = {
         revisionTime: new Date(),
-        revisionDate: new Date()
+        revisionDate: new Date(),
+        user: $rootScope.connectedUser.user
     };
     MachineService.get($routeParams.machineId, function (data) {
         $scope.revision.machine = data;

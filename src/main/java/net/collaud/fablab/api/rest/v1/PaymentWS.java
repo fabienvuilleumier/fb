@@ -1,7 +1,6 @@
 package net.collaud.fablab.api.rest.v1;
 
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
-import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.virtual.HistoryEntryId;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
@@ -37,14 +36,14 @@ public class PaymentWS {
 	public BaseModel addUsage(@RequestBody @Validated UsageEO usage) {
 		return new DataModel(paymentService.useMachine(usage.getUser().getId(),
 				usage.getMachine().getId(), usage.getDateStart(), usage.getMinutes(),
-				usage.getAdditionalCost(), usage.getComment(), usage.isDirectPaid()));
+				usage.getAdditionalCost(), usage.getNote(), true));
 	}
 
-	@RequestMapping(value = "add_payment", method = RequestMethod.POST)
-	public BaseModel addPayment(@RequestBody @Validated PaymentEO payment) {
+	/*@RequestMapping(value = "add_payment", method = RequestMethod.POST)
+	public BaseModel addPayment(@RequestBody @Validated PaymentUserEO payment) {
 		return new DataModel(paymentService.addPayment(payment.getUser().getId()
-				, payment.getDatePayment(), payment.getTotal(), payment.getComment()));
-	}
+				, payment.getDatePayment(), payment.getTotal(), payment.getNote()));
+	}*/
 
 	@RequestMapping(value = "delete_history", method = RequestMethod.POST)
 	public BaseModel removeHistory(@RequestBody @Validated HistoryEntryId id) {

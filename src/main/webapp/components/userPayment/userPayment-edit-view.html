@@ -112,7 +112,7 @@
                             off-label="Non"></toggle-switch>
                     </div>
                 </div>
-                <div class="form-group" ng-show="paidDirectly">
+                <div class="form-group" ng-show="(paidDirectly || userPayment.cashier)">
                     <label class="col-sm-3 control-label" translate="userPayment.cashier"></label>
                     <div class="col-sm-6">
                         <select class="form-control" 

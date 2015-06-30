@@ -3,7 +3,7 @@ package net.collaud.fablab.api.generator;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import net.collaud.fablab.api.data.GroupEO;
+import net.collaud.fablab.api.data.UsageEO;
 /**
  *
  * @author Fabien Vuilleumier
@@ -21,8 +21,8 @@ public class Generator {
      {"java type", "java name", "nullable ? [t,f]", "db type"} 
      */
     /*FIRST*/
-    private final String CLASS_NAME = "Group";
-    private final String TABLE_NAME = "t_group";
+    private final String CLASS_NAME = "Usage";
+    private final String TABLE_NAME = "t_payment";
 
     private final String[][] FIELDS = new String[][]{
         {"Integer", "id", "f", "INT"},
@@ -30,16 +30,18 @@ public class Generator {
         {"String", "technicalname", "f", "INT"}};
 
     private final boolean WRITE = true;
-    private final String[] ROLES = new String[]{"GROUP_MANAGE"};
+    private final String[] ROLES = new String[]{"PAYMENT_VIEW"};
     private final Map<String, String> nestedObjectReprAttr = new HashMap<>();
 
     /*SECOND*/
-    private final Class KLAZZ = GroupEO.class;//CertificationEO.class;
+    private final Class KLAZZ = UsageEO.class;//CertificationEO.class;
 
     public static void main(String[] args) {
         Generator agl = new Generator();
-        //agl.getNestedObjectReprAttr().put("prerequire", "name");
-        //agl.getNestedObjectReprAttr().put("dependent", "name");
+        agl.getNestedObjectReprAttr().put("user", "firstname");
+        agl.getNestedObjectReprAttr().put("cashier", "firstname");
+        agl.getNestedObjectReprAttr().put("machine", "name");
+        agl.getNestedObjectReprAttr().put("membershipType", "name");
         //agl.runEO();
         //agl.runBase();
         agl.runAngular(agl.getNestedObjectReprAttr());

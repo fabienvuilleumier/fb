@@ -4,7 +4,7 @@ import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.rest.v1.criteria.PeriodSearchCriteria;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;
-import net.collaud.fablab.api.service.PaymentService;
+import net.collaud.fablab.api.service.UserPaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccoutingWS {
 
 	@Autowired
-	private PaymentService paymentService;
+	private UserPaymentService paymentService;
 
 	@RequestMapping(value = "search", method = RequestMethod.POST)
 	public BaseModel search(@Validated @RequestBody PeriodSearchCriteria search) {

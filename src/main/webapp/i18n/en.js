@@ -427,6 +427,8 @@ angular.module('Fablab').config(function ($translateProvider) {
         purchase: {
             title: 'Purchase',
             purchaseDate: 'Purchase date',
+            cashier: 'cashier',
+            paidDirectly: 'Did the user pay directly ?',
             quantity: 'Quantity',
             purchasePrice: 'Purchase price',
             supply: 'Supply',
@@ -621,7 +623,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             amount: 'Amount',
             paidDirectly: 'Did the user pay directly ?',
             paidFablab: 'Pay for the FabLab ? ',
-            label:'Label',
+            label: 'Label',
             note: 'Note',
             user: 'User',
             cashier: 'Cashier',

@@ -428,6 +428,8 @@ angular.module('Fablab').config(function ($translateProvider) {
         purchase: {
             title: 'Achat',
             purchaseDate: 'Date d\'achat',
+            cashier:'Utilisateur ayant encaissé ',
+            paidDirectly: 'L\'utilisateur a-t-il payé directement ?',
             quantity: 'Quantité',
             purchasePrice: 'Prix d\'achat',
             supply: 'Fourniture',

@@ -210,7 +210,6 @@ public class BackendBaseGenerator {
         str.append(";").append("\n");
         if (write) {
             str.append("import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;").append("\n");
-            str.append("import net.collaud.fablab.api.rest.v1.base.SoftRemoveWebService;").append("\n");
             str.append("import net.collaud.fablab.api.exceptions.FablabException;").append("\n");
         } else {
             str.append("import net.collaud.fablab.api.rest.v1.base.ReadRestWebservice;").append("\n");
@@ -237,11 +236,7 @@ public class BackendBaseGenerator {
         } else {
             str.append("ReadRestWebservice<");
         }
-        str.append(CLASS_EO).append(", ").append(CLASS_SERVICE).append(">");
-        if (write) {
-            str.append(" implements SoftRemoveWebService ");
-        }
-        str.append("{").append("\n\n");
+        str.append(CLASS_EO).append(", ").append(CLASS_SERVICE).append(">{").append("\n\n");
         str.append("    ").append("@Autowired").append("\n");
         str.append("    ").append("private ").append(CLASS_SERVICE).append(" ").append(CLASS_SERVICE_ATTRIBUTE).append(";\n\n");
         str.append("    ").append("@PostConstruct").append("\n");

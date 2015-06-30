@@ -3,7 +3,6 @@ package net.collaud.fablab.api.audit;
 import java.util.Date;
 import net.collaud.fablab.api.data.AbstractDataEO;
 import net.collaud.fablab.api.data.AuditEO;
-import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.type.AuditAction;
@@ -11,10 +10,6 @@ import static net.collaud.fablab.api.data.type.AuditAction.DELETE;
 import static net.collaud.fablab.api.data.type.AuditAction.INSERT;
 import static net.collaud.fablab.api.data.type.AuditAction.UPDATE;
 import net.collaud.fablab.api.data.type.AuditObject;
-import static net.collaud.fablab.api.data.type.AuditObject.PAYMENT;
-import static net.collaud.fablab.api.data.type.AuditObject.SUBSCRIPTION;
-import static net.collaud.fablab.api.data.type.AuditObject.USAGE;
-import static net.collaud.fablab.api.data.type.AuditObject.USER;
 import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.service.AuditService;
 import net.collaud.fablab.api.service.SecurityService;
@@ -90,23 +85,6 @@ public class AuditInterceptor {
 //		return null;
 //	}
 
-	private String getReadableMessage(AuditObject obj, AuditAction action, Object res) {
-		switch (obj) {
-			case USAGE:
-				return getReadableMessage(action, (UsageEO) res);
-			case PAYMENT:
-				return getReadableMessage(action, (PaymentEO) res);
-			case USER:
-				return getReadableMessage(action, (UserEO) res);
-//			case ACCESS_DOOR:
-//				return getReadableMessage(action, (AccessDoorResponse) res);
-			case SUBSCRIPTION:
-				return getReadableMessageSubscription(action, (UserEO) res);
-			default:
-				return "ERROR object " + obj + " not implemented yet";
-		}
-	}
-
 	//FIXME take care of action
 	private String getReadableMessage(AuditAction action, UsageEO usage) {
 		StringBuilder sb = new StringBuilder();
@@ -124,23 +102,6 @@ public class AuditInterceptor {
 		return sb.toString();
 	}
 
-	//FIXME take care of action
-	private String getReadableMessage(AuditAction action, PaymentEO payment) {
-		StringBuilder sb = new StringBuilder();
-		if (action == AuditAction.INSERT) {
-			sb.append(payment.getUser().getFirstLastName());
-			sb.append(" paid ");
-			sb.append(payment.getTotal());
-			sb.append("CHF ");
-		} else if (action == AuditAction.DELETE) {
-			sb.append("Payment of ");
-			sb.append(payment.getTotal());
-			sb.append(" by ");
-			sb.append(payment.getUser().getFirstLastName());
-			sb.append(" was removed");
-		}
-		return sb.toString();
-	}
 
 	private String getReadableMessage(AuditAction action, UserEO user) {
 		StringBuilder sb = new StringBuilder();

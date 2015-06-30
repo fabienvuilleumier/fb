@@ -41,6 +41,7 @@ public class RevisionEO extends AbstractDataEO<Integer> implements Serializable 
     @Column(name = "revision_date", nullable = false, columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private Date revisionDate;
+    
     @Column(name = "revision_time", nullable = true, columnDefinition = "DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date revisionTime;
@@ -55,6 +56,10 @@ public class RevisionEO extends AbstractDataEO<Integer> implements Serializable 
     @JoinColumn(name = "machine_id", referencedColumnName = "machine_id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MachineEO machine;
+
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private UserEO user;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;

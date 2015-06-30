@@ -15,14 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 import net.collaud.fablab.api.audit.AuditUtils;
 import net.collaud.fablab.api.dao.MachineRepository;
 import net.collaud.fablab.api.dao.MachineTypeRepository;
-import net.collaud.fablab.api.dao.PaymentRepository;
 import net.collaud.fablab.api.dao.PriceMachineRepository;
 import net.collaud.fablab.api.dao.SubscriptionRepository;
 import net.collaud.fablab.api.dao.UsageRepository;
+import net.collaud.fablab.api.dao.UserPaymentRepository;
 import net.collaud.fablab.api.dao.UserRepository;
 import net.collaud.fablab.api.data.MachineEO;
 import net.collaud.fablab.api.data.MembershipTypeEO;
-import net.collaud.fablab.api.data.PaymentEO;
+import net.collaud.fablab.api.data.UserPaymentEO;
 import net.collaud.fablab.api.data.PriceMachineEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
@@ -66,7 +66,7 @@ public class PaymentServiceImpl implements PaymentService {
     private UserService userService;
 
     @Autowired
-    private PaymentRepository paymentRepository;
+    private UserPaymentRepository paymentRepository;
 
     @Autowired
     private SubscriptionRepository subscriptionRepository;
@@ -85,9 +85,9 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Secured({Roles.PAYMENT_VIEW})
-    public PaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment) {
+    public UserPaymentEO addPayment(Integer userId, Date datePayment, double amount, String comment) {
         UserEO user = userRepository.findOneDetails(userId).orElseThrow(() -> new RuntimeException("Cannot find user with id " + userId));
-        PaymentEO payment = new PaymentEO(datePayment, amount, user, securityService.getCurrentUser().get(), comment);
+        UserPaymentEO payment = new UserPaymentEO(datePayment, amount, user, securityService.getCurrentUser().get(), comment);
         payment = paymentRepository.save(payment);
         return payment;
     }
@@ -104,7 +104,7 @@ public class PaymentServiceImpl implements PaymentService {
                 .map(pm -> pm.getPrice())
                 .orElseThrow(() -> new RuntimeException("Cannot find price for usage"));
         double amount = hourPrice * minutes / 60 + additionalCost;
-        UsageEO usage = new UsageEO(startDate, hourPrice, minutes, additionalCost, comment, user, machine, user.getMembershipType());
+        UsageEO usage = new UsageEO();
         usage = usageRepository.save(usage);
 
         if (paidDirectly) {
@@ -122,7 +122,7 @@ public class PaymentServiceImpl implements PaymentService {
             throw new FablabException("Dates cannot be null");
         }
         List<UsageEO> listUsage = usageRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
-        List<PaymentEO> listPayment = paymentRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
+        List<UserPaymentEO> listPayment = paymentRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
         List<SubscriptionEO> listSubscription = subscriptionRepository.getAllBetween(search.getDateFrom(), search.getDateTo());
         return convertToHistoryEntry(listUsage, listPayment, listSubscription);
     }
@@ -143,13 +143,13 @@ public class PaymentServiceImpl implements PaymentService {
 
     protected List<HistoryEntry> getHistoryEntriesForuser(Integer userId) {
         List<UsageEO> listUsage = usageRepository.getByUser(userId);
-        List<PaymentEO> listPayment = paymentRepository.getByUser(userId);
+        List<UserPaymentEO> listPayment = paymentRepository.findByUser(userId);
         List<SubscriptionEO> listSubscription = subscriptionRepository.getByUser(userId);
 
         return convertToHistoryEntry(listUsage, listPayment, listSubscription);
     }
 
-    protected List<HistoryEntry> convertToHistoryEntry(List<UsageEO> listUsage, List<PaymentEO> listPayment, List<SubscriptionEO> listSubscription) {
+    protected List<HistoryEntry> convertToHistoryEntry(List<UsageEO> listUsage, List<UserPaymentEO> listPayment, List<SubscriptionEO> listSubscription) {
         final List<HistoryEntry> listHistory = Stream.concat(
                 Stream.concat(
                         listUsage.stream()
@@ -210,7 +210,7 @@ public class PaymentServiceImpl implements PaymentService {
         final int id = historyId.getId();
         switch (historyId.getType()) {
             case PAYMENT:
-                PaymentEO payment = Optional.ofNullable(paymentRepository.getOne(id))
+                UserPaymentEO payment = Optional.ofNullable(paymentRepository.getOne(id))
                         .orElseThrow(() -> new RuntimeException("Cannot find payment with id " + id));
                 checkDateAccounting(payment.getDatePayment());
                 paymentRepository.delete(payment);
@@ -223,7 +223,7 @@ public class PaymentServiceImpl implements PaymentService {
                 checkDateAccounting(usage.getDateStart());
                 usageRepository.delete(usage);
                 AuditUtils.addAudit(audtiService, securityService.getCurrentUser().get(), AuditObject.PAYMENT, AuditAction.DELETE, true,
-                        "Machine usage (amount " + (-usage.getTotalPrice()) + ") removed for user " + usage.getUser().getFirstLastName());
+                        "Machine usage (amount " + (-0) + ") removed for user " + usage.getUser().getFirstLastName());
                 break;
             case SUBSCRIPTION:
                 SubscriptionEO subscription = Optional.ofNullable(subscriptionRepository.getOne(id))
