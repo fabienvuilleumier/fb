@@ -1,8 +1,8 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('PriceMachineTableController', function ($scope, $location,
+app.controller('PriceMachineTableController', function ($scope, $location,$filter, 
         PriceMachineService, MachineTypeService, MembershipTypeService, NotificationService) {
-            $scope.currency = App.CONFIG.CURRENCY;
+            $scope.currency = App.CONFIG.CURRENCY + " " + $filter('translate')('priceMachine.hour');
     $scope.save = function () {
         var mt = $scope.prices.machineTypes;
         var mti, msti;

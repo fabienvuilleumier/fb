@@ -17,7 +17,7 @@
                     {{$select.selected|prettyUser}} 
                 </ui-select-match>
                 <ui-select-choices repeat="u in users | propsFilter:{firstname: $select.search, lastname: $select.search}">
-                    <div ng-bind-html="u.firstname | highlight: $select.search"></div>
+                    <div ng-bind-html="(u.lastname.toUpperCase() + ' ' + u.firstname) | highlight: $select.search"></div>
                     <small>
                         {{u.address}}
                     </small>
@@ -47,7 +47,7 @@
         <user-payment-add-usage user="selected.user" min-date="minDate" callback="reloadHistory()"/>
     </div>
     <div class="col-md-6">
-        <user-payment-add-payment user="selected.user" min-date="minDate" callback="reloadHistory()" />
+        <user-payment-add-payment user="selected.user" doShow="true" min-date="minDate" callback="reloadHistory()" />
     </div>
 </div>
 

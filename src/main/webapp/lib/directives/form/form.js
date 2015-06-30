@@ -29,6 +29,16 @@
                 }
             };
         }]);
+    app.directive('toggleButton', [function ($filter) {
+            return {
+                restrict: 'A',
+                replace: true,
+                transclude: true,
+                require: 'ngModel',
+                scope: {'ngModel': '='},
+                template: '<button type="button" class="btn ng-class:{\'btn-primary\':ngModel, \'btn-default\':!ngModel}" data-toggle="button" ng-click="ngModel = !ngModel" ng-transclude></button>'
+            };
+        }]);
     app.directive('btnShow', [function () {
             return {
                 restrict: "EA",

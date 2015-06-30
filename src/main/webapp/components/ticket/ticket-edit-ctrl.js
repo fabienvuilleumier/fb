@@ -85,7 +85,7 @@ app.controller('GlobalTicketEditController', function ($scope,
                         $filter('prettyUser')($scope.ticket.closeUser) + ";";
                 $scope.ticket.description += "\n" + $filter('translate')('ticket.reopenDescr2') +
                         moment(new Date()).format('DD.MM.YYYY') + $filter('translate')('ticket.by') +
-                        $filter('prettyUser')(App.connectedUser.user) + ";";
+                        $filter('prettyUser')($rootScope.connectedUser.user) + ";";
             }
             $scope.ticket.closeDate = null;
             $scope.ticket.closeUser = null;

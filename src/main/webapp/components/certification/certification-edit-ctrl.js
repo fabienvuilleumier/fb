@@ -85,6 +85,10 @@ app.controller('GlobalCertificationEditController', function ($scope, $routePara
         filter: true,
         filterValues: true
     };
+
+    StaticDataService.loadMachineTypes(function (data) {
+        $scope.machineTypeList = data;
+    });
     var setLists = function () {
         UserService.list(function (users) {
             if ($scope.certification) {

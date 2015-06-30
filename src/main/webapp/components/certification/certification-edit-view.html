@@ -35,6 +35,15 @@
                         <span ng-show="editCertification.name.$error.required" ></span>
                     </div>
                 </div>
+                <div class="form-group" ng-if="certification.training.machineType">
+                    <label class="col-sm-2 control-label" translate="certification.machineType"></label>
+                    <div class="col-sm-8">
+                        <select class="form-control" 
+                                ng-model="certification.training.machineType" 
+                                ng-options="mt.name for mt in machineTypeList track by mt.id" 
+                                disabled></select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label" translate="certification.certificationDate"></label>
                     <div class="col-sm-8">

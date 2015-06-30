@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     angular.module('Fablab').directive('userPaymentAddUsage', function (PaymentService, MachineService,
-            MachineTypeService, NotificationService, StaticDataService,TrainingService,UserService) {
+            MachineTypeService, NotificationService, StaticDataService, TrainingService, UserService) {
         return {
             restrict: 'EA',
             scope: {
@@ -36,18 +36,30 @@
                         var machineTypeId = $scope.addUsage.machine.machineType.id;
                         PaymentService.getPrice(machineTypeId, $scope.user.id, function (price) {
                             var add = $scope.addUsage.additionalCost;
-                            var total = price * getMinutes() / 60 + add;
+                            var interTotal = price * getMinutes() / 60 + add;
+                            if ($scope.addUsage.discount === undefined || !$scope.addUsage.discount) {
+                                $scope.addUsage.total = interTotal;
+                            } else {
+                                if ($scope.purchase.discountPercent) {
+                                    var discountInter = parseFloat(interTotal) * (parseFloat($scope.purchase.discount) / parseFloat(100));
+                                    var discountFinal = parseFloat(interTotal) - parseFloat(discountInter);
+                                    $scope.addUsage.total = (Math.ceil(discountFinal * 20) / 20).toFixed(2);
+                                } else {
+                                    $scope.addUsage.total = parseFloat(interTotal) - parseFloat($scope.purchase.discount);
+                                }
+                            }
                             $scope.addUsage.total = parseFloat($filter('number')(total, 2));
+                            $scope.maxMoney = parseFloat($filter('number')(total, 2));
                         });
                     } else {
                         delete $scope.addUsage.total;
                     }
-                };                
+                };
                 $scope.canUse = true;
-                
-                $scope.canUseMachinery = function() {
-                    UserService.canUse($scope.addUsage.machine.machineType.id,App.connectedUser.user.id, function(data){
-                         $scope.canUse = data;
+
+                $scope.canUseMachinery = function () {
+                    UserService.canUse($scope.addUsage.machine.machineType.id, App.connectedUser.user.id, function (data) {
+                        $scope.canUse = data;
                     });
                 };
 
@@ -135,6 +147,16 @@
 
                     return '';
                 };
+                $scope.firstPercent = App.CONFIG.FIRST_PERCENT.toUpperCase() === "PERCENT";
+
+                $scope.optionsPercent = [{
+                        name: "%",
+                        value: true
+                    }, {
+                        name: App.CONFIG.CURRENCY,
+                        value: false
+                    }];
+
             }
         };
 
