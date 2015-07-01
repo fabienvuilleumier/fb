@@ -1,5 +1,6 @@
 package net.collaud.fablab.api.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.Column;
@@ -26,7 +27,7 @@ import lombok.ToString;
 @Table(name = "t_event_person")
 @Getter
 @Setter
-@ToString(exclude = {"aquiredModules"})
+@ToString(exclude = {"aquiredModules", "organizors", "participants"})
 @Where(clause = "active=1")
 public class EventPersonEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -51,6 +52,14 @@ public class EventPersonEO extends AbstractDataEO<Integer> implements Serializab
                 @JoinColumn(name = "event_module_id", referencedColumnName = "event_module_id", nullable = true)})
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<EventModuleEO> aquiredModules;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "organizors", fetch = FetchType.LAZY)
+    private Set<EventEO> organizors;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "participants", fetch = FetchType.LAZY)
+    private Set<EventEO> participants;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;

@@ -1,0 +1,45 @@
+package net.collaud.fablab.api.dao;
+
+import java.util.List;
+import net.collaud.fablab.api.data.EventEO;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+/**
+ * This is the DAO interface for a <tt>Event</tt>.
+ *
+ * @author Fabien Vuilleumier
+ */
+public interface EventRepository extends JpaRepository<EventEO, Integer> {
+
+    @Query("SELECT e "
+            + " FROM EventEO e  "
+            + " LEFT JOIN FETCH e.supervisor  "
+            + " LEFT JOIN FETCH e.participants  "
+            + " LEFT JOIN FETCH e.organizors  "
+            + " LEFT JOIN FETCH e.cashier  ")
+    @Override
+    List<EventEO> findAll();
+
+    @Query("SELECT e "
+            + " FROM EventEO e "
+            + " LEFT JOIN FETCH e.supervisor "
+            + " LEFT JOIN FETCH e.cashier "
+            + " LEFT JOIN FETCH e.supervisor  "
+            + " LEFT JOIN FETCH e.participants  "
+            + " LEFT JOIN FETCH e.organizors  "
+            + " WHERE e.id=:id")
+    Optional<EventEO> findOneDetails(@Param("id") Integer id);
+
+    @Query("SELECT e "
+            + " FROM EventEO e "
+            + " LEFT JOIN FETCH e.supervisor "
+            + " LEFT JOIN FETCH e.cashier "
+            + " LEFT JOIN FETCH e.supervisor  "
+            + " LEFT JOIN FETCH e.participants  "
+            + " LEFT JOIN FETCH e.organizors  "
+            + " WHERE UPPER(c.title) = UPPER(:title)")
+    EventEO getId(@Param("title") String title);
+}

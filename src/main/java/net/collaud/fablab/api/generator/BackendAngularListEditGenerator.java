@@ -291,7 +291,7 @@ public class BackendAngularListEditGenerator {
                         str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"></label>").append("\n");
                         str.append("                    ").append("<div class=\"col-sm-8\">").append("\n");
 
-                        if (!f.get("dbtype").toUpperCase().equals("TEXT")) {
+                        if (!f.get("dbType").toUpperCase().equals("TEXT")) {
                             str.append("                        ").append("<input type=\"").append(appendType(f.get("type"))).append("\"").append("\n");
                             str.append("                            ").append("class=\"form-control\" ").append("\n");
                             str.append("                            ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"\n");
