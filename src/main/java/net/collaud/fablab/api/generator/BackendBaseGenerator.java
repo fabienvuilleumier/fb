@@ -25,7 +25,6 @@ public class BackendBaseGenerator {
     private final String SERVICE_IMPL = ".\\src\\main\\java\\net\\collaud\\fablab\\api\\service\\impl";
 
     private boolean hasList = false;
-    private boolean hasEO = false;
 
     private final List<Map<String, String>> FIELDS;
     private final String CLASS_NAME;
@@ -41,8 +40,8 @@ public class BackendBaseGenerator {
 
     private <T> BackendBaseGenerator(Class<T> klazz, String[][] fields) {
         this.FIELDS = new LinkedList<>();
-        if(fields[0].length == 5){
-            for(String[] s : fields){
+        if (fields[0].length == 5) {
+            for (String[] s : fields) {
                 Map<String, String> map = new HashMap<>();
                 map.put("type", s[0]);
                 map.put("name", s[1]);
@@ -51,7 +50,7 @@ public class BackendBaseGenerator {
                 map.put("unique", s[4]);
                 this.FIELDS.add(map);
             }
-        }else{
+        } else {
             throw new IllegalArgumentException("PAS LE BON NOMBRE D'ARGUMENTS");
         }
         this.CLASS_NAME = klazz.getSimpleName().substring(0, klazz.getSimpleName().length() - 2);
@@ -109,11 +108,8 @@ public class BackendBaseGenerator {
         str.append("    ").append("@Override").append("\n");
         str.append(rolesView(roles));
         str.append("    ").append("public Optional<").append(CLASS_EO).append("> getById(Integer id) {").append("\n");
-        if (hasEO) {
-            str.append("        ").append("return ").append(CLASS_DAO_ATTRIBUTE).append(".findOneDetails(id);").append("\n");
-        } else {
-            str.append("        ").append("return Optional.ofNullable(").append(CLASS_DAO_ATTRIBUTE).append(".findOne(id));").append("\n");
-        }
+        str.append("        ").append("return ").append(CLASS_DAO_ATTRIBUTE).append(".findOneDetails(id);").append("\n");
+
         str.append("    ").append("}").append("\n\n");
 
         if (write) {
@@ -126,7 +122,7 @@ public class BackendBaseGenerator {
             str.append("        ").append("if (").append(CLASS_ATTRIBUTE).append(".getId() > 0) {").append("\n");
             str.append("            ").append(CLASS_EO).append(" old = ").append(CLASS_DAO_ATTRIBUTE).append(".findOne(").append(CLASS_ATTRIBUTE).append(".getId());").append("\n");
 
-            for(Map<String, String> f : FIELDS) {
+            for (Map<String, String> f : FIELDS) {
                 if (!f.get("name").equals("id")) {
                     str.append("            ").append("old.").append(setter(f)).append("(").append(CLASS_ATTRIBUTE).append(".").append(getter(f)).append(");").append("\n");
                 }
@@ -259,12 +255,7 @@ public class BackendBaseGenerator {
         str.append("    ").append("public void postConstruct(){").append("\n");
         str.append("        ").append("super.setService(").append(CLASS_SERVICE_ATTRIBUTE).append(");\n");
         str.append("    ").append("}").append("\n");
-        if (write) {
-            str.append("    ").append("@Override").append("\n");
-            str.append("    ").append("public void softRemove(Integer id) throws FablabException {").append("\n");
-            str.append("        ").append(CLASS_SERVICE_ATTRIBUTE).append(".softRemove(id);").append("\n");
-            str.append("    ").append("}").append("\n");
-        }
+
         str.append("}").append("\n");
         return str.toString();
     }
@@ -287,11 +278,9 @@ public class BackendBaseGenerator {
         str.append("import net.collaud.fablab.api.data.").append(CLASS_EO).append(";\n");
         str.append("import org.springframework.data.jpa.repository.JpaRepository;").append("\n");
         str.append("import org.springframework.data.jpa.repository.Query;").append("\n");
-        if (hasEO) {
             str.append("import java.util.Optional;").append("\n");
             str.append("import org.springframework.data.jpa.repository.Query;").append("\n");
             str.append("import org.springframework.data.repository.query.Param;").append("\n");
-        }
         str.append("/**").append("\n");
         str.append(" *This is the DAO interface for a <tt>").append(CLASS_NAME).append("</tt>.").append("\n");
         str.append(" * @author Fabien Vuilleumier").append("\n");
@@ -303,10 +292,9 @@ public class BackendBaseGenerator {
                 .append(", Integer>{\n")
                 .append("\n");
 
-        if (hasEO) {
             str.append("    ").append("@Query(\"SELECT ").append(queryAttribute).append(" \"").append("\n");
             str.append("        ").append("+ \" FROM ").append(CLASS_EO).append(" ").append(queryAttribute).append(" ");
-            for(Map<String, String> f : FIELDS) {
+            for (Map<String, String> f : FIELDS) {
                 if (f.get("type").contains("EO") && !f.get("type").contains("LIST")) {
                     str.append(" \" \n").append("        ").append("+ \" LEFT JOIN FETCH ").append(queryAttribute).append(".").append(f.get("name")).append(" ");
                 }
@@ -317,7 +305,7 @@ public class BackendBaseGenerator {
 
             str.append("    ").append("@Query(\"SELECT ").append(queryAttribute).append(" \"").append("\n");
             str.append("        ").append("+ \" FROM ").append(CLASS_EO).append(" ").append(queryAttribute).append(" \"").append("\n");
-            for(Map<String, String> f : FIELDS) {
+            for (Map<String, String> f : FIELDS) {
                 if (f.get("type").contains("EO") && !f.get("type").contains("List")) {
                     str.append("        ").append("+ \" LEFT JOIN FETCH ").append(queryAttribute).append(".").append(f.get("name")).append(" \"").append("\n");
                 }
@@ -325,7 +313,7 @@ public class BackendBaseGenerator {
             str.append("        ").append("+ \" WHERE ").append(queryAttribute).append(".id=:id\")").append("\n");
             str.append("    ").append("Optional<").append(CLASS_EO).append("> findOneDetails(@Param(\"id\")Integer id);").append("\n");
 
-        }
+
         str.append("}");
         return str.toString();
     }
@@ -356,7 +344,7 @@ public class BackendBaseGenerator {
         System.out.println("File " + path + " correctly created...");
     }
 
-    private String getter(Map<String,String> f) {
+    private String getter(Map<String, String> f) {
         StringBuilder str = new StringBuilder();
         if (f.get("type").toLowerCase().equals("boolean")) {
             str.append("is");
@@ -369,7 +357,7 @@ public class BackendBaseGenerator {
         return str.toString();
     }
 
-    private String setter(Map<String,String> f) {
+    private String setter(Map<String, String> f) {
         StringBuilder str = new StringBuilder();
         str.append("set")
                 .append((f.get("name").substring(0, 1)).toUpperCase())
@@ -378,10 +366,9 @@ public class BackendBaseGenerator {
     }
 
     private void init() {
-        for(Map<String, String> f : FIELDS) {
+        for (Map<String, String> f : FIELDS) {
             String type = f.get("type");
             hasList = hasList || type.contains("List");
-            hasEO = hasEO || (type.contains("EO") && !type.contains("List"));
         }
     }
 

@@ -21,6 +21,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             yes: 'Yes',
             no: 'No',
             type: 'Type',
+            erase: 'Erase',
             table: {
                 action: 'Action'
             },
@@ -77,7 +78,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             event: "Evènements",
             eventTypes: 'Event types',
             eventPersons: 'Event persons list',
-            eventModules : 'Event modules'
+            eventModules: 'Event modules'
 
         },
         loading: {
@@ -683,6 +684,9 @@ angular.module('Fablab').config(function ($translateProvider) {
             alreadyExist: 'This event person already exists',
             create: 'Event person creation',
             edit: 'Edit :',
+            haveAquired: 'Does this person aquired modules ?',
+            nonSelectedListLabel: 'Available modules',
+            selectedListLabel: 'Acquired modules',
             notification: {
                 saved: 'Event person saved',
                 removed: 'Event person removed'
@@ -695,9 +699,12 @@ angular.module('Fablab').config(function ($translateProvider) {
             title: 'Event module',
             name: 'Name',
             description: 'Description',
+            havePrerequisites: 'Does this module have prerequisites ?',
             alreadyExist: 'This event module already exists',
             create: 'Event module creation',
             edit: 'Edit :',
+            nonSelectedListLabel: 'Available modules as prerequisites',
+            selectedListLabel: 'Prerequisites modules',
             notification: {
                 saved: 'Event module saved',
                 removed: 'Event module removed'

@@ -30,6 +30,9 @@
                 $log.debug("EventModuleService: get...");
                 var eventModuleRes = eventModule.get({id: id}, successFn);
                 return eventModuleRes;
+            }, 
+            getId: function(name, successFn) {
+                $http.get(App.API.EVENT_MODULE_API + "/getId?name=" + name.latinise()).success(successFn);
             }
         };
     });

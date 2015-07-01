@@ -290,24 +290,29 @@ public class BackendAngularListEditGenerator {
                         str.append("                ").append("<div class=\"form-group\">").append("\n");
                         str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"></label>").append("\n");
                         str.append("                    ").append("<div class=\"col-sm-8\">").append("\n");
-                        str.append("                        ").append("<input type=\"").append(appendType(f.get("type"))).append("\"").append("\n");
-                        str.append("                            ").append("class=\"form-control\" ").append("\n");
-                        str.append("                            ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"");
-                        if (f.get("unique").equals("t")) {
-                            str.append("                            ").append("duplicate=\"existingValues\" ").append("\n");
-                            str.append("                            ").append("uppercase ").append("\n");
-                            str.append("                            ").append("name=\"").append(f.get("name")).append("\" \n");
-                        }
-                        if (f.get("required").equals("t")) {
-                            str.append("required");
-                        }
-                        str.append("/>").append("\n");
-                        if (f.get("unique").equals("t")) {
-                            str.append("                        ").append("<div class=\"col-sm-2 error-text\">").append("\n");
-                            str.append("                            ").append("<span ng-show=\"edit").append(CLASS_NAME).append(".").append(f.get("name")).append(".$error.duplicate\" ").append("\n");
-                            str.append("                                ").append("translate=\"").append(CLASS_ATTRIBUTE).append(".alreadyExist\"></span>").append("\n");
-                            str.append("                            ").append("<span ng-show=\"edit").append(CLASS_NAME).append(".").append(f.get("name")).append(".$error.required\" ></span>").append("\n");
-                            str.append("                        ").append("</div>").append("\n");
+
+                        if (!f.get("dbtype").toUpperCase().equals("TEXT")) {
+                            str.append("                        ").append("<input type=\"").append(appendType(f.get("type"))).append("\"").append("\n");
+                            str.append("                            ").append("class=\"form-control\" ").append("\n");
+                            str.append("                            ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"\n");
+                            if (f.get("unique").equals("t")) {
+                                str.append("                            ").append("duplicate=\"existingValues\" ").append("\n");
+                                str.append("                            ").append("uppercase ").append("\n");
+                                str.append("                            ").append("name=\"").append(f.get("name")).append("\" \n");
+                            }
+                            if (f.get("required").equals("t")) {
+                                str.append("                            ").append("required");
+                            }
+                            str.append("/>").append("\n");
+                            if (f.get("unique").equals("t")) {
+                                str.append("                        ").append("<div class=\"col-sm-2 error-text\">").append("\n");
+                                str.append("                            ").append("<span ng-show=\"edit").append(CLASS_NAME).append(".").append(f.get("name")).append(".$error.duplicate\" ").append("\n");
+                                str.append("                                ").append("translate=\"").append(CLASS_ATTRIBUTE).append(".alreadyExist\"></span>").append("\n");
+                                str.append("                            ").append("<span ng-show=\"edit").append(CLASS_NAME).append(".").append(f.get("name")).append(".$error.required\" ></span>").append("\n");
+                                str.append("                        ").append("</div>").append("\n");
+                            }
+                        } else {
+                            str.append("                        ").append("<textarea class=\"form-control\" ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"></textarea>").append("\n");
                         }
                         str.append("                    ").append("</div>").append("\n");
                         str.append("                ").append("</div>").append("\n");

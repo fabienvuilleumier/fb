@@ -1,28 +1,66 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('GlobalEventModuleEditController', function ($scope, $location,
-    EventModuleService, NotificationService) {
+        EventModuleService, NotificationService, StaticDataService) {
     $scope.selected = {eventModule: undefined};
     $scope.loadEventModule = function (id) {
         EventModuleService.get(id, function (data) {
             $scope.eventModule = data;
+            setList();
         });
     };
     $scope.save = function () {
-        var eventModuleCurrent = angular.copy($scope.eventModule);
-        EventModuleService.save(eventModuleCurrent, function (data) {
-            $scope.eventModule = data;
-            NotificationService.notify("success", "eventModule.notification.saved");
-            $location.path("eventModules");
-        });
+        if ($scope.newEventModule) {
+            var evmCurrent = angular.copy($scope.eventModule);
+            EventModuleService.save(evmCurrent, function (data) {
+                $scope.eventModule = data;
+                NotificationService.notify("success", "training.notification.saved");
+                EventModuleService.getId(data.name, function (withId) {
+                    $location.path("eventModules/eventModule-edit/" + withId.id);
+                });
+            });
+        } else {
+            $scope.eventModule.prerequisites = $scope.assignedPrerequisites;
+            var evmCurrent = angular.copy($scope.eventModule);
+            EventModuleService.save(evmCurrent, function (data) {
+                $scope.eventModule = data;
+                NotificationService.notify("success", "training.notification.saved");
+                $location.path("eventModules");
+            });
+        }
     };
     EventModuleService.list(function (data) {
         var res = [];
         for (var i = 0; i < data.length; i++) {
-            res.push(data[i].label.toUpperCase());
+            res.push(data[i].name.toUpperCase());
         }
         $scope.existingValues = res;
     });
+    StaticDataService.loadMachineTypes(function (data) {
+        $scope.machineTypeList = data;
+    });
+
+    $scope.ereaseType = function () {
+        $scope.eventModule.machineType = null;
+    };
+
+    var setList = function () {
+        EventModuleService.list(function (evm) {
+            if ($scope.eventModule) {
+                $scope.availablePrerequisites = evm;
+                $scope.assignedPrerequisites = $scope.eventModule.prerequisites;
+            }
+        });
+    };
+
+    $scope.settings = {
+        bootstrap2: false,
+        moveOnSelect: true,
+        postfix: '_helperz',
+        selectMinHeight: 200,
+        filter: true,
+        filterValues: true
+    };
 }
 );
 app.controller('EventModuleNewController', function ($scope, $controller) {
@@ -31,7 +69,7 @@ app.controller('EventModuleNewController', function ($scope, $controller) {
     $scope.eventModule = new Object();
 }
 );
-    app.controller('EventModuleEditController', function ($scope, $routeParams, $controller) {
+app.controller('EventModuleEditController', function ($scope, $routeParams, $controller) {
     $controller('GlobalEventModuleEditController', {$scope: $scope});
     $scope.newEventModule = false;
     $scope.loadEventModule($routeParams.id);

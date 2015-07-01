@@ -1,11 +1,16 @@
 package net.collaud.fablab.api.data;
 
 import java.io.Serializable;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.Getter;
 import org.hibernate.annotations.Where;
@@ -14,14 +19,15 @@ import lombok.ToString;
 
 /**
  * This is the business class for a <tt>EventPerson</tt>
+ *
  * @author Fabien Vuilleumier
  */
 @Entity
 @Table(name = "t_event_person")
 @Getter
 @Setter
-@ToString
-@Where(clause="active=1")
+@ToString(exclude = {"aquiredModules"})
+@Where(clause = "active=1")
 public class EventPersonEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Id
@@ -29,16 +35,24 @@ public class EventPersonEO extends AbstractDataEO<Integer> implements Serializab
     @Column(name = "event_person_id", nullable = true)
     private Integer id;
 
-    @Column(name = "lastname", nullable = true )
+    @Column(name = "lastname", nullable = true)
     private String lastname;
 
-    @Column(name = "firstname", nullable = true )
+    @Column(name = "firstname", nullable = true)
     private String firstname;
 
-    @Column(name = "email", nullable = true )
+    @Column(name = "email", nullable = true)
     private String email;
 
-    @Column(name="active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
+    @JoinTable(name = "r_event_aquired_module",
+            joinColumns = {
+                @JoinColumn(name = "event_person_id", referencedColumnName = "event_person_id", nullable = true)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "event_module_id", referencedColumnName = "event_module_id", nullable = true)})
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<EventModuleEO> aquiredModules;
+
+    @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
 
     public EventPersonEO() {

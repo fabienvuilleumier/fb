@@ -33,7 +33,7 @@ public class EventModuleServiceImpl implements EventModuleService {
     @Override
     @Secured({Roles.EVENT_VIEW})
     public Optional<EventModuleEO> getById(Integer id) {
-        return Optional.ofNullable(eventModuleDAO.findOne(id));
+        return eventModuleDAO.findOneDetails(id);
     }
 
      @Override
@@ -45,7 +45,9 @@ public class EventModuleServiceImpl implements EventModuleService {
         if (eventModule.getId() > 0) {
             EventModuleEO old = eventModuleDAO.findOne(eventModule.getId());
             old.setName(eventModule.getName());
+            old.setMachineType(eventModule.getMachineType());
             old.setDescription(eventModule.getDescription());
+            old.setPrerequisites(eventModule.getPrerequisites());
             return eventModuleDAO.saveAndFlush(old);
         } else {
             return eventModuleDAO.saveAndFlush(eventModule);
@@ -64,6 +66,11 @@ public class EventModuleServiceImpl implements EventModuleService {
         EventModuleEO current = eventModuleDAO.findOne(id);
         current.setActive(false);
         eventModuleDAO.saveAndFlush(current);
+    }
+
+    @Override
+    public EventModuleEO getId(String name) {
+        return eventModuleDAO.getId(name);
     }
 }
 
