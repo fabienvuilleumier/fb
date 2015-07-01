@@ -30,7 +30,6 @@ import org.hibernate.annotations.Where;
 @Getter
 @Setter
 @ToString
-@Where(clause = "active=1")
 public class RevisionEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Id

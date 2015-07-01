@@ -43,7 +43,7 @@ import org.hibernate.annotations.Where;
 @Setter
 @ToString(exclude = {"payments", "subscriptions", "ticketCloseList", "ticketCreationList", 
     "groups", "certifications", "supplyList", "paymentUserList", "paymentCashierList", 
-    "usageUserList", "usageCashierList"})
+    "usageUserList", "usageCashierList", "reservations"})
 @AllArgsConstructor
 @Where(clause = "active=1")
 public class UserEO extends AbstractDataEO<Integer> implements Serializable {

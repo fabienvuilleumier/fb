@@ -1,10 +1,10 @@
 package net.collaud.fablab.api.dao;
 
+import java.util.Date;
 import java.util.List;
 import net.collaud.fablab.api.data.TicketEO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
-import net.collaud.fablab.api.data.RevisionEO;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -39,4 +39,11 @@ public interface TicketRepository extends JpaRepository<TicketEO, Integer> {
             + " LEFT JOIN FETCH t.status "
             + " WHERE m.id = :id ")
     List<TicketEO> listByMachine(@Param("id") Integer id);
+
+       @Query(" SELECT t "
+            + " FROM TicketEO t "
+            + " LEFT JOIN FETCH t.machine m "
+            + " LEFT JOIN FETCH t.status "
+            + " WHERE t.creationDate>=:dateAfter AND t.creationDate <=:dateBefore")
+    public List<TicketEO> getAllBetween(@Param("dateAfter") Date dateAfter, @Param("dateBefore") Date dateBefore);
 }

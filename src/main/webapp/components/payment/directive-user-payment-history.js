@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('Fablab').directive('userPaymentHistory', function (PaymentService, NotificationService, $filter) {
+    angular.module('Fablab').directive('userPaymentHistory', function (AccountingService, UserService, $filter) {
         return {
             restrict: 'EA',
             scope: {
@@ -10,46 +10,23 @@
                 needReloadUser: '&'
             },
             templateUrl: 'components/payment/directive-user-payment-history.html',
-            controller: function ($scope) {
-                $scope.userBalance = {};
+            controller: function ($scope, AccountingService, UserService, $filter) {
+                $scope.currency = App.CONFIG.CURRENCY;
                 $scope.reload = function () {
-                    console.log('reload history');
-                    //FIXME get user balance !
-                    PaymentService.history($scope.user.id, function (data) {
-                        $scope.history = data.history;
-                        $scope.userBalance.balance = $filter('currency')(data.balance);
-                        $scope.userBalance.balanceRaw = data.balance;
+                    AccountingService.byUser($scope.user.id, function (data) {
+                        $scope.history = data;
+                        UserService.balance($scope.user.id, function (balance) {
+                            $scope.balance = $filter('number')(balance, 2);
+                        });
                     });
                 };
                 $scope.$watch('user', function (newValue) {
                     $scope.history = [];
-                    $scope.userBalance = {};
                     if (newValue) {
-                        $scope.userBalance.firstname = newValue.firstname;
-                        $scope.userBalance.lastname = newValue.lastname;
+                        $scope.user = newValue;
                         $scope.reload();
                     }
                 });
-                $scope.canRemove = function (h) {
-                    var diff = moment().diff(moment(h.date));
-                    return moment.duration(diff).asDays() <= App.CONFIG.ACCOUNTING_EDIT_HISTORY_LIMIT;
-                };
-                $scope.remove = function (h) {
-                    //FIXME check roles !
-                    var data = {
-                        id: h.id,
-                        type: h.type
-                    };
-                    PaymentService.removeHistory(data, function () {
-                        NotificationService.notify("success", "payment.notification.historyRemoved");
-                        $scope.reload();
-                        if (h.type === 'SUBSCRIPTION') {
-                            $scope.needReloadUser();
-                        }
-                    });
-                };
-
-
             }
         };
     });

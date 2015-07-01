@@ -16,6 +16,9 @@
         }).when('/login', {
             templateUrl: './components/auth/login-view.html',
             controller: 'AuthLoginController'
+        }).when('/connected', {
+            templateUrl: './components/dashboard/home-connected-view.html',
+            controller: 'DashboardHomeConnectedController'
         }).when('/logout', {
             templateUrl: './components/auth/logout-view.html',
             controller: 'AuthLogoutController'
@@ -52,15 +55,15 @@
         }).when('/reservations/reservation-edit', {
             templateUrl: './components/reservation/reservation-edit-view.html',
             controller: 'ReservationNewController'
-        }).when('/payments', {
-            templateUrl: './components/payment/by-user-view.html',
-            controller: 'PaymentByUserController'
-        }).when('/payments/:id', {
-            templateUrl: './components/payment/by-user-view.html',
-            controller: 'PaymentByUserController'
         }).when('/accounting', {
             templateUrl: './components/accounting/accounting-list-view.html',
             controller: 'AccountingListController'
+        }).when('/accounting/user-account', {
+            templateUrl: './components/accounting/user-account-view.html',
+            controller: 'AccountingUserController'
+        }).when('/accounting/user-account/:id', {
+            templateUrl: './components/accounting/user-account-view.html',
+            controller: 'AccountingUserEditController'
         }).when('/machines', {
             templateUrl: './components/machine/machine-list-view.html',
             controller: 'MachineListController'
@@ -253,6 +256,9 @@
         }).when('/userPayments/userPayment-edit', {
             templateUrl: './components/userPayment/userPayment-edit-view.html',
             controller: 'UserPaymentNewController'
+        }).when('/userPayments/userPayment-refund', {
+            templateUrl: './components/userPayment/userPayment-refund-view.html',
+            controller: 'UserPaymentRefundController'
         }).otherwise({
             redirectTo: '/'
         });

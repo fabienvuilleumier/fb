@@ -7,6 +7,9 @@ angular.module('Fablab').config(function ($translateProvider) {
                 time: 'hh:mm:ss'
             }
         },
+        home: {
+            user: 'Utilisateur'
+        },
         general: {
             days: 'jours',
             date: 'Date',
@@ -17,6 +20,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             toEn: 'En',
             yes: 'Oui',
             no: 'Non',
+            type: 'Type',
             table: {
                 action: 'Action'
             },
@@ -33,6 +37,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         },
         menu: {
             home: 'Home',
+            userAccount: 'Comptes utilisateurs',
             users: 'Utilisateurs',
             reservation: 'Réservations',
             payment: 'Paiements',
@@ -175,6 +180,9 @@ angular.module('Fablab').config(function ($translateProvider) {
             userTitle: 'Utilisateur',
             usageTitle: 'Ajouter une utilisation',
             paymentTitle: 'Ajouter un paiement',
+            credit: 'Crédit',
+            debit: 'Débit',
+            type:'Type',
             userNotAllowed: 'L\'utilisateur connecté n\'est pas autorisé à utiliser cette machine !',
             userNotAllowed2: 'Une certification pour la machine sélectionnée est requise',
             enterName: 'Entrer un nom',
@@ -189,7 +197,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             addPayment: 'Ajouter un paiement',
             addUsage: 'Ajouter une utilisation',
             details: 'Détails',
-            history: 'Historique',
+            history: 'Compte de l\'utilisateur',
             balanceText: 'Solde pour l\'utilisateur {{firstname}} {{lastname}} : <b>{{balance}}</b>',
             confirmation: {
                 historyRemove: 'Etes-vous sûr de vouloir supprimé cette entrée dans l\'historique ?'
@@ -203,7 +211,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         accounting: {
             title: 'Entrée / Sorties',
             today: 'Aujourd\'hui',
-            yesterday: 'Hieer',
+            yesterday: 'Hier',
             thisMonth: 'Mois courant',
             lastMonth: 'Mois dernier',
             thisYear: 'Année courante',
@@ -213,7 +221,9 @@ angular.module('Fablab').config(function ($translateProvider) {
             moneyIn: 'montant recettes',
             delta: 'Delta',
             debit: 'Débit',
-            credit: 'Crédit'
+            credit: 'Crédit',
+            accountCredit: 'Compte crédité',
+            accountDebit: 'Compte débité'
         },
         machine: {
             title: 'Machine',
@@ -312,6 +322,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             note: 'Remarques aditionnelles',
             cost: 'Coût',
             machine: 'Machine',
+            machineName: 'Machine',
             create: 'Création d\'une révision',
             edit: 'Edititon de la révision du ',
             notification: {
@@ -428,7 +439,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         purchase: {
             title: 'Achat',
             purchaseDate: 'Date d\'achat',
-            cashier:'Utilisateur ayant encaissé ',
+            cashier: 'Utilisateur ayant encaissé ',
             paidDirectly: 'L\'utilisateur a-t-il payé directement ?',
             quantity: 'Quantité',
             purchasePrice: 'Prix d\'achat',
@@ -622,7 +633,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             discount: 'Rabais',
             discountPercent: 'Rabais en pourcent',
             amount: 'Montant',
-            label:'Libellé',
+            label: 'Libellé',
             note: 'Remarques',
             user: 'Utilisateur',
             paidFablab: 'Paye pour le FabLab ? ',
@@ -631,6 +642,13 @@ angular.module('Fablab').config(function ($translateProvider) {
             create: 'Création d\'un paiement annexe',
             edit: 'Edition du paiement du ',
             btnTitle: 'Est-ce que l\'utilisateur paye pour ses propres dépenses ou pour le FabLab ?',
+            refund: 'Remboursement',
+            accountCredit: 'Compte crédité',
+            accountDebit: 'Compte débité',
+            alertRefund: 'Votre total a payer est déjà écrit dasn le champ total',
+            alertOk: 'Vous êtes à jour. Le montant sera crédité à votre compte',
+            cred:'Remise de crédit sur le compte',
+            refu:'Remboursement du dû',
             notification: {
                 saved: 'Paiement annexe sauvegardé',
                 removed: 'Paiement annexe supprimé'

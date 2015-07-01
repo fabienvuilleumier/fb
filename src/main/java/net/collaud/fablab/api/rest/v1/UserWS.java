@@ -25,7 +25,7 @@ public class UserWS extends ReadWriteRestWebservice<UserEO, UserService> {
     private UserService userService;
 
     @PostConstruct
-    private void postConstruct() {
+    public void postConstruct() {
         super.setService(userService);
     }
 
@@ -44,5 +44,10 @@ public class UserWS extends ReadWriteRestWebservice<UserEO, UserService> {
     public boolean hasRole(@RequestParam("userId") Integer userId,
             @RequestParam("role") String role) {
         return userService.hasRole(userId, role);
+    }
+    
+    @RequestMapping(value = "balance", method = RequestMethod.GET)
+    public Double balance(@RequestParam("userId") Integer userId) {
+        return userService.balance(userId);
     }
 }

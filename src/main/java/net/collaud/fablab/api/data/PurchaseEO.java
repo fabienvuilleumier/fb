@@ -29,7 +29,6 @@ import org.hibernate.annotations.Type;
 @Getter
 @Setter
 @ToString
-@Where(clause = "active=1")
 public class PurchaseEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Id

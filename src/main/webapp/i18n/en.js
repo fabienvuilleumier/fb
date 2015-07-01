@@ -7,6 +7,9 @@ angular.module('Fablab').config(function ($translateProvider) {
                 time: 'hh:mm:ss'
             }
         },
+        home: {
+            user: 'User'
+        },
         general: {
             days: 'days',
             date: 'Date',
@@ -17,6 +20,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             toEn: 'En',
             yes: 'Yes',
             no: 'No',
+            type: 'Type',
             table: {
                 action: 'Action'
             },
@@ -33,6 +37,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         },
         menu: {
             home: 'Home',
+            userAccount: 'Comptes utilsiateurs',
             users: 'Users',
             reservation: 'Reservation',
             payment: 'Payment',
@@ -175,6 +180,9 @@ angular.module('Fablab').config(function ($translateProvider) {
             userTitle: 'User',
             usageTitle: 'Add an usage',
             paymentTitle: 'Add a payment',
+            credit: 'Credit',
+            debit: 'Debit',
+            type: 'Type',
             userNotAllowed: 'The connected user is not allowed to use this machine !',
             userNotAllowed2: 'A certification for the chosen machinery is required',
             enterName: 'Enter a name',
@@ -189,7 +197,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             addPayment: 'Add payment',
             addUsage: 'Add usage',
             details: 'Details',
-            history: 'History',
+            history: 'User account',
             balanceText: 'Balance for user {{firstname}} {{lastname}} : <b>{{balance}}</b>',
             confirmation: {
                 historyRemove: 'Do you really want to remove this history entry ?'
@@ -213,7 +221,9 @@ angular.module('Fablab').config(function ($translateProvider) {
             moneyIn: 'Money in',
             delta: 'Delta',
             debit: 'Debit',
-            credit: 'Credit'
+            credit: 'Credit',
+            accountCredit: 'Credit account',
+            accountDebit: 'Debit account'
         },
         machine: {
             title: 'Machinery',
@@ -312,6 +322,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             note: 'Note',
             cost: 'Cost',
             machine: 'Machinery',
+            machineName: 'Machinery',
             create: 'Revision creation',
             edit: 'Edit revision @',
             notification: {
@@ -630,6 +641,13 @@ angular.module('Fablab').config(function ($translateProvider) {
             create: 'Annex payment creation',
             edit: 'Edit payment at :',
             btnTitle: 'Does the current user pay for him or for the FabLab ?',
+            refund: 'Refund',
+            accountCredit: 'Credit account',
+            accountDebit: 'Debit account',
+            alertRefund: 'Your total to refund is already set in the total input',
+            alertOk: 'You\'re up to date, no need to refund. You can add some money to your account',
+            cred: 'Credit the account',
+            refu: 'Refund the account',
             notification: {
                 saved: 'Annex payment saved',
                 removed: 'Annex payment removed'

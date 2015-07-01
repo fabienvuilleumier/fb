@@ -392,3 +392,7 @@ table.dataTable tbody tr .bg-success{
 .canUse {
     color: red;
 }
+
+.bold {
+    font-weight: bold;
+}

@@ -1,7 +1,14 @@
 <h1 translate="menu.userPayments"></h1>
 <div class="header-control">
     <div class="btn-group" >
-        <btn-create link="#/userPayments/userPayment-edit"></btn-create>
+        <a href="#/userPayments/userPayment-edit" class="btn btn-success btn-glyph">
+            <span translate="button.create"> </span>
+            <span class="fa fa-fw fa-plus"></span>
+        </a>
+        <a href="#/userPayments/userPayment-refund" class="btn btn-alternate btn-glyph">
+            <span translate="userPayment.refund"> </span>
+            <span class="fa fa-fw fa-check"></span>
+        </a>
     </div>
 </div>
 <div class="userPaymentList" >
@@ -39,7 +46,7 @@
             </td>
             <td class="center"
                 data-title="'userPayment.paidFablab' | translate">
-                 <input type="checkbox" ng-checked="userPayment.payedForFabLab" disabled />
+                <input type="checkbox" ng-checked="userPayment.payedForFabLab" disabled />
             </td>
             <td class="listBtn2">
                 <div class="btn-group">
