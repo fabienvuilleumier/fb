@@ -120,7 +120,7 @@ public class BackendBaseGenerator {
             str.append("            ").append(CLASS_ATTRIBUTE).append(".setId(0);").append("\n");
             str.append("        ").append("}").append("\n");
             str.append("        ").append("if (").append(CLASS_ATTRIBUTE).append(".getId() > 0) {").append("\n");
-            str.append("            ").append(CLASS_EO).append(" old = ").append(CLASS_DAO_ATTRIBUTE).append(".findOne(").append(CLASS_ATTRIBUTE).append(".getId());").append("\n");
+            str.append("            ").append(CLASS_EO).append(" old = ").append(CLASS_DAO_ATTRIBUTE).append(".findOneDetails(").append(CLASS_ATTRIBUTE).append(".getId()).get();").append("\n");
 
             for (Map<String, String> f : FIELDS) {
                 if (!f.get("name").equals("id")) {

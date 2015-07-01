@@ -3,7 +3,7 @@ package net.collaud.fablab.api.generator;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import net.collaud.fablab.api.data.EventModuleEO;
+import net.collaud.fablab.api.data.EventEO;
 /**
  *
  * @author Fabien Vuilleumier
@@ -18,17 +18,26 @@ public class Generator {
      * BEGIN CHANGE SECTION
      Must be a table of : 
     
-     {"java type", "java name", "required ? [t,f]", "db type", "unique[t,f]"} 
+     {"java type", "java name", "nullable ? [t,f]", "db type", "unique[t,f]"} 
      */
     /*FIRST*/
-    private final String CLASS_NAME = "EventModule";
-    private final String TABLE_NAME = "t_event_module";
-    private final String SORT_ATTR = "name";
+    private final String CLASS_NAME = "Event";
+    private final String TABLE_NAME = "t_event";
+    private final String SORT_ATTR = "title";
 
     private final String[][] FIELDS = new String[][]{
-        {"Integer", "id", "t", "INT", "t"},
-        {"String", "name", "t", "VARCHAR", "t"},
-        {"String", "description", "f", "TEXT", "f"}
+        {"Integer", "id", "f", "INT", "t"},
+        {"Date", "dateStart", "f", "DATE", "f"},
+        {"Date", "dateEnd", "f", "DATE", "f"},
+        {"Date", "timeStart", "f", "DATETIME", "f"},
+        {"Date", "timeEnd", "f", "DATETIME", "f"},
+        {"String", "title", "f", "VARCHAR", "t"},
+        {"String", "theme", "t", "VARCHAR", "f"},
+        {"String", "place", "t", "VARCHAR", "f"},
+        {"String", "description", "t", "TEXT", "f"},
+        {"EventTypeEo", "eventType", "f", "INT", "f"},
+        {"UserEO", "supervisor", "f", "INT", "f"},
+        {"UserEO", "cashier", "t", "INT", "f"}
     };
 
     private final boolean WRITE = true;
@@ -36,17 +45,16 @@ public class Generator {
     private final Map<String, String> nestedObjectReprAttr = new HashMap<>();
 
     /*SECOND*/
-    private final Class KLAZZ = null;//CertificationEO.class;
+    private final Class KLAZZ = EventEO.class;//CertificationEO.class;
 
     public static void main(String[] args) {
         Generator agl = new Generator();
-        /*agl.getNestedObjectReprAttr().put("user", "firstname");
+        agl.getNestedObjectReprAttr().put("user", "firstname");
         agl.getNestedObjectReprAttr().put("cashier", "firstname");
-        agl.getNestedObjectReprAttr().put("machine", "name");
-        agl.getNestedObjectReprAttr().put("membershipType", "name");*/
+        agl.getNestedObjectReprAttr().put("eventType", "label");
         //agl.runEO();
-        //agl.runBase();
-       // agl.runAngular(agl.getNestedObjectReprAttr());
+        agl.runBase();
+        agl.runAngular(agl.getNestedObjectReprAttr());
     }
 
     /*END CHANGE SECTION */
