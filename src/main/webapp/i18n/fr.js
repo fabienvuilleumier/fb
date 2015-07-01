@@ -21,6 +21,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             yes: 'Oui',
             no: 'Non',
             type: 'Type',
+            erase:'Effacer',
             table: {
                 action: 'Action'
             },
@@ -683,6 +684,9 @@ angular.module('Fablab').config(function ($translateProvider) {
             alreadyExist: 'Cet email existe déjà',
             create: 'Création d\'un inscrit',
             edit: 'Edition de ',
+            haveAquired:'Cette personnes a-t-elle des modules acquis ?',
+            nonSelectedListLabel:'Modules disponibles',
+            selectedListLabel:'Modules acquis',
             notification: {
                 saved: 'Inscrit sauvegardé',
                 removed: 'Inscrit supprimé'
@@ -696,8 +700,11 @@ angular.module('Fablab').config(function ($translateProvider) {
             name: 'Nom',
             description: 'Description',
             alreadyExist: 'Ce nom existe déjà',
+            havePrerequisites:'Ce module a-t-il des prerequis ?',
             create: 'Création d\'un module d\'évènements',
             edit: 'Edition de ',
+            nonSelectedListLabel:'Modules disponibles comme prérequis',
+            selectedListLabel:'Modules prérequis',
             notification: {
                 saved: 'Module d\'évènements sauvegardé',
                 removed: 'Module d\'évènements supprimé'

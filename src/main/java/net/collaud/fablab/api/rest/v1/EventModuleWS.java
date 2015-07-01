@@ -4,10 +4,11 @@ import javax.annotation.PostConstruct;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.EventModuleEO;
 import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
-import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.service.EventModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -26,9 +27,10 @@ public class EventModuleWS extends ReadWriteRestWebservice<EventModuleEO, EventM
     public void postConstruct(){
         super.setService(eventModuleService);
     }
-    @Override
-    public void softRemove(Integer id) throws FablabException {
-        eventModuleService.softRemove(id);
+
+    @RequestMapping(value = "getId", method = RequestMethod.GET)
+    public EventModuleEO getId(@RequestParam(value = "name") String name) {
+        return eventModuleService.getId(name);
     }
 }
 

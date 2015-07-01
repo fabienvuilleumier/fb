@@ -25,6 +25,10 @@
                 filter="{'email':'text'}">
                 {{eventPerson.email}}
             </td>
+             <td  class="center"
+                 data-title="'eventPerson.haveAquired' | translate ">
+                <input type="checkbox" ng-checked="eventPerson.aquiredModules.length !== 0" disabled />
+            </td>
             <td class="listBtn2">
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" href="#/eventPersons/eventPerson-edit/{{eventPerson.id}}"><span class="glyphicon glyphicon-pencil"></span></a>

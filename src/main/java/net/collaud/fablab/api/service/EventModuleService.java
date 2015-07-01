@@ -8,4 +8,6 @@ import net.collaud.fablab.api.service.global.ReadWriteService;
 */
 public interface EventModuleService extends ReadWriteService<EventModuleEO>{
 
+    EventModuleEO getId(String name);
+
 }

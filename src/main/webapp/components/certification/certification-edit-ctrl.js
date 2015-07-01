@@ -36,8 +36,10 @@ app.controller('GlobalCertificationEditController', function ($scope, $routePara
             $scope.certification.users = $scope.certifiedUsers;
             var userIds = [];
             var ui;
-            for (ui = 0; ui < $scope.certification.users.length; ui++) {
-                userIds.push($scope.certification.users[ui].id);
+            if ($scope.certification.users) {
+                for (ui = 0; ui < $scope.certification.users.length; ui++) {
+                    userIds.push($scope.certification.users[ui].id);
+                }
             }
             //Control of prerequisites 
             CertificationService.failedUser($scope.certification.id, userIds, function (failedUsers) {
