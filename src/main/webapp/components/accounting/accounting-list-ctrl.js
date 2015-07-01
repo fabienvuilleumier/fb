@@ -2,6 +2,7 @@
     'use strict';
     var app = angular.module('Fablab');
     app.controller('AccountingListController', function ($scope, AccountingService) {
+        $scope.filename = "FabLab-Manager_Acouunting_export";
         $scope.criteria = {
             dateFrom: null,
             dateTo: null
@@ -51,6 +52,8 @@
             $scope.updateAccounting();
         };
 
+
+
         var computeInAndOut = function () {
             var moneyIn = 0;
             var sell = 0;
@@ -76,7 +79,22 @@
         };
 
         $scope.export = function () {
-            alert('todo');
+            var hist = $scope.history;
+            var tabRet = [];
+            for(var i = 0; i < hist.length; i++){
+                tabRet.push({
+                    date:moment(hist[i].date).format(),
+                    type:hist[i].type,
+                    accountCredit:hist[i].account_CREDIT,
+                    accountDebit:hist[i].account_DEBIT,
+                    credit:hist[i].amount > 0 ? hist[i].amount : "",
+                    debit:hist[i].amount <= 0 ? hist[i].amount : "",
+                    user:hist[i].user.lastname.toUpperCase() + " " + hist[i].user.firstname,
+                    detail:hist[i].detail.latinise(),
+                    comment:hist[i].comment.latinise()
+                });
+            }
+            return tabRet;
         };
 
         $scope.periodPreset($scope.intervals[2]);//this month

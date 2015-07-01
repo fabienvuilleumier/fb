@@ -21,28 +21,29 @@ public enum HistoryEntryAccounts {
     VENTES_MARCHANDISES(3200),
     PRODUIT_EXCEPTIONNEL(8000),
     COTISATIONS(6586),
-    HONORAIRES(3400), 
+    HONORAIRES(3400),
     STOCK_DIVERS(1200);
 
-    
     private final int NUMBER;
-    
+
     /**
      * Parameterized constructor.
+     *
      * @param number the swiss NUMBER
      */
-    private HistoryEntryAccounts(final int number){
+    private HistoryEntryAccounts(final int number) {
         this.NUMBER = number;
     }
-    
+
     /**
      * Get the type.
+     *
      * @return the type (String)
      */
-    public int getNumber(){
+    public int getNumber() {
         return NUMBER;
     }
-    
+
     public static List<String> names() {
         HistoryEntryAccounts[] accounts = values();
         List<String> names = new ArrayList<>();
@@ -52,6 +53,7 @@ public enum HistoryEntryAccounts {
 
         return names;
     }
+
     public static List<String> both() {
         HistoryEntryAccounts[] accounts = values();
         List<String> names = new ArrayList<>();
@@ -60,5 +62,28 @@ public enum HistoryEntryAccounts {
         }
 
         return names;
+    }
+
+    public static String getName(String name) {
+        HistoryEntryAccounts hea = HistoryEntryAccounts.valueOf(name);
+        StringBuilder res = new StringBuilder();
+        res.append("(");
+        res.append(hea.getNumber());
+        res.append(") ");
+        res.append(stringify(name));
+        return res.toString();
+    }
+
+    private static StringBuilder stringify(String hea) {
+        String[] splitted = hea.split("_");
+        StringBuilder stringified = new StringBuilder();
+        for (String s : splitted) {
+            stringified.append(s);
+            stringified.append(" ");
+        }
+        if (stringified.length() > 0) {
+            stringified.deleteCharAt(stringified.length() - 1);
+        }
+        return stringified;
     }
 }

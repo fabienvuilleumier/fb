@@ -52,7 +52,14 @@
                 </div>
             </div>
             <div class="panel-footer text-right">
-                <button type="button" class="btn btn-danger"ng-click="export()">
+                <button type="button" 
+                        class="btn btn-danger" 
+                        ng-csv="export()" 
+                        field-separator=";" 
+                        charset='UTF-8'
+                        filename="FabLab-Manager_Acounting_export.csv"
+                        csv-header="['DATE', 'TYPE', 'CREDIT ACCOUNT' ,
+                        'DEBIT ACCOUNT', 'CREDIT', 'DEBIT', 'USER', 'DETAIL', 'COMMENT']">
                     {{'button.export'| translate}}
                     <span class="glyphicon glyphicon-export"></span>
                 </button>
@@ -93,10 +100,10 @@
                 ng-class="{'bg-success':h.amount > 0,
                            'bg-danger':h.amount <= 0}"
                 >
-                <td>{{h.date|formatTimestamp:'DD.MM.YYYY'}}</td>
+                <td>{{h.date|prettyDate}}</td>
                 <td>{{h.type|lowercase}}</td>
-                <td>{{h.account_CREDIT|lowercase}}</td>
-                <td>{{h.account_DEBIT|lowercase}}</td>
+                <td>{{h.account_CREDIT}}</td>
+                <td>{{h.account_DEBIT}}</td>
                 <td><span ng-if="h.amount > 0">{{h.amount|currency}}</span></td>
                 <td><span ng-if="h.amount <= 0">{{-h.amount|currency}}</span></td>
                 <td>{{h.user|prettyUser}}</td>
