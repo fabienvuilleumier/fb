@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import net.collaud.fablab.api.data.EventTypeEO;
-import net.collaud.fablab.api.data.UsageEO;
 /**
  *
  * @author Fabien Vuilleumier
@@ -36,7 +35,7 @@ public class Generator {
     private final Map<String, String> nestedObjectReprAttr = new HashMap<>();
 
     /*SECOND*/
-    private final Class KLAZZ = null;//CertificationEO.class;
+    private final Class KLAZZ = EventTypeEO.class;//CertificationEO.class;
 
     public static void main(String[] args) {
         Generator agl = new Generator();
@@ -45,7 +44,7 @@ public class Generator {
         agl.getNestedObjectReprAttr().put("machine", "name");
         agl.getNestedObjectReprAttr().put("membershipType", "name");*/
         //agl.runEO();
-        agl.runBase();
+        //agl.runBase();
         agl.runAngular(agl.getNestedObjectReprAttr());
     }
 

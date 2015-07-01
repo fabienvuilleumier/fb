@@ -55,7 +55,7 @@ public class BackendAngularListEditGenerator {
                 map.put("unique", s[4]);
                 this.FIELDS.add(map);
             }
-            
+
         } else {
             throw new IllegalArgumentException("PAS LE BON NOMBRE D'ARGUMENTS");
         }
@@ -116,7 +116,11 @@ public class BackendAngularListEditGenerator {
                     if (f.get("type").contains("EO") && !f.get("type").contains("List")) {
                         str.append("                ").append("sortable=\"'").append(nestedObjectReprAtr(f)).append("'\"").append("\n");
                         str.append("                ").append("filter=\"{'").append(nestedObjectReprAtr(f)).append("':'text'}\">").append("\n");
-                        str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append(".").append(NESTED_OBJECT_REPR_ATTR.get(f.get("name"))).append("}}").append("\n");
+                        if (f.get("unique").equals("t")) {
+                            str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append(".").append(NESTED_OBJECT_REPR_ATTR.get(f.get("name"))).append("|lowercase}}").append("\n");
+                        } else {
+                            str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append(".").append(NESTED_OBJECT_REPR_ATTR.get(f.get("name"))).append("}}").append("\n");
+                        }
                     } else {
                         str.append("                ").append("sortable=\"'").append(f.get("name")).append("'\"").append("\n");
                         str.append("                ").append("filter=\"{'").append(f.get("name")).append("':'text'}\">").append("\n");
@@ -289,7 +293,7 @@ public class BackendAngularListEditGenerator {
                         str.append("                        ").append("<input type=\"").append(appendType(f.get("type"))).append("\"").append("\n");
                         str.append("                            ").append("class=\"form-control\" ").append("\n");
                         str.append("                            ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"");
-                        if (f.get("unique").equals("true")) {
+                        if (f.get("unique").equals("t")) {
                             str.append("                            ").append("duplicate=\"existingValues\" ").append("\n");
                             str.append("                            ").append("uppercase ").append("\n");
                             str.append("                            ").append("name=\"").append(f.get("name")).append("\" \n");
@@ -298,7 +302,7 @@ public class BackendAngularListEditGenerator {
                             str.append("required");
                         }
                         str.append("/>").append("\n");
-                        if (f.get("unique").equals("true")) {
+                        if (f.get("unique").equals("t")) {
                             str.append("                        ").append("<div class=\"col-sm-2 error-text\">").append("\n");
                             str.append("                            ").append("<span ng-show=\"edit").append(CLASS_NAME).append(".").append(f.get("name")).append(".$error.duplicate\" ").append("\n");
                             str.append("                                ").append("translate=\"").append(CLASS_ATTRIBUTE).append(".alreadyExist\"></span>").append("\n");
