@@ -41,7 +41,7 @@ public class BackendBaseGenerator {
 
     private <T> BackendBaseGenerator(Class<T> klazz, String[][] fields) {
         this.FIELDS = new LinkedList<>();
-        if(fields.length == 5){
+        if(fields[0].length == 5){
             for(String[] s : fields){
                 Map<String, String> map = new HashMap<>();
                 map.put("type", s[0]);
@@ -49,6 +49,7 @@ public class BackendBaseGenerator {
                 map.put("required", s[2]);
                 map.put("dbType", s[3]);
                 map.put("unique", s[4]);
+                this.FIELDS.add(map);
             }
         }else{
             throw new IllegalArgumentException("PAS LE BON NOMBRE D'ARGUMENTS");
