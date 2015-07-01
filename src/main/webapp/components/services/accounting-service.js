@@ -16,6 +16,9 @@
 			},
                         byUser : function(userId, successFn){
                             $http.get(App.API.ACCOUNTING_API + '/byUser?userId=' + userId).success(successFn);
+                        },
+                        getName : function(name, successFn){
+                            $http.get(App.API.ACCOUNTING_API + '/getName?name=' + name).success(successFn);
                         }
 		};
 	});

@@ -43,4 +43,9 @@ public class AccoutingWS {
         return HistoryEntryAccounts.names();
     }
 
+    @RequestMapping(value = "getName", method = RequestMethod.GET)
+    public String getAccounts(@RequestParam("name") String name) {
+        return HistoryEntryAccounts.getName(name);
+    }
+
 }
