@@ -52,6 +52,9 @@
             hasRole: function (userId, role, successFn) {
                 $http.get(App.API.USER_API + "/hasRole?userId=" + userId +
                         "&role=" + role).success(successFn);
+            },
+            balance: function (userId, successFn) {
+                $http.get(App.API.USER_API + "/balance?userId=" + userId).success(successFn);
             }
         };
     });

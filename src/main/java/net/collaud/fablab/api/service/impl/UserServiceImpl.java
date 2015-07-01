@@ -17,9 +17,10 @@ import net.collaud.fablab.api.data.CertificationEO;
 import net.collaud.fablab.api.data.GroupEO;
 import net.collaud.fablab.api.data.RoleEO;
 import net.collaud.fablab.api.data.UserEO;
+import net.collaud.fablab.api.data.virtual.UserAccountEntry;
 import net.collaud.fablab.api.security.PasswordUtils;
 import net.collaud.fablab.api.security.Roles;
-import net.collaud.fablab.api.service.CertificationService;
+import net.collaud.fablab.api.service.AccountingService;
 import net.collaud.fablab.api.service.MailService;
 import net.collaud.fablab.api.service.UserService;
 import net.collaud.fablab.api.service.util.recaptcha.ReCaptchaChecker;
@@ -52,6 +53,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userDao;
+
+    @Autowired
+    private AccountingService accountingService;
 
     @Autowired
     private MembershipTypeRepository membershipTypeDao;
@@ -206,5 +210,16 @@ public class UserServiceImpl implements UserService {
             }
         }
         return res;
+    }
+
+    @Override
+    @Secured(Roles.USER_VIEW)
+    public Double balance(Integer userId) {
+        Double balance = 0.0;
+        for (UserAccountEntry uae : accountingService.getAccountingEntries(userId)) {
+            balance += uae.getAMOUNT();
+        }
+        balance = Math.round(balance * 20) / 20.0;
+        return balance;
     }
 }

@@ -21,7 +21,8 @@ public interface UsageRepository extends JpaRepository<UsageEO, Integer> {
             + " LEFT JOIN FETCH u.cashier  "
             + " LEFT JOIN FETCH u.machine m "
             + " LEFT JOIN FETCH m.machineType "
-            + " LEFT JOIN FETCH u.membershipType  ")
+            + " LEFT JOIN FETCH u.membershipType "
+            + " WHERE u.active = true")
     @Override
     List<UsageEO> findAll();
 
@@ -32,7 +33,7 @@ public interface UsageRepository extends JpaRepository<UsageEO, Integer> {
             + " LEFT JOIN FETCH u.machine m "
             + " LEFT JOIN FETCH m.machineType "
             + " LEFT JOIN FETCH u.membershipType "
-            + " WHERE u.id=:id")
+            + " WHERE u.id=:id AND u.active = true")
     Optional<UsageEO> findOneDetails(@Param("id") Integer id);
 
     @Query(" SELECT u "
@@ -41,7 +42,7 @@ public interface UsageRepository extends JpaRepository<UsageEO, Integer> {
             + " LEFT JOIN FETCH u.cashier  "
             + " LEFT JOIN FETCH u.machine m "
             + " LEFT JOIN FETCH m.machineType "
-            + " WHERE u.dateStart>=:dateAfter AND u.dateStart <=:dateBefore")
+            + " WHERE u.dateStart>=:dateAfter AND u.dateStart <=:dateBefore ")
     public List<UsageEO> getAllBetween(@Param("dateAfter") Date dateAfter, @Param("dateBefore") Date dateBefore);
 
     @Query(" SELECT u "
@@ -50,7 +51,16 @@ public interface UsageRepository extends JpaRepository<UsageEO, Integer> {
             + " LEFT JOIN FETCH u.cashier  "
             + " LEFT JOIN FETCH u.machine m "
             + " LEFT JOIN FETCH m.machineType "
-            + " WHERE u.user.id=:userId ")
+            + " WHERE u.user.id=:userId AND u.active = true ")
     public List<UsageEO> getByUser(@Param("userId") Integer userId);
 
+    @Query("SELECT u "
+            + " FROM UsageEO u  "
+            + " LEFT JOIN FETCH u.user  "
+            + " LEFT JOIN FETCH u.cashier  "
+            + " LEFT JOIN FETCH u.machine m "
+            + " LEFT JOIN FETCH m.machineType "
+            + " LEFT JOIN FETCH u.membershipType "
+            + " WHERE u.user.id = :id")
+    public List<UsageEO> findAllWithActive(@Param("id")Integer id);
 }

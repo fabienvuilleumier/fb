@@ -11,7 +11,6 @@
                 ng-model="selected.user"
                 on-select="onSelectUser($item)"
                 ng-change="setSelected(true)"
-                ng-disabled="!showRole"
                 theme="bootstrap">
                 <ui-select-match placeholder="{{'payment.enterName'|translate}}" >
                     {{$select.selected|prettyUser}} 
@@ -39,14 +38,6 @@
             </tr>
         </table>
         <fab-user-subscription user="selected.user" confirm-callback="updateUser(user)" ></fab-user-subscription>
-    </div>
-</div>
-<div class="row" ng-if="selected.user">
-    <div class="col-md-6">
-        <user-payment-add-usage user="selected.user" min-date="minDate" callback="reloadHistory()"/>
-    </div>
-    <div class="col-md-6">
-        <user-payment-add-payment user="selected.user" doShow="true" min-date="minDate" callback="reloadHistory()" />
     </div>
 </div>
 <div class="row" ng-if="selected.user">

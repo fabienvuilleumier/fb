@@ -26,7 +26,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Where(clause = "active=1")
 public class SupplyEO extends AbstractDataEO<Integer> implements Serializable {
 
     @Id

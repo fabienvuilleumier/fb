@@ -13,7 +13,10 @@
 					},
 					url: App.API.ACCOUNTING_API + '/search'
 				}).success(successFn);
-			}
+			},
+                        byUser : function(userId, successFn){
+                            $http.get(App.API.ACCOUNTING_API + '/byUser?userId=' + userId).success(successFn);
+                        }
 		};
 	});
 

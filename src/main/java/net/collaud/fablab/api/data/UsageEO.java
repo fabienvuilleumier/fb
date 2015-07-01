@@ -17,7 +17,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.Where;
 
 /**
  *
@@ -28,7 +27,6 @@ import org.hibernate.annotations.Where;
 @Getter
 @Setter
 @ToString
-@Where(clause = "active=1")
 public class UsageEO extends AbstractDataEO<Integer> implements Serializable {
 
     private static final long serialVersionUID = 1L;

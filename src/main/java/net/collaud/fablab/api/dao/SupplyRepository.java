@@ -16,7 +16,8 @@ public interface SupplyRepository extends JpaRepository<SupplyEO, Integer>{
         + " FROM SupplyEO s  " 
         + " LEFT JOIN FETCH s.supplyType "
         + " LEFT JOIN FETCH s.creationUser "
-        + " LEFT JOIN FETCH s.supplyUnity u ")
+        + " LEFT JOIN FETCH s.supplyUnity u "
+    + " WHERE s.active = true ")
     @Override
     List<SupplyEO> findAll();
     
@@ -33,6 +34,6 @@ public interface SupplyRepository extends JpaRepository<SupplyEO, Integer>{
         + " LEFT JOIN FETCH s.supplyType "
         + " LEFT JOIN FETCH s.supplyUnity "
         + " LEFT JOIN FETCH s.creationUser "
-        + " WHERE s.quantityStock>0")
+        + " WHERE s.quantityStock>0  AND s.active = true")
     List<SupplyEO> stock();
 }

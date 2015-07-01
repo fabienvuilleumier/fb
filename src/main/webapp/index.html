@@ -291,6 +291,10 @@
                                     label="menu.inOut" icon="exchange"
                                     show="hasAnyRole('ACCOUNTING_VIEW')"
                                     ng-show="hasAnyRole('ACCOUNTING_VIEW')"></li>
+                                <li fab-nav-item-af link="accounting/user-account"
+                                    label="menu.userAccount" icon="calculator"
+                                    show="hasAnyRole('ACCOUNTING_MANAGE')"
+                                    ng-show="hasAnyRole('ACCOUNTING_MANAGE')"></li>
                             </ul>
                         </li>
                         <!--PAYMENT DROPDOWN-->
@@ -474,6 +478,7 @@
     <script src="./components/payment/directive-add-payment.js"></script>
 
     <script src="./components/accounting/accounting-list-ctrl.js"></script>
+    <script src="./components/accounting/user-account-ctrl.js"></script>
 
     <script src="./components/machine/machine-list-ctrl.js"></script>
     <script src="./components/machine/machine-edit-ctrl.js"></script>

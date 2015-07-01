@@ -109,7 +109,7 @@ app.controller('UserPaymentNewController', function ($scope, $controller, $rootS
     $controller('GlobalUserPaymentEditController', {$scope: $scope});
     $scope.newUserPayment = true;
     $scope.paidDirectly = false;
-    $scope.editable=true;
+    $scope.editable = true;
     $scope.userPayment = {
         datePayment: new Date(),
         user: $rootScope.connectedUser.user,
@@ -120,8 +120,45 @@ app.controller('UserPaymentNewController', function ($scope, $controller, $rootS
 app.controller('UserPaymentEditController', function ($scope, $routeParams, $controller) {
     $controller('GlobalUserPaymentEditController', {$scope: $scope});
     $scope.newUserPayment = false;
-    $scope.false=true;
+    $scope.false = true;
     $scope.loadUserPayment($routeParams.id);
+}
+);
+app.controller('UserPaymentRefundController', function ($scope, $rootScope, $controller, UserService, $filter) {
+    $controller('GlobalUserPaymentEditController', {$scope: $scope});
+    $scope.newUserPayment = true;
+    $scope.paidDirectly = true;
+    $scope.editable = true;
+    
+    UserService.balance($rootScope.connectedUser.user.id, function (balance) {
+        var ref = balance < 0 ? 'REFUND' : 'CREDIT';
+        if(parseFloat(balance) === parseFloat(0)){
+            ref = 'CREDIT';
+        }
+        $scope.refund = ref;
+        var cred = $filter('translate')('userPayment.cred');
+        var refu = $filter('translate')('userPayment.refu');
+        if (ref === 'CREDIT') {
+            $scope.userPayment = {
+                datePayment: new Date(),
+                user: $rootScope.connectedUser.user,
+                payedForFabLab: false,
+                label: cred,
+                refund: ref
+            };
+        } else {
+            $scope.userPayment = {
+                datePayment: new Date(),
+                user: $rootScope.connectedUser.user,
+                payedForFabLab: false,
+                refund: ref,
+                label: refu,
+                amount: $filter('number')(-balance, 2),
+                total: $filter('number')(-balance, 2)
+            };
+        }
+    });
+
 }
 );
 

@@ -21,4 +21,6 @@ public interface UserService extends ReadWriteService<UserEO> {
     boolean canUse(Integer machineTypeId, Integer userId);
 
     boolean hasRole(Integer userId, String role);
+
+    Double balance(Integer userId);
 }

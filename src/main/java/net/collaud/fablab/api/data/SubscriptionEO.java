@@ -28,7 +28,6 @@ import org.hibernate.annotations.Where;
 @Getter
 @Setter
 @ToString
-@Where(clause = "active=1")
 public class SubscriptionEO extends AbstractDataEO<Integer> implements Serializable {
 
     private static final long serialVersionUID = 1L;
