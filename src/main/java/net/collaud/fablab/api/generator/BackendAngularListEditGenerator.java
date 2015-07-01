@@ -405,7 +405,7 @@ public class BackendAngularListEditGenerator {
                 str.append("    ").append("});").append("\n");
             }
         }
-        
+
         str.append("    ").append(CLASS_SERVICE).append(".list(function (data) {").append("\n");
         str.append("        ").append("var res = [];").append("\n");
         str.append("        ").append("for (var i = 0; i < data.length; i++) {").append("\n");
@@ -413,7 +413,6 @@ public class BackendAngularListEditGenerator {
         str.append("        ").append("}").append("\n");
         str.append("        ").append("$scope.existingValues = res;").append("\n");
         str.append("    ").append("});").append("\n");
-
 
         str.append("}").append("\n");
         str.append(");").append("\n");
@@ -559,6 +558,9 @@ public class BackendAngularListEditGenerator {
                 str.append("    ").append(f.get("name")).append(": '").append((f.get("name").substring(0, 1)).toUpperCase()).append(f.get("name").substring(1)).append("',").append("\n");
             }
         }
+        if (hasUnique) {
+            str.append("    ").append("alreadyExist").append(": 'This ").append(CLASS_ATTRIBUTE).append(" already exists',").append("\n");
+        }
         if (write) {
             str.append("    ").append("create:'").append(CLASS_NAME).append(" creation',").append("\n");
             str.append("    ").append("edit:'Edit :',").append("\n");
@@ -583,6 +585,9 @@ public class BackendAngularListEditGenerator {
             if (!f.get("name").equals("id") && !f.get("name").equals("active") && !f.get("type").contains("List")) {
                 str.append("    ").append(f.get("name")).append(": '").append((f.get("name").substring(0, 1)).toUpperCase()).append(f.get("name").substring(1)).append("',").append("\n");
             }
+        }
+        if (hasUnique) {
+            str.append("    ").append("alreadyExist").append(": 'Ce ").append(CLASS_ATTRIBUTE).append(" existe déjà',").append("\n");
         }
         if (write) {
             str.append("    ").append("create:'Création de ").append(CLASS_NAME).append("',").append("\n");
