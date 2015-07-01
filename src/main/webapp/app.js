@@ -3,9 +3,9 @@
 
     angular.module('Fablab', [
         //ext-lib
-        'ngRoute', 'ngSanitize',  'ngResource', 'ui.bootstrap', 'btford.modal', 'ngNotify',
+        'ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap', 'btford.modal', 'ngNotify',
         'pascalprecht.translate', 'ngTable', 'ui.calendar', 'ui.select', 'vcRecaptcha', 'datatables',
-        'toggle-switch','ngCsv',
+        'toggle-switch', 'ngCsv',
         'datatables.columnfilter', 'datatables.bootstrap', 'colorpicker.module',
         // Core
         'Notification', 'Loader', 'httpInterceptor'
@@ -259,6 +259,33 @@
         }).when('/userPayments/userPayment-refund', {
             templateUrl: './components/userPayment/userPayment-refund-view.html',
             controller: 'UserPaymentRefundController'
+        }).when('/eventTypes', {
+            templateUrl: './components/eventType/eventType-list-view.html',
+            controller: 'EventTypeListController'
+        }).when('/eventTypes/eventType-edit/:id', {
+            templateUrl: './components/eventType/eventType-edit-view.html',
+            controller: 'EventTypeEditController'
+        }).when('/eventTypes/eventType-edit', {
+            templateUrl: './components/eventType/eventType-edit-view.html',
+            controller: 'EventTypeNewController'
+        }).when('/eventPersons', {
+            templateUrl: './components/eventPerson/eventPerson-list-view.html',
+            controller: 'EventPersonListController'
+        }).when('/eventPersons/eventPerson-edit/:id', {
+            templateUrl: './components/eventPerson/eventPerson-edit-view.html',
+            controller: 'EventPersonEditController'
+        }).when('/eventPersons/eventPerson-edit', {
+            templateUrl: './components/eventPerson/eventPerson-edit-view.html',
+            controller: 'EventPersonNewController'
+                 }).when('/eventModules', {
+        templateUrl: './components/eventModule/eventModule-list-view.html',
+        controller: 'EventModuleListController'
+    }).when('/eventModules/eventModule-edit/:id', {
+        templateUrl: './components/eventModule/eventModule-edit-view.html',
+        controller: 'EventModuleEditController'
+    }).when('/eventModules/eventModule-edit', {
+        templateUrl: './components/eventModule/eventModule-edit-view.html',
+        controller: 'EventModuleNewController'
         }).otherwise({
             redirectTo: '/'
         });

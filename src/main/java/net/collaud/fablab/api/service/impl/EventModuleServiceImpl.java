@@ -1,0 +1,69 @@
+package net.collaud.fablab.api.service.impl;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import net.collaud.fablab.api.dao.EventModuleRepository;
+import net.collaud.fablab.api.data.EventModuleEO;
+import net.collaud.fablab.api.security.Roles;
+import net.collaud.fablab.api.service.EventModuleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+/**
+ * This is the service implementation class for a <tt>EventModule</tt>.
+ * @author Fabien Vuilleumier
+ */
+@Service
+@Transactional
+    @Secured({Roles.EVENT_VIEW})
+public class EventModuleServiceImpl implements EventModuleService {
+
+    @Autowired
+    private EventModuleRepository eventModuleDAO;
+
+    @Override
+    @Secured({Roles.EVENT_VIEW})
+    public List<EventModuleEO> findAll() {
+        return new ArrayList(new HashSet(eventModuleDAO.findAll()));
+    }
+
+    @Override
+    @Secured({Roles.EVENT_VIEW})
+    public Optional<EventModuleEO> getById(Integer id) {
+        return Optional.ofNullable(eventModuleDAO.findOne(id));
+    }
+
+     @Override
+    @Secured({Roles.EVENT_VIEW})
+    public EventModuleEO save(EventModuleEO eventModule) {
+        if (eventModule.getId() == null) {
+            eventModule.setId(0);
+        }
+        if (eventModule.getId() > 0) {
+            EventModuleEO old = eventModuleDAO.findOne(eventModule.getId());
+            old.setName(eventModule.getName());
+            old.setDescription(eventModule.getDescription());
+            return eventModuleDAO.saveAndFlush(old);
+        } else {
+            return eventModuleDAO.saveAndFlush(eventModule);
+        }
+    }
+
+    @Override
+    @Secured({Roles.EVENT_VIEW})
+    public void remove(Integer id) {
+        eventModuleDAO.delete(id);
+    }
+
+    @Override
+    @Secured({Roles.EVENT_VIEW})
+    public void softRemove(Integer id) {
+        EventModuleEO current = eventModuleDAO.findOne(id);
+        current.setActive(false);
+        eventModuleDAO.saveAndFlush(current);
+    }
+}
+

@@ -3,7 +3,7 @@ package net.collaud.fablab.api.generator;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import net.collaud.fablab.api.data.EventTypeEO;
+import net.collaud.fablab.api.data.EventModuleEO;
 /**
  *
  * @author Fabien Vuilleumier
@@ -21,13 +21,14 @@ public class Generator {
      {"java type", "java name", "required ? [t,f]", "db type", "unique[t,f]"} 
      */
     /*FIRST*/
-    private final String CLASS_NAME = "EventType";
-    private final String TABLE_NAME = "t_event_type";
-    private final String SORT_ATTR = "label";
+    private final String CLASS_NAME = "EventModule";
+    private final String TABLE_NAME = "t_event_module";
+    private final String SORT_ATTR = "name";
 
     private final String[][] FIELDS = new String[][]{
         {"Integer", "id", "t", "INT", "t"},
-        {"String", "label", "t", "INT", "t"}
+        {"String", "name", "t", "VARCHAR", "t"},
+        {"String", "description", "f", "TEXT", "f"}
     };
 
     private final boolean WRITE = true;
@@ -35,7 +36,7 @@ public class Generator {
     private final Map<String, String> nestedObjectReprAttr = new HashMap<>();
 
     /*SECOND*/
-    private final Class KLAZZ = EventTypeEO.class;//CertificationEO.class;
+    private final Class KLAZZ = null;//CertificationEO.class;
 
     public static void main(String[] args) {
         Generator agl = new Generator();
@@ -45,7 +46,7 @@ public class Generator {
         agl.getNestedObjectReprAttr().put("membershipType", "name");*/
         //agl.runEO();
         //agl.runBase();
-        agl.runAngular(agl.getNestedObjectReprAttr());
+       // agl.runAngular(agl.getNestedObjectReprAttr());
     }
 
     /*END CHANGE SECTION */

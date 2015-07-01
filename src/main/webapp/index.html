@@ -55,6 +55,10 @@
         <link href="./components/role/style.css" rel="stylesheet">
         <link href="./components/usage/style.css" rel="stylesheet">
         <link href="./components/userPayment/style.css" rel="stylesheet">
+        <link href="./components/eventType/style.css" rel="stylesheet">
+        <link href="./components/eventPerson/style.css" rel="stylesheet">
+        <link href="./components/eventModule/style.css" rel="stylesheet">
+
         <!-- endbuild -->
 
     </head>
@@ -128,7 +132,8 @@
                             show="!connectedUser.connected"></li>
                         Not implemented yet-->
 
-                        <!-- <li> <a href="#/tests">Test Datatable</a></li>-->
+                        <!-- FOR DATATABLES TESTS
+                        <li> <a href="#/tests">Test Datatable</a></li>-->
 
                         <li fab-nav-item link="users/user-edit/{{connectedUser.user.id}}" icon="cog"
                             label="{{connectedUser.user| prettyUser}}"
@@ -139,7 +144,7 @@
                         <li class="lang-menu">
                             <span ng-show="curentLanguage === 'fr'">
                                 <span>
-                                    <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
+                                    <img src="./images/fr.png" alt="toFr" height="17" width="16"/>
                                     <span translate="general.toFr"></span>
                                 </span>
                                 <span>|</span>
@@ -150,7 +155,7 @@
                             </span>
                             <span ng-show="curentLanguage === 'en'">
                                 <a href="" ng-click="translate('fr')">
-                                    <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
+                                    <img src="./images/fr.png" alt="toFr" height="17" width="16"/>
                                     <span translate="general.toFr"></span>
                                 </a>
                                 <span>|</span>
@@ -276,6 +281,26 @@
                                     label="menu.motionStocks"
                                     show="hasAnyRole('SUPPLY_MANAGE')" 
                                     ng-show="hasAnyRole('SUPPLY_MANAGE')"></li>
+                            </ul>
+                        </li>
+                        <!--EVENTS DROPDOWN-->
+                        <li>
+                            <a data-toggle="collapse" data-target="#eventListDD" 
+                               ng-show="hasAnyRole('EVENT_VIEW')"  href="javascript:;">
+                                <i class="fa fa-fw fa-cubes"></i>
+                                <span translate="menu.event"></span>
+                                <b class="caret"></b>
+                            </a>
+                            <ul id="eventListDD" class="collapse">
+                                <li fab-nav-item-af link="eventTypes" icon="list" 
+                                    label="menu.eventTypes" 
+                                    show="hasAnyRole('EVENT_VIEW')"></li>
+                                <li fab-nav-item-af link="eventPersons" icon="users" 
+                                    label="menu.eventPersons" 
+                                    show="hasAnyRole('EVENT_VIEW')"></li>
+                                <li fab-nav-item-af link="eventModules" icon="cube" 
+                                    label="menu.eventModules" 
+                                    show="hasAnyRole('EVENT_VIEW')"></li>
                             </ul>
                         </li>
                         <!--ACCOUNTING DROPDOWN-->
@@ -447,6 +472,10 @@
     <script src="./components/services/userPayment-service.js"></script>
     <script src="./components/services/certification-service.js"></script>
     <script src="./components/services/trainingLevel-service.js"></script>
+    <script src="./components/services/eventType-service.js"></script>
+    <script src="./components/services/eventPerson-service.js"></script>
+    <script src="./components/services/eventModule-service.js"></script>
+
 
 
     <script src="./components/dashboard/home-ctrl.js"></script>
@@ -539,7 +568,17 @@
     <script src="./components/userPayment/userPayment-list-ctrl.js"></script>
     <script src="./components/userPayment/userPayment-edit-ctrl.js"></script>
 
+    <script src="./components/eventType/eventType-list-ctrl.js"></script>
+    <script src="./components/eventType/eventType-edit-ctrl.js"></script>
+
+    <script src="./components/eventPerson/eventPerson-list-ctrl.js"></script>
+    <script src="./components/eventPerson/eventPerson-edit-ctrl.js"></script>
+
+    <script src="./components/eventModule/eventModule-list-ctrl.js"></script>
+    <script src="./components/eventModule/eventModule-edit-ctrl.js"></script>
+
     <script src="./components/machineTest/test-ctrl.js"></script>
+
 
     <script src="https://apis.google.com/js/client.js?onload=OnLoadCallback"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
