@@ -27,6 +27,8 @@ public interface Roles {
     public static final String TRAINING_VIEW = "ROLE_TRAINING_VIEW";
     public static final String TRAINING_MANAGE = "ROLE_TRAINING_MANAGE";
     public static final String GROUP_MANAGE = "ROLE_GROUP_MANAGE";
+    public static final String EVENT_VIEW = "ROLE_EVENT_VIEW";
+    public static final String EVENT_MANAGE = "ROLE_EVENT_MANAGE";
 
     public static final String[] LIST_ROLES = new String[]{
         ADMIN,
@@ -49,6 +51,8 @@ public interface Roles {
         SUPPLY_MANAGE,
         TRAINING_MANAGE,
         TRAINING_VIEW,
-        GROUP_MANAGE
+        GROUP_MANAGE,
+        EVENT_VIEW,
+        EVENT_MANAGE
     };
 }

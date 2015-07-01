@@ -73,7 +73,11 @@ angular.module('Fablab').config(function ($translateProvider) {
             groups: 'Groupes d\'utilisateurs',
             usages: 'Utilisations machines',
             paymentsUse: 'Paiements et <br/><span class="second-ligne">utilisations machines</span>',
-            userPayments: 'Paiements annexes'
+            userPayments: 'Paiements annexes',
+            event: "Evènements",
+            eventTypes: 'Types d\'évènements',
+            eventPersons: 'Liste d\'inscrits',
+            eventModules : 'Modules d\'évènements'
         },
         loading: {
             title: 'Chargement',
@@ -182,7 +186,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             paymentTitle: 'Ajouter un paiement',
             credit: 'Crédit',
             debit: 'Débit',
-            type:'Type',
+            type: 'Type',
             userNotAllowed: 'L\'utilisateur connecté n\'est pas autorisé à utiliser cette machine !',
             userNotAllowed2: 'Une certification pour la machine sélectionnée est requise',
             enterName: 'Entrer un nom',
@@ -647,14 +651,59 @@ angular.module('Fablab').config(function ($translateProvider) {
             accountDebit: 'Compte débité',
             alertRefund: 'Votre total a payer est déjà écrit dasn le champ total',
             alertOk: 'Vous êtes à jour. Le montant sera crédité à votre compte',
-            cred:'Remise de crédit sur le compte',
-            refu:'Remboursement du dû',
+            cred: 'Remise de crédit sur le compte',
+            refu: 'Remboursement du dû',
             notification: {
                 saved: 'Paiement annexe sauvegardé',
                 removed: 'Paiement annexe supprimé'
             },
             confirmation: {
                 remove: 'Voulez-vous réellement supprimer ce paiement annexe ?'
+            }
+        },
+        eventType: {
+            title: 'Type d\'évènements',
+            label: 'Label',
+            alreadyExist: 'Ce type d\'évènements existe déjà',
+            create: 'Création de\'un type d\'évènements',
+            edit: 'Edition de ',
+            notification: {
+                saved: 'Type d\'évènements sauvegardé',
+                removed: 'Type d\'évènements supprimé'
+            },
+            confirmation: {
+                remove: 'Voulez-vous réellement supprimer type d\'évènements ?'
+            }
+        },
+        eventPerson: {
+            title: 'Inscrit',
+            lastname: 'Nom',
+            firstname: 'Prénom',
+            email: 'Email',
+            alreadyExist: 'Cet email existe déjà',
+            create: 'Création d\'un inscrit',
+            edit: 'Edition de ',
+            notification: {
+                saved: 'Inscrit sauvegardé',
+                removed: 'Inscrit supprimé'
+            },
+            confirmation: {
+                remove: 'Voulez-vous réellement supprimer cet inscrit ?'
+            }
+        },
+        eventModule: {
+            title: 'module d\'évènements',
+            name: 'Nom',
+            description: 'Description',
+            alreadyExist: 'Ce nom existe déjà',
+            create: 'Création d\'un module d\'évènements',
+            edit: 'Edition de ',
+            notification: {
+                saved: 'Module d\'évènements sauvegardé',
+                removed: 'Module d\'évènements supprimé'
+            },
+            confirmation: {
+                remove: 'Voulez-vous réellement supprimer ce module d\'évènements ?'
             }
         }
     });

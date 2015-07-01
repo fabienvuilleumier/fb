@@ -1,12 +1,14 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('RoleController', function ($scope,
-        NotificationService, RoleService, GroupService) {
+        NotificationService, RoleService, GroupService, $rootScope) {
 
     $scope.group;
     GroupService.list(function (groupes) {
         $scope.groupList = groupes;
     });
+    
+    var roleAdmin;
 
     $scope.setLists = function () {
         RoleService.list(function (roles) {
@@ -16,6 +18,8 @@ app.controller('RoleController', function ($scope,
                     for (var i = 0; i < roles.length; i++) {
                         if (roles[i].technicalname !== 'ROLE_ADMIN') {
                             availableRoles.push(roles[i]);
+                        }else{
+                            roleAdmin = roles[i];
                         }
                     }
                 } else {
@@ -28,7 +32,12 @@ app.controller('RoleController', function ($scope,
     };
 
     $scope.save = function () {
-        $scope.group.roles = $scope.assignedRoles;
+        var roles = $scope.assignedRoles;
+        //on remet les doirts administrateurs
+        if(roleAdmin){
+            roles.push(roleAdmin);
+        }
+        $scope.group.roles = roles;
         var groupCurrent = angular.copy($scope.group);
         GroupService.save(groupCurrent, function (data) {
             $scope.group = data;

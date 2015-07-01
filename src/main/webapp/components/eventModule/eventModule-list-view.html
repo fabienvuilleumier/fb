@@ -1,0 +1,35 @@
+<h1 translate="menu.eventModules"></h1>
+<div class="header-control">
+    <div class="btn-group" >
+        <btn-create link="#/eventModules/eventModule-edit"></btn-create>
+    </div>
+</div>
+<div class="eventModuleList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="eventModule in $data">
+            <td 
+                data-title="'eventModule.name' | translate" 
+                sortable="'name'"
+                filter="{'name':'text'}">
+                {{eventModule.name}}
+            </td>
+            <td 
+                data-title="'eventModule.description' | translate" 
+                sortable="'description'"
+                filter="{'description':'text'}">
+                {{eventModule.description}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group">
+                    <a class="btn btn-sm btn-default" href="#/eventModules/eventModule-edit/{{eventModule.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(eventModule)"
+                        ng-really-message="{{'eventModule.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

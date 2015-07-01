@@ -73,7 +73,12 @@ angular.module('Fablab').config(function ($translateProvider) {
             groups: 'Groups',
             usage: 'Usages',
             paymentsUse: 'Payment and usages',
-            userPayments: 'Annex payments'
+            userPayments: 'Annex payments',
+            event: "Evènements",
+            eventTypes: 'Event types',
+            eventPersons: 'Event persons list',
+            eventModules : 'Event modules'
+
         },
         loading: {
             title: 'Loading',
@@ -654,6 +659,51 @@ angular.module('Fablab').config(function ($translateProvider) {
             },
             confirmation: {
                 remove: 'Do you really want to remove this annex payment ?'
+            }
+        },
+        eventType: {
+            title: 'Event type',
+            label: 'Label',
+            alreadyExist: 'This event type already exists',
+            create: 'Event type creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Event type saved',
+                removed: 'Event type removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this event type ?'
+            }
+        },
+        eventPerson: {
+            title: 'Event person',
+            lastname: 'Lastname',
+            firstname: 'Firstname',
+            email: 'Email',
+            alreadyExist: 'This event person already exists',
+            create: 'Event person creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Event person saved',
+                removed: 'Event person removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this event person ?'
+            }
+        },
+        eventModule: {
+            title: 'Event module',
+            name: 'Name',
+            description: 'Description',
+            alreadyExist: 'This event module already exists',
+            create: 'Event module creation',
+            edit: 'Edit :',
+            notification: {
+                saved: 'Event module saved',
+                removed: 'Event module removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this event module ?'
             }
         }
     });
