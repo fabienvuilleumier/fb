@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('Fablab');
 app.controller('GlobalUserPaymentEditController', function ($scope, $location, $window, $rootScope, $filter,
-        UserPaymentService, NotificationService, StaticDataService) {
+        UserPaymentService, NotificationService, StaticDataService, AccountingService) {
     $scope.selected = {userPayment: undefined};
     $scope.currency = App.CONFIG.CURRENCY;
     $scope.showRole = $rootScope.hasAnyRole('PAYMENT_MANAGE');
@@ -103,6 +103,17 @@ app.controller('GlobalUserPaymentEditController', function ($scope, $location, $
     StaticDataService.loadCashiers(function (data) {
         $scope.cashierList = data;
     });
+
+    AccountingService.getAccounts(function (data) {
+        $scope.accounts = [];
+        for (var i = 0; i < data.length; i++) {
+            $scope.accounts.push({
+                name: data[i],
+                value: data[i]
+            });
+        }
+    });
+
 }
 );
 app.controller('UserPaymentNewController', function ($scope, $controller, $rootScope) {
@@ -129,10 +140,10 @@ app.controller('UserPaymentRefundController', function ($scope, $rootScope, $con
     $scope.newUserPayment = true;
     $scope.paidDirectly = true;
     $scope.editable = true;
-    
+
     UserService.balance($rootScope.connectedUser.user.id, function (balance) {
         var ref = balance < 0 ? 'REFUND' : 'CREDIT';
-        if(parseFloat(balance) === parseFloat(0)){
+        if (parseFloat(balance) === parseFloat(0)) {
             ref = 'CREDIT';
         }
         $scope.refund = ref;
