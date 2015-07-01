@@ -126,31 +126,26 @@ public class BackendEOGenerator {
         str.append("@Where(clause=\"active=1\")").append("\n");
         str.append("public class ").append(CLASS_EO).append(" extends AbstractDataEO<Integer> implements Serializable {").append("\n\n");
         if (FIELDS.length != 0) {
-            if (FIELDS[0].length == 4) {
+            if (FIELDS[0].length == 5) {
                 for (String[] fields : FIELDS) {
                     String type = fields[0];
                     String name = fields[1];
                     String nullable = fields[2].equals("t") ? "true" : "false";
+                    String optional = fields[2].equals("t") ? "false" : "true";
                     String dbType = fields[3];
                     if (name.equals("id")) {
                         str.append("    ").append("@Id").append("\n");
                         str.append("    ").append("@GeneratedValue(strategy = GenerationType.IDENTITY)").append("\n");
-                        str.append("    ").append("@Column(name = \"").append(getId()).append("\", nullable = false)").append("\n");
+                        str.append("    ").append("@Column(name = \"").append(getId()).append("\", nullable = ").append(nullable).append(")").append("\n");
                         str.append("    ").append("private ").append("Integer").append(" id;").append("\n\n");
                     } else {
                         if (type.contains("List")) {
                             lists.put(name, type);
-                            /*str.append("    ").append("@JsonManagedReference(\"").append(CLASS_ATTRIBUTE)
-                             .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
-                             .append("\")\n");*/
                             str.append("    ").append("@OneToMany(cascade = CascadeType.PERSIST, mappedBy = \"").append(CLASS_ATTRIBUTE).append("\", fetch = FetchType.LAZY)").append("\n");
                             str.append("    ").append("private ").append(type).append(" ").append(name).append(";\n\n");
                         } else if (type.contains("EO") && !type.contains("List")) {
-                            /*str.append("    ").append("@JsonBackReference(\"").append(CLASS_ATTRIBUTE)
-                             .append(name.substring(0, 1).toUpperCase()).append(name.substring(1))
-                             .append("\")\n");*/
                             str.append("    ").append("@JoinColumn(name = \"").append(getFKname(name)).append("\", referencedColumnName = \"").append(getFKname(name)).append("\")").append("\n");
-                            str.append("    ").append("@ManyToOne(optional = false, fetch = FetchType.LAZY)").append("\n");
+                            str.append("    ").append("@ManyToOne(optional = ").append(optional).append(", fetch = FetchType.LAZY)").append("\n");
                             str.append("    ").append("private ").append(type).append(" ").append(name).append(";\n\n");
                         } else {
                             str.append("    ").append("@Column(name = \"").append(getName(name)).append("\", nullable = ").append(nullable);
@@ -241,7 +236,7 @@ public class BackendEOGenerator {
             lists = new HashMap<>();
         }
         if (FIELDS.length != 0) {
-            if (FIELDS[0].length == 4) {
+            if (FIELDS[0].length == 5) {
                 for (String[] fields : FIELDS) {
                     String type = fields[0];
                     String dbType = fields[3];
@@ -258,7 +253,7 @@ public class BackendEOGenerator {
         StringBuilder str = new StringBuilder();
         List<String> names = new ArrayList<>();
         if (FIELDS.length != 0) {
-            if (FIELDS[0].length == 4) {
+            if (FIELDS[0].length == 5) {
                 for (String[] fields : FIELDS) {
                     if (fields[0].contains("List")) {
                         names.add(fields[1]);

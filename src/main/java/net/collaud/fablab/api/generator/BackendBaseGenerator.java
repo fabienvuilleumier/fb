@@ -8,7 +8,10 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -24,7 +27,7 @@ public class BackendBaseGenerator {
     private boolean hasList = false;
     private boolean hasEO = false;
 
-    private final Field[] FIELDS;
+    private final List<Map<String, String>> FIELDS;
     private final String CLASS_NAME;
     private final String CLASS_ATTRIBUTE;
     private final String CLASS_EO;
@@ -36,8 +39,20 @@ public class BackendBaseGenerator {
 
     private static BackendBaseGenerator instance;
 
-    private <T> BackendBaseGenerator(Class<T> klazz) {
-        this.FIELDS = klazz.getDeclaredFields();
+    private <T> BackendBaseGenerator(Class<T> klazz, String[][] fields) {
+        this.FIELDS = new LinkedList<>();
+        if(fields.length == 5){
+            for(String[] s : fields){
+                Map<String, String> map = new HashMap<>();
+                map.put("type", s[0]);
+                map.put("name", s[1]);
+                map.put("required", s[2]);
+                map.put("dbType", s[3]);
+                map.put("unique", s[4]);
+            }
+        }else{
+            throw new IllegalArgumentException("PAS LE BON NOMBRE D'ARGUMENTS");
+        }
         this.CLASS_NAME = klazz.getSimpleName().substring(0, klazz.getSimpleName().length() - 2);
         this.CLASS_ATTRIBUTE = CLASS_NAME.substring(0, 1).toLowerCase() + CLASS_NAME.substring(1);
         this.CLASS_EO = CLASS_NAME + "EO";
@@ -48,9 +63,9 @@ public class BackendBaseGenerator {
         this.CLASS_REPOSITORY = CLASS_NAME + "Repository";
     }
 
-    public static synchronized <T> BackendBaseGenerator getInstance(Class<T> klazz) {
+    public static synchronized <T> BackendBaseGenerator getInstance(Class<T> klazz, String[][] fields) {
         if (instance == null) {
-            instance = new BackendBaseGenerator(klazz);
+            instance = new BackendBaseGenerator(klazz, fields);
         }
         return instance;
     }
@@ -110,9 +125,9 @@ public class BackendBaseGenerator {
             str.append("        ").append("if (").append(CLASS_ATTRIBUTE).append(".getId() > 0) {").append("\n");
             str.append("            ").append(CLASS_EO).append(" old = ").append(CLASS_DAO_ATTRIBUTE).append(".findOne(").append(CLASS_ATTRIBUTE).append(".getId());").append("\n");
 
-            for (Field field : FIELDS) {
-                if (!field.getName().equals("id")) {
-                    str.append("            ").append("old.").append(setter(field)).append("(").append(CLASS_ATTRIBUTE).append(".").append(getter(field)).append(");").append("\n");
+            for(Map<String, String> f : FIELDS) {
+                if (!f.get("name").equals("id")) {
+                    str.append("            ").append("old.").append(setter(f)).append("(").append(CLASS_ATTRIBUTE).append(".").append(getter(f)).append(");").append("\n");
                 }
             }
 
@@ -290,9 +305,9 @@ public class BackendBaseGenerator {
         if (hasEO) {
             str.append("    ").append("@Query(\"SELECT ").append(queryAttribute).append(" \"").append("\n");
             str.append("        ").append("+ \" FROM ").append(CLASS_EO).append(" ").append(queryAttribute).append(" ");
-            for (Field f : FIELDS) {
-                if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("LIST")) {
-                    str.append(" \" \n").append("        ").append("+ \" LEFT JOIN FETCH ").append(queryAttribute).append(".").append(f.getName()).append(" ");
+            for(Map<String, String> f : FIELDS) {
+                if (f.get("type").contains("EO") && !f.get("type").contains("LIST")) {
+                    str.append(" \" \n").append("        ").append("+ \" LEFT JOIN FETCH ").append(queryAttribute).append(".").append(f.get("name")).append(" ");
                 }
             }
             str.append(" \" )").append("\n");
@@ -301,9 +316,9 @@ public class BackendBaseGenerator {
 
             str.append("    ").append("@Query(\"SELECT ").append(queryAttribute).append(" \"").append("\n");
             str.append("        ").append("+ \" FROM ").append(CLASS_EO).append(" ").append(queryAttribute).append(" \"").append("\n");
-            for (Field f : FIELDS) {
-                if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
-                    str.append("        ").append("+ \" LEFT JOIN FETCH ").append(queryAttribute).append(".").append(f.getName()).append(" \"").append("\n");
+            for(Map<String, String> f : FIELDS) {
+                if (f.get("type").contains("EO") && !f.get("type").contains("List")) {
+                    str.append("        ").append("+ \" LEFT JOIN FETCH ").append(queryAttribute).append(".").append(f.get("name")).append(" \"").append("\n");
                 }
             }
             str.append("        ").append("+ \" WHERE ").append(queryAttribute).append(".id=:id\")").append("\n");
@@ -340,30 +355,30 @@ public class BackendBaseGenerator {
         System.out.println("File " + path + " correctly created...");
     }
 
-    private String getter(Field field) {
+    private String getter(Map<String,String> f) {
         StringBuilder str = new StringBuilder();
-        if (field.getType().getSimpleName().toLowerCase().equals("boolean")) {
+        if (f.get("type").toLowerCase().equals("boolean")) {
             str.append("is");
         } else {
             str.append("get");
         }
-        str.append(((field.getName()).substring(0, 1)).toUpperCase())
-                .append((field.getName()).substring(1))
+        str.append(((f.get("name")).substring(0, 1)).toUpperCase())
+                .append((f.get("name")).substring(1))
                 .append("()");
         return str.toString();
     }
 
-    private String setter(Field field) {
+    private String setter(Map<String,String> f) {
         StringBuilder str = new StringBuilder();
         str.append("set")
-                .append(((field.getName()).substring(0, 1)).toUpperCase())
-                .append((field.getName()).substring(1));
+                .append((f.get("name").substring(0, 1)).toUpperCase())
+                .append(f.get("name").substring(1));
         return str.toString();
     }
 
     private void init() {
-        for (Field f : FIELDS) {
-            String type = f.getType().getSimpleName();
+        for(Map<String, String> f : FIELDS) {
+            String type = f.get("type");
             hasList = hasList || type.contains("List");
             hasEO = hasEO || (type.contains("EO") && !type.contains("List"));
         }

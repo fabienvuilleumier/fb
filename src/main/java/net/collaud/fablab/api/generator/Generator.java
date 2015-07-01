@@ -18,16 +18,15 @@ public class Generator {
      * BEGIN CHANGE SECTION
      Must be a table of : 
     
-     {"java type", "java name", "nullable ? [t,f]", "db type"} 
+     {"java type", "java name", "required ? [t,f]", "db type", "unique[t,f]"} 
      */
     /*FIRST*/
     private final String CLASS_NAME = "Usage";
     private final String TABLE_NAME = "t_payment";
+    private final String SORT_ATTR = "label";
 
     private final String[][] FIELDS = new String[][]{
-        {"Integer", "id", "f", "INT"},
-        {"String", "name", "f", "VARCHAR"},
-        {"String", "technicalname", "f", "INT"}};
+        {"Integer", "id", "t", "INT", "t"}};
 
     private final boolean WRITE = true;
     private final String[] ROLES = new String[]{"PAYMENT_VIEW"};
@@ -43,7 +42,7 @@ public class Generator {
         agl.getNestedObjectReprAttr().put("machine", "name");
         agl.getNestedObjectReprAttr().put("membershipType", "name");
         //agl.runEO();
-        //agl.runBase();
+        agl.runBase();
         agl.runAngular(agl.getNestedObjectReprAttr());
     }
 
@@ -63,7 +62,7 @@ public class Generator {
 
     private void runBase() {
         try {
-            this.base = BackendBaseGenerator.getInstance(KLAZZ);
+            this.base = BackendBaseGenerator.getInstance(KLAZZ, FIELDS);
             base.genere(WRITE, ROLES);
         } catch (IOException ex) {
             System.out.println("Error : " + ex.getMessage());
@@ -72,7 +71,7 @@ public class Generator {
 
     private void runAngular(final Map<String, String> nestedObjectReprAttr) {
         try {
-            this.angular = BackendAngularListEditGenerator.getInstance(KLAZZ, nestedObjectReprAttr);
+            this.angular = BackendAngularListEditGenerator.getInstance(KLAZZ, nestedObjectReprAttr, FIELDS, SORT_ATTR);
             angular.genere(WRITE, "", ROLES);
         } catch (IOException ex) {
             System.out.println("Error : " + ex.getMessage());
@@ -82,4 +81,16 @@ public class Generator {
     public Map<String, String> getNestedObjectReprAttr() {
         return nestedObjectReprAttr;
     }
+
+    public String getSORT_ATTR() {
+        return SORT_ATTR;
+    }
+
+    public String[][] getFIELDS() {
+        return FIELDS;
+    }
+    
+    
+    
+    
 }
