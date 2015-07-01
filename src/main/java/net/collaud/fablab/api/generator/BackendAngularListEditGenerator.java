@@ -1,13 +1,14 @@
 package net.collaud.fablab.api.generator;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 public class BackendAngularListEditGenerator {
 
-    private final Field[] FIELDS;
+    private final List<Map<String, String>> FIELDS;
     private final String CLASS_NAME;
     private final String CLASS_ATTRIBUTE;
     private final String CLASS_SERVICE;
@@ -25,9 +26,11 @@ public class BackendAngularListEditGenerator {
     private boolean hasList = false;
     private boolean hasEO = false;
     private boolean hasDate = false;
+    private boolean hasUnique = false;
 
     private final String SERVICE;
     private final String COMPONENTS;
+    private final String SORTABLE_ATTR;
 
     private final StringBuilder SERVICE_FP;
     private final StringBuilder EDIT_JS_FP;
@@ -40,8 +43,21 @@ public class BackendAngularListEditGenerator {
 
     private static BackendAngularListEditGenerator instance;
 
-    private <T> BackendAngularListEditGenerator(Class<T> klazz, Map<String, String> nestedObjectReprAttr) {
-        this.FIELDS = klazz.getDeclaredFields();
+    private <T> BackendAngularListEditGenerator(Class<T> klazz, Map<String, String> nestedObjectReprAttr, String[][] fields, String sortableAttr) {
+        this.FIELDS = new LinkedList<>();
+        if (fields.length == 5) {
+            for (String[] s : fields) {
+                Map<String, String> map = new HashMap<>();
+                map.put("type", s[0]);
+                map.put("name", s[1]);
+                map.put("required", s[2]);
+                map.put("dbType", s[3]);
+                map.put("unique", s[4]);
+            }
+        } else {
+            throw new IllegalArgumentException("PAS LE BON NOMBRE D'ARGUMENTS");
+        }
+        this.SORTABLE_ATTR = sortableAttr;
         this.CLASS_NAME = klazz.getSimpleName().substring(0, klazz.getSimpleName().length() - 2);
         this.CLASS_ATTRIBUTE = CLASS_NAME.substring(0, 1).toLowerCase() + CLASS_NAME.substring(1);
         this.CLASS_SERVICE = CLASS_NAME + "Service";
@@ -69,9 +85,10 @@ public class BackendAngularListEditGenerator {
         STYLE_FP.append(COMPONENTS).append("\\").append(CLASS_ATTRIBUTE).append("\\style");
     }
 
-    public static synchronized <T> BackendAngularListEditGenerator getInstance(Class<T> klazz, Map<String, String> nestedObjectReprAttr) {
+    public static synchronized <T> BackendAngularListEditGenerator getInstance(Class<T> klazz, Map<String, String> nestedObjectReprAttr,
+            String[][] fields, String sortableAttr) {
         if (instance == null) {
-            instance = new BackendAngularListEditGenerator(klazz, nestedObjectReprAttr);
+            instance = new BackendAngularListEditGenerator(klazz, nestedObjectReprAttr, fields, sortableAttr);
         }
         return instance;
     }
@@ -89,19 +106,19 @@ public class BackendAngularListEditGenerator {
         str.append("    ").append("<table ng-table=\"tableParams\" class=\"table\" show-filter=\"true\">").append("\n");
         str.append("        ").append("<tr ng-repeat=\"").append(CLASS_ATTRIBUTE).append(" in $data\">").append("\n");
 
-        for (Field f : FIELDS) {
-            if (!f.getName().equals("id") && !f.getName().equals("active")) {
-                if (!f.getType().getSimpleName().contains("List")) {
+        for (Map<String, String> f : FIELDS) {
+            if (!f.get("name").equals("id") && !f.get("name").equals("active")) {
+                if (!f.get("type").contains("List")) {
                     str.append("            ").append("<td ").append("\n");
-                    str.append("                ").append("data-title=\"'").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("' | translate\" ").append("\n");
-                    if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
+                    str.append("                ").append("data-title=\"'").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("' | translate\" ").append("\n");
+                    if (f.get("type").contains("EO") && !f.get("type").contains("List")) {
                         str.append("                ").append("sortable=\"'").append(nestedObjectReprAtr(f)).append("'\"").append("\n");
                         str.append("                ").append("filter=\"{'").append(nestedObjectReprAtr(f)).append("':'text'}\">").append("\n");
-                        str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append(".").append(NESTED_OBJECT_REPR_ATTR.get(f.getName())).append("}}").append("\n");
+                        str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append(".").append(NESTED_OBJECT_REPR_ATTR.get(f.get("name"))).append("}}").append("\n");
                     } else {
-                        str.append("                ").append("sortable=\"'").append(f.getName()).append("'\"").append("\n");
-                        str.append("                ").append("filter=\"{'").append(f.getName()).append("':'text'}\">").append("\n");
-                        str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("}}").append("\n");
+                        str.append("                ").append("sortable=\"'").append(f.get("name")).append("'\"").append("\n");
+                        str.append("                ").append("filter=\"{'").append(f.get("name")).append("':'text'}\">").append("\n");
+                        str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("}}").append("\n");
                     }
                     str.append("            ").append("</td>").append("\n");
 
@@ -154,13 +171,8 @@ public class BackendAngularListEditGenerator {
         str.append("                ").append("page: 1, // show first page").append("\n");
         str.append("                ").append("count: 25, // count per page").append("\n");
         str.append("                ").append("sorting: {").append("\n");
-        if (FIELDS.length != 0) {
-            Field f = FIELDS[1];
-            if (f.getType().getSimpleName().toUpperCase().contains("DATE")) {
-                str.append("                    ").append(f.getName()).append(":'desc',").append("\n");
-            } else {
-                str.append("                    ").append(f.getName()).append(":'asc',").append("\n");
-            }
+        if (SORTABLE_ATTR != null) {
+            str.append("                    ").append(SORTABLE_ATTR).append(":'asc',").append("\n");
         }
 
         str.deleteCharAt(str.length() - 2);
@@ -181,14 +193,14 @@ public class BackendAngularListEditGenerator {
 
         if (hasEO) {
             str.append("            ").append("for (var i = 0; i < data.length; i++) {").append("\n");
-            for (Field f : FIELDS) {
-                if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
+            for (Map<String, String> f : FIELDS) {
+                if (f.get("type").contains("EO") && !f.get("type").contains("List")) {
                     str.append("                ").append("data[i].").append(nestedObjectReprAtr(f)).append(" = \"\"; //initialization of new property ").append("\n");
                     str.append("                ").append("data[i].").append(nestedObjectReprAtr(f))
                             .append(" = data[i].")
-                            .append(f.getName())
+                            .append(f.get("name"))
                             .append(".")
-                            .append(NESTED_OBJECT_REPR_ATTR.get(f.getName()))
+                            .append(NESTED_OBJECT_REPR_ATTR.get(f.get("name")))
                             .append(";  //set the data from nested obj into new property").append("\n");
                 }
             }
@@ -228,36 +240,39 @@ public class BackendAngularListEditGenerator {
         str.append("            ").append("<div class=\"panel-heading\">").append("\n");
         str.append("                ").append("<span ng-show=\"new").append(CLASS_NAME).append("\" translate=\"").append(CLASS_ATTRIBUTE).append(".create\"></span>").append("\n");
         str.append("                ").append("<span ng-show=\"!new").append(CLASS_NAME).append("\" translate=\"").append(CLASS_ATTRIBUTE).append(".edit\"></span>").append("\n");
-        str.append("                ").append("<span ng-show=\"!new").append(CLASS_NAME).append("\"> {{").append(CLASS_ATTRIBUTE).append(".").append(FIELDS[1].getName()).append("}}</span>").append("\n");
+        str.append("                ").append("<span ng-show=\"!new").append(CLASS_NAME).append("\"> {{").append(CLASS_ATTRIBUTE).append(".").append(FIELDS.get(1).get("name")).append("}}</span>").append("\n");
         str.append("            ").append("</div>").append("\n");
         str.append("            ").append("<div class=\"panel-body\">").append("\n");
-        for (Field f : FIELDS) {
-            if (!f.getName().equals("id") && !f.getName().equals("active")) {
-                if (!f.getType().getSimpleName().contains("List")) {
-                    if (f.getType().getSimpleName().contains("EO")) {
+        for (Map<String, String> f : FIELDS) {
+            if (!f.get("name").equals("id") && !f.get("name").equals("active")) {
+                if (!f.get("type").contains("List")) {
+                    if (f.get("type").contains("EO")) {
                         str.append("            ").append("<div class=\"form-group\">").append("\n");
-                        str.append("                ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"></label>").append("\n");
+                        str.append("                ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"></label>").append("\n");
                         str.append("                    ").append("<div class=\"col-sm-8\">").append("\n");
                         str.append("                        ").append("<select class=\"form-control\" ").append("\n");
-                        str.append("                        ").append("required").append("\n");
-                        str.append("                        ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"").append("\n");
-                        str.append("                    ").append("ng-options=\"common.").append(NESTED_OBJECT_REPR_ATTR.get(f.getName())).append(" for common in ").append(f.getName()).append("List track by common.id\"></select>").append("\n");
+                        if (f.get("required").equals("t")) {
+                            str.append("                        ").append("required").append("\n");
+                        }
+                        str.append("                        ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"").append("\n");
+                        str.append("                    ").append("ng-options=\"common.").append(NESTED_OBJECT_REPR_ATTR.get(f.get("name"))).append(" for common in ").append(f.get("name")).append("List track by common.id\"></select>").append("\n");
                         str.append("                ").append("</div>").append("\n");
                         str.append("            ").append("</div>").append("\n");
-                    } else if (f.getType().getSimpleName().toUpperCase().contains("DATE")) {
+                    } else if (f.get("type").toUpperCase().contains("DATE")) {
                         str.append("                ").append("<div class=\"form-group\">").append("\n");
-                        str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"></label>").append("\n");
+                        str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"></label>").append("\n");
                         str.append("                    ").append("<div class=\"col-sm-8\">").append("\n");
                         str.append("                        ").append("<p class=\"input-group\">").append("\n");
                         str.append("                            ").append("<input class=\"form-control\" ").append("\n");
                         str.append("                            ").append("datepicker-popup=\"{{format}}\" ").append("\n");
-                        str.append("                                ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\" ").append("\n");
+                        str.append("                                ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\" ").append("\n");
                         str.append("                                ").append("is-open=\"opened\" ").append("\n");
                         str.append("                                ").append("min-date=\"{{minDate}}\"").append("\n");
                         str.append("                                ").append("datepicker-options=\"dateOptions\" ").append("\n");
-                        str.append("                                ").append("ng-required=\"true\" ").append("\n");
                         str.append("                                ").append("close-text=\"Close\"").append("\n");
-                        str.append("                                ").append("required/>").append("\n");
+                        if (f.get("required").equals("t")) {
+                            str.append("                                ").append("required/>").append("\n");
+                        }
                         str.append("                            ").append("<span class=\"input-group-btn\">").append("\n");
                         str.append("                                ").append("<button type=\"button\" class=\"btn btn-default\" ng-click=\"open($event)\"><i class=\"glyphicon glyphicon-calendar\"></i></button>").append("\n");
                         str.append("                            ").append("</span>").append("\n");
@@ -267,9 +282,27 @@ public class BackendAngularListEditGenerator {
 
                     } else {
                         str.append("                ").append("<div class=\"form-group\">").append("\n");
-                        str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\"></label>").append("\n");
+                        str.append("                    ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"></label>").append("\n");
                         str.append("                    ").append("<div class=\"col-sm-8\">").append("\n");
-                        str.append("                        ").append("<input type=\"").append(appendType(f.getType().getSimpleName())).append("\" class=\"form-control\" ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.getName()).append("\" required/>").append("\n");
+                        str.append("                        ").append("<input type=\"").append(appendType(f.get("type"))).append("\"").append("\n");
+                        str.append("                            ").append("class=\"form-control\" ").append("\n");
+                        str.append("                            ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"");
+                        if (f.get("unique").equals("true")) {
+                            str.append("                            ").append("duplicate=\"existingValues\" ").append("\n");
+                            str.append("                            ").append("uppercase ").append("\n");
+                            str.append("                            ").append("name=\"").append(f.get("name")).append("\" \n");
+                        }
+                        if (f.get("required").equals("t")) {
+                            str.append("required");
+                        }
+                        str.append("/>").append("\n");
+                        if (f.get("unique").equals("true")) {
+                            str.append("                        ").append("<div class=\"col-sm-2 error-text\">").append("\n");
+                            str.append("                            ").append("<span ng-show=\"edit").append(CLASS_NAME).append(".").append(f.get("name")).append(".$error.duplicate\" ").append("\n");
+                            str.append("                                ").append("translate=\"").append(CLASS_ATTRIBUTE).append(".alreadyExist\"></span>").append("\n");
+                            str.append("                            ").append("<span ng-show=\"edit").append(CLASS_NAME).append(".").append(f.get("name")).append(".$error.required\" ></span>").append("\n");
+                            str.append("                        ").append("</div>").append("\n");
+                        }
                         str.append("                    ").append("</div>").append("\n");
                         str.append("                ").append("</div>").append("\n");
 
@@ -365,13 +398,22 @@ public class BackendAngularListEditGenerator {
             str.append("    ").append("};").append("\n");
         }
 
-        for (Field f : FIELDS) {
-            if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
-                str.append("    ").append("StaticDataService.load").append(f.getName().substring(0, 1).toUpperCase()).append(endWithS(f.getName().substring(1))).append("(function (data) {").append("\n");
-                str.append("        ").append("$scope.").append(f.getName()).append("List = data;").append("\n");
+        for (Map<String, String> f : FIELDS) {
+            if (f.get("type").contains("EO") && !f.get("type").contains("List")) {
+                str.append("    ").append("StaticDataService.load").append(f.get("name").substring(0, 1).toUpperCase()).append(endWithS(f.get("name").substring(1))).append("(function (data) {").append("\n");
+                str.append("        ").append("$scope.").append(f.get("name")).append("List = data;").append("\n");
                 str.append("    ").append("});").append("\n");
             }
         }
+        
+        str.append("    ").append(CLASS_SERVICE).append(".list(function (data) {").append("\n");
+        str.append("        ").append("var res = [];").append("\n");
+        str.append("        ").append("for (var i = 0; i < data.length; i++) {").append("\n");
+        str.append("            ").append("res.push(data[i].label.toUpperCase());").append("\n");
+        str.append("        ").append("}").append("\n");
+        str.append("        ").append("$scope.existingValues = res;").append("\n");
+        str.append("    ").append("});").append("\n");
+
 
         str.append("}").append("\n");
         str.append(");").append("\n");
@@ -512,9 +554,9 @@ public class BackendAngularListEditGenerator {
         str.append("EACH ").append("\n");
         str.append(",").append(CLASS_ATTRIBUTE).append(": {").append("\n");
         str.append("    ").append("title: '").append(CLASS_NAME).append("',").append("\n");
-        for (Field f : FIELDS) {
-            if (!f.getName().equals("id") && !f.getName().equals("active") && !f.getType().getSimpleName().contains("List")) {
-                str.append("    ").append(f.getName()).append(": '").append((f.getName().substring(0, 1)).toUpperCase()).append(f.getName().substring(1)).append("',").append("\n");
+        for (Map<String, String> f : FIELDS) {
+            if (!f.get("name").equals("id") && !f.get("name").equals("active") && !f.get("type").contains("List")) {
+                str.append("    ").append(f.get("name")).append(": '").append((f.get("name").substring(0, 1)).toUpperCase()).append(f.get("name").substring(1)).append("',").append("\n");
             }
         }
         if (write) {
@@ -537,9 +579,9 @@ public class BackendAngularListEditGenerator {
         str.append("EACH ").append("\n");
         str.append(",").append(CLASS_ATTRIBUTE).append(": {").append("\n");
         str.append("    ").append("title: '").append(CLASS_NAME).append("',").append("\n");
-        for (Field f : FIELDS) {
-            if (!f.getName().equals("id") && !f.getName().equals("active") && !f.getType().getSimpleName().contains("List")) {
-                str.append("    ").append(f.getName()).append(": '").append((f.getName().substring(0, 1)).toUpperCase()).append(f.getName().substring(1)).append("',").append("\n");
+        for (Map<String, String> f : FIELDS) {
+            if (!f.get("name").equals("id") && !f.get("name").equals("active") && !f.get("type").contains("List")) {
+                str.append("    ").append(f.get("name")).append(": '").append((f.get("name").substring(0, 1)).toUpperCase()).append(f.get("name").substring(1)).append("',").append("\n");
             }
         }
         if (write) {
@@ -564,10 +606,10 @@ public class BackendAngularListEditGenerator {
 
         if (write) {
             str.append("#####STATIC_DATA IF NEEDED#####").append("\n");
-            for (Field f : FIELDS) {
-                if (f.getType().getSimpleName().contains("EO") && !f.getType().getSimpleName().contains("List")) {
-                    str.append("    ").append("this.load").append(f.getName().substring(0, 1).toUpperCase()).append(endWithS(f.getName().substring(1))).append(" = function (successFn) {").append("\n");
-                    str.append("        ").append(f.getName().substring(0, 1).toUpperCase()).append(f.getName().substring(1)).append("Service.list(successFn);").append("\n");
+            for (Map<String, String> f : FIELDS) {
+                if (f.get("type").contains("EO") && !f.get("type").contains("List")) {
+                    str.append("    ").append("this.load").append(f.get("name").substring(0, 1).toUpperCase()).append(endWithS(f.get("name").substring(1))).append(" = function (successFn) {").append("\n");
+                    str.append("        ").append(f.get("name").substring(0, 1).toUpperCase()).append(f.get("name").substring(1)).append("Service.list(successFn);").append("\n");
                     str.append("    ").append("};").append("\n");
                 }
             }
@@ -599,11 +641,12 @@ public class BackendAngularListEditGenerator {
     }
 
     private void init() {
-        for (Field f : FIELDS) {
-            String type = f.getType().getSimpleName();
+        for (Map<String, String> f : FIELDS) {
+            String type = f.get("type");
             hasList = hasList || type.contains("List");
             hasEO = hasEO || (type.contains("EO") && !type.contains("List"));
             hasDate = hasDate || (type.toUpperCase().contains("DATE"));
+            hasUnique = hasUnique || (f.get("unique").equals("t"));
         }
     }
 
@@ -622,17 +665,17 @@ public class BackendAngularListEditGenerator {
         }
     }
 
-    private StringBuilder nestedObjectReprAtr(Field field) {
+    private StringBuilder nestedObjectReprAtr(Map<String, String> f) {
         StringBuilder str = new StringBuilder();
         StringBuilder strCamelCase = new StringBuilder();
-        String name = NESTED_OBJECT_REPR_ATTR.get(field.getName());
+        String name = NESTED_OBJECT_REPR_ATTR.get(f.get("name"));
         if (name != null) {
             strCamelCase.append(name.substring(0, 1).toUpperCase())
                     .append(name.substring(1));
         } else {
             strCamelCase.append("Label");
         }
-        str.append(field.getName()).append(strCamelCase);
+        str.append(f.get("name")).append(strCamelCase);
         return str;
     }
 }
