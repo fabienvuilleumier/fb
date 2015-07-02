@@ -277,15 +277,27 @@
         }).when('/eventPersons/eventPerson-edit', {
             templateUrl: './components/eventPerson/eventPerson-edit-view.html',
             controller: 'EventPersonNewController'
-                 }).when('/eventModules', {
-        templateUrl: './components/eventModule/eventModule-list-view.html',
-        controller: 'EventModuleListController'
-    }).when('/eventModules/eventModule-edit/:id', {
-        templateUrl: './components/eventModule/eventModule-edit-view.html',
-        controller: 'EventModuleEditController'
-    }).when('/eventModules/eventModule-edit', {
-        templateUrl: './components/eventModule/eventModule-edit-view.html',
-        controller: 'EventModuleNewController'
+        }).when('/eventModules', {
+            templateUrl: './components/eventModule/eventModule-list-view.html',
+            controller: 'EventModuleListController'
+        }).when('/eventModules/eventModule-edit/:id', {
+            templateUrl: './components/eventModule/eventModule-edit-view.html',
+            controller: 'EventModuleEditController'
+        }).when('/eventModules/eventModule-edit', {
+            templateUrl: './components/eventModule/eventModule-edit-view.html',
+            controller: 'EventModuleNewController'
+        }).when('/events', {
+            templateUrl: './components/event/event-list-view.html',
+            controller: 'EventListController'
+        }).when('/events/event-payment', {
+            templateUrl: './components/event/event-payment-view.html',
+            controller: 'EventPaymentNewController'
+        }).when('/events/event-edit/:id', {
+            templateUrl: './components/event/event-edit-view.html',
+            controller: 'EventEditController'
+        }).when('/events/event-edit', {
+            templateUrl: './components/event/event-edit-view.html',
+            controller: 'EventNewController'
         }).otherwise({
             redirectTo: '/'
         });

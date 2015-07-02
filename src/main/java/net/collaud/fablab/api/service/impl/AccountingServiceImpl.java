@@ -123,7 +123,7 @@ public class AccountingServiceImpl implements AccountingService {
         for (UserPaymentEO p : listPayment) {
             if (Objects.equals(p.getUser().getId(), user.getId())) {
                 if (p.getCashier() == null) {
-                    if (Objects.equals(p.getPayedForFabLab(), false)) {
+                    if (!p.isPayedForFabLab()) {
                         userAccount.add(new UserAccountEntry(p, user));
                     }
                 }

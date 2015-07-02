@@ -21,12 +21,13 @@ app.controller('GlobalEventPersonEditController', function ($scope, $location, E
                 });
             });
         } else {
+            
             $scope.eventPerson.acquiredModules = $scope.acquiredModules;
             var moduleIds = [];
             var ui;
-            if ($scope.eventPerson.acquiredModules) {
-                for (ui = 0; ui < $scope.eventPerson.acquiredModules.length; ui++) {
-                    moduleIds.push($scope.eventPerson.acquiredModules[ui].id);
+            if ($scope.acquiredModules) {
+                for (ui = 0; ui < $scope.acquiredModules.length; ui++) {
+                    moduleIds.push($scope.acquiredModules[ui].id);
                 }
             }
             //Control of prerequisites 
@@ -41,8 +42,8 @@ app.controller('GlobalEventPersonEditController', function ($scope, $location, E
                     fuNames = fuNames.substring(0, parseInt(fuNames.length - 2));
                     NotificationService.notify("error", "eventPerson.notification.failed", fuNames.toString());
                 } else {
-
                     var eventPersonCurrent = angular.copy($scope.eventPerson);
+                    console.log(eventPersonCurrent);
                     EventPersonService.save(eventPersonCurrent, function (data) {
                         $scope.eventPerson = data;
                         NotificationService.notify("success", "eventPerson.notification.saved");

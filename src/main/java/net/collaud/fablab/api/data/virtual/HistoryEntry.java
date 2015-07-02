@@ -44,7 +44,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
 
     public HistoryEntry(UserPaymentEO payment) {
         boolean cancel = !payment.isActive();
-        boolean forTheLab = payment.getPayedForFabLab();
+        boolean forTheLab = payment.isPayedForFabLab();
         boolean cash = payment.getCashier() != null;
         boolean refund = payment.getRefund() == REFUND || payment.getRefund() == CREDIT;
         TYPE = HistoryEntryType.PAYMENT;
@@ -60,7 +60,7 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
         StringBuilder detailSb = new StringBuilder();
         detailSb.append(cash ? "cashier=" + payment.getCashier().getFirstLastName() : "Use it's credit");
         detailSb.append(" | ");
-        detailSb.append(payment.getPayedForFabLab() ? "Payed for the lab" : "Payed for the user ");
+        detailSb.append(payment.isPayedForFabLab()? "Payed for the lab" : "Payed for the user ");
         DETAIL = detailSb.toString();
         double interAmount = forTheLab ? -payment.getTotal() : payment.getTotal();
         AMOUNT = !cancel ? interAmount : -interAmount;

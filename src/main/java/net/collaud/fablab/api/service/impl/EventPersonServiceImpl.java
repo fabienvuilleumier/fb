@@ -50,7 +50,7 @@ public class EventPersonServiceImpl implements EventPersonService {
             old.setLastname(eventPerson.getLastname());
             old.setFirstname(eventPerson.getFirstname());
             old.setEmail(eventPerson.getEmail());
-            old.setAquiredModules(eventPerson.getAquiredModules());
+            old.setAcquiredModules(eventPerson.getAcquiredModules());
             return eventPersonDAO.saveAndFlush(old);
         } else {
             return eventPersonDAO.saveAndFlush(eventPerson);
@@ -82,9 +82,9 @@ public class EventPersonServiceImpl implements EventPersonService {
         List<Integer> res = new ArrayList<>();
         EventPersonEO ep = getById(eventPersonId).get();
         if (ep != null) {
-            for (EventModuleEO personAquiredModules : ep.getAquiredModules()) {
+            for (EventModuleEO personAcquiredModules : ep.getAcquiredModules()) {
                 for (Integer moduleId : eventModuleId) {
-                    if (!personAquiredModules.getId().equals(moduleId)) {
+                    if (!personAcquiredModules.getId().equals(moduleId)) {
                         res.add(eventPersonId);
                     }
                 }

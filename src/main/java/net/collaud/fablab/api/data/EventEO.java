@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
 import java.util.Date;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
@@ -79,25 +80,21 @@ public class EventEO extends AbstractDataEO<Integer> implements Serializable {
     @JoinColumn(name = "supervisor_id", referencedColumnName = "user_id")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     private UserEO supervisor;
-
-    @JoinColumn(name = "cashier_id", referencedColumnName = "user_id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private UserEO cashier;
     
     @JoinTable(name = "r_event_organisator",
             joinColumns = {
-                @JoinColumn(name = "event_id", referencedColumnName = "event_id", nullable = false)},
+                @JoinColumn(name = "event_id", referencedColumnName = "event_id", nullable = true)},
             inverseJoinColumns = {
-                @JoinColumn(name = "event_person_id", referencedColumnName = "event_person_id", nullable = false)})
-    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.ALL)
-    private Set<EventPersonEO> organizors;
+                @JoinColumn(name = "event_person_id", referencedColumnName = "event_person_id", nullable = true)})
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<EventPersonEO> organizers;
     
-    @JoinTable(name = "r_event_organisator",
+    @JoinTable(name = "r_event_participant",
             joinColumns = {
-                @JoinColumn(name = "event_id", referencedColumnName = "event_id", nullable = false)},
+                @JoinColumn(name = "event_id", referencedColumnName = "event_id", nullable = true)},
             inverseJoinColumns = {
-                @JoinColumn(name = "event_person_id", referencedColumnName = "event_person_id", nullable = false)})
-    @ManyToMany(fetch = FetchType.LAZY)//, cascade = CascadeType.ALL)
+                @JoinColumn(name = "event_person_id", referencedColumnName = "event_person_id", nullable = true)})
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<EventPersonEO> participants;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")

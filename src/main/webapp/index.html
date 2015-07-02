@@ -58,6 +58,7 @@
         <link href="./components/eventType/style.css" rel="stylesheet">
         <link href="./components/eventPerson/style.css" rel="stylesheet">
         <link href="./components/eventModule/style.css" rel="stylesheet">
+        <link href="./components/event/style.css" rel="stylesheet">
 
         <!-- endbuild -->
 
@@ -292,6 +293,10 @@
                                 <b class="caret"></b>
                             </a>
                             <ul id="eventListDD" class="collapse">
+                                <li fab-nav-item-af link="events" icon="exclamation" 
+                                    label="menu.events" 
+                                    show="hasAnyRole('EVENT_VIEW')"></li>
+
                                 <li fab-nav-item-af link="eventTypes" icon="list" 
                                     label="menu.eventTypes" 
                                     show="hasAnyRole('EVENT_VIEW')"></li>
@@ -336,6 +341,9 @@
                                     show="hasAnyRole('PAYMENT_VIEW')"></li>
                                 <li fab-nav-item-af link="userPayments" icon="money" 
                                     label="menu.userPayments" 
+                                    show="hasAnyRole('PAYMENT_VIEW')"></li>
+                                <li fab-nav-item-af link="events/event-payment" icon="exclamation" 
+                                    label="menu.eventPayment" 
                                     show="hasAnyRole('PAYMENT_VIEW')"></li>
                             </ul>
                         </li>
@@ -475,6 +483,7 @@
     <script src="./components/services/eventType-service.js"></script>
     <script src="./components/services/eventPerson-service.js"></script>
     <script src="./components/services/eventModule-service.js"></script>
+    <script src="./components/services/event-service.js"></script>
 
 
 
@@ -576,6 +585,10 @@
 
     <script src="./components/eventModule/eventModule-list-ctrl.js"></script>
     <script src="./components/eventModule/eventModule-edit-ctrl.js"></script>
+
+    <script src="./components/event/event-list-ctrl.js"></script>
+    <script src="./components/event/event-edit-ctrl.js"></script>
+    <script src="./components/event/event-payment-ctrl.js"></script>
 
     <script src="./components/machineTest/test-ctrl.js"></script>
 

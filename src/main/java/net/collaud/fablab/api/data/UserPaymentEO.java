@@ -79,7 +79,7 @@ public class UserPaymentEO extends AbstractDataEO<Integer> implements Serializab
     private UserEO cashier;
 
     @Column(name = "payed_for_fab_lab", nullable = true, columnDefinition = "TINYINT(1) DEFAULT 1")
-    private Boolean payedForFabLab;
+    private boolean payedForFabLab;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "refund", nullable = true)

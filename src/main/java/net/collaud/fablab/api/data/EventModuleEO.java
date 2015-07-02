@@ -62,7 +62,7 @@ public class EventModuleEO extends AbstractDataEO<Integer> implements Serializab
     private Set<EventModuleEO> dependents;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "aquiredModules", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "acquiredModules", fetch = FetchType.LAZY)
     private Set<EventPersonEO> certified;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")

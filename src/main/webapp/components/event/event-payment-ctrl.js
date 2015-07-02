@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalUserPaymentEditController', function ($scope, $location, $window, $rootScope, $filter,
-        UserPaymentService, NotificationService, StaticDataService, AccountingService) {
+app.controller('GlobalEventPaymentEditController', function ($scope, $location, $window, $rootScope, $filter,
+        UserPaymentService, NotificationService, StaticDataService, AccountingService, EventService) {
     $scope.selected = {userPayment: undefined};
     $scope.currency = App.CONFIG.CURRENCY;
     $scope.showRole = $rootScope.hasAnyRole('PAYMENT_MANAGE');
@@ -12,15 +12,32 @@ app.controller('GlobalUserPaymentEditController', function ($scope, $location, $
         });
     };
     $scope.save = function () {
+        $scope.userPayment.total = -$scope.userPayment.total;
+        $scope.userPayment.accountCredit = 'CAISSE_POSTE_BANQUE';
+        $scope.userPayment.accountDebit = 'HONORAIRES';
+        $scope.userPayment.note = $scope.event.place ? $scope.event.place : '' + ' | ' +
+                $scope.event.theme ? $scope.event.theme : '' + ' | ' +
+                $scope.event.description ? $scope.event.description : '';
+        $scope.userPayment.user = $scope.event.supervisor;
+        $scope.userPayment.payedForFabLab = true;
         var userPaymentCurrent = angular.copy($scope.userPayment);
+        console.log(userPaymentCurrent);
         UserPaymentService.save(userPaymentCurrent, function (data) {
             $scope.userPayment = data;
-            NotificationService.notify("success", "userPayment.notification.saved");
+            NotificationService.notify("success", "eventPayment.saved");
             $location.path("userPayments");
         });
     };
 
+    EventService.list(function (data) {
+        $scope.eventList = data;
+    });
+
     $scope.updatePrice = function () {
+        if ($scope.event) {
+            $scope.userPayment.amount = parseFloat($scope.event.price);
+            $scope.userPayment.label = $scope.event.title;
+        }
         var interTotal = parseFloat($scope.userPayment.amount);
         if (!$scope.userPayment.discount) {
             $scope.userPayment.total = interTotal;
@@ -116,60 +133,17 @@ app.controller('GlobalUserPaymentEditController', function ($scope, $location, $
 
 }
 );
-app.controller('UserPaymentNewController', function ($scope, $controller, $rootScope) {
-    $controller('GlobalUserPaymentEditController', {$scope: $scope});
+app.controller('EventPaymentNewController', function ($scope, $controller, $rootScope) {
+    $controller('GlobalEventPaymentEditController', {$scope: $scope});
     $scope.newUserPayment = true;
     $scope.paidDirectly = false;
     $scope.editable = true;
     $scope.userPayment = {
         datePayment: new Date(),
         user: $rootScope.connectedUser.user,
+        cashier: $rootScope.connectedUser.user,
         payedForFabLab: false
     };
-}
-);
-app.controller('UserPaymentEditController', function ($scope, $routeParams, $controller) {
-    $controller('GlobalUserPaymentEditController', {$scope: $scope});
-    $scope.newUserPayment = false;
-    $scope.editable = true;
-    $scope.loadUserPayment($routeParams.id);
-}
-);
-app.controller('UserPaymentRefundController', function ($scope, $rootScope, $controller, UserService, $filter) {
-    $controller('GlobalUserPaymentEditController', {$scope: $scope});
-    $scope.newUserPayment = true;
-    $scope.paidDirectly = true;
-    $scope.editable = true;
-
-    UserService.balance($rootScope.connectedUser.user.id, function (balance) {
-        var ref = balance < 0 ? 'REFUND' : 'CREDIT';
-        if (parseFloat(balance) === parseFloat(0)) {
-            ref = 'CREDIT';
-        }
-        $scope.refund = ref;
-        var cred = $filter('translate')('userPayment.cred');
-        var refu = $filter('translate')('userPayment.refu');
-        if (ref === 'CREDIT') {
-            $scope.userPayment = {
-                datePayment: new Date(),
-                user: $rootScope.connectedUser.user,
-                payedForFabLab: false,
-                label: cred,
-                refund: ref
-            };
-        } else {
-            $scope.userPayment = {
-                datePayment: new Date(),
-                user: $rootScope.connectedUser.user,
-                payedForFabLab: false,
-                refund: ref,
-                label: refu,
-                amount: $filter('number')(-balance, 2),
-                total: $filter('number')(-balance, 2)
-            };
-        }
-    });
-
 }
 );
 

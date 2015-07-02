@@ -56,7 +56,7 @@ public class UserPaymentServiceImpl implements UserPaymentService {
             old.setUser(userPayment.getUser());
             old.setCashier(userPayment.getCashier());
             old.setRefund(userPayment.getRefund());
-            old.setPayedForFabLab(userPayment.getPayedForFabLab());
+            old.setPayedForFabLab(userPayment.isPayedForFabLab());
             old.setAccountCredit(userPayment.getAccountCredit());
             old.setAccountDebit(userPayment.getAccountDebit());
             old.setActive(userPayment.isActive());
