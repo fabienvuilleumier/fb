@@ -67,6 +67,10 @@
         this.loadCashiers = function (successFn) {
             UserService.list(successFn);
         };
+        this.loadSupervisors = function (successFn) {
+            UserService.list(successFn);
+        };
+
     });
 
 }());

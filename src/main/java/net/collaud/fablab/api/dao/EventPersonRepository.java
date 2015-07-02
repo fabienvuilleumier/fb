@@ -17,18 +17,18 @@ public interface EventPersonRepository extends JpaRepository<EventPersonEO, Inte
     @Override
     @Query("SELECT ep "
             + " FROM EventPersonEO ep "
-            + " LEFT JOIN FETCH ep.aquiredModules ")
+            + " LEFT JOIN FETCH ep.acquiredModules ")
     List<EventPersonEO> findAll();
 
     @Query("SELECT ep "
             + " FROM EventPersonEO ep "
-            + " LEFT JOIN FETCH ep.aquiredModules "
+            + " LEFT JOIN FETCH ep.acquiredModules "
             + " WHERE ep.id=:id")
     Optional<EventPersonEO> findOneDetails(@Param("id") Integer id);
 
     @Query("SELECT ep "
             + " FROM EventPersonEO ep "
-            + " LEFT JOIN FETCH ep.aquiredModules "
+            + " LEFT JOIN FETCH ep.acquiredModules "
             + " WHERE UPPER(ep.email)=UPPER(:email) ")
     EventPersonEO getId(@Param("email") String email);
 }

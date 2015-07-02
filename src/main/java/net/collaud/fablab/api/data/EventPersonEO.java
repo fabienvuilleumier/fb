@@ -27,7 +27,7 @@ import lombok.ToString;
 @Table(name = "t_event_person")
 @Getter
 @Setter
-@ToString(exclude = {"aquiredModules", "organizors", "participants"})
+@ToString(exclude = {"acquiredModules", "organizers", "participants"})
 @Where(clause = "active=1")
 public class EventPersonEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -51,11 +51,11 @@ public class EventPersonEO extends AbstractDataEO<Integer> implements Serializab
             inverseJoinColumns = {
                 @JoinColumn(name = "event_module_id", referencedColumnName = "event_module_id", nullable = true)})
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<EventModuleEO> aquiredModules;
+    private Set<EventModuleEO> acquiredModules;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "organizors", fetch = FetchType.LAZY)
-    private Set<EventEO> organizors;
+    @ManyToMany(mappedBy = "organizers", fetch = FetchType.LAZY)
+    private Set<EventEO> organizers;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "participants", fetch = FetchType.LAZY)

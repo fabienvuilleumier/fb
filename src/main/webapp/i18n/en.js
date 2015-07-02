@@ -78,7 +78,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             event: "Evènements",
             eventTypes: 'Event types',
             eventPersons: 'Event persons list',
-            eventModules: 'Event modules'
+            eventModules: 'Event modules',
+            events: 'Events'
 
         },
         loading: {
@@ -712,6 +713,44 @@ angular.module('Fablab').config(function ($translateProvider) {
             confirmation: {
                 remove: 'Do you really want to remove this event module ?'
             }
+        }, event: {
+            title: 'Event',
+            dateStart: 'Date start',
+            dateEnd: 'Date end',
+            timeStart: 'Time start',
+            timeEnd: 'Time end',
+            titleEvent: 'Title',
+            theme: 'Theme',
+            place: 'Place',
+            description: 'Description',
+            eventType: 'Event type',
+            supervisor: 'Supervisor',
+            cashier: 'Cashier',
+            alreadyExist: 'This event already exists',
+            create: 'Event creation',
+            edit: 'Edit :',
+            organizer: 'Organizers',
+            participants: 'Participants',
+            nonSelectedListLabelOrg: 'Available organizors',
+            selectedListLabelOrg: 'Organizers',
+            nonSelectedListLabelPart: 'Available participants',
+            selectedListLabelPart: 'Participants',
+            price:'Price',
+            addPerson: 'Add person',
+            eventPayment: 'Event payment',
+            notification: {
+                saved: 'Event saved',
+                removed: 'Event removed'
+            },
+            confirmation: {
+                remove: 'Do you really want to remove this event ?'
+            }
+        },
+        eventPayment:{
+            create: 'Event payment creation',
+            event: 'Event',
+            user:'Supervisor',
+            saved:'Event payment saved'
         }
     });
 });

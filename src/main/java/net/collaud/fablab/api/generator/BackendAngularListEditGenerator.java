@@ -50,7 +50,7 @@ public class BackendAngularListEditGenerator {
                 Map<String, String> map = new HashMap<>();
                 map.put("type", s[0]);
                 map.put("name", s[1]);
-                map.put("required", s[2]);
+                map.put("nullable", s[2]);
                 map.put("dbType", s[3]);
                 map.put("unique", s[4]);
                 this.FIELDS.add(map);
@@ -118,8 +118,11 @@ public class BackendAngularListEditGenerator {
                         str.append("                ").append("filter=\"{'").append(nestedObjectReprAtr(f)).append("':'text'}\">").append("\n");
                         if (f.get("unique").equals("t")) {
                             str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append(".").append(NESTED_OBJECT_REPR_ATTR.get(f.get("name"))).append("|lowercase}}").append("\n");
+                        } else if (f.get("dbType").toUpperCase().equals("DATE")) {
+                            str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append(".").append(NESTED_OBJECT_REPR_ATTR.get(f.get("name"))).append("}}|prettyDate").append("\n");
                         } else {
                             str.append("                ").append("{{").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append(".").append(NESTED_OBJECT_REPR_ATTR.get(f.get("name"))).append("}}").append("\n");
+
                         }
                     } else {
                         str.append("                ").append("sortable=\"'").append(f.get("name")).append("'\"").append("\n");
@@ -257,7 +260,7 @@ public class BackendAngularListEditGenerator {
                         str.append("                ").append("<label class=\"col-sm-2 control-label\" translate=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"></label>").append("\n");
                         str.append("                    ").append("<div class=\"col-sm-8\">").append("\n");
                         str.append("                        ").append("<select class=\"form-control\" ").append("\n");
-                        if (f.get("required").equals("t")) {
+                        if (f.get("nullable").equals("f")) {
                             str.append("                        ").append("required").append("\n");
                         }
                         str.append("                        ").append("ng-model=\"").append(CLASS_ATTRIBUTE).append(".").append(f.get("name")).append("\"").append("\n");
@@ -276,9 +279,10 @@ public class BackendAngularListEditGenerator {
                         str.append("                                ").append("min-date=\"{{minDate}}\"").append("\n");
                         str.append("                                ").append("datepicker-options=\"dateOptions\" ").append("\n");
                         str.append("                                ").append("close-text=\"Close\"").append("\n");
-                        if (f.get("required").equals("t")) {
-                            str.append("                                ").append("required/>").append("\n");
+                        if (f.get("nullable").equals("f")) {
+                            str.append("                                ").append("required");
                         }
+                        str.append("/>").append("\n");
                         str.append("                            ").append("<span class=\"input-group-btn\">").append("\n");
                         str.append("                                ").append("<button type=\"button\" class=\"btn btn-default\" ng-click=\"open($event)\"><i class=\"glyphicon glyphicon-calendar\"></i></button>").append("\n");
                         str.append("                            ").append("</span>").append("\n");
@@ -300,7 +304,7 @@ public class BackendAngularListEditGenerator {
                                 str.append("                            ").append("uppercase ").append("\n");
                                 str.append("                            ").append("name=\"").append(f.get("name")).append("\" \n");
                             }
-                            if (f.get("required").equals("t")) {
+                            if (f.get("nullable").equals("f")) {
                                 str.append("                            ").append("required");
                             }
                             str.append("/>").append("\n");

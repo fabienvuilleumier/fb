@@ -17,29 +17,29 @@ public interface EventRepository extends JpaRepository<EventEO, Integer> {
     @Query("SELECT e "
             + " FROM EventEO e  "
             + " LEFT JOIN FETCH e.supervisor  "
+            + " LEFT JOIN FETCH e.eventType "
             + " LEFT JOIN FETCH e.participants  "
-            + " LEFT JOIN FETCH e.organizors  "
-            + " LEFT JOIN FETCH e.cashier  ")
+            + " LEFT JOIN FETCH e.organizers  ")
     @Override
     List<EventEO> findAll();
 
     @Query("SELECT e "
             + " FROM EventEO e "
             + " LEFT JOIN FETCH e.supervisor "
-            + " LEFT JOIN FETCH e.cashier "
             + " LEFT JOIN FETCH e.supervisor  "
+            + " LEFT JOIN FETCH e.eventType "
             + " LEFT JOIN FETCH e.participants  "
-            + " LEFT JOIN FETCH e.organizors  "
+            + " LEFT JOIN FETCH e.organizers  "
             + " WHERE e.id=:id")
     Optional<EventEO> findOneDetails(@Param("id") Integer id);
 
     @Query("SELECT e "
             + " FROM EventEO e "
             + " LEFT JOIN FETCH e.supervisor "
-            + " LEFT JOIN FETCH e.cashier "
             + " LEFT JOIN FETCH e.supervisor  "
+            + " LEFT JOIN FETCH e.eventType "
             + " LEFT JOIN FETCH e.participants  "
-            + " LEFT JOIN FETCH e.organizors  "
-            + " WHERE UPPER(c.title) = UPPER(:title)")
+            + " LEFT JOIN FETCH e.organizers  "
+            + " WHERE UPPER(e.title) = UPPER(:title)")
     EventEO getId(@Param("title") String title);
 }

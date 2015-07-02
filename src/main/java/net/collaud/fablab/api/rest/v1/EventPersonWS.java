@@ -50,13 +50,18 @@ public class EventPersonWS extends ReadWriteRestWebservice<EventPersonEO, EventP
     @RequestMapping(value = "failedModules", method = RequestMethod.GET)
     public List<String> failedModules(@RequestParam(value = "eventPersonId") Integer eventPersonId,
             @RequestParam(value = "eventModuleId") List<Integer> eventModuleId) {
+
+        List<EventModuleEO> newEvm = new ArrayList<>();
+        EventPersonEO ep = eventPersonService.getById(eventPersonId).get();
         List<String> names = new ArrayList<>();
-        for (Integer id : eventPersonService.failedModules(eventPersonId, eventModuleId)) {
-            EventModuleEO m = eventModuleService.getById(id).get();
-            if (m != null) {
-                StringBuilder str = new StringBuilder();
-                str.append(m.getName());
-                names.add(str.toString());
+        for (Integer evmId : eventModuleId) {
+            newEvm.add(eventModuleService.getById(evmId).get());
+        }
+        for (EventModuleEO evm : newEvm) {
+            if (!evm.getPrerequisites().isEmpty()) {
+                if (!ep.getAcquiredModules().containsAll(evm.getPrerequisites())) {
+                    names.add(evm.getName());
+                }
             }
         }
         return names;

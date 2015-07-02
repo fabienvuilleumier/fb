@@ -57,10 +57,9 @@ public class EventServiceImpl implements EventService {
             old.setDescription(event.getDescription());
             old.setEventType(event.getEventType());
             old.setSupervisor(event.getSupervisor());
-            old.setCashier(event.getCashier());
             old.setPrice(event.getPrice());
             old.setParticipants(event.getParticipants());
-            old.setOrganizors(event.getOrganizors());
+            old.setOrganizers(event.getOrganizers());
             return eventDAO.saveAndFlush(old);
         } else {
             return eventDAO.saveAndFlush(event);
