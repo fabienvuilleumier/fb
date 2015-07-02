@@ -2,7 +2,7 @@
 var app = angular.module('Fablab');
 app.controller('GlobalEventEditController', function ($scope, $location,
         EventService, NotificationService, StaticDataService, EventTypeService,
-        EventPersonService, UserService) {
+        EventPersonService, EventModuleService) {
     $scope.currency = App.CONFIG.CURRENCY;
     $scope.selected = {event: undefined};
     $scope.loadEvent = function (id) {
@@ -24,15 +24,26 @@ app.controller('GlobalEventEditController', function ($scope, $location,
         });
     };
     $scope.save = function () {
-        $scope.event.organizers = $scope.assignedOrganizers;
-        $scope.event.participants = $scope.assignedParticipants;
-        var eventCurrent = angular.copy($scope.event);
-        console.log(eventCurrent);
-        EventService.save(eventCurrent, function (data) {
-            $scope.event = data;
-            NotificationService.notify("success", "event.notification.saved");
-            $location.path("events");
-        });
+        if ($scope.newEvent) {
+            var eventCurrent = angular.copy($scope.event);
+            EventService.save(eventCurrent, function (data) {
+                $scope.event = data;
+                NotificationService.notify("success", "event.notification.saved");
+                EventService.getId(data.title, function (withId) {
+                    $location.path("events/event-edit/" + withId.id);
+                });
+            });
+        } else {
+            $scope.event.organizers = $scope.assignedOrganizers;
+            $scope.event.participants = $scope.assignedParticipants;
+            $scope.event.modules = $scope.assignedModules;
+            var eventCurrent = angular.copy($scope.event);
+            EventService.save(eventCurrent, function (data) {
+                $scope.event = data;
+                NotificationService.notify("success", "event.notification.saved");
+                    $location.path("events");
+            });
+        }
     };
     $scope.saveEventPerson = function () {
         var person = angular.copy($scope.newPerson);
@@ -42,7 +53,7 @@ app.controller('GlobalEventEditController', function ($scope, $location,
             setLists();
         });
     };
-    
+
     $scope.minDate = new Date();
     $scope.today = function () {
         $scope.dt = new Date();
@@ -130,8 +141,14 @@ app.controller('GlobalEventEditController', function ($scope, $location,
                 $scope.assignedOrganizers = $scope.event.organizers;
                 $scope.availableParticipants = eventPerson;
                 $scope.assignedParticipants = $scope.event.participants;
+
             }
         });
+        EventModuleService.list(function (eventModules) {
+            $scope.availableModules = eventModules;
+            $scope.assignedModules = $scope.event.modules;
+        });
+
     };
 }
 );

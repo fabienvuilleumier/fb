@@ -737,8 +737,11 @@ angular.module('Fablab').config(function ($translateProvider) {
             selectedListLabelOrg: 'Organisateurs',
             nonSelectedListLabelPart: 'Participants disponibles',
             selectedListLabelPart: 'Participants',
+            nonSelectedListLabelMod: 'Modules disponibles',
+            selectedListLabelMod: 'Modules',
             addPerson: 'Ajouter la personne',
             price: 'Prix',
+            modules:'Modules',
             notification: {
                 saved: 'Evènement sauvegardé',
                 removed: 'Evènement supprimé'

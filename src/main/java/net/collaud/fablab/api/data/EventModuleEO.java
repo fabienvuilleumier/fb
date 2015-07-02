@@ -29,7 +29,7 @@ import lombok.ToString;
 @Table(name = "t_event_module")
 @Getter
 @Setter
-@ToString(exclude = {"prerequisites", "dependents", "certified"})
+@ToString(exclude = {"prerequisites", "dependents", "certified", "modules"})
 @Where(clause = "active=1")
 public class EventModuleEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -56,6 +56,10 @@ public class EventModuleEO extends AbstractDataEO<Integer> implements Serializab
                 @JoinColumn(name = "event_module_dependent", referencedColumnName = "event_module_id", nullable = true)})
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<EventModuleEO> prerequisites;
+    
+     @JsonIgnore
+    @ManyToMany(mappedBy = "modules", fetch = FetchType.LAZY)
+    private Set<EventEO> events;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "prerequisites", fetch = FetchType.LAZY)

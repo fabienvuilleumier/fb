@@ -18,6 +18,7 @@ public interface EventRepository extends JpaRepository<EventEO, Integer> {
             + " FROM EventEO e  "
             + " LEFT JOIN FETCH e.supervisor  "
             + " LEFT JOIN FETCH e.eventType "
+            + " LEFT JOIN FETCH e.modules "
             + " LEFT JOIN FETCH e.participants  "
             + " LEFT JOIN FETCH e.organizers  ")
     @Override
@@ -27,6 +28,8 @@ public interface EventRepository extends JpaRepository<EventEO, Integer> {
             + " FROM EventEO e "
             + " LEFT JOIN FETCH e.supervisor "
             + " LEFT JOIN FETCH e.supervisor  "
+            + " LEFT JOIN FETCH e.eventType "
+            + " LEFT JOIN FETCH e.modules "
             + " LEFT JOIN FETCH e.eventType "
             + " LEFT JOIN FETCH e.participants  "
             + " LEFT JOIN FETCH e.organizers  "
@@ -38,6 +41,8 @@ public interface EventRepository extends JpaRepository<EventEO, Integer> {
             + " LEFT JOIN FETCH e.supervisor "
             + " LEFT JOIN FETCH e.supervisor  "
             + " LEFT JOIN FETCH e.eventType "
+            + " LEFT JOIN FETCH e.eventType "
+            + " LEFT JOIN FETCH e.modules "
             + " LEFT JOIN FETCH e.participants  "
             + " LEFT JOIN FETCH e.organizers  "
             + " WHERE UPPER(e.title) = UPPER(:title)")

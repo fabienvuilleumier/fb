@@ -130,6 +130,40 @@
                     </div>
                 </div>
                 <div ng-show="event.id">
+                    <div>
+                        <h2 translate="event.modules"></h2>
+                        <select  multiple="multiple" 
+                                 name="selectedRoles" 
+                                 bs-duallistbox 
+                                 style="min-height:250px;" 
+                                 ng-model="assignedModules"                          
+                                 ng-options="u.name for u in availableModules track by u.id"
+                                 bootstrap2="{{ settings.bootstrap2}}"
+                                 move-on-select="{{ settings.moveOnSelect}}"
+                                 postfix="{{ settings.postfix}}"
+                                 select-min-height="{{ settings.selectMinHeight}}"
+                                 filter="{{ settings.filter}}"
+                                 filter-values="{{ settings.filterValues}}"
+
+                                 non-selected-list-label="{{ 'event.nonSelectedListLabelMod'|translate}}"
+                                 selected-list-label="{{ 'event.selectedListLabelMod'|translate}}"
+
+                                 preserve-selection="{{ 'duallist.preserveSelection'|translate}}"
+                                 move-selected-label="{{ 'duallist.moveSelectedLabel'|translate}}"
+                                 move-all-label="{{ 'duallist.moveAllLabel'|translate}}"
+                                 remove-selected-label="{{ 'duallist.removeSelectedLabel'|translate}}"
+                                 remove-all-label="{{ 'duallist.removeAllLabel'|translate}}"
+                                 filter-non-selected="settings.filterNonSelected"
+                                 filter-selected="settings.filterSelected"
+                                 filter-placeholder="{{ 'duallist.filterPlaceholder'|translate}}"
+                                 filter-clear="{{ 'duallist.filterClear'|translate}}"
+                                 info-all="{{ 'duallist.infoAll'|translate}}"
+                                 info-filtered="{{ 'duallist.infoFiltered'|translate}}"
+                                 info-empty="{{ 'duallist.infoEmpty'|translate}}"
+                                 >
+                        </select>
+                        <br>
+                    </div>
                     <div class="row">
                         <div class="col-sm-3 center bold"><span translate="eventPerson.lastname"></span></div>
                         <div class="col-sm-3 center bold"><span translate="eventPerson.firstname"></span></div>
