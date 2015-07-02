@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.FetchType;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
@@ -32,7 +31,7 @@ import lombok.ToString;
 @Table(name = "t_event")
 @Getter
 @Setter
-@ToString
+@ToString(exclude={"modules", "organizers", "participants"})
 @Where(clause = "active=1")
 public class EventEO extends AbstractDataEO<Integer> implements Serializable {
 
@@ -96,6 +95,14 @@ public class EventEO extends AbstractDataEO<Integer> implements Serializable {
                 @JoinColumn(name = "event_person_id", referencedColumnName = "event_person_id", nullable = true)})
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<EventPersonEO> participants;
+    
+    @JoinTable(name = "r_event_module",
+            joinColumns = {
+                @JoinColumn(name = "event_id", referencedColumnName = "event_id", nullable = true)},
+            inverseJoinColumns = {
+                @JoinColumn(name = "event_module_id", referencedColumnName = "event_module_id", nullable = true)})
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<EventModuleEO> modules;
 
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
