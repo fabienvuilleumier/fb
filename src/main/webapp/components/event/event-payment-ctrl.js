@@ -6,13 +6,7 @@ app.controller('GlobalEventPaymentEditController', function ($scope, $location, 
     $scope.currency = App.CONFIG.CURRENCY;
     $scope.showRole = $rootScope.hasAnyRole('PAYMENT_MANAGE');
     $scope.btnTitle = $filter('translate')('userPayment.btnTitle');
-    $scope.loadUserPayment = function (id) {
-        UserPaymentService.get(id, function (data) {
-            $scope.userPayment = data;
-        });
-    };
     $scope.save = function () {
-        $scope.userPayment.total = -$scope.userPayment.total;
         $scope.userPayment.accountCredit = 'CAISSE_POSTE_BANQUE';
         $scope.userPayment.accountDebit = 'HONORAIRES';
         $scope.userPayment.note = $scope.event.place ? $scope.event.place : '' + ' | ' +
@@ -142,7 +136,8 @@ app.controller('EventPaymentNewController', function ($scope, $controller, $root
         datePayment: new Date(),
         user: $rootScope.connectedUser.user,
         cashier: $rootScope.connectedUser.user,
-        payedForFabLab: false
+        payedForFabLab: true,
+        event:true
     };
 }
 );

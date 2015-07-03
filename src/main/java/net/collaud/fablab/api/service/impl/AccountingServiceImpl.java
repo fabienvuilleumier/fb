@@ -17,6 +17,7 @@ import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.UserPaymentEO;
+import static net.collaud.fablab.api.data.type.RefundAction.REFUND;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.data.virtual.UserAccountEntry;
 import net.collaud.fablab.api.exceptions.FablabException;
@@ -78,25 +79,67 @@ public class AccountingServiceImpl implements AccountingService {
             List<RevisionEO> listRevision, List<PurchaseEO> listPurchase, List<MotionStockEO> listMotionStock) {
         final List<HistoryEntry> listHistory = new ArrayList<>();
         for (UserPaymentEO p : listPayment) {
+            if (!p.isActive()) {
+                //copy the element to add it twice. first when was active and 
+                //second when is cancelled (evite la copie profonde)
+                p.setActive(true);
+                listHistory.add(new HistoryEntry(p));
+                p.setActive(false);
+            }
             listHistory.add(new HistoryEntry(p));
         }
         for (SubscriptionEO s : listSubscription) {
+            if (!s.isActive()) {
+                //copy the element to add it twice. first when was active and 
+                //second when is cancelled (evite la copie profonde)
+                s.setActive(true);
+                listHistory.add(new HistoryEntry(s));
+                s.setActive(false);
+            }
             listHistory.add(new HistoryEntry(s));
         }
         for (RevisionEO r : listRevision) {
             if (r.getCost() != 0) {
+                if (!r.isActive()) {
+                    //copy the element to add it twice. first when was active and 
+                    //second when is cancelled (evite la copie profonde)
+                    r.setActive(true);
+                    listHistory.add(new HistoryEntry(r));
+                    r.setActive(false);
+                }
                 listHistory.add(new HistoryEntry(r));
             }
         }
         for (MotionStockEO ms : listMotionStock) {
             if (!ms.getIo().equals("Sortie")) {
+                if (!ms.isActive()) {
+                    //copy the element to add it twice. first when was active and 
+                    //second when is cancelled (evite la copie profonde)
+                    ms.setActive(true);
+                    listHistory.add(new HistoryEntry(ms));
+                    ms.setActive(false);
+                }
                 listHistory.add(new HistoryEntry(ms));
             }
         }
         for (PurchaseEO p : listPurchase) {
+            if (!p.isActive()) {
+                //copy the element to add it twice. first when was active and 
+                //second when is cancelled (evite la copie profonde)
+                p.setActive(true);
+                listHistory.add(new HistoryEntry(p));
+                p.setActive(false);
+            }
             listHistory.add(new HistoryEntry(p));
         }
         for (UsageEO u : listUsage) {
+            if (!u.isActive()) {
+                //copy the element to add it twice. first when was active and 
+                //second when is cancelled (evite la copie profonde)
+                u.setActive(true);
+                listHistory.add(new HistoryEntry(u));
+                u.setActive(false);
+            }
             listHistory.add(new HistoryEntry(u));
         }
         Collections.sort(listHistory);
@@ -112,18 +155,36 @@ public class AccountingServiceImpl implements AccountingService {
         List<SubscriptionEO> listSubscription = subscriptionDao.findAllWithActive(user.getId());
         List<PurchaseEO> listPurchase = purchaseDao.findAllWithActive(user.getId());
         List<MotionStockEO> listMotionStock = motionStockDao.findAllWithActive(user.getId());
-        return convertToHistoryEntryForUser(listUsage, listPayment, listSubscription, listPurchase, 
+        return convertToHistoryEntryForUser(listUsage, listPayment, listSubscription, listPurchase,
                 listMotionStock, user);
     }
 
     protected List<UserAccountEntry> convertToHistoryEntryForUser(List<UsageEO> listUsage,
-            List<UserPaymentEO> listPayment, List<SubscriptionEO> listSubscription, 
+            List<UserPaymentEO> listPayment, List<SubscriptionEO> listSubscription,
             List<PurchaseEO> listPurchase, List<MotionStockEO> listMotionStock, UserEO user) {
         final List<UserAccountEntry> userAccount = new ArrayList<>();
         for (UserPaymentEO p : listPayment) {
             if (Objects.equals(p.getUser().getId(), user.getId())) {
                 if (p.getCashier() == null) {
                     if (!p.isPayedForFabLab()) {
+                        if (!p.isActive()) {
+                            //copy the element to add it twice. first when was active and 
+                            //second when is cancelled (evite la copie profonde)
+                            p.setActive(true);
+                            userAccount.add(new UserAccountEntry(p, user));
+                            p.setActive(false);
+                        }
+                        userAccount.add(new UserAccountEntry(p, user));
+                    }
+                } else {
+                    if (p.getRefund().equals(REFUND)) {
+                        if (!p.isActive()) {
+                            //copy the element to add it twice. first when was active and 
+                            //second when is cancelled (evite la copie profonde)
+                            p.setActive(true);
+                            userAccount.add(new UserAccountEntry(p, user));
+                            p.setActive(false);
+                        }
                         userAccount.add(new UserAccountEntry(p, user));
                     }
                 }
@@ -131,6 +192,13 @@ public class AccountingServiceImpl implements AccountingService {
         }
         for (SubscriptionEO s : listSubscription) {
             if (Objects.equals(s.getUser().getId(), user.getId())) {
+                if (!s.isActive()) {
+                    //copy the element to add it twice. first when was active and 
+                    //second when is cancelled (evite la copie profonde)
+                    s.setActive(true);
+                    userAccount.add(new UserAccountEntry(s, user));
+                    s.setActive(false);
+                }
                 userAccount.add(new UserAccountEntry(s, user));
             }
         }
@@ -139,6 +207,13 @@ public class AccountingServiceImpl implements AccountingService {
                 //PURCHASE CASE
                 if (ms.getIo().equals("Correction")) {
                     if (!ms.getIo().equals("Sortie")) {
+                        if (!ms.isActive()) {
+                            //copy the element to add it twice. first when was active and 
+                            //second when is cancelled (evite la copie profonde)
+                            ms.setActive(true);
+                            userAccount.add(new UserAccountEntry(ms, user));
+                            ms.setActive(false);
+                        }
                         userAccount.add(new UserAccountEntry(ms, user));
                     }
                 }
@@ -147,6 +222,13 @@ public class AccountingServiceImpl implements AccountingService {
         for (PurchaseEO p : listPurchase) {
             if (Objects.equals(p.getUser().getId(), user.getId())) {
                 if (p.getCashier() == null) {
+                    if (!p.isActive()) {
+                        //copy the element to add it twice. first when was active and 
+                        //second when is cancelled (evite la copie profonde)
+                        p.setActive(true);
+                        userAccount.add(new UserAccountEntry(p, user));
+                        p.setActive(false);
+                    }
                     userAccount.add(new UserAccountEntry(p, user));
                 }
             }
@@ -154,6 +236,13 @@ public class AccountingServiceImpl implements AccountingService {
         for (UsageEO u : listUsage) {
             if (Objects.equals(u.getUser().getId(), user.getId())) {
                 if (u.getCashier() == null) {
+                    if (!u.isActive()) {
+                        //copy the element to add it twice. first when was active and 
+                        //second when is cancelled (evite la copie profonde)
+                        u.setActive(true);
+                        userAccount.add(new UserAccountEntry(u, user));
+                        u.setActive(false);
+                    }
                     userAccount.add(new UserAccountEntry(u, user));
                 }
             }

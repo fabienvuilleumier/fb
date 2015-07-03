@@ -49,9 +49,15 @@ app.controller('GlobalTrainingEditController', function ($scope, $location, $roo
     });
 
     var setList = function () {
-        TrainingService.list(function (training) {
+        TrainingService.list(function (trainings) {
             if ($scope.training) {
-                $scope.availablePrerequisites = training;
+                var availableTrainings = [];
+                for(var i = 0; i < trainings.length; i++){
+                    if(trainings[i].id !== $scope.training.id){
+                        availableTrainings.push(trainings[i]);
+                    }
+                }
+                $scope.availablePrerequisites = availableTrainings;
                 $scope.assignedPrerequisites = $scope.training.prerequisites;
             }
         });

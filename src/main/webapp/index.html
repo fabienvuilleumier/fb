@@ -145,7 +145,7 @@
                         <li class="lang-menu">
                             <span ng-show="curentLanguage === 'fr'">
                                 <span>
-                                    <img src="./images/fr.png" alt="toFr" height="17" width="16"/>
+                                    <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
                                     <span translate="general.toFr"></span>
                                 </span>
                                 <span>|</span>
@@ -156,7 +156,7 @@
                             </span>
                             <span ng-show="curentLanguage === 'en'">
                                 <a href="" ng-click="translate('fr')">
-                                    <img src="./images/fr.png" alt="toFr" height="17" width="16"/>
+                                    <img src="./images/fr.png" alt="toFr" height="15" width="22"/>
                                     <span translate="general.toFr"></span>
                                 </a>
                                 <span>|</span>
@@ -198,7 +198,7 @@
                                     label="menu.machineStatus" 
                                     show="hasAnyRole('MACHINE_MANAGE')" 
                                     ng-show="hasAnyRole('MACHINE_MANAGE')"></li>
-                                <li>
+                                <li ng-show="hasAnyRole('MACHINE_MANAGE')">
                                     <a ng-show="hasAnyRole('MACHINE_MANAGE')" href="#/priceMachines/table">
                                         <span class="fa fa-fw fa-euro"></span>
                                         <span translate="menu.priceMachinesTable"></span>
@@ -299,10 +299,12 @@
 
                                 <li fab-nav-item-af link="eventTypes" icon="list" 
                                     label="menu.eventTypes" 
-                                    show="hasAnyRole('EVENT_VIEW')"></li>
+                                    show="hasAnyRole('EVENT_MANAGE')" 
+                                    ng-show="hasAnyRole('EVENT_MANAGE')"></li>
                                 <li fab-nav-item-af link="eventPersons" icon="users" 
                                     label="menu.eventPersons" 
-                                    show="hasAnyRole('EVENT_VIEW')"></li>
+                                    show="hasAnyRole('EVENT_MANAGE')" 
+                                    ng-show="hasAnyRole('EVENT_MANAGE')"></li>
                                 <li fab-nav-item-af link="eventModules" icon="cube" 
                                     label="menu.eventModules" 
                                     show="hasAnyRole('EVENT_VIEW')"></li>
@@ -339,12 +341,18 @@
                                 <li fab-nav-item-af link="usages" icon="sliders" 
                                     label="menu.usages" 
                                     show="hasAnyRole('PAYMENT_VIEW')"></li>
-                                <li fab-nav-item-af link="userPayments" icon="money" 
-                                    label="menu.userPayments" 
-                                    show="hasAnyRole('PAYMENT_VIEW')"></li>
-                                <li fab-nav-item-af link="events/event-payment" icon="exclamation" 
-                                    label="menu.eventPayment" 
-                                    show="hasAnyRole('PAYMENT_VIEW')"></li>
+                                <li>
+                                    <a ng-show="hasAnyRole('PAYMENT_VIEW')" href="#/userPayments">
+                                        <span class="fa fa-fw fa-money"></span>
+                                        <span translate="menu.userPayments"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a ng-show="hasAnyRole('PAYMENT_VIEW')" href="#/events/event-payment">
+                                        <span class="fa fa-fw fa-exclamation"></span>
+                                        <span translate="menu.eventPayment"></span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li fab-nav-item link="reservations" icon="calendar"

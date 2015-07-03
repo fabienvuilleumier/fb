@@ -1,8 +1,9 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalEventModuleEditController', function ($scope, $location,
+app.controller('GlobalEventModuleEditController', function ($scope, $location, $rootScope,
         EventModuleService, NotificationService, StaticDataService) {
     $scope.selected = {eventModule: undefined};
+    $scope.showRole = $rootScope.hasAnyRole('EVENT_MANAGE');
     $scope.loadEventModule = function (id) {
         EventModuleService.get(id, function (data) {
             $scope.eventModule = data;
@@ -47,7 +48,13 @@ app.controller('GlobalEventModuleEditController', function ($scope, $location,
     var setList = function () {
         EventModuleService.list(function (evm) {
             if ($scope.eventModule) {
-                $scope.availablePrerequisites = evm;
+                var availableEvms = [];
+                for(var i = 0; i < evm.length; i++){
+                    if(evm[i].id !== $scope.eventModule.id){
+                        availableEvms.push(evm[i]);
+                    }
+                }
+                $scope.availablePrerequisites = availableEvms;
                 $scope.assignedPrerequisites = $scope.eventModule.prerequisites;
             }
         });

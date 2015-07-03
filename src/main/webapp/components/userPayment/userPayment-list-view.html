@@ -1,4 +1,4 @@
-<h1 translate="menu.userPayments"></h1>
+<h1 translate="userPayment.titleList"></h1>
 <div class="header-control">
     <div class="btn-group" >
         <a href="#/userPayments/userPayment-edit" class="btn btn-success btn-glyph">
@@ -19,6 +19,12 @@
                 sortable="'datePayment'"
                 filter="{'datePayment':'text'}">
                 {{userPayment.datePayment|prettyDate}}
+            </td>
+            <td 
+                data-title="'userPayment.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{userPayment.label}}
             </td>
             <td 
                 data-title="'userPayment.amount' | translate" 
@@ -51,7 +57,7 @@
             <td class="listBtn2">
                 <div class="btn-group">
                     <a class="btn btn-sm btn-default" href="#/userPayments/userPayment-edit/{{userPayment.id}}"><span class="glyphicon glyphicon-search"></span></a>
-                    <button class="btn btn-sm btn-danger" 
+                    <button ng-show="showRole" class="btn btn-sm btn-danger" 
                             ng-really-click="softRemove(userPayment)"
                             ng-really-message="{{'userPayment.confirmation.remove'|translate}}">
                         <span class="glyphicon glyphicon-trash"></span>

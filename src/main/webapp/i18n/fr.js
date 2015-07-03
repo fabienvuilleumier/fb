@@ -74,13 +74,13 @@ angular.module('Fablab').config(function ($translateProvider) {
             groups: 'Groupes d\'utilisateurs',
             usages: 'Utilisations machines',
             paymentsUse: 'Paiements et <br/><span class="second-ligne">utilisations machines</span>',
-            userPayments: 'Paiements annexes',
+            userPayments: 'Paiements annexes et <br/><span class="second-ligne-bis">remboursements</span>',
             event: "Evènements",
             eventTypes: 'Types d\'évènements',
             eventPersons: 'Liste d\'inscrits',
             eventModules: 'Modules d\'évènements',
             events: 'Evènements',
-            eventPayment: 'Paiement d\'un évènement',
+            eventPayment: 'Paiement d\'un <br/><span class="second-ligne-bis">évènement</span>'
         },
         loading: {
             title: 'Chargement',
@@ -229,6 +229,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             delta: 'Delta',
             debit: 'Débit',
             credit: 'Crédit',
+            user: 'Utilisateur',
             accountCredit: 'Compte crédité',
             accountDebit: 'Compte débité'
         },
@@ -636,6 +637,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         userPayment: {
             title: 'Paiements anexes',
             total: 'Total',
+            titleList: 'Paiements annexes et remboursements',
             datePayment: 'Date',
             discount: 'Rabais',
             discountPercent: 'Rabais en pourcent',
@@ -652,7 +654,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             refund: 'Remboursement',
             accountCredit: 'Compte crédité',
             accountDebit: 'Compte débité',
-            alertRefund: 'Votre total a payer est déjà écrit dasn le champ total',
+            alertRefund: 'Votre total à payer est déjà écrit dans le champ total',
             alertOk: 'Vous êtes à jour. Le montant sera crédité à votre compte',
             cred: 'Remise de crédit sur le compte',
             refu: 'Remboursement du dû',
@@ -668,7 +670,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             title: 'Type d\'évènements',
             label: 'Label',
             alreadyExist: 'Ce type d\'évènements existe déjà',
-            create: 'Création de\'un type d\'évènements',
+            create: 'Création d\'un type d\'évènements',
             edit: 'Edition de ',
             notification: {
                 saved: 'Type d\'évènements sauvegardé',
@@ -691,7 +693,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             selectedListLabel: 'Modules acquis',
             notification: {
                 saved: 'Inscrit sauvegardé',
-                removed: 'Inscrit supprimé'
+                removed: 'Inscrit supprimé',
+                failed: 'Les modules suivants nécessites des prérequis non acquis par l\'utilsiateur courant : '
             },
             confirmation: {
                 remove: 'Voulez-vous réellement supprimer cet inscrit ?'
@@ -722,8 +725,10 @@ angular.module('Fablab').config(function ($translateProvider) {
             timeStart: 'Heure de debut',
             timeEnd: 'Heure de fin',
             titleEvent: 'Titre',
+            btnTitle: 'Cloner cet évènement',
             theme: 'Thème',
             place: 'Lieu',
+            failedPerson: 'Les personnes suivantes ne disposent pas de tous les prérequis : ',
             description: 'Description',
             eventType: 'Type d\'évènement',
             supervisor: 'Supervisor',
@@ -741,10 +746,15 @@ angular.module('Fablab').config(function ($translateProvider) {
             selectedListLabelMod: 'Modules',
             addPerson: 'Ajouter la personne',
             price: 'Prix',
-            modules:'Modules',
+            modules: 'Modules',
+            addPeople: 'Ajouter des personnes',
             notification: {
                 saved: 'Evènement sauvegardé',
-                removed: 'Evènement supprimé'
+                cloned: 'Evènement cloné avec succès',
+                clonedFailed: 'Le superviseur ou le type d\'évènement n\'existe plus, impossible de cloner l\'évènement',
+                removed: 'Evènement supprimé',
+                userSaved: 'Nouveau participant ajouté',
+                userFailed: 'Une erreur s\'est produite lors de l\'ajout de la nouvelle personne. Email correct ? '
             },
             confirmation: {
                 remove: 'Voulez-vous réellement supprimer cet évènement ?'
@@ -753,8 +763,8 @@ angular.module('Fablab').config(function ($translateProvider) {
         eventPayment: {
             create: 'Création d\'un paiement relatif à un évènement',
             event: 'Evènement',
-            user:'Superviseur',
-            saved:'Paiement d\'évènement sauvegardé'
+            user: 'Superviseur',
+            saved: 'Paiement d\'évènement sauvegardé'
         }
     });
 });

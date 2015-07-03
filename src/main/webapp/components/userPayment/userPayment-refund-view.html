@@ -1,10 +1,8 @@
 <div class="userPaymentEdit">
     <div class="row warning-msg">
-        <div class="col-sm-12 alert alert-warning" ng-show="refund === 'REFUND'">
-            <span translate="userPayment.alertRefund"></span>
-        </div> 
-        <div class="col-sm-12 alert alert-info" ng-show="refund === 'CREDIT'">
-            <span translate="userPayment.alertOk"></span>
+        <div class="col-sm-12 alert alert-info">
+            <span ng-show="refund === 'REFUND'" translate="userPayment.alertRefund"></span>
+            <span ng-show="refund === 'CREDIT'" translate="userPayment.alertOk"></span>
         </div> 
     </div>
     <form class="form-horizontal" name="editUserPayment" ng-submit="save(false)">
@@ -71,7 +69,7 @@
                         <toggle-switch 
                             class="toggle"
                             ng-model="paidDirectly"
-                            ng-disabled="editable"
+                            disabled
                             on-label="Oui"
                             off-label="Non"></toggle-switch>
                     </div>
@@ -82,6 +80,7 @@
                         <select class="form-control" 
                                 ng-model="userPayment.cashier"
                                 ng-disabled="!editable"
+                                required
                                 ng-options="(u.lastname + ' ' + u.firstname) for u in cashierList track by u.id"></select>
                     </div>
                 </div>

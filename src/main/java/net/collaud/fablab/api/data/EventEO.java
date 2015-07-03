@@ -66,7 +66,7 @@ public class EventEO extends AbstractDataEO<Integer> implements Serializable {
     private String place;
     
     @Column(name = "price", nullable = true)
-    private String price;
+    private double price;
 
     @Column(name = "description", nullable = true)
     @Type(type = "text")

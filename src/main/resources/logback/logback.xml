@@ -24,9 +24,9 @@
 		</encoder>
 	</appender>
 
-	<logger name="net.collaud.fablab.api" level="DEBUG" />
+	<logger name="net.collaud.fablab.api" level="WARN" />
 	<!--<logger name="org.springframework" level="DEBUG" />-->
-	<logger name="org.springframework.http.converter" level="DEBUG" />
+	<logger name="org.springframework.http.converter" level="WARN" />
 
 	<root level="INFO">
 		<appender-ref ref="FILE" />

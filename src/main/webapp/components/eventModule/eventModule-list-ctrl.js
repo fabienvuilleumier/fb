@@ -1,13 +1,14 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('EventModuleListController', function ($scope, $filter, $location,
+app.controller('EventModuleListController', function ($scope, $filter, $location,$rootScope,
         ngTableParams, EventModuleService, NotificationService) {
+    $scope.showRole = $rootScope.hasAnyRole('EVENT_MANAGE');
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    name:'asc'
+                    name: 'asc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

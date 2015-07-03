@@ -85,6 +85,9 @@ public class UserPaymentEO extends AbstractDataEO<Integer> implements Serializab
     @Column(name = "refund", nullable = true)
     private RefundAction refund;
 
+    @Column(name = "event", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
+    private boolean event;
+    
     @Column(name = "active", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 1")
     private boolean active;
 
@@ -95,6 +98,7 @@ public class UserPaymentEO extends AbstractDataEO<Integer> implements Serializab
     public UserPaymentEO(Integer id) {
         this.active = true;
         this.payedForFabLab = false;
+        this.event = false;
         this.refund = PAYMENT;
         this.id = id;
     }
@@ -102,6 +106,7 @@ public class UserPaymentEO extends AbstractDataEO<Integer> implements Serializab
     public UserPaymentEO(Date datePayment, Double amount, UserEO user, UserEO cashier, String note) {
         this.active = true;
         this.payedForFabLab = false;
+        this.event = false;
         this.refund = PAYMENT;
         this.datePayment = datePayment;
         this.amount = amount;

@@ -58,41 +58,4 @@
 			<bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
 		</property>
 	</bean>
-	
-
-<!--
-<bean id="persistenceUnitManager"
-	  class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
-		<property name="persistenceXmlLocations">
-			<list>
-				<value>classpath*:META-INF/persistence.xml</value>
-			</list>
-		</property>
-		<property name="defaultDataSource" ref="fablabDataSource"/>
-	</bean>
- 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitManager" ref="persistenceUnitManager"/>
-		<property name="persistenceUnitName" value="fablabPU"/>
-	</bean>
-	-->
- 
-	
-	<!--<bean id="entityManagerFactory"
-		  class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="packagesToScan" value="net.collaud.fablab.api.data" />
-		<property name="dataSource" ref="fablabDataSource" />
-
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-			</props>
-		</property>
-
-		<property name="persistenceProvider">
-			<bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
-		</property>
-
-	</bean>-->
 </beans>

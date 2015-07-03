@@ -1,14 +1,16 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('EventListController', function ($scope, $filter, $location,
+app.controller('EventListController', function ($scope, $filter, $location, $rootScope,
         ngTableParams, EventService, NotificationService) {
-            $scope.currency = App.CONFIG.CURRENCY;
+    $scope.currency = App.CONFIG.CURRENCY;
+    $scope.showRole = $rootScope.hasAnyRole('EVENT_MANAGE');
+    $scope.btnClone = $filter('translate')('event.btnTitle');
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    title:'asc'
+                    dateStart: 'desc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {
@@ -44,5 +46,31 @@ app.controller('EventListController', function ($scope, $filter, $location,
         });
     };
     updateEventList();
+
+    $scope.clone = function (eventId) {
+        console.log("here");
+        EventService.get(eventId, function (data) {
+            var event = angular.copy(data);
+            //obligatory for adding. Save instead
+            event.id = null;
+            event.dateStart = new Date();
+            event.dateEnd = new Date();
+            event.timeStart = new Date();
+            event.timeEnd = new Date();
+            event.title = "Cloné de " + data.title;
+            event.organizers = null;
+            event.participants = null;
+            event.modules = null;
+            if (!data.supervisor.active || !data.eventType.active) {
+                NotificationService.notify("error", "event.notification.clonedFailed");
+            } else {
+                EventService.save(event, function (newEvent) {
+                    event = newEvent;
+                    NotificationService.notify("success", "event.notification.cloned");
+                    updateEventList();
+                });
+            }
+        });
+    };
 });
 

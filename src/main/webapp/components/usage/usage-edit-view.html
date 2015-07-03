@@ -119,8 +119,9 @@
                         <select class="form-control" 
                                 required
                                 ng-model="usage.user"
+                                ng-change="updatePrice()" 
                                 ng-options="(u.lastname + ' ' + u.firstname) for u in userList track by u.id" 
-                                ng-disabled="!showRole || !editable"></select>
+                                ng-disabled="!showRole || !editable || !usage.machine"></select>
                     </div>
                 </div>
                 <div class="form-group">

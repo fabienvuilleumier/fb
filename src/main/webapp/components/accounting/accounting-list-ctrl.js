@@ -1,8 +1,25 @@
 (function () {
     'use strict';
     var app = angular.module('Fablab');
-    app.controller('AccountingListController', function ($scope, AccountingService) {
-        $scope.filename = "FabLab-Manager_Acouunting_export";
+    app.controller('AccountingListController', function ($scope, $location,$filter,
+            AccountingService, ngTableParams) {
+        $scope.filename = "FabLab-Manager_Acounting_export";
+        $scope.tableParams = new ngTableParams(
+                angular.extend({
+                    page: 1, // show first page
+                    count: 25, // count per page
+                }, $location.search()), {
+            getData: function ($defer, params) {
+                if ($scope.history) {
+                    params.total($scope.history.length);
+                    $location.search(params.url());
+                    var filteredData = params.filter() ? $filter('filter')($scope.history, params.filter()) : $scope.history;
+                    var orderedData = params.sorting() ? $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+                    $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+                }
+            }
+        });
+
         $scope.criteria = {
             dateFrom: null,
             dateTo: null
@@ -32,6 +49,7 @@
                 unit: 'year',
                 delta: 1
             }];
+
 
         $scope.dateManuallyUpdated = function () {
             $scope.selectedInterval = null;
@@ -75,23 +93,24 @@
             AccountingService.search($scope.criteria.dateFrom, $scope.criteria.dateTo, function (data) {
                 $scope.history = data;
                 computeInAndOut();
+                $scope.tableParams.reload();
             });
         };
 
         $scope.export = function () {
             var hist = $scope.history;
             var tabRet = [];
-            for(var i = 0; i < hist.length; i++){
+            for (var i = 0; i < hist.length; i++) {
                 tabRet.push({
-                    date:moment(hist[i].date).format(),
-                    type:hist[i].type,
-                    accountCredit:hist[i].account_CREDIT,
-                    accountDebit:hist[i].account_DEBIT,
-                    credit:hist[i].amount > 0 ? hist[i].amount : "",
-                    debit:hist[i].amount <= 0 ? hist[i].amount : "",
-                    user:hist[i].user.lastname.toUpperCase() + " " + hist[i].user.firstname,
-                    detail:hist[i].detail.latinise(),
-                    comment:hist[i].comment.latinise()
+                    date: moment(hist[i].date).format(),
+                    type: hist[i].type,
+                    accountCredit: hist[i].account_CREDIT,
+                    accountDebit: hist[i].account_DEBIT,
+                    credit: hist[i].amount > 0 ? hist[i].amount : "",
+                    debit: hist[i].amount <= 0 ? hist[i].amount : "",
+                    user: hist[i].user.lastname.toUpperCase() + " " + hist[i].user.firstname,
+                    detail: hist[i].detail.latinise(),
+                    comment: hist[i].comment.latinise()
                 });
             }
             return tabRet;

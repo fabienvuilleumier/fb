@@ -3,12 +3,13 @@ var app = angular.module('Fablab');
 app.controller('UserPaymentListController', function ($scope, $filter, $location,$rootScope,
         ngTableParams, UserPaymentService, NotificationService) {
     $scope.currency = App.CONFIG.CURRENCY;
+    $scope.showRole = $rootScope.hasAnyRole('PAYMENT_MANAGE');
     $scope.tableParams = new ngTableParams(
             angular.extend({
                 page: 1, // show first page
                 count: 25, // count per page
                 sorting: {
-                    total: 'asc'
+                    datePayment: 'desc'
                 }
             }, $location.search()), {
         getData: function ($defer, params) {

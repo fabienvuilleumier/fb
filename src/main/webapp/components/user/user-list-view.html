@@ -14,6 +14,12 @@
 <table ng-table="tableParams" class="table" show-filter="true">
     <tr ng-repeat="user in $data">
         <td 
+            data-title="'user.login' | translate" 
+            sortable="'login'"
+            filter="{'login':'text'}">
+            {{user.login}}
+        </td>
+        <td 
             data-title="'user.firstname' | translate" 
             sortable="'firstname'"
             filter="{'firstname':'text'}">

@@ -73,14 +73,15 @@ angular.module('Fablab').config(function ($translateProvider) {
             roles: 'Roles',
             groups: 'Groups',
             usage: 'Usages',
+            usages: 'Usages',
             paymentsUse: 'Payment and usages',
-            userPayments: 'Annex payments',
+            userPayments: 'Annex payments and <br/><span class="second-ligne-bis">remboursements</span>',
             event: "Evènements",
             eventTypes: 'Event types',
             eventPersons: 'Event persons list',
             eventModules: 'Event modules',
-            events: 'Events'
-
+            events: 'Events',
+            eventPayment: 'Event payments'
         },
         loading: {
             title: 'Loading',
@@ -226,6 +227,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             summary: 'Summary',
             sell: 'Sell',
             moneyIn: 'Money in',
+            user: 'User',
             delta: 'Delta',
             debit: 'Debit',
             credit: 'Credit',
@@ -634,6 +636,7 @@ angular.module('Fablab').config(function ($translateProvider) {
         },
         userPayment: {
             title: 'Annex payment',
+            titleList: 'Annex payment and refund',
             total: 'Total',
             datePayment: 'Date',
             discount: 'Discount',
@@ -690,7 +693,8 @@ angular.module('Fablab').config(function ($translateProvider) {
             selectedListLabel: 'Acquired modules',
             notification: {
                 saved: 'Event person saved',
-                removed: 'Event person removed'
+                removed: 'Event person removed',
+                failed: 'The following modules contains prerequisits modules : '
             },
             confirmation: {
                 remove: 'Do you really want to remove this event person ?'
@@ -722,8 +726,10 @@ angular.module('Fablab').config(function ($translateProvider) {
             titleEvent: 'Title',
             theme: 'Theme',
             place: 'Place',
+            btnTitle: 'Cloner this event',
             description: 'Description',
             eventType: 'Event type',
+            failedPerson: 'The following people does not have all the prerequisites : ',
             supervisor: 'Supervisor',
             cashier: 'Cashier',
             alreadyExist: 'This event already exists',
@@ -737,23 +743,28 @@ angular.module('Fablab').config(function ($translateProvider) {
             selectedListLabelPart: 'Participants',
             nonSelectedListLabelMod: 'Available modules',
             selectedListLabelMod: 'Modules',
-            price:'Price',
-            modules:'Modules',
+            price: 'Price',
+            modules: 'Modules',
             addPerson: 'Add person',
             eventPayment: 'Event payment',
+            addPeople: 'Add people',
             notification: {
                 saved: 'Event saved',
-                removed: 'Event removed'
+                cloned: 'Event cloned',
+                clonedFailed: 'Supervisor or event typ does not exist anymore',
+                removed: 'Event removed',
+                userSaved: 'New participant added',
+                userFailed: 'An error occurs during the new person save. Email correct ? '
             },
             confirmation: {
                 remove: 'Do you really want to remove this event ?'
             }
         },
-        eventPayment:{
+        eventPayment: {
             create: 'Event payment creation',
             event: 'Event',
-            user:'Supervisor',
-            saved:'Event payment saved'
+            user: 'Supervisor',
+            saved: 'Event payment saved'
         }
     });
 });

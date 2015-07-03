@@ -81,35 +81,20 @@
         </div>
     </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th style="width:80px" translate="general.date"></th>
-                <th style="width:80px" translate="general.type"></th>
-                <th style="width:100px" translate="accounting.accountCredit"></th>
-                <th style="width:100px" translate="accounting.accountDebit"></th>
-                <th style="width:100px" translate="accounting.credit"></th>
-                <th style="width:100px" translate="accounting.debit"></th>
-                <th style="min-width:150px"translate="general.user"></th>
-                <th translate="general.detail"></th>
-                <th translate="general.comment"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="h in history"
-                ng-class="{'bg-success':h.amount > 0,
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="h in history"
+            ng-class="{'bg-success':h.amount > 0,
                            'bg-danger':h.amount <= 0}"
-                >
-                <td>{{h.date|prettyDate}}</td>
-                <td>{{h.type|lowercase}}</td>
-                <td>{{h.account_CREDIT}}</td>
-                <td>{{h.account_DEBIT}}</td>
-                <td><span ng-if="h.amount > 0">{{h.amount|currency}}</span></td>
-                <td><span ng-if="h.amount <= 0">{{-h.amount|currency}}</span></td>
-                <td>{{h.user|prettyUser}}</td>
-                <td>{{h.detail}}</td>
-                <td>{{h.comment}}</td>
-            </tr>
-        </tbody>
+            >
+            <td data-title="'general.date' | translate">{{h.date|prettyDate}}</td>
+            <td data-title="'general.type' | translate">{{h.type|lowercase}}</td>
+            <td data-title="'accounting.accountCredit' | translate">{{h.account_CREDIT}}</td>
+            <td data-title="'accounting.accountDebit' | translate">{{h.account_DEBIT}}</td>
+            <td data-title="'accounting.credit' | translate"><span ng-if="h.amount > 0">{{h.amount|currency}}</span></td>
+            <td data-title="'accounting.debit' | translate"><span ng-if="h.amount <= 0">{{-h.amount|currency}}</span></td>
+            <td data-title="'accounting.user' | translate">{{h.user|prettyUser}}</td>
+            <td data-title="'general.detail' | translate">{{h.detail}}</td>
+            <td data-title="'general.comment' | translate">{{h.comment}}</td>
+        </tr>
     </table>
 </div>

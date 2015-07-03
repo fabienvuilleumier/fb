@@ -107,7 +107,7 @@
                         <toggle-switch 
                             class="toggle"
                             ng-model="paidDirectly"
-                            ng-disabled="!editable"
+                            ng-disabled="!editable || userPayment.payedForFabLab"
                             on-label="Oui"
                             off-label="Non"></toggle-switch>
                     </div>

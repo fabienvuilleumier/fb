@@ -11,6 +11,7 @@ import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
 import net.collaud.fablab.api.data.UserPaymentEO;
 import net.collaud.fablab.api.data.type.HistoryEntryType;
+import net.collaud.fablab.api.data.type.RefundAction;
 import static net.collaud.fablab.api.data.type.RefundAction.CREDIT;
 import static net.collaud.fablab.api.data.type.RefundAction.REFUND;
 import static net.collaud.fablab.api.data.virtual.HistoryEntryAccounts.CAISSE_POSTE_BANQUE;
@@ -47,23 +48,29 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
         boolean forTheLab = payment.isPayedForFabLab();
         boolean cash = payment.getCashier() != null;
         boolean refund = payment.getRefund() == REFUND || payment.getRefund() == CREDIT;
-        TYPE = HistoryEntryType.PAYMENT;
+        boolean event = payment.isEvent();
+        if (event) {
+            TYPE = HistoryEntryType.EVENT;
+        } else if (payment.getRefund().equals(RefundAction.REFUND)) {
+            TYPE = HistoryEntryType.REFUND;
+        } else {
+            TYPE = HistoryEntryType.PAYMENT;
+        }
         ID = payment.getId();
         DATE = payment.getDatePayment();
         StringBuilder commentSb = new StringBuilder();
-        commentSb.append(payment.isActive() ? "" : "Canceled");
-        commentSb.append(payment.isActive() ? "" : " | ");
-        commentSb.append(payment.getLabel());
-        commentSb.append(" | ");
+        commentSb.append(payment.isActive() ? "" : "Canceled | ");
+        commentSb.append(payment.getNote() == null ? "" : " | ");
         commentSb.append(payment.getNote() == null ? "" : payment.getNote());
         COMMENT = commentSb.toString();
         StringBuilder detailSb = new StringBuilder();
-        detailSb.append(cash ? "cashier=" + payment.getCashier().getFirstLastName() : "Use it's credit");
-        detailSb.append(" | ");
-        detailSb.append(payment.isPayedForFabLab()? "Payed for the lab" : "Payed for the user ");
+        detailSb.append(payment.getLabel());
+        detailSb.append(payment.isPayedForFabLab() ? "" : cash ? " | cashier=" + payment.getCashier().getFirstLastName() : " | Use it's credit");
+        detailSb.append(payment.isPayedForFabLab() ? " | Payed for the lab" : " | Payed for the user ");
         DETAIL = detailSb.toString();
         double interAmount = forTheLab ? -payment.getTotal() : payment.getTotal();
-        AMOUNT = !cancel ? interAmount : -interAmount;
+        double inter2Amount = event ? -interAmount : interAmount;
+        AMOUNT = !cancel ? inter2Amount : -inter2Amount;
         USER = new HistoryEntryUser(payment.getUser());
         if (!cancel) {
             if (forTheLab) {
@@ -133,8 +140,12 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
         detailSb.append(usage.getMinutes());
         detailSb.append("min");
         detailSb.append(" | ");
-        detailSb.append(usage.getAdditionalCost());
-        detailSb.append(" CHF additional | ");
+        detailSb.append(usage.getAdditionalCost() == 0 ? "" : usage.getAdditionalCost());
+        detailSb.append(usage.getAdditionalCost() == 0 ? "" : " CHF additional | ");
+        detailSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : " discount = ");
+        detailSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : usage.getDiscount());
+        detailSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : " ");
+        detailSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : usage.isDiscountPercent() ? "% | " : "CHF | ");
         detailSb.append(cash ? "cashier=" + usage.getCashier().getFirstLastName() : "Use it's credit");
         DETAIL = detailSb.toString();
         double interAmount = usage.getTotal();
@@ -287,13 +298,13 @@ public class HistoryEntry implements Comparable<HistoryEntry> {
         detailSb.append(purchase.getSupply().getCode());
         detailSb.append(" | ");
         detailSb.append(purchase.getQuantity());
-        detailSb.append(" ");
-        detailSb.append(purchase.getSupply().getSupplyUnity().getLabel());
-        detailSb.append(" | discount = ");
-        detailSb.append(purchase.getDiscount());
-        detailSb.append(" ");
-        detailSb.append(purchase.isDiscountPercent() ? "%" : "CHF");
         detailSb.append(" | ");
+        detailSb.append(purchase.getSupply().getSupplyUnity().getLabel());
+        detailSb.append(purchase.getDiscount() == null ? "" : purchase.getDiscount() == 0 ? "" : " discount = ");
+        detailSb.append(purchase.getDiscount() == null ? "" : purchase.getDiscount() == 0 ? "" : purchase.getDiscount());
+        detailSb.append(" ");
+        detailSb.append(purchase.getDiscount() == null ? "" : purchase.getDiscount() == 0 ? "" : purchase.isDiscountPercent() ? "%" : "CHF");
+        detailSb.append(purchase.getDiscount() == null ? "" : purchase.getDiscount() == 0 ? "" : " | ");
         detailSb.append(cash ? "cashier=" + purchase.getCashier().getFirstLastName() : "Use it's credit");
         DETAIL = detailSb.toString();
         double interAmount = purchase.getQuantity() > 0 ? purchase.getPurchasePrice() : -purchase.getPurchasePrice();
