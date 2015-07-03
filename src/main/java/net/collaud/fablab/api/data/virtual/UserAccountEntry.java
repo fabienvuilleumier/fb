@@ -16,8 +16,8 @@ import static net.collaud.fablab.api.data.type.HistoryEntryType.PAYMENT;
 import static net.collaud.fablab.api.data.type.HistoryEntryType.PURCHASE;
 import static net.collaud.fablab.api.data.type.HistoryEntryType.SUBSCRIPTION;
 import static net.collaud.fablab.api.data.type.HistoryEntryType.USAGE;
+import net.collaud.fablab.api.data.type.RefundAction;
 import static net.collaud.fablab.api.data.type.RefundAction.CREDIT;
-import static net.collaud.fablab.api.data.type.RefundAction.REFUND;
 
 /**
  *
@@ -40,15 +40,19 @@ public class UserAccountEntry implements Comparable<UserAccountEntry> {
         boolean cancel = !payment.isActive();
         ID = payment.getId();
         USER = new HistoryEntryUser(user);
-        TYPE = PAYMENT;
+        if (payment.getRefund().equals(RefundAction.REFUND)) {
+            TYPE = HistoryEntryType.REFUND;
+        } else {
+            TYPE = PAYMENT;
+        }
         DATE = payment.getDatePayment();
-        StringBuilder commentSb = new StringBuilder();
-        commentSb.append(payment.isActive() ? "" : "Canceled");
-        commentSb.append(payment.isActive() ? "" : " | ");
-        commentSb.append(payment.getLabel());
-        COMMENT = commentSb.toString();
-        DETAIL = payment.getNote() == null ? "" : payment.getNote();
-        Double total = payment.getRefund() == REFUND ? payment.getTotal() : (payment.getRefund() == CREDIT ? payment.getTotal() : -payment.getTotal());
+        StringBuilder detailSb = new StringBuilder();
+        detailSb.append(payment.isActive() ? "" : "Canceled");
+        detailSb.append(payment.isActive() ? "" : " | ");
+        detailSb.append(payment.getLabel());
+        DETAIL = detailSb.toString();
+        COMMENT = payment.getNote() == null ? "" : payment.getNote();
+        Double total = payment.getRefund() == RefundAction.REFUND ? payment.getTotal() : (payment.getRefund() == CREDIT ? payment.getTotal() : -payment.getTotal());
         AMOUNT = !cancel ? total : -total;
     }
 
@@ -58,20 +62,24 @@ public class UserAccountEntry implements Comparable<UserAccountEntry> {
         USER = new HistoryEntryUser(user);
         TYPE = USAGE;
         DATE = usage.getDateStart();
-        StringBuilder commentSb = new StringBuilder();
-        commentSb.append(usage.isActive() ? "" : "Canceled");
-        commentSb.append(usage.isActive() ? "" : " | ");
-        commentSb.append(usage.getNote() == null ? "" : usage.getNote());
-        COMMENT = commentSb.toString();
         StringBuilder detailSb = new StringBuilder();
-        detailSb.append(usage.getMachine().getName());
-        detailSb.append(" | ");
-        detailSb.append(usage.getMinutes());
-        detailSb.append("min");
-        detailSb.append(" | ");
-        detailSb.append(usage.getAdditionalCost());
-        detailSb.append(" CHF additional ");
+        detailSb.append(usage.isActive() ? "" : "Canceled");
+        detailSb.append(usage.isActive() ? "" : " | ");
+        detailSb.append(usage.getNote() == null ? "" : usage.getNote());
         DETAIL = detailSb.toString();
+        StringBuilder commentSb = new StringBuilder();
+        commentSb.append(usage.getMachine().getName());
+        commentSb.append(" | ");
+        commentSb.append(usage.getMinutes());
+        commentSb.append("min");
+        commentSb.append(usage.getAdditionalCost() == 0 ? "" : " | ");
+        commentSb.append(usage.getAdditionalCost() == 0 ? "" : usage.getAdditionalCost());
+        commentSb.append(usage.getAdditionalCost() == 0 ? "" : " CHF additional ");
+        commentSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : " | discount = ");
+        commentSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : usage.getDiscount());
+        commentSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : " ");
+        commentSb.append(usage.getDiscount() == null ? usage.getDiscount() == 0 ? "" : "" : usage.isDiscountPercent() ? "%" : "CHF");
+        COMMENT = commentSb.toString();
         AMOUNT = !cancel ? -usage.getTotal() : usage.getTotal();
     }
 
@@ -81,18 +89,18 @@ public class UserAccountEntry implements Comparable<UserAccountEntry> {
         USER = new HistoryEntryUser(user);
         TYPE = SUBSCRIPTION;
         DATE = subscription.getDateSubscription();
-        StringBuilder commentSb = new StringBuilder();
-        commentSb.append(subscription.isActive() ? "" : "Canceled");
-        commentSb.append(subscription.isActive() ? "" : " | ");
-        commentSb.append(subscription.getComment() == null ? "" : subscription.getComment());
-        COMMENT = commentSb.toString();
         StringBuilder detailSb = new StringBuilder();
-        detailSb.append("Subscription type : ");
-        detailSb.append(subscription.getMembershipType().getName());
-        detailSb.append(", duration :");
-        detailSb.append(subscription.getDuration());
-        detailSb.append(" days");
+        detailSb.append(subscription.isActive() ? "" : "Canceled");
+        detailSb.append(subscription.isActive() ? "" : " | ");
+        detailSb.append(subscription.getComment() == null ? "" : subscription.getComment());
         DETAIL = detailSb.toString();
+        StringBuilder commentSb = new StringBuilder();
+        commentSb.append("Subscription type : ");
+        commentSb.append(subscription.getMembershipType().getName());
+        commentSb.append(", duration :");
+        commentSb.append(subscription.getDuration());
+        commentSb.append(" days");
+        COMMENT = commentSb.toString();
         AMOUNT = !cancel ? -subscription.getPrice() : subscription.getPrice();
     }
 
@@ -102,19 +110,19 @@ public class UserAccountEntry implements Comparable<UserAccountEntry> {
         ID = motionStock.getId();
         USER = new HistoryEntryUser(user);
         DATE = motionStock.getMotionDate() == null ? new Date() : motionStock.getMotionDate();
-        StringBuilder commentSb = new StringBuilder();
-        commentSb.append(motionStock.isActive() ? "" : "Canceled");
-        commentSb.append(motionStock.isActive() ? "" : " | ");
-        commentSb.append(motionStock.getIo() == null ? "Erreur" : motionStock.getIo());
-        COMMENT = commentSb.toString();
-        TYPE = HistoryEntryType.PURCHASE;
         StringBuilder detailSbCor = new StringBuilder();
-        detailSbCor.append(motionStock.getSupply().getCode());
-        detailSbCor.append(" | ");
-        detailSbCor.append(motionStock.getQuantity());
-        detailSbCor.append(" ");
-        detailSbCor.append(motionStock.getSupply().getSupplyUnity().getLabel());
+        detailSbCor.append(motionStock.isActive() ? "" : "Canceled");
+        detailSbCor.append(motionStock.isActive() ? "" : " | ");
+        detailSbCor.append(motionStock.getIo() == null ? "Erreur" : motionStock.getIo());
         DETAIL = detailSbCor.toString();
+        TYPE = HistoryEntryType.PURCHASE;
+        StringBuilder commentSbCor = new StringBuilder();
+        commentSbCor.append(motionStock.getSupply().getCode());
+        commentSbCor.append(" | ");
+        commentSbCor.append(motionStock.getQuantity());
+        commentSbCor.append(" ");
+        commentSbCor.append(motionStock.getSupply().getSupplyUnity().getLabel());
+        COMMENT = commentSbCor.toString();
         Double interAmountCor = -(motionStock.getQuantity() * motionStock.getSupply().getSellingPrice());
         AMOUNT = !cancel ? interAmountCor : -interAmountCor;
 
@@ -126,22 +134,22 @@ public class UserAccountEntry implements Comparable<UserAccountEntry> {
         USER = new HistoryEntryUser(user);
         TYPE = PURCHASE;
         DATE = purchase.getPurchaseDate();
-        StringBuilder commentSb = new StringBuilder();
-        commentSb.append(purchase.isActive() ? "" : "Canceled");
-        commentSb.append(purchase.isActive() ? "" : " | ");
-        commentSb.append(purchase.getNote() == null ? "" : purchase.getNote());
-        COMMENT = commentSb.toString();
         StringBuilder detailSb = new StringBuilder();
-        detailSb.append(purchase.getSupply().getCode());
-        detailSb.append(" | ");
-        detailSb.append(purchase.getQuantity());
-        detailSb.append(" ");
-        detailSb.append(purchase.getSupply().getSupplyUnity().getLabel());
-        detailSb.append(" | discount = ");
-        detailSb.append(purchase.getDiscount());
-        detailSb.append(" ");
-        detailSb.append(purchase.isDiscountPercent() ? "%" : "CHF");
+        detailSb.append(purchase.isActive() ? "" : "Canceled");
+        detailSb.append(purchase.isActive() ? "" : " | ");
+        detailSb.append(purchase.getNote() == null ? "" : purchase.getNote());
         DETAIL = detailSb.toString();
+        StringBuilder commentSb = new StringBuilder();
+        commentSb.append(purchase.getSupply().getCode());
+        commentSb.append(" | ");
+        commentSb.append(purchase.getQuantity());
+        commentSb.append(" ");
+        commentSb.append(purchase.getSupply().getSupplyUnity().getLabel());
+        commentSb.append(purchase.getDiscount() == null ? purchase.getDiscount() == 0 ? "" : "" : " | discount = ");
+        commentSb.append(purchase.getDiscount() == null ? purchase.getDiscount() == 0 ? "" : "" : purchase.getDiscount());
+        commentSb.append(purchase.getDiscount() == null ? purchase.getDiscount() == 0 ? "" : "" : " ");
+        commentSb.append(purchase.getDiscount() == null ? purchase.getDiscount() == 0 ? "" : "" : purchase.isDiscountPercent() ? "%" : "CHF");
+        COMMENT = commentSb.toString();
         Double interAmount = purchase.getQuantity() > 0 ? purchase.getPurchasePrice() : -purchase.getPurchasePrice();
         AMOUNT = !cancel ? -interAmount : interAmount;
     }

@@ -1,7 +1,7 @@
 <h1 translate="menu.events"></h1>
 <div class="header-control">
     <div class="btn-group" >
-        <btn-create link="#/events/event-edit"></btn-create>
+        <btn-create ng-show="showRole" link="#/events/event-edit"></btn-create>
     </div>
 </div>
 <div class="eventList" >
@@ -32,7 +32,7 @@
                 {{event.timeEnd|prettyTime}}
             </td>
             <td 
-                data-title="'event.title' | translate" 
+                data-title="'event.titleEvent' | translate" 
                 sortable="'title'"
                 filter="{'title':'text'}">
                 {{event.title}}
@@ -61,14 +61,18 @@
                 filter="{'eventTypeLabel':'text'}">
                 {{event.eventType.label|lowercase}}
             </td>
-            <td class="listBtn2">
+            <td class="listBtn3">
                 <div class="btn-group">
-                    <a class="btn btn-sm btn-default" href="#/events/event-edit/{{event.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                    <button class="btn btn-sm btn-danger" 
+                    <a ng-show="showRole" class="btn btn-sm btn-default" href="#/events/event-edit/{{event.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button ng-show="showRole" class="btn btn-sm btn-danger" 
                         ng-really-click="softRemove(event)"
                         ng-really-message="{{'event.confirmation.remove'|translate}}">
                         <span class="glyphicon glyphicon-trash"></span>
                     </button>
+                    <btn-show ng-show="!showRole" link="#/events/event-edit/{{event.id}}"></btn-show>
+                    <a title="{{btnClone}}"ng-show="showRole" class="btn btn-sm btn-alternate" ng-click="clone(event.id)">
+                        <span class="fa fa-fw fa-plus-square"></span>
+                    </a>
                 </div>
             </td>
         </tr>

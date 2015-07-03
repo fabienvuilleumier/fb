@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalEventPersonEditController', function ($scope, $location, EventModuleService,
-        EventPersonService, NotificationService) {
+app.controller('GlobalEventPersonEditController', function ($scope, $location, UserService,
+        EventModuleService, EventPersonService, NotificationService) {
     $scope.selected = {eventPerson: undefined};
     $scope.loadEventPerson = function (id) {
         EventPersonService.get(id, function (data) {
@@ -21,7 +21,7 @@ app.controller('GlobalEventPersonEditController', function ($scope, $location, E
                 });
             });
         } else {
-            
+
             $scope.eventPerson.acquiredModules = $scope.acquiredModules;
             var moduleIds = [];
             var ui;

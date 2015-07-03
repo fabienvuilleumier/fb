@@ -9,6 +9,7 @@ app.controller('GlobalUserPaymentEditController', function ($scope, $location, $
     $scope.loadUserPayment = function (id) {
         UserPaymentService.get(id, function (data) {
             $scope.userPayment = data;
+            $scope.paidDirectly = $scope.userPayment.cashier;
         });
     };
     $scope.save = function () {
@@ -124,14 +125,15 @@ app.controller('UserPaymentNewController', function ($scope, $controller, $rootS
     $scope.userPayment = {
         datePayment: new Date(),
         user: $rootScope.connectedUser.user,
-        payedForFabLab: false
+        payedForFabLab: false,
+        event: false
     };
 }
 );
 app.controller('UserPaymentEditController', function ($scope, $routeParams, $controller) {
     $controller('GlobalUserPaymentEditController', {$scope: $scope});
     $scope.newUserPayment = false;
-    $scope.editable = true;
+    $scope.editable = false;
     $scope.loadUserPayment($routeParams.id);
 }
 );
@@ -142,8 +144,9 @@ app.controller('UserPaymentRefundController', function ($scope, $rootScope, $con
     $scope.editable = true;
 
     UserService.balance($rootScope.connectedUser.user.id, function (balance) {
-        var ref = balance < 0 ? 'REFUND' : 'CREDIT';
-        if (parseFloat(balance) === parseFloat(0)) {
+        var bal = parseFloat(balance);
+        var ref = bal < 0 ? 'REFUND' : 'CREDIT';
+        if (bal === parseFloat(0)) {
             ref = 'CREDIT';
         }
         $scope.refund = ref;
@@ -155,7 +158,8 @@ app.controller('UserPaymentRefundController', function ($scope, $rootScope, $con
                 user: $rootScope.connectedUser.user,
                 payedForFabLab: false,
                 label: cred,
-                refund: ref
+                refund: ref,
+                event: false
             };
         } else {
             $scope.userPayment = {
@@ -164,8 +168,9 @@ app.controller('UserPaymentRefundController', function ($scope, $rootScope, $con
                 payedForFabLab: false,
                 refund: ref,
                 label: refu,
-                amount: $filter('number')(-balance, 2),
-                total: $filter('number')(-balance, 2)
+                amount: parseFloat($filter('number')(-bal, 2)),
+                total: parseFloat($filter('number')(-bal, 2)),
+                event: false
             };
         }
     });

@@ -8,30 +8,23 @@
             <span class="bold">{{balance}}</span>
             <span class="bold"> {{currency}}</span>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th translate="payment.date"></th>
-                    <th translate="payment.type"></th>
-                    <th translate="payment.credit"></th>
-                    <th translate="payment.debit"></th>
-                    <th translate="payment.details"></th>
-                    <th translate="payment.comment"></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="h in history"
-                    ng-class="{'bg-danger' : h.amount < 0,
-							'bg-success' : h.amount > 0}">
-                    <td>{{h.date|formatTimestamp}}</td>
-                    <td>{{h.type|lowercase}}</td>
-                    <td><span ng-if="h.amount > 0">{{h.amount|currency}}</span></td>
-                    <td><span ng-if="h.amount <= 0">{{-h.amount|currency}}</span></td>
-                    <td>{{h.detail}}</td>
-                    <td>{{h.comment}}</td>
-                </tr>
-            </tbody>
+        <table ng-table="tableParams" class="table" show-filter="true">
+            <tr ng-repeat="h in history"
+                ng-class="{'bg-danger' : h.amount < 0, 'bg-success' : h.amount > 0}">
+                <td
+                    data-title="'payment.date' | translate">
+                    {{h.date|prettyDate}}</td>
+                <td data-title="'payment.type' | translate">
+                    {{h.type|lowercase}}</td>
+                <td data-title="'payment.credit' | translate">
+                    <span ng-if="h.amount > 0">{{h.amount|currency}}</span></td>
+                <td data-title="'payment.debit' | translate">
+                    <span ng-if="h.amount <= 0">{{-h.amount|currency}}</span></td>
+                <td data-title="'payment.details' | translate">
+                    {{h.detail}}</td>
+                <td data-title="'payment.comment' | translate">
+                    {{h.comment}}</td>
+            </tr>
         </table>
     </div>
 </div>

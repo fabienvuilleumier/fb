@@ -14,7 +14,7 @@
 			if(!date){
 				return '';
 			}
-			return moment(date).format('HH:MM');
+			return moment(date).format('HH:mm');
 		};
 	});
 }());

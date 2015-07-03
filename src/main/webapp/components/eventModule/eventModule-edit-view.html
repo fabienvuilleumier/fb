@@ -15,6 +15,7 @@
                                ng-model="eventModule.name"                            
                                duplicate="existingValues"  
                                name="name" 
+                               ng-disabled="!showRole" 
                                required/>
                         <div class="col-sm-2 error-text">
                             <span ng-show="editEventModule.name.$error.duplicate" 
@@ -27,6 +28,7 @@
                     <label class="col-sm-2 control-label" translate="eventModule.description"></label>
                     <div class="col-sm-8">
                         <textarea type="text"
+                                  ng-disabled="!showRole" 
                                   class="form-control" 
                                   ng-model="eventModule.description"></textarea>
                     </div>
@@ -37,9 +39,10 @@
                     <div class="col-sm-8">
                         <select class="form-control" 
                                 ng-model="eventModule.machineType"
+                                ng-disabled="!showRole"
                                 ng-options="mt.name for mt in machineTypeList track by mt.id"></select>
                     </div>
-                    <div class="col-sm-2" ng-show="eventModule.machineType">
+                    <div class="col-sm-2" ng-show="eventModule.machineType && showRole">
                         <a class="btn btn-sm btn-primary" ng-click="ereaseType()">
                             <span translate="general.erase"></span>
                             <span class="fa fa-fw fa-close"></span>
@@ -80,10 +83,14 @@
                 </div>
             </div>
             <div class="panel-footer right">
-                <btn-cancel link="#/eventModules"></btn-cancel>
-                <btn-submit form="editEventModule"></btn-submit>
+                <btn-cancel ng-show="showRole" link="#/eventModules"></btn-cancel>
+                <btn-submit ng-show="showRole" form="editEventModule"></btn-submit>
+                <btn-return ng-show="!showRole" link="#/eventModules"></btn-return>
             </div>
         </div>
     </form>
 </div>
 
+<script ng-if="!showRole">
+            $(".bootstrap-duallistbox-container").find("*").prop("disabled", true);
+</script>

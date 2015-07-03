@@ -11,5 +11,6 @@ public enum HistoryEntryType {
     REVISION,
     PURCHASE,
     SUPPLY,
-    EVENT
+    EVENT,
+    REFUND
 }

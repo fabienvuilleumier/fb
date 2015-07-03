@@ -5,10 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.api.dao.EventRepository;
-import net.collaud.fablab.api.data.CertificationEO;
 import net.collaud.fablab.api.data.EventEO;
+import net.collaud.fablab.api.data.EventTypeEO;
+import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.security.Roles;
 import net.collaud.fablab.api.service.EventService;
+import net.collaud.fablab.api.service.EventTypeService;
+import net.collaud.fablab.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,12 @@ public class EventServiceImpl implements EventService {
 
     @Autowired
     private EventRepository eventDAO;
+
+    @Autowired
+    private EventTypeService eventTypeService;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     @Secured({Roles.EVENT_VIEW})

@@ -1,10 +1,11 @@
 'use strict';
 var app = angular.module('Fablab');
-app.controller('GlobalEventEditController', function ($scope, $location,
+app.controller('GlobalEventEditController', function ($scope, $location, $rootScope,
         EventService, NotificationService, StaticDataService, EventTypeService,
         EventPersonService, EventModuleService) {
     $scope.currency = App.CONFIG.CURRENCY;
     $scope.selected = {event: undefined};
+    $scope.showRole = $rootScope.hasAnyRole('EVENT_MANAGE');
     $scope.loadEvent = function (id) {
         EventService.get(id, function (data) {
             $scope.event = data;
@@ -41,19 +42,20 @@ app.controller('GlobalEventEditController', function ($scope, $location,
             EventService.save(eventCurrent, function (data) {
                 $scope.event = data;
                 NotificationService.notify("success", "event.notification.saved");
-                    $location.path("events");
+                $location.path("events");
             });
         }
     };
     $scope.saveEventPerson = function () {
         var person = angular.copy($scope.newPerson);
         EventPersonService.save(person, function (data) {
-            $scope.person = data;
-            NotificationService.notify("success", "event.notification.saved");
+            $scope.newPerson = data;
+            NotificationService.notify("success", "event.notification.userSaved");
             setLists();
+        }, function () {
+            NotificationService.notify("error", "event.notification.userFailed");
         });
     };
-
     $scope.minDate = new Date();
     $scope.today = function () {
         $scope.dt = new Date();
@@ -120,11 +122,9 @@ app.controller('GlobalEventEditController', function ($scope, $location,
         }
         $scope.existingValuesEmail = res;
     });
-
     $scope.newPerson;
     $scope.hstep = 1;
     $scope.mstep = 15;
-
     $scope.settings = {
         bootstrap2: false,
         moveOnSelect: true,
@@ -133,22 +133,20 @@ app.controller('GlobalEventEditController', function ($scope, $location,
         filter: true,
         filterValues: true
     };
-
     var setLists = function () {
+
         EventPersonService.list(function (eventPerson) {
             if ($scope.event) {
                 $scope.availableOrganizers = eventPerson;
                 $scope.assignedOrganizers = $scope.event.organizers;
                 $scope.availableParticipants = eventPerson;
                 $scope.assignedParticipants = $scope.event.participants;
-
             }
         });
         EventModuleService.list(function (eventModules) {
             $scope.availableModules = eventModules;
             $scope.assignedModules = $scope.event.modules;
         });
-
     };
 }
 );
