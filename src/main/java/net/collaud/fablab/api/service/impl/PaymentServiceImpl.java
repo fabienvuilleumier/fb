@@ -135,10 +135,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         List<HistoryEntry> listHistory = getHistoryEntriesForuser(userId);
-        double balance = userRepository.getUserBalanceFromUserId(userId)
-                .map(ub -> ub.getValue())
-                .orElse(0d);
-        return new UserPaymentHistory(listHistory, balance);
+        return new UserPaymentHistory(listHistory, userService.balance(userId));
     }
 
     protected List<HistoryEntry> getHistoryEntriesForuser(Integer userId) {
