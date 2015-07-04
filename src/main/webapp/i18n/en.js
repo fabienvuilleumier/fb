@@ -122,6 +122,7 @@ angular.module('Fablab').config(function ($translateProvider) {
             lastname: 'Lastname',
             name: 'Name',
             email: 'Email',
+            login:'Login',
             balance: 'Balance',
             membership: 'Membership',
             newpassword: 'New password',
