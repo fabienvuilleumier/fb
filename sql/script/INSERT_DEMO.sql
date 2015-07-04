@@ -541,8 +541,6 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `fablab`;
-INSERT INTO `fablab`.`t_event_person` (`event_person_id`, `firstname`, `lastname`, `email`, `active`) VALUES (1, 'Fabien', 'Vuilleumier', 'fabien.vuilleumier@he-arc.ch', 0);
-INSERT INTO `fablab`.`t_event_person` (`event_person_id`, `firstname`, `lastname`, `email`, `active`) VALUES (2, 'Camille', 'Robin', 'camille.robin@unifr.ch', 0);
 INSERT INTO `fablab`.`t_event_person` (`event_person_id`, `firstname`, `lastname`, `email`, `active`) VALUES (6, 'John', 'Hirsh', 'john.hirch@email.com', 1);
 INSERT INTO `fablab`.`t_event_person` (`event_person_id`, `firstname`, `lastname`, `email`, `active`) VALUES (7, 'Valentin', 'Stram', 'valentinStram@email.com', 1);
 INSERT INTO `fablab`.`t_event_person` (`event_person_id`, `firstname`, `lastname`, `email`, `active`) VALUES (13, 'Jean-Daniel', 'Choppard', 'j-d.c@remail.com', 1);
