@@ -69,7 +69,6 @@
                         <toggle-switch 
                             class="toggle"
                             ng-model="paidDirectly"
-                            disabled
                             on-label="Oui"
                             off-label="Non"></toggle-switch>
                     </div>
@@ -80,7 +79,6 @@
                         <select class="form-control" 
                                 ng-model="userPayment.cashier"
                                 ng-disabled="!editable"
-                                required
                                 ng-options="(u.lastname + ' ' + u.firstname) for u in cashierList track by u.id"></select>
                     </div>
                 </div>
