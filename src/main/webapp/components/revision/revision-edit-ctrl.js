@@ -88,12 +88,13 @@ app.controller('GlobalRevisionEditController', function ($scope, $location, $rou
     $scope.hstep = 1;
     $scope.mstep = 15;
 });
-app.controller('RevisionNewController', function ($scope, $controller) {
+app.controller('RevisionNewController', function ($scope, $controller, $rootScope) {
     $controller('GlobalRevisionEditController', {$scope: $scope});
     $scope.newRevision = true;
     $scope.revision = {
         revisionDate: new Date(),
-        revisionTime: new Date()
+        revisionTime: new Date(),
+        user: $rootScope.connectedUser.user
     };
 }
 );
