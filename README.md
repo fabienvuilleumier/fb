@@ -41,3 +41,5 @@ You can manage :
 * Create database schema (use Mysql workbench)
 * Deploy the WAR file previously compiled
 
+##Version
+v2.0
