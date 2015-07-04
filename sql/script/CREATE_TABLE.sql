@@ -153,10 +153,6 @@ CREATE TABLE IF NOT EXISTS `fablab`.`t_price_revision` (
   `membership_duration` INT(11) NOT NULL COMMENT 'in days',
   PRIMARY KEY (`price_revision_id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
-
 
 -- -----------------------------------------------------
 -- Table `fablab`.`t_reservation`
@@ -938,7 +934,6 @@ CREATE TABLE IF NOT EXISTS `fablab`.`r_event_aquired_module` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-USE `fablab` ;
 
 -- -----------------------------------------------------
 -- procedure update_machine_existing_code
