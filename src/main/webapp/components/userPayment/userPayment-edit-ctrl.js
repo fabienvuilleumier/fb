@@ -140,7 +140,6 @@ app.controller('UserPaymentEditController', function ($scope, $routeParams, $con
 app.controller('UserPaymentRefundController', function ($scope, $rootScope, $controller, UserService, $filter) {
     $controller('GlobalUserPaymentEditController', {$scope: $scope});
     $scope.newUserPayment = true;
-    $scope.paidDirectly = true;
     $scope.editable = true;
 
     UserService.balance($rootScope.connectedUser.user.id, function (balance) {
@@ -153,6 +152,7 @@ app.controller('UserPaymentRefundController', function ($scope, $rootScope, $con
         var cred = $filter('translate')('userPayment.cred');
         var refu = $filter('translate')('userPayment.refu');
         if (ref === 'CREDIT') {
+            $scope.paidDirectly = false;
             $scope.userPayment = {
                 datePayment: new Date(),
                 user: $rootScope.connectedUser.user,
@@ -162,6 +162,7 @@ app.controller('UserPaymentRefundController', function ($scope, $rootScope, $con
                 event: false
             };
         } else {
+            $scope.paidDirectly = true;
             $scope.userPayment = {
                 datePayment: new Date(),
                 user: $rootScope.connectedUser.user,
