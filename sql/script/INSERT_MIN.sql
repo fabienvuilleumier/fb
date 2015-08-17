@@ -18,7 +18,7 @@ COMMIT;
 START TRANSACTION;
 USE `fablab`;
 -- pwd = admin
-INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `auth_by_sql`, `login`, `password_manager`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`, `active`) VALUES (1, 2, 1, 'admin', '7c0deadab3077e14480bc4cfc80714b7cd8f12bd4c8968f69e4a0053c38867f1', '7c0deadab3077e14480bc4cfc80714b7cd8f12bd4c8968f69e4a0053c38867f1', 'tW7RjN0OvD3ltNFb27fi4nZ39qIhLM1x99ls1qFZ', 'admin', 'admin', 'admin@fablabmanager.ch', '2015-05-26 14:57:12', 0, '120050C9ED65', 1, 'NULL', 'NULL', '2015-01-01', 1, 'NULL', 1);
+INSERT INTO `fablab`.`t_user` (`user_id`, `membership_type_id`, `auth_by_sql`, `login`, `password_manager`, `password`, `password_salt`, `firstname`, `lastname`, `email`, `date_inscr`, `balance`, `rfid`, `enabled`, `phone`, `address`, `birthdate`, `gender`, `comment`, `active`) VALUES (1, 2, 1, 'admin', '7c0deadab3077e14480bc4cfc80714b7cd8f12bd4c8968f69e4a0053c38867f1', '7c0deadab3077e14480bc4cfc80714b7cd8f12bd4c8968f69e4a0053c38867f1', 'tW7RjN0OvD3ltNFb27fi4nZ39qIhLM1x99ls1qFZ', 'admin', 'admin', 'admin@fablabmanager.ch', '2015-05-26 14:57:12', 0, '120050C9ED65', 1, NULL, NULL, '2015-01-01', 1, NULL, 1);
 
 COMMIT;
 
