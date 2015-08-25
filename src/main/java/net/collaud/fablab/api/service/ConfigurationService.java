@@ -1,13 +1,13 @@
 package net.collaud.fablab.api.service;
 
-import java.util.Map;
-import net.collaud.fablab.api.data.type.ConfigurationKey;
+import net.collaud.fablab.api.data.ConfigurationEO;
+import net.collaud.fablab.api.service.global.ReadWriteService;
 
 /**
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface ConfigurationService {
+public interface ConfigurationService extends ReadWriteService<ConfigurationEO> {
 
-	Map<ConfigurationKey, String> getAllConfiguration();
+    ConfigurationEO findByKey(String key);
 }

@@ -1,0 +1,22 @@
+<form class="form-horizontal" name="editMachineState" ng-submit="save(false)">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<span ng-if="newMachineState" translate="machineState.create"></span>
+                        <span ng-if="!newMachineState" translate="machineState.edit"></span>
+			<span ng-if="!newMachineState"> {{machineState.label}}</span>
+		</div>
+		<div class="panel-body">
+			<div class="form-group">
+				<label class="col-sm-2 control-label" translate="machineState.label"></label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" ng-model="machineState.label" required>
+				</div>
+			</div>
+		</div>
+		<div class="panel-footer right">
+			<btn-cancel link="#/machineStates"></btn-cancel>
+			<btn-submit form="ediMachineState"></btn-submit>
+		</div>
+	</div>
+</form>
+

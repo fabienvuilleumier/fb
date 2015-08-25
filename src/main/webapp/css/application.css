@@ -43,3 +43,23 @@ body{
 .text-bold{
 	font-weight: bold;
 }
+
+.nav > li > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+}
+
+.navbar-nav > li > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 20px;
+}
+
+.navbar-default .navbar-nav > li > li > a {
+    color: #777;
+}
+.navbar-nav > li > li > a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

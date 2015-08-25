@@ -3,10 +3,9 @@ package net.collaud.fablab.api.rest.v1;
 import javax.annotation.PostConstruct;
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
 import net.collaud.fablab.api.data.UserEO;
+import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.rest.v1.base.ReadWriteRestWebservice;
-import net.collaud.fablab.api.rest.v1.model.BaseModel;
-import net.collaud.fablab.api.rest.v1.model.DataModel;
-import net.collaud.fablab.api.service.MembershipTypeService;
+import net.collaud.fablab.api.rest.v1.base.SoftRemoveWebService;
 import net.collaud.fablab.api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,33 +14,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud <gaetancollaud@gmail.com>
+ * @author Gaetan Collaud <gaetancollaud@gmail.com> Collaud
+ * <gaetancollaud@gmail.com>
  */
 @RestController()
 @RequestMapping("/v1/user")
 @JavascriptAPIConstant("USER_API")
-public class UserWS extends ReadWriteRestWebservice<UserEO, UserService> {
+public class UserWS extends ReadWriteRestWebservice<UserEO, UserService> implements SoftRemoveWebService {
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Autowired
-	private MembershipTypeService membershipTypeService;
+    @PostConstruct
+    private void postConstruct() {
+        super.setService(userService);
+    }
 
-	@PostConstruct
-	private void postConstruct() {
-		super.setService(userService);
-	}
+    @RequestMapping(value = "updateMailingList", method = RequestMethod.GET)
+    public void updateMailingList() {
+        userService.updateMailingList();
+    }
 
-	//FIXME put in standalone WS
-	@RequestMapping(value = "membershipType", method = RequestMethod.GET)
-	public BaseModel getallMembershipType() {
-		return new DataModel(membershipTypeService.findAll());
-	}
-	
-	@RequestMapping(value = "updateMailingList", method = RequestMethod.GET)
-	public void updateMailingList(){
-		userService.updateMailingList();
-	}
-
+    @Override
+    public void softRemove(Integer id) throws FablabException {
+        userService.softRemove(id);
+    }
 }

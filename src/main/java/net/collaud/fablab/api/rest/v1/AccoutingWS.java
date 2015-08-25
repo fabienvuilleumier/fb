@@ -1,7 +1,6 @@
 package net.collaud.fablab.api.rest.v1;
 
 import net.collaud.fablab.api.annotation.JavascriptAPIConstant;
-import static net.collaud.fablab.api.data.UserBalanceEO_.userId;
 import net.collaud.fablab.api.rest.v1.criteria.PeriodSearchCriteria;
 import net.collaud.fablab.api.rest.v1.model.BaseModel;
 import net.collaud.fablab.api.rest.v1.model.DataModel;

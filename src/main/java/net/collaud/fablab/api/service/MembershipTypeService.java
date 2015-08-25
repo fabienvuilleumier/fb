@@ -1,12 +1,12 @@
 package net.collaud.fablab.api.service;
 
 import net.collaud.fablab.api.data.MembershipTypeEO;
-import net.collaud.fablab.api.service.global.ReadService;
-
+import net.collaud.fablab.api.service.global.ReadWriteService;
+import net.collaud.fablab.api.service.global.SoftRemoveService;
 /**
- *
- * @author Gaetan Collaud <gaetancollaud@gmail.com>
- */
-public interface MembershipTypeService extends ReadService<MembershipTypeEO>{
+ *This is the Service interface for a <tt>MembershipType</tt>.
+* @author Fabien Vuilleumier
+*/
+public interface MembershipTypeService extends ReadWriteService<MembershipTypeEO>, SoftRemoveService<MembershipTypeEO> {
 
 }

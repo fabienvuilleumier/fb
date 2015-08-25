@@ -15,6 +15,7 @@ import org.springframework.data.repository.query.Param;
  */
 public interface ReservationRepository extends JpaRepository<ReservationEO, Integer>, JpaSpecificationExecutor<ReservationEO> {
 
+
 	@Query("SELECT DISTINCT r "
 			+ " FROM ReservationEO r "
 			+ " JOIN FETCH r.user u "

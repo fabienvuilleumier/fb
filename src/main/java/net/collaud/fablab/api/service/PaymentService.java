@@ -5,11 +5,9 @@ import java.util.List;
 import net.collaud.fablab.api.data.PaymentEO;
 import net.collaud.fablab.api.data.SubscriptionEO;
 import net.collaud.fablab.api.data.UsageEO;
-import net.collaud.fablab.api.data.UserEO;
 import net.collaud.fablab.api.data.virtual.HistoryEntry;
 import net.collaud.fablab.api.data.virtual.HistoryEntryId;
 import net.collaud.fablab.api.data.virtual.UserPaymentHistory;
-import net.collaud.fablab.api.exceptions.FablabException;
 import net.collaud.fablab.api.rest.v1.criteria.PeriodSearchCriteria;
 
 /**

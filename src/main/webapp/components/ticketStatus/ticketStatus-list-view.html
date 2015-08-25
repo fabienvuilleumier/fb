@@ -1,0 +1,26 @@
+<h1 translate="ticketStatus.title"></h1>
+<div class="ticketStatusList" >
+    <table ng-table="tableParams" class="table" show-filter="true">
+        <tr ng-repeat="ticketStatus in $data">
+            <td 
+                data-title="'ticketStatus.label' | translate" 
+                sortable="'label'"
+                filter="{'label':'text'}">
+                {{ticketStatus.label}}
+            </td>
+            <td class="listBtn2">
+                <div class="btn-group" 
+                     ng-if="ticketStatus.label.toUpperCase() !== 'OPEN'
+                     && ticketStatus.label.toUpperCase() !== 'CLOSED'">
+                    <a class="btn btn-sm btn-default" href="#/ticketStatus/ticketStatus-edit/{{ticketStatus.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(ticketStatus)"
+                        ng-really-message="{{'ticketStatus.confirmation.remove'|translate}}">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </table> 
+</div>
+

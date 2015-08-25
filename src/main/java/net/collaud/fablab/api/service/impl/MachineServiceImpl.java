@@ -1,7 +1,5 @@
 package net.collaud.fablab.api.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import net.collaud.fablab.api.dao.MachineRepository;
@@ -19,21 +17,68 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Secured({Roles.ADMIN})
+@Secured({Roles.RESERVATION_USE, Roles.PAYMENT_MANAGE, Roles.MACHINE_VIEW, Roles.MACHINE_MANAGE})
 public class MachineServiceImpl extends AbstractServiceImpl implements MachineService {
 
-	@Autowired
-	private MachineRepository machineDao;
+    @Autowired
+    private MachineRepository machineDao;
 
-	@Override
-	@Secured({Roles.RESERVATION_USE, Roles.PAYMENT_MANAGE, Roles.MACHINE_VIEW})
-	public List<MachineEO> findAll() {
-		return new ArrayList(new HashSet(machineDao.findAll()));
-	}
+    @Override
+    @Secured({Roles.RESERVATION_USE, Roles.PAYMENT_MANAGE, Roles.MACHINE_VIEW})
+    public List<MachineEO> findAll() {
+        return machineDao.findAll();
+    }
 
-	@Override
-	@Secured({Roles.RESERVATION_USE, Roles.PAYMENT_MANAGE, Roles.MACHINE_VIEW})
-	public Optional<MachineEO> getById(Integer id) {
-		return Optional.ofNullable(machineDao.findOne(id));
-	}
+    @Override
+    @Secured({Roles.RESERVATION_USE, Roles.PAYMENT_MANAGE, Roles.MACHINE_VIEW})
+    public Optional<MachineEO> getById(Integer id) {
+        return machineDao.findOneDetails(id);
+    }
+
+    @Override
+    @Secured({Roles.MACHINE_MANAGE})
+    public MachineEO findSimpleByCode(String code) {
+        return machineDao.findSimpleByCode(code);
+    }
+
+    @Override
+    @Secured({Roles.MACHINE_MANAGE})
+    public MachineEO save(MachineEO machine) {
+        if (machine.getId() == null) {
+            machine.setId(0);
+        }
+        if (machine.getId() > 0) {
+            MachineEO old = machineDao.findOne(machine.getId());
+            old.setCode(machine.getCode());
+            old.setName(machine.getName());
+            old.setBuyPrice(machine.getBuyPrice());
+            old.setAcquisitionDate(machine.getAcquisitionDate());
+            old.setMachineType(machine.getMachineType());
+            old.setMachineState(machine.getMachineState());
+            old.setMachineStatus(machine.getMachineStatus());
+            return machineDao.saveAndFlush(old);
+        } else {
+            return machineDao.saveAndFlush(machine);
+        }
+    }
+
+    @Override
+    @Secured({Roles.MACHINE_MANAGE})
+    public void remove(Integer id) {
+        machineDao.delete(id);
+    }
+
+    @Override
+    @Secured({Roles.MACHINE_MANAGE})
+    public void softRemove(Integer id) {
+        MachineEO current = machineDao.findOne(id);
+        current.setActive(false);
+        machineDao.saveAndFlush(current);
+    }
+
+    @Override
+    @Secured({Roles.MACHINE_MANAGE})
+    public List<MachineEO> getByStatusLabel(String label) {
+        return machineDao.getByStatusLabel(label);
+    }
 }

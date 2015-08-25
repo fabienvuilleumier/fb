@@ -7,6 +7,6 @@ import net.collaud.fablab.api.service.global.ReadService;
  *
  * @author Gaetan Collaud <gaetancollaud@gmail.com>
  */
-public interface GroupService extends ReadService<GroupEO>{
+public interface GroupService extends ReadService<GroupEO> {
 	
 }

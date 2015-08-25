@@ -1,54 +1,54 @@
 
 <div class="header-control">
-	<div class="btn-group">
-		<a class="btn btn-success" href="#/users/edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
-		<a class="btn btn-danger" href="#/users/export">{{'button.export'| translate}} <span class="glyphicon glyphicon-export"> </span></a>
-		<a class="btn btn-warning" href=""
-		   ng-if="hasAnyRole('MAILINGLIST_MANAGE')"
-		   ng-click="updateMailingList()">{{'button.updateMailingList'| translate}} <span class="glyphicon glyphicon-envelope"> </span></a>
-	</div>
+    <div class="btn-group">
+        <a class="btn btn-success" href="#/users/edit">{{'button.create'| translate}} <span class="glyphicon glyphicon-plus"> </span></a>
+        <a class="btn btn-danger" href="#/users/export">{{'button.export'| translate}} <span class="glyphicon glyphicon-export"> </span></a>
+        <a class="btn btn-warning" href=""
+           ng-if="hasAnyRole('MAILINGLIST_MANAGE')"
+           ng-click="updateMailingList()">{{'button.updateMailingList'| translate}} <span class="glyphicon glyphicon-envelope"> </span></a>
+    </div>
 </div>
 
 <table ng-table="tableParams" class="table" show-filter="true">
     <tr ng-repeat="user in $data">
         <td 
-			data-title="'user.firstname' | translate" 
-			sortable="'firstname'"
-			filter="{'firstname':'text'}">
-			{{user.firstname}}
-		</td>
+            data-title="'user.firstname' | translate" 
+            sortable="'firstname'"
+            filter="{'firstname':'text'}">
+            {{user.firstname}}
+        </td>
         <td 
-			data-title="'user.lastname' | translate" 
-			sortable="'lastname'"
-			filter="{'lastname':'text'}">
-			{{user.lastname}}
-		</td>
+            data-title="'user.lastname' | translate" 
+            sortable="'lastname'"
+            filter="{'lastname':'text'}">
+            {{user.lastname}}
+        </td>
         <td 
-			data-title="'user.email' | translate" 
-			sortable="'email'"
-			filter="{'email':'text'}">
-			{{user.email}}
-		</td>
+            data-title="'user.email' | translate" 
+            sortable="'email'"
+            filter="{'email':'text'}">
+            {{user.email}}
+        </td>
         <td 
-			data-title="'user.balance' | translate"
-			sortable="'balance.value'"
-			ng-class="{'negativBalance' : user.balance.value < 0}">
-			{{user.balance.value|number:2}}
-		</td>
+            data-title="'user.balance' | translate"
+            sortable="'balance.value'"
+            ng-class="{'negativBalance' : user.balance.value < 0}">
+            {{user.balance.value|number:2}}
+        </td>
         <td 
-			data-title="'user.membership' | translate"
-			sortable="'membershipType.name'">
-			{{user.membershipType.name}}
-		</td>
-        <td>
-			<div class="btn-group">
-				<a class="btn btn-sm btn-default" href="#/users/edit/{{user.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
-				<button class="btn btn-sm btn-danger" 
-						ng-really-click="remove(user)"
-						ng-really-message="{{'user.confirmation.remove'|translate}}">
-					<span class="glyphicon glyphicon-trash"></span>
-				</button>
-			</div>
-		</td>
+            data-title="'user.membership' | translate"
+            sortable="'membershipType.name'">
+            {{user.membershipType.name}}
+        </td>
+        <td  class="listBtn2">
+            <div class="btn-group">
+                <a class="btn btn-sm btn-default" href="#/users/edit/{{user.id}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <button class="btn btn-sm btn-danger" 
+                        ng-really-click="softRemove(user)"
+                        ng-really-message="{{'user.confirmation.remove'|translate}}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </div>
+        </td>
     </tr>
 </table> 

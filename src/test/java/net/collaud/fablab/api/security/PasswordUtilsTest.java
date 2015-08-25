@@ -41,13 +41,13 @@ public class PasswordUtilsTest {
 		boolean result = PasswordUtils.isPasswordValid(user, "test");
 		assertEquals(false, result);
 		
-		PasswordUtils.setUseEONewPassword(user, "test");
+		PasswordUtils.setUserEONewPassword(user, "test");
 
 		result = PasswordUtils.isPasswordValid(user, "test");
 		assertEquals(true, result);
 		
-		log.info("Passord is : {}", user.getPassword());
-		log.info("Salt is : {}", user.getPasswordSalt());
+		//log.info("Passord is : {}", user.getPassword());
+		//log.info("Salt is : {}", user.getPasswordSalt());
 		
 	}
 }
